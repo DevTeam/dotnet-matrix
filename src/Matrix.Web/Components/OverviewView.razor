@@ -1,0 +1,115 @@
+@foreach (var report in Reports)
+{
+    if (report.Charts is not { } charts
+        || charts.Overviews.Count == 0 && charts.Features.Count == 0)
+    {
+        continue;
+    }
+
+    <section class="overview-report">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">@report.Category.Name</p>
+                <h2>Benchmark report</h2>
+            </div>
+            <span class="section-meta">Performance · Memory</span>
+        </div>
+        @if (charts.Overviews.Count > 0)
+        {
+            <div class="report-chart-grid overview-chart-grid">
+                @foreach (var chart in charts.Overviews)
+                {
+                    <figure class="report-chart">
+                        <img src="@chart.Source"
+                             alt="@($"{report.Category.Name} {chart.Name} benchmark overview")"/>
+                    </figure>
+                }
+            </div>
+        }
+        @if (charts.Features.Count > 0)
+        {
+            <h3 class="chart-section-title">Scenarios</h3>
+            <div class="report-chart-grid feature-chart-grid">
+                @foreach (var chart in charts.Features)
+                {
+                    <figure class="report-chart">
+                        <img src="@chart.Source"
+                             loading="lazy"
+                             alt="@($"{report.Category.Name} {chart.Name} benchmark")"/>
+                    </figure>
+                }
+            </div>
+        }
+    </section>
+}
+
+<section class="overview-grid">
+    @foreach (var report in Reports)
+    {
+        var libraries = MatrixView.Libraries(report)
+            .Where(library => MatrixView.IsSelected(report, SelectedLibraries, library.Id))
+            .Where(library => MatrixView.Metadata(report, library.Id) is not null)
+            .ToArray();
+        @foreach (var library in libraries)
+        {
+            var metadata = MatrixView.Metadata(report, library.Id);
+            var featureResults = (report.Features?.Features ?? [])
+                .SelectMany(feature => feature.Results)
+                .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+            var supported = featureResults.Count(result => result.Status == "Supported");
+            var unavailable = featureResults.Count(result =>
+                result.Status is "Unsupported" or "NotApplicable");
+            var benchmarkResults = (report.Benchmarks?.Features ?? [])
+                .SelectMany(feature => feature.Results)
+                .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+            <article class="library-card">
+                <div class="card-heading">
+                    <span class="category-chip">@report.Category.Name</span>
+                    <span class="status-dot @(benchmarkResults.All(item => item.Successful) ? "ok" : "bad")"></span>
+                </div>
+                <div class="library-identity">
+                    <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                 Name="@library.Name"/>
+                    <div>
+                        <h2>@library.Name</h2>
+                        <p class="package">@library.Package · @library.Version</p>
+                    </div>
+                </div>
+                @if (metadata is not null)
+                {
+                    <p class="library-description">@metadata.Description</p>
+                    @if (LibraryUrl(metadata) is { } url)
+                    {
+                        <a class="library-link"
+                           href="@url"
+                           target="_blank"
+                           rel="noreferrer">
+                            @LibraryLinkLabel(metadata) ↗
+                        </a>
+                    }
+                }
+                <div class="metric-row">
+                    <div><strong>@supported</strong><span>supported</span></div>
+                    <div><strong>@unavailable</strong><span>unavailable</span></div>
+                    <div><strong>@benchmarkResults.Length</strong><span>benchmarks</span></div>
+                </div>
+            </article>
+        }
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    private static string? LibraryUrl(MatrixLibraryMetadata metadata) =>
+        metadata.DocumentationUrl ?? metadata.RepositoryUrl;
+
+    private static string LibraryLinkLabel(MatrixLibraryMetadata metadata) =>
+        metadata.DocumentationUrl is not null ? "Documentation" : "Repository";
+}

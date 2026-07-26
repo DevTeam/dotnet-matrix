@@ -1,0 +1,58 @@
+<Project>
+
+    <ItemGroup>
+        <EmbeddedResource Include="$(MSBuildProjectFullPath)"
+                          LogicalName="Matrix.Project.csproj"/>
+    </ItemGroup>
+
+    <Target Name="GenerateMatrixLibraryCatalog"
+            BeforeTargets="CoreCompile">
+        <Error Condition="'$(MatrixModuleId)' == ''"
+               Text="MatrixModuleId is required."/>
+        <Error Condition="'$(MatrixModuleName)' == ''"
+               Text="MatrixModuleName is required."/>
+        <Error Condition="'$(MatrixRunConfigurationPrefix)' == ''"
+               Text="MatrixRunConfigurationPrefix is required."/>
+        <Error Condition="'$(MatrixReportDirectory)' == ''"
+               Text="MatrixReportDirectory is required."/>
+        <Error Condition="'$(MatrixLibraryCatalogNamespace)' == ''"
+               Text="MatrixLibraryCatalogNamespace is required."/>
+
+        <PropertyGroup>
+            <MatrixLibraryCatalogPath>$(IntermediateOutputPath)Generated\LibraryCatalog.g.cs</MatrixLibraryCatalogPath>
+        </PropertyGroup>
+        <ItemGroup>
+            <_MatrixLibrary Include="@(PackageReference)"
+                            Condition="'%(PackageReference.MatrixLibraryId)' != ''"/>
+        </ItemGroup>
+
+        <Error Condition="'%(_MatrixLibrary.Version)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define Version."/>
+        <Error Condition="'%(_MatrixLibrary.MatrixLibraryName)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixLibraryName."/>
+        <Error Condition="'%(_MatrixLibrary.MatrixCodeName)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixCodeName."/>
+        <Error Condition="'%(_MatrixLibrary.MatrixDescription)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixDescription."/>
+        <Error Condition="'%(_MatrixLibrary.MatrixDocumentationUrl)' == '' and '%(_MatrixLibrary.MatrixRepositoryUrl)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define documentation or repository URL."/>
+        <Error Condition="'%(_MatrixLibrary.MatrixLogo)' == ''"
+               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixLogo."/>
+
+        <ItemGroup>
+            <_MatrixLibraryCatalogLine Include="// &lt;auto-generated/&gt;"/>
+            <_MatrixLibraryCatalogLine Include="namespace $(MatrixLibraryCatalogNamespace)%3B"/>
+            <_MatrixLibraryCatalogLine Include="public static partial class LibraryCatalog"/>
+            <_MatrixLibraryCatalogLine Include="{"/>
+            <_MatrixLibraryCatalogLine Include="    public const string %(_MatrixLibrary.MatrixCodeName) = &quot;%(_MatrixLibrary.MatrixLibraryId)&quot;%3B"/>
+            <_MatrixLibraryCatalogLine Include="}"/>
+            <Compile Include="$(MatrixLibraryCatalogPath)"/>
+        </ItemGroup>
+        <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('$(MatrixLibraryCatalogPath)'))"/>
+        <WriteLinesToFile File="$(MatrixLibraryCatalogPath)"
+                          Lines="@(_MatrixLibraryCatalogLine)"
+                          Overwrite="true"
+                          WriteOnlyWhenDifferent="true"/>
+    </Target>
+
+</Project>

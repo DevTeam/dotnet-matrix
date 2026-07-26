@@ -1,0 +1,58 @@
+name: Run .NET Matrix Reports
+
+on:
+  workflow_dispatch:
+    inputs:
+      libraries:
+        description: "Library filter (comma-separated, empty = all)"
+        required: false
+        default: ""
+      benchmarks:
+        description: "Run benchmarks after feature validation"
+        type: boolean
+        default: true
+      smoke:
+        description: "Smoke run: one iteration, numbers are not trustworthy"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: matrix-reports
+  cancel-in-progress: false
+
+jobs:
+  reports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Run .NET Matrix reports
+        run: >
+          dotnet run --project ./build -- ci-reports
+          ${{ inputs.libraries != '' && format('--libraries {0}', inputs.libraries) || '' }}
+          ${{ inputs.smoke && '--smoke' || '' }}
+          ${{ !inputs.benchmarks && '--skip-benchmarks' || '' }}
+
+      - name: Publish summary
+        if: always()
+        run: cat artifacts/ci-reports-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: matrix-reports
+          path: artifacts/ci-reports
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,131 @@
+@foreach (var report in Reports)
+{
+    var libraries = report.Features?.Libraries
+        .Where(library => MatrixView.IsSelected(report, SelectedLibraries, library.Id))
+        .ToArray() ?? [];
+    if (libraries.Length == 0)
+    {
+        continue;
+    }
+
+    var features = report.Features!.Features
+        .OrderBy(feature => feature.Order)
+        .ToArray();
+    <section class="panel report-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">@report.Category.Name</p>
+                <h2>Feature matrix</h2>
+            </div>
+            <span class="section-meta">@features.Length scenarios · @libraries.Length libraries</span>
+        </div>
+        <ul class="feature-legend">
+            @foreach (var (status, label) in Legend)
+            {
+                <li>
+                    <span class="feature-status @StatusClass(status)">
+                        <StatusIcon Kind="@StatusClass(status)"/>
+                    </span>
+                    @label
+                </li>
+            }
+            <li>
+                <span class="feature-status supported has-reason">
+                    <StatusIcon Kind="supported"/>
+                </span>
+                Has a note
+            </li>
+        </ul>
+        <div class="table-scroll">
+            <table class="feature-table">
+                <thead>
+                <tr>
+                    <th>Feature</th>
+                    @foreach (var library in libraries)
+                    {
+                        <th title="@($"{library.Name} {library.Version}")">
+                            <span class="column-library">
+                                <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                             Name="@library.Name"
+                                             Size="sm"/>
+                                <span class="column-library-name">@library.Name</span>
+                                <small>@library.Version</small>
+                            </span>
+                        </th>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var feature in features)
+                {
+                    <tr>
+                        <th><span class="feature-order">@feature.Order.ToString("00")</span>@feature.Name</th>
+                        @foreach (var library in libraries)
+                        {
+                            var value = feature.Results.FirstOrDefault(result =>
+                                result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase));
+                            <td>
+                                @if (value is not null)
+                                {
+                                    <span class="feature-status @StatusClass(value.Status) @ReasonClass(value)"
+                                          title="@Tooltip(feature, library, value)">
+                                        <StatusIcon Kind="@StatusClass(value.Status)"/>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="feature-status missing"
+                                          title="@($"{library.Name} · {feature.Name}: no data")">
+                                        <StatusIcon Kind="missing"/>
+                                    </span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
+@code {
+    private static readonly (string Status, string Label)[] Legend =
+    [
+        ("Supported", "Supported"),
+        ("Unsupported", "Unsupported"),
+        ("NotApplicable", "Not applicable"),
+        ("Failed", "Failed"),
+        ("", "No data")
+    ];
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    private static string Tooltip(
+        FeatureReportEntry feature,
+        MatrixLibrary library,
+        FeatureResult result)
+    {
+        var head = $"{library.Name} · {feature.Name}: {StatusLabel(result.Status)}";
+        return result.Reason is null ? head : $"{head}\n{result.Reason}";
+    }
+
+    private static string ReasonClass(FeatureResult result) =>
+        result.Reason is null ? string.Empty : "has-reason";
+
+    private static string StatusClass(string status) => status switch
+    {
+        "Supported" => "supported",
+        "Unsupported" => "unsupported",
+        "NotApplicable" => "not-applicable",
+        "Failed" => "failed",
+        _ => "missing"
+    };
+
+    private static string StatusLabel(string status) =>
+        status == "NotApplicable" ? "N/A" : status;
+}

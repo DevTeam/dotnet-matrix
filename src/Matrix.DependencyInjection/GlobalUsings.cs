@@ -1,0 +1,12 @@
+global using System;
+global using System.Collections.Generic;
+global using System.Diagnostics;
+global using System.Diagnostics.CodeAnalysis;
+global using System.Linq;
+global using System.Runtime.CompilerServices;
+global using BenchmarkDotNet.Attributes;
+global using BenchmarkDotNet.Order;
+global using Matrix;
+global using Matrix.DependencyInjection.Infrastructure;
+global using Matrix.DependencyInjection.Scenarios;
+global using Pure.DI;

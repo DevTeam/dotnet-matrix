@@ -1,0 +1,70 @@
+@if (Features.Length == 0)
+{
+    <EmptyState Title="No benchmark data" Text="No benchmark report is available for this selection."/>
+}
+else
+{
+    <section class="benchmark-toolbar">
+        <div>
+            <label for="benchmark-scenario">Scenario</label>
+            <select id="benchmark-scenario" @bind="_selectedFeature">
+                @foreach (var feature in Features)
+                {
+                    <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
+                }
+            </select>
+        </div>
+        <span class="direction-note">↓ Lower is better</span>
+    </section>
+    <section class="benchmark-split">
+        <div class="benchmark-split-column">
+            <div class="split-heading">
+                <p class="eyebrow">Performance</p>
+                <h2>Execution time</h2>
+            </div>
+            <BenchmarkView Reports="@Reports"
+                           SelectedLibraries="@SelectedLibraries"
+                           Feature="@_selectedFeature"
+                           ShowToolbar="false"
+                           Memory="false"/>
+        </div>
+        <div class="benchmark-split-column">
+            <div class="split-heading">
+                <p class="eyebrow">Memory</p>
+                <h2>Allocations</h2>
+            </div>
+            <BenchmarkView Reports="@Reports"
+                           SelectedLibraries="@SelectedLibraries"
+                           Feature="@_selectedFeature"
+                           ShowToolbar="false"
+                           Memory="true"/>
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    private string? _selectedFeature;
+
+    private (string Id, string Name, int Order)[] Features =>
+        Reports
+            .SelectMany(report => report.Benchmarks?.Features ?? [])
+            .Select(feature => (feature.Id, feature.Name, feature.Order))
+            .Distinct()
+            .OrderBy(feature => feature.Order)
+            .ToArray();
+
+    protected override void OnParametersSet()
+    {
+        var features = Features;
+        if (_selectedFeature is null || features.All(feature => feature.Id != _selectedFeature))
+        {
+            _selectedFeature = features.FirstOrDefault().Id;
+        }
+    }
+}

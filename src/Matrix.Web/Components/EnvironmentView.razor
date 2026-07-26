@@ -1,0 +1,41 @@
+@foreach (var report in Reports)
+{
+    var environments = report.Benchmarks?.Environments ?? [];
+    if (environments.Count == 0)
+    {
+        continue;
+    }
+    <section class="panel report-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">@report.Category.Name</p>
+                <h2>Benchmark environments</h2>
+            </div>
+            <span class="section-meta">@environments.Count snapshot(s)</span>
+        </div>
+        <div class="environment-grid">
+            @foreach (var environment in environments)
+            {
+                <article class="environment-card">
+                    <div class="environment-id">@environment.Id</div>
+                    <h3>@environment.Processor</h3>
+                    <dl>
+                        <div><dt>OS</dt><dd>@environment.OperatingSystem</dd></div>
+                        <div><dt>Runtime</dt><dd>@environment.Framework</dd></div>
+                        <div><dt>SDK</dt><dd>@environment.DotNetSdkVersion</dd></div>
+                        <div><dt>Architecture</dt><dd>@environment.ProcessArchitecture</dd></div>
+                        <div><dt>Logical cores</dt><dd>@environment.LogicalCoreCount</dd></div>
+                        <div><dt>GC</dt><dd>@(environment.ServerGarbageCollector ? "Server" : "Workstation")</dd></div>
+                        <div><dt>Tool</dt><dd>@environment.BenchmarkTool @environment.BenchmarkToolVersion</dd></div>
+                        <div><dt>Job</dt><dd>@environment.Job</dd></div>
+                    </dl>
+                </article>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+}

@@ -1,0 +1,236 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>dependency-injection</MatrixModuleId>
+        <MatrixModuleName>Dependency Injection</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>DI</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>DependencyInjection</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.DependencyInjection.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8"/>
+        <PackageReference Include="Pure.DI" Version="2.5.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <MatrixLibraryId>Pure.DI</MatrixLibraryId>
+            <MatrixLibraryName>Pure.DI</MatrixLibraryName>
+            <MatrixCodeName>PureDi</MatrixCodeName>
+            <MatrixDescription>A compile-time dependency injection framework that generates strongly typed compositions.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/DevTeam/Pure.DI#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/DevTeam/Pure.DI</MatrixRepositoryUrl>
+            <MatrixLogo>logos/pure-di.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10">
+            <MatrixLibraryId>Microsoft.DI</MatrixLibraryId>
+            <MatrixLibraryName>Microsoft Extensions Dependency Injection</MatrixLibraryName>
+            <MatrixCodeName>MicrosoftDi</MatrixCodeName>
+            <MatrixDescription>The built-in .NET dependency injection container and its service collection abstractions.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/core/extensions/dependency-injection</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/dotnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/microsoft-di.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Autofac" Version="9.3.1">
+            <MatrixLibraryId>Autofac</MatrixLibraryId>
+            <MatrixLibraryName>Autofac</MatrixLibraryName>
+            <MatrixCodeName>Autofac</MatrixCodeName>
+            <MatrixDescription>A flexible inversion of control container for building extensible .NET applications.</MatrixDescription>
+            <MatrixDocumentationUrl>https://autofac.readthedocs.io/en/latest/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/autofac/Autofac</MatrixRepositoryUrl>
+            <MatrixLogo>logos/autofac.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Autofac.Extras.DynamicProxy" Version="8.0.1"/>
+        <PackageReference Include="SimpleInjector" Version="5.6.0">
+            <MatrixLibraryId>SimpleInjector</MatrixLibraryId>
+            <MatrixLibraryName>Simple Injector</MatrixLibraryName>
+            <MatrixCodeName>SimpleInjector</MatrixCodeName>
+            <MatrixDescription>A fast, opinionated dependency injection library that promotes explicit configuration and maintainable application design.</MatrixDescription>
+            <MatrixDocumentationUrl>https://docs.simpleinjector.org/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/simpleinjector/SimpleInjector</MatrixRepositoryUrl>
+            <MatrixLogo>logos/simple-injector.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Catel.Core" Version="6.2.0">
+            <MatrixLibraryId>Catel</MatrixLibraryId>
+            <MatrixLibraryName>Catel</MatrixLibraryName>
+            <MatrixCodeName>Catel</MatrixCodeName>
+            <MatrixDescription>An MVVM application framework whose service locator and type factory perform constructor injection.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.catelproject.com/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Catel/Catel</MatrixRepositoryUrl>
+            <MatrixLogo>logos/catel.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="DryIoc.dll" Version="5.4.3">
+            <MatrixLibraryId>DryIoc</MatrixLibraryId>
+            <MatrixLibraryName>DryIoc</MatrixLibraryName>
+            <MatrixCodeName>DryIoc</MatrixCodeName>
+            <MatrixDescription>A fast, small and feature-rich container with expression-compiled resolution and rich reuse options.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/dadhi/DryIoc/blob/master/docs/DryIoc.Docs/README.md</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dadhi/DryIoc</MatrixRepositoryUrl>
+            <MatrixLogo>logos/dry-ioc.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Faster.Ioc" Version="5.0.0">
+            <MatrixLibraryId>Faster.Ioc</MatrixLibraryId>
+            <MatrixLibraryName>Faster.Ioc</MatrixLibraryName>
+            <MatrixCodeName>FasterIoc</MatrixCodeName>
+            <MatrixDescription>A minimalistic container focused on the shortest possible resolve path.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Wsm2110/Faster.Ioc#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Wsm2110/Faster.Ioc</MatrixRepositoryUrl>
+            <MatrixLogo>logos/faster-ioc.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Grace" Version="7.2.1">
+            <MatrixLibraryId>Grace</MatrixLibraryId>
+            <MatrixLibraryName>Grace</MatrixLibraryName>
+            <MatrixCodeName>Grace</MatrixCodeName>
+            <MatrixDescription>A container with a fluent registration model, per-object-graph lifestyles and decorator support.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ipjohnson/Grace/wiki</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ipjohnson/Grace</MatrixRepositoryUrl>
+            <MatrixLogo>logos/grace.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Lamar" Version="16.0.0">
+            <MatrixLibraryId>Lamar</MatrixLibraryId>
+            <MatrixLibraryName>Lamar</MatrixLibraryName>
+            <MatrixCodeName>Lamar</MatrixCodeName>
+            <MatrixDescription>The successor to StructureMap, built around runtime code generation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://jasperfx.github.io/lamar/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/JasperFx/lamar</MatrixRepositoryUrl>
+            <MatrixLogo>logos/lamar.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="LightInject" Version="7.1.0">
+            <MatrixLibraryId>LightInject</MatrixLibraryId>
+            <MatrixLibraryName>LightInject</MatrixLibraryName>
+            <MatrixCodeName>LightInject</MatrixCodeName>
+            <MatrixDescription>A lightweight container with an ultra-small API surface and its own interception package.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.lightinject.net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/seesharper/LightInject</MatrixRepositoryUrl>
+            <MatrixLogo>logos/light-inject.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="LightInject.Interception" Version="2.0.4"/>
+        <PackageReference Include="Maestro" Version="3.6.6">
+            <MatrixLibraryId>Maestro</MatrixLibraryId>
+            <MatrixLibraryName>Maestro</MatrixLibraryName>
+            <MatrixCodeName>Maestro</MatrixCodeName>
+            <MatrixDescription>A small container with a fluent configuration API and pluggable activation interceptors.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/JonasSamuelsson/Maestro#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/JonasSamuelsson/Maestro</MatrixRepositoryUrl>
+            <MatrixLogo>logos/maestro.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Maestro.Castle.DynamicProxy" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.13.41">
+            <MatrixLibraryId>VS.MEF</MatrixLibraryId>
+            <MatrixLibraryName>Visual Studio MEF</MatrixLibraryName>
+            <MatrixCodeName>VsMef</MatrixCodeName>
+            <MatrixDescription>The Visual Studio composition engine, a fast attribute-driven MEF implementation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/microsoft/vs-mef/blob/main/doc/index.md</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/microsoft/vs-mef</MatrixRepositoryUrl>
+            <MatrixLogo>logos/vs-mef.png</MatrixLogo>
+        </PackageReference>
+        <!-- Microsoft.VisualStudio.Composition pulls a MessagePack version with published advisories. -->
+        <PackageReference Include="MessagePack" Version="2.5.302"/>
+        <PackageReference Include="MvvmCross" Version="10.1.2">
+            <MatrixLibraryId>MvvmCross</MatrixLibraryId>
+            <MatrixLibraryName>MvvmCross</MatrixLibraryName>
+            <MatrixCodeName>MvvmCross</MatrixCodeName>
+            <MatrixDescription>A cross-platform MVVM framework with its own inversion of control provider.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.mvvmcross.com/documentation/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MvvmCross/MvvmCross</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mvvm-cross.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Ninject" Version="3.3.6">
+            <MatrixLibraryId>Ninject</MatrixLibraryId>
+            <MatrixLibraryName>Ninject</MatrixLibraryName>
+            <MatrixCodeName>Ninject</MatrixCodeName>
+            <MatrixDescription>A container built around fluent bindings, contextual conditions and pluggable extensions.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ninject/Ninject/wiki</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ninject/Ninject</MatrixRepositoryUrl>
+            <MatrixLogo>logos/ninject.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Ninject.Extensions.Interception" Version="3.3.5"/>
+        <PackageReference Include="Ninject.Extensions.Interception.DynamicProxy" Version="3.3.5"/>
+        <PackageReference Include="Singularity" Version="0.18.0">
+            <MatrixLibraryId>Singularity</MatrixLibraryId>
+            <MatrixLibraryName>Singularity</MatrixLibraryName>
+            <MatrixCodeName>Singularity</MatrixCodeName>
+            <MatrixDescription>An expression-tree based container that validates the whole object graph when the container is built.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Barsonax/Singularity#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Barsonax/Singularity</MatrixRepositoryUrl>
+            <MatrixLogo>logos/singularity.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Spring.Aop" Version="3.0.3"/>
+        <PackageReference Include="Spring.Core" Version="3.0.3">
+            <MatrixLibraryId>Spring</MatrixLibraryId>
+            <MatrixLibraryName>Spring.NET</MatrixLibraryName>
+            <MatrixCodeName>Spring</MatrixCodeName>
+            <MatrixDescription>The Spring.NET application framework and its XML or code configured object factory.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.springframework.net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/spring-projects/spring-net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/spring.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Stashbox" Version="5.20.0">
+            <MatrixLibraryId>Stashbox</MatrixLibraryId>
+            <MatrixLibraryName>Stashbox</MatrixLibraryName>
+            <MatrixCodeName>Stashbox</MatrixCodeName>
+            <MatrixDescription>A fast container with per-request lifetimes, conditional registrations and child containers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://z4kn4fein.github.io/stashbox/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/z4kn4fein/stashbox</MatrixRepositoryUrl>
+            <MatrixLogo>logos/stashbox.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="StructureMap" Version="4.7.1">
+            <MatrixLibraryId>StructureMap</MatrixLibraryId>
+            <MatrixLibraryName>StructureMap</MatrixLibraryName>
+            <MatrixCodeName>StructureMap</MatrixCodeName>
+            <MatrixDescription>A mature container with a fluent registry DSL, nested containers and decorators.</MatrixDescription>
+            <MatrixDocumentationUrl>https://structuremap.github.io/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/structuremap/structuremap</MatrixRepositoryUrl>
+            <MatrixLogo>logos/structure-map.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="System.Composition" Version="10.0.10">
+            <MatrixLibraryId>MEF2</MatrixLibraryId>
+            <MatrixLibraryName>Managed Extensibility Framework 2</MatrixLibraryName>
+            <MatrixCodeName>Mef2</MatrixCodeName>
+            <MatrixDescription>The lightweight Managed Extensibility Framework composition engine shipped as System.Composition.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/framework/mef/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mef2.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Unity" Version="5.11.10">
+            <MatrixLibraryId>Unity</MatrixLibraryId>
+            <MatrixLibraryName>Unity</MatrixLibraryName>
+            <MatrixCodeName>Unity</MatrixCodeName>
+            <MatrixDescription>The Unity container, offering per-resolve lifetimes and hierarchical child containers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://unitycontainer.org/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/unitycontainer/unity</MatrixRepositoryUrl>
+            <MatrixLogo>logos/unity.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Castle.Windsor" Version="6.0.0">
+            <MatrixLibraryId>Windsor</MatrixLibraryId>
+            <MatrixLibraryName>Castle Windsor</MatrixLibraryName>
+            <MatrixCodeName>Windsor</MatrixCodeName>
+            <MatrixDescription>The Castle Project container, with bound lifestyles and Castle DynamicProxy interception.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/castleproject/Windsor/blob/master/docs/README.md</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/castleproject/Windsor</MatrixRepositoryUrl>
+            <MatrixLogo>logos/windsor.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ZenIoc" Version="1.0.1">
+            <MatrixLibraryId>ZenIoc</MatrixLibraryId>
+            <MatrixLibraryName>ZenIoc</MatrixLibraryName>
+            <MatrixCodeName>ZenIoc</MatrixCodeName>
+            <MatrixDescription>A tiny container with compiled registrations, named resolution and nested containers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/zenmvvm/ZenIoc#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/zenmvvm/ZenIoc</MatrixRepositoryUrl>
+            <MatrixLogo>logos/zen-ioc.png</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

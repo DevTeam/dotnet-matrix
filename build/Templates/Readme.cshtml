@@ -1,0 +1,52 @@
+@model Build.Targets.ReadmeModel
+# .NET Matrix
+
+> [**Open the interactive .NET Matrix →**](@Model.ApplicationUrl)
+
+Evidence-based feature and performance comparisons for .NET libraries.
+
+@foreach (var category in Model.Categories)
+{
+<text>
+## @category.Name
+
+### Benchmark overview
+
+Performance and allocated memory are shown together. Lower values are better.
+
+@foreach (var chart in category.Overviews)
+{
+<text>![@category.Name @chart.Name benchmark overview](@chart.Path)
+
+</text>
+}
+### Libraries
+
+<table>
+@foreach (var library in category.Libraries)
+{
+<tr>
+<td width="64"><img src="@library.Logo" width="48" height="48" alt="@library.Name logo"></td>
+<td><strong>@if (library.Url is not null)
+{<a href="@library.Url">@library.Name</a>}
+else
+{@library.Name}</strong>@if (!string.IsNullOrWhiteSpace(library.Version))
+{<text> @library.Version</text>}<br>@library.Description</td>
+</tr>
+}
+</table>
+
+### Benchmark scenarios
+
+@foreach (var feature in category.Features)
+{
+<details>
+<summary><strong>@feature.Order.ToString("00") · @feature.Name</strong></summary>
+
+![@category.Name @feature.Name benchmark](@feature.ChartPath)
+
+</details>
+
+}
+</text>
+}

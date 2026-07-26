@@ -1,0 +1,361 @@
+@page "/"
+@inject IMatrixDataSource DataSource
+
+<PageTitle>.NET Matrix — compare .NET libraries</PageTitle>
+
+<div class="app-shell">
+    <header class="topbar">
+        <a class="brand" href="./" aria-label=".NET Matrix home">
+            <span class="brand-mark" aria-hidden="true">M</span>
+            <span>
+                <strong>.NET Matrix</strong>
+                <small>Library intelligence</small>
+            </span>
+        </a>
+
+        @if (_catalog is not null)
+        {
+            <div class="release-picker">
+                <label for="release">Release</label>
+                <select id="release" value="@_selectedVersion" @onchange="ChangeVersionAsync">
+                    @foreach (var version in _catalog.Versions)
+                    {
+                        <option value="@version.Version">
+                            @VersionLabel(version)
+                        </option>
+                    }
+                </select>
+                @if (SelectedVersion is { Commit.Length: > 0 })
+                {
+                    <a class="commit-link"
+                       href="@CommitUrl(SelectedVersion)"
+                       target="_blank"
+                       rel="noreferrer"
+                       title="Open commit on GitHub">
+                        @ShortCommit(SelectedVersion.Commit) ↗
+                    </a>
+                }
+            </div>
+        }
+    </header>
+
+    @if (_loadingCatalog)
+    {
+        <main class="center-state">
+            <span class="loader"></span>
+            <p>Loading release catalog…</p>
+        </main>
+    }
+    else if (_fatalError is not null)
+    {
+        <main class="center-state error-state">
+            <span class="state-icon">!</span>
+            <h1>Unable to load .NET Matrix</h1>
+            <p>@_fatalError</p>
+        </main>
+    }
+    else if (_catalog is not null && _catalog.Versions.Count == 0)
+    {
+        <main class="center-state">
+            <span class="state-icon">∅</span>
+            <h1>No releases yet</h1>
+            <p>Create a Git tag in the <code>1.0.0</code> format and reload the page.</p>
+        </main>
+    }
+    else
+    {
+        <div class="workspace">
+            <aside class="filters">
+                <div class="filters-heading">
+                    <div>
+                        <p class="eyebrow">Scope</p>
+                        <h2>Compare</h2>
+                    </div>
+                    <button class="text-button" @onclick="SelectEverything">Select all</button>
+                </div>
+
+                <section class="filter-section">
+                    <h3>Categories</h3>
+                    @foreach (var category in _catalog!.Categories)
+                    {
+                        <label class="check-row">
+                            <input type="checkbox"
+                                   checked="@_selectedCategories.Contains(category.Id)"
+                                   @onchange="eventArgs => ToggleCategoryAsync(category.Id, eventArgs)"/>
+                            <span>@category.Name</span>
+                        </label>
+                    }
+                </section>
+
+                <section class="filter-section">
+                    <h3>Libraries</h3>
+                    @foreach (var report in VisibleReports)
+                    {
+                        var libraries = Libraries(report).ToArray();
+                        <div class="library-group">
+                            <div class="group-label">@report.Category.Name</div>
+                            @if (libraries.Length == 0)
+                            {
+                                <p class="muted">No library data</p>
+                            }
+                            @foreach (var library in libraries)
+                            {
+                                var key = LibraryKey(report.Category.Id, library.Id);
+                                <label class="check-row library-row">
+                                    <input type="checkbox"
+                                           checked="@_selectedLibraries.Contains(key)"
+                                           @onchange="eventArgs => ToggleLibrary(key, eventArgs)"/>
+                                    <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                                 Name="@library.Name"
+                                                 Size="xs"/>
+                                    <span>
+                                        @library.Name
+                                        <small>@library.Version</small>
+                                    </span>
+                                </label>
+                            }
+                        </div>
+                    }
+                </section>
+
+                @if (SelectedVersion is not null)
+                {
+                    <footer class="filter-footer">
+                        <span>Report snapshot</span>
+                        <strong>@SnapshotLabel(SelectedVersion)</strong>
+                    </footer>
+                }
+            </aside>
+
+            <main class="content">
+                <section class="hero">
+                    <div>
+                        <p class="eyebrow">Evidence, not faith</p>
+                        <h1>Choose with confidence.</h1>
+                        <p class="hero-copy">
+                            Compare capabilities, execution time and allocations across .NET libraries
+                            from reproducible reports.
+                        </p>
+                    </div>
+                    <div class="hero-summary">
+                        <span><strong>@SelectedLibraryCount</strong> libraries</span>
+                        <span><strong>@_selectedCategories.Count</strong> categories</span>
+                        <span><strong>@FeatureCount</strong> scenarios</span>
+                    </div>
+                </section>
+
+                <nav class="tabs" aria-label="Report views">
+                    @foreach (var view in Views)
+                    {
+                        <button class="@TabClass(view.Id)" @onclick="() => _view = view.Id">
+                            @view.Name
+                        </button>
+                    }
+                </nav>
+
+                @if (_loadingReports)
+                {
+                    <section class="panel loading-panel">
+                        <span class="loader"></span>
+                        <p>Loading reports from GitHub…</p>
+                    </section>
+                }
+                else if (_selectedCategories.Count == 0)
+                {
+                    <EmptyState Title="Select a category"
+                                Text="Choose one or more library categories in the filter panel."/>
+                }
+                else
+                {
+                    @foreach (var report in VisibleReports.Where(report => report.Error is not null))
+                    {
+                        <div class="notice warning">
+                            <strong>@report.Category.Name:</strong> @report.Error
+                            @* ReSharper disable once UseCollectionExpression *@
+                        </div>
+                    }
+
+                    @switch (_view)
+                    {
+                        case "features":
+                            <FeaturesView Reports="@VisibleReports.ToArray()"
+                                          SelectedLibraries="@_selectedLibraries"/>
+                            break;
+                        case "benchmarks":
+                            <BenchmarksView Reports="@VisibleReports.ToArray()"
+                                            SelectedLibraries="@_selectedLibraries"/>
+                            break;
+                        case "environment":
+                            <EnvironmentView Reports="@VisibleReports.ToArray()"/>
+                            break;
+                        default:
+                            <OverviewView Reports="@VisibleReports.ToArray()"
+                                          SelectedLibraries="@_selectedLibraries"/>
+                            break;
+                    }
+                }
+            </main>
+        </div>
+    }
+</div>
+
+@code {
+    private static readonly (string Id, string Name)[] Views =
+    [
+        ("overview", "Overview"),
+        ("features", "Features"),
+        ("benchmarks", "Benchmarks"),
+        ("environment", "Environment")
+    ];
+
+    private MatrixWebCatalog? _catalog;
+    private IReadOnlyList<CategoryReport> _reports = [];
+    private readonly HashSet<string> _selectedCategories = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _selectedLibraries = new(StringComparer.OrdinalIgnoreCase);
+    private string? _selectedVersion;
+    private string _view = "overview";
+    private bool _loadingCatalog = true;
+    private bool _loadingReports;
+    private string? _fatalError;
+
+    private MatrixVersion? SelectedVersion =>
+        _catalog?.Versions.FirstOrDefault(version => version.Version == _selectedVersion);
+
+    private IEnumerable<CategoryReport> VisibleReports =>
+        _reports.Where(report => _selectedCategories.Contains(report.Category.Id));
+
+    private int SelectedLibraryCount => _selectedLibraries.Count;
+
+    private int FeatureCount => VisibleReports
+        .SelectMany(report => report.Features?.Features ?? [])
+        .Select(feature => $"{feature.Order}:{feature.Id}")
+        .Distinct(StringComparer.Ordinal)
+        .Count();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _catalog = await DataSource.LoadCatalogAsync();
+            foreach (var category in _catalog.Categories)
+            {
+                _selectedCategories.Add(category.Id);
+            }
+
+            _selectedVersion = _catalog.Versions.FirstOrDefault()?.Version;
+            if (SelectedVersion is not null)
+            {
+                await LoadReportsAsync();
+            }
+        }
+        catch (Exception exception)
+        {
+            _fatalError = exception.Message;
+        }
+        finally
+        {
+            _loadingCatalog = false;
+        }
+    }
+
+    private async Task ChangeVersionAsync(ChangeEventArgs eventArgs)
+    {
+        _selectedVersion = eventArgs.Value?.ToString();
+        _selectedLibraries.Clear();
+        await LoadReportsAsync();
+    }
+
+    private async Task ToggleCategoryAsync(string categoryId, ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value is true)
+        {
+            _selectedCategories.Add(categoryId);
+        }
+        else
+        {
+            _selectedCategories.Remove(categoryId);
+        }
+
+        await Task.CompletedTask;
+    }
+
+    private void ToggleLibrary(string key, ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value is true)
+        {
+            _selectedLibraries.Add(key);
+        }
+        else
+        {
+            _selectedLibraries.Remove(key);
+        }
+    }
+
+    private void SelectEverything()
+    {
+        if (_catalog is null)
+        {
+            return;
+        }
+
+        foreach (var category in _catalog.Categories)
+        {
+            _selectedCategories.Add(category.Id);
+        }
+
+        foreach (var report in _reports)
+        {
+            foreach (var library in Libraries(report))
+            {
+                _selectedLibraries.Add(LibraryKey(report.Category.Id, library.Id));
+            }
+        }
+    }
+
+    private async Task LoadReportsAsync()
+    {
+        if (_catalog is null || SelectedVersion is null)
+        {
+            return;
+        }
+
+        _loadingReports = true;
+        try
+        {
+            _reports = await DataSource.LoadAsync(
+                _catalog,
+                SelectedVersion,
+                _catalog.Categories);
+            SelectEverything();
+        }
+        finally
+        {
+            _loadingReports = false;
+        }
+    }
+
+    private static IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
+        MatrixView.Libraries(report);
+    
+    private static string LibraryKey(string categoryId, string libraryId) =>
+        $"{categoryId}\u001f{libraryId}";
+
+    private string TabClass(string view) => view == _view ? "tab active" : "tab";
+
+    private string CommitUrl(MatrixVersion version) =>
+        $"https://github.com/{_catalog!.Repository.Owner}/{_catalog.Repository.Name}/commit/{version.Commit}";
+
+    private static string ShortCommit(string commit) =>
+        commit[..Math.Min(7, commit.Length)];
+
+    private static string VersionLabel(MatrixVersion version) =>
+        version.Version == "local"
+            ? "Local reports · workspace"
+            : $"{version.Version} · {version.DateUtc:dd MMM yyyy}";
+
+    private static string SnapshotLabel(MatrixVersion version) =>
+        version.Version == "local"
+            ? "Local files"
+            : version.DateUtc.ToString("dd MMM yyyy");
+
+}

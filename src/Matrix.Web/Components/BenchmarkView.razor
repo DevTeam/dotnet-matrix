@@ -1,0 +1,177 @@
+@if (Features.Length == 0)
+{
+    <EmptyState Title="No benchmark data" Text="No benchmark report is available for this selection."/>
+}
+else
+{
+    @if (ShowToolbar)
+    {
+        <section class="benchmark-toolbar">
+            <div>
+                <label for="@ControlId">Scenario</label>
+                <select id="@ControlId" @bind="_selectedFeature">
+                    @foreach (var feature in Features)
+                    {
+                        <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
+                    }
+                </select>
+            </div>
+            <span class="direction-note">↓ Lower is better</span>
+        </section>
+    }
+
+    @foreach (var report in Reports)
+    {
+        var values = (report.Benchmarks?.Features
+                          .FirstOrDefault(feature => feature.Id == SelectedFeature)?.Results
+                      ?? [])
+            .Where(item => MatrixView.IsSelected(report, SelectedLibraries, item.LibraryId))
+            .Where(item => Memory
+                ? item.AllocatedBytesPerOperation is not null
+                : item.MeanNanoseconds is not null)
+            .OrderBy(item => Memory ? item.AllocatedBytesPerOperation : item.MeanNanoseconds)
+            .ToArray();
+        if (values.Length == 0)
+        {
+            continue;
+        }
+
+        var environmentGroups = values
+            .GroupBy(value => value.EnvironmentId ?? "unknown", StringComparer.Ordinal)
+            .ToArray();
+
+        <section class="panel report-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">@report.Category.Name</p>
+                    <h2>@(Memory ? "Allocated memory" : "Execution time")</h2>
+                </div>
+                <span class="section-meta">@(Memory ? "bytes / operation" : "mean")</span>
+            </div>
+                @if (environmentGroups.Length > 1)
+                {
+                    <div class="notice warning">
+                        Results were produced in different environments and are separated below.
+                    </div>
+                }
+                <div class="benchmark-list">
+                    @foreach (var environmentGroup in environmentGroups)
+                    {
+                        var minimum = environmentGroup
+                            .Select(value => Memory
+                                ? value.AllocatedBytesPerOperation!.Value
+                                : value.MeanNanoseconds!.Value)
+                            .DefaultIfEmpty(0)
+                            .Min();
+                        @if (environmentGroups.Length > 1)
+                        {
+                            <div class="benchmark-environment">Environment @environmentGroup.Key</div>
+                        }
+                        @foreach (var value in environmentGroup)
+                        {
+                            var current = Memory
+                                ? value.AllocatedBytesPerOperation!.Value
+                                : value.MeanNanoseconds!.Value;
+                            var ratio = minimum > 0
+                                ? $"{current / minimum:0.00}x"
+                                : current > 0
+                                    ? "∞x"
+                                    : "1.00x";
+                            var efficiency = minimum > 0
+                                ? Math.Clamp(minimum / current * 100, 8, 100)
+                                : current > 0
+                                    ? 8
+                                    : 100;
+                            <div class="benchmark-row">
+                                <div class="benchmark-name">
+                                    <LibraryLogo Source="@MatrixView.Logo(report, value.LibraryId)"
+                                                 Name="@DisplayLibrary(report, value)"
+                                                 Size="sm"/>
+                                    <div>
+                                        <strong>@DisplayLibrary(report, value)</strong>
+                                        <span>library result</span>
+                                    </div>
+                                </div>
+                                <div class="meter">
+                                    <span style="@MeterStyle(efficiency)"></span>
+                                </div>
+                                <div class="benchmark-value">
+                                    <strong>@(Memory ? FormatBytes(current) : FormatTime(current))</strong>
+                                    <span>@ratio</span>
+                                    @if (!Memory && value.StandardErrorNanoseconds is not null)
+                                    {
+                                        <small>± @FormatTime(value.StandardErrorNanoseconds.Value)</small>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+        </section>
+    }
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public bool Memory { get; set; }
+
+    [Parameter]
+    public string? Feature { get; set; }
+
+    [Parameter]
+    public bool ShowToolbar { get; set; } = true;
+
+    private string? _selectedFeature;
+
+    private string? SelectedFeature => Feature ?? _selectedFeature;
+
+    private string ControlId => Memory ? "memory-scenario" : "performance-scenario";
+
+    private (string Id, string Name, int Order)[] Features =>
+        Reports
+            .SelectMany(report => report.Benchmarks?.Features ?? [])
+            .Select(feature => (feature.Id, feature.Name, feature.Order))
+            .Distinct()
+            .OrderBy(feature => feature.Order)
+            .ToArray();
+
+    protected override void OnParametersSet()
+    {
+        var features = Features;
+        if (Feature is null
+            && (_selectedFeature is null
+                || features.All(feature => feature.Id != _selectedFeature)))
+        {
+            _selectedFeature = features.FirstOrDefault().Id;
+        }
+    }
+
+    private static string DisplayLibrary(CategoryReport report, BenchmarkResult result) =>
+        report.Benchmarks?.Libraries
+            .FirstOrDefault(library =>
+                library.Id.Equals(result.LibraryId, StringComparison.OrdinalIgnoreCase))?.Name
+        ?? result.LibraryId;
+
+    private static string MeterStyle(double efficiency) =>
+        $"width: {efficiency.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+
+    private static string FormatTime(double nanoseconds) => nanoseconds switch
+    {
+        < 1_000 => $"{nanoseconds:0.##} ns",
+        < 1_000_000 => $"{nanoseconds / 1_000:0.##} μs",
+        _ => $"{nanoseconds / 1_000_000:0.##} ms"
+    };
+
+    private static string FormatBytes(double bytes) => bytes switch
+    {
+        < 1_024 => $"{bytes:0.##} B",
+        < 1_048_576 => $"{bytes / 1_024:0.##} KB",
+        _ => $"{bytes / 1_048_576:0.##} MB"
+    };
+}

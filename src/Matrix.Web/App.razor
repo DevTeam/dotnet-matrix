@@ -1,0 +1,15 @@
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData"/>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+    </Found>
+    <NotFound>
+        <LayoutView>
+            <main class="empty-page">
+                <p class="eyebrow">404</p>
+                <h1>Comparison not found</h1>
+                <a href="./">Return to .NET Matrix</a>
+            </main>
+        </LayoutView>
+    </NotFound>
+</Router>

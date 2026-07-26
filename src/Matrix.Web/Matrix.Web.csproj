@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PureDiVersion>2.5.2</PureDiVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.10" PrivateAssets="all" />
+        <PackageReference Include="Pure.DI" Version="$(PureDiVersion)">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Pure.DI.MS" Version="$(PureDiVersion)"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MatrixCatalogPath)' != ''">
+        <Content Remove="wwwroot\data\catalog.json"/>
+        <Content Include="$(MatrixCatalogPath)"
+                 Link="wwwroot\data\catalog.json"
+                 CopyToOutputDirectory="PreserveNewest"
+                 CopyToPublishDirectory="PreserveNewest"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MatrixProduction)' != 'true'">
+        <EmbeddedResource Include="..\..\reports\**\*.json;..\..\reports\**\*.png">
+            <LogicalName>Matrix.Web.Reports/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+            <Visible>false</Visible>
+        </EmbeddedResource>
+        <EmbeddedResource Include="..\..\metadata\**\*.json;..\..\metadata\**\*.png;..\..\metadata\**\*.svg;..\..\metadata\**\*.jpg;..\..\metadata\**\*.jpeg;..\..\metadata\**\*.webp">
+            <LogicalName>Matrix.Web.Metadata/%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
+            <Visible>false</Visible>
+        </EmbeddedResource>
+    </ItemGroup>
+
+</Project>

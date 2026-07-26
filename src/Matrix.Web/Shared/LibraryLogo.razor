@@ -1,0 +1,33 @@
+@if (!string.IsNullOrWhiteSpace(Source))
+{
+    <img class="library-logo @SizeClass"
+         src="@Source"
+         alt=""
+         aria-hidden="true"
+         loading="lazy"
+         decoding="async"/>
+}
+else
+{
+    <span class="library-logo is-fallback @SizeClass" aria-hidden="true">@Monogram</span>
+}
+
+@code {
+    [Parameter]
+    public string? Source { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Name { get; set; }
+
+    [Parameter]
+    public string Size { get; set; } = "md";
+
+    private string SizeClass => Size switch
+    {
+        "xs" => "library-logo-xs",
+        "sm" => "library-logo-sm",
+        _ => string.Empty
+    };
+
+    private string Monogram => Name.Length > 0 ? Name[..1] : "?";
+}
