@@ -49,13 +49,6 @@ internal sealed class GitHubMatrixDataSource(
                           "data/catalog.json",
                           cancellationToken)
                       ?? throw new InvalidOperationException("The matrix catalog is empty.");
-        if (UseLocalReports)
-        {
-            return catalog with
-            {
-                Versions = [new MatrixVersion("local", DateTimeOffset.MinValue, string.Empty)]
-            };
-        }
 
         var versions = await LoadVersionsAsync(catalog.Repository, cancellationToken);
         return catalog with { Versions = versions };
@@ -82,7 +75,7 @@ internal sealed class GitHubMatrixDataSource(
         {
             var isLocal = version.Version == "local";
             var repositoryRoot =
-                $"https://raw.githubusercontent.com/{repository.Owner}/{repository.Name}/{version.Version}";
+                $"https://raw.githubusercontent.com/{repository.Owner}/{repository.Name}/{version.Commit}";
             var reportsRoot = $"{repositoryRoot}/reports/{category.ReportDirectory}";
             var metadataRoot = $"{repositoryRoot}/metadata/{category.ReportDirectory}";
             var featuresTask = isLocal
@@ -197,10 +190,18 @@ internal sealed class GitHubMatrixDataSource(
                     commit.Sha),
                 SortKey: Version.Parse(tag.Name));
         }));
-        return versions
+
+        var result =  versions
             .OrderByDescending(version => version.SortKey)
             .Select(version => version.Value)
-            .ToArray();
+            .ToList();
+
+        if (UseLocalReports)
+        {
+            result.Insert(0, new MatrixVersion("local", DateTimeOffset.MinValue, string.Empty));
+        }
+
+        return result;
     }
 
     private async Task<T> GetRequiredAsync<T>(
