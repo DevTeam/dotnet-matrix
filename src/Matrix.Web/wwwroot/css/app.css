@@ -1043,11 +1043,17 @@ tbody th {
     background: var(--surface-3);
 }
 
+/* Same two colours the readme charts use: cyan for time, lime for memory.
+   Length follows MatrixMetrics.Scale, so a longer bar always means a worse result. */
 .meter span {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, var(--cyan), var(--accent));
+    background: var(--cyan);
+}
+
+.meter span.is-memory {
+    background: var(--accent);
 }
 
 .benchmark-value {

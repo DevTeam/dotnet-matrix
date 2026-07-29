@@ -54,7 +54,7 @@ public static class MatrixOverviews
             .ToArray();
         var ranked = rows
             .Where(row => row.MissingFeatures.Count == 0)
-            .OrderBy(row => Total(row.PerformanceValues))
+            .OrderBy(row => MatrixMetrics.Total(row.PerformanceValues))
             .ThenBy(row => row.Name, StringComparer.OrdinalIgnoreCase)
             .ToArray();
         var unranked = rows
@@ -68,53 +68,9 @@ public static class MatrixOverviews
             features,
             ranked,
             unranked,
-            scaleRows.Select(row => Total(row.PerformanceValues)).DefaultIfEmpty().Max(),
-            scaleRows.Select(row => Total(row.MemoryValues)).DefaultIfEmpty().Max());
+            scaleRows.Select(row => MatrixMetrics.Total(row.PerformanceValues)).DefaultIfEmpty().Max(),
+            scaleRows.Select(row => MatrixMetrics.Total(row.MemoryValues)).DefaultIfEmpty().Max());
     }
-
-    public static double Total(IReadOnlyList<double?> values) =>
-        values.Sum(value => value ?? 0);
-
-    public static bool HasValues(IReadOnlyList<double?> values) =>
-        values.Any(value => value is not null);
-
-    /// <summary>
-    /// Logarithmic, so that containers within the same order of magnitude stay
-    /// comparable while an outlier does not flatten everything else to a sliver.
-    /// The 7 unit floor keeps a non-zero result visible.
-    /// </summary>
-    public static double Scale(double current, double maximum, double width)
-    {
-        if (current <= 0)
-        {
-            return 7;
-        }
-
-        if (maximum <= 0)
-        {
-            return width;
-        }
-
-        return Math.Min(
-            width,
-            Math.Max(7, Math.Log10(current + 1) / Math.Log10(maximum + 1) * width));
-    }
-
-    public static string FormatTime(double nanoseconds) => nanoseconds switch
-    {
-        0 => "0 ns",
-        < 1_000 => $"{nanoseconds:0.##} ns",
-        < 1_000_000 => $"{nanoseconds / 1_000:0.##} μs",
-        _ => $"{nanoseconds / 1_000_000:0.##} ms"
-    };
-
-    public static string FormatBytes(double bytes) => bytes switch
-    {
-        0 => "0 B",
-        < 1_024 => $"{bytes:0.##} B",
-        < 1_048_576 => $"{bytes / 1_024:0.##} KB",
-        _ => $"{bytes / 1_048_576:0.##} MB"
-    };
 
     private static MatrixOverviewRow CreateRow(
         BenchmarkLibrary library,

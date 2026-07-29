@@ -111,19 +111,8 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         LibraryLogos logos,
         string outputPath)
     {
-        var names = report.Libraries.ToDictionary(
-            library => library.Id,
-            library => library.Name,
-            StringComparer.OrdinalIgnoreCase);
-        var rows = feature.Results
-            .Where(result => result.Successful)
-            .Where(result =>
-                result.MeanNanoseconds is not null
-                || result.AllocatedBytesPerOperation is not null)
-            .OrderBy(result => result.MeanNanoseconds ?? double.MaxValue)
-            .ThenBy(result => names.GetValueOrDefault(result.LibraryId, result.LibraryId))
-            .ToArray();
-        var height = Math.Max(360, 154 + rows.Length * 58);
+        var rows = MatrixScenarios.Order(MatrixScenarios.Create(report, feature), memory: false);
+        var height = Math.Max(360, 154 + rows.Count * 58);
         using var surface = CreateSurface(height);
         var canvas = surface.Canvas;
         canvas.Clear(Background);
@@ -147,18 +136,17 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         DrawPanelHeading(canvas, "PERFORMANCE", "mean execution time", performanceX, panelWidth, subtitle, hint);
         DrawPanelHeading(canvas, "MEMORY", "allocated / operation", memoryX, panelWidth, subtitle, hint);
 
-        var maximumTime = rows.Select(row => row.MeanNanoseconds ?? 0).DefaultIfEmpty().Max();
-        var maximumMemory = rows.Select(row => row.AllocatedBytesPerOperation ?? 0).DefaultIfEmpty().Max();
-        for (var index = 0; index < rows.Length; index++)
+        var maximumTime = MatrixScenarios.Maximum(rows, memory: false);
+        var maximumMemory = MatrixScenarios.Maximum(rows, memory: true);
+        for (var index = 0; index < rows.Count; index++)
         {
             var row = rows[index];
             var y = 132 + index * 58;
             DrawStripe(canvas, index, y, 48);
-            var libraryName = names.GetValueOrDefault(row.LibraryId, row.LibraryId);
-            DrawLogo(canvas, logos.Find(row.LibraryId), libraryName, y - 1);
+            DrawLogo(canvas, logos.Find(row.LibraryId), row.Name, y - 1);
             DrawFittedText(
                 canvas,
-                $"{index + 1}. {libraryName}",
+                $"{index + 1}. {row.Name}",
                 LabelTextX,
                 y + 5,
                 LabelTextWidth,
@@ -168,7 +156,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
                 performanceX,
                 y,
                 panelWidth,
-                row.MeanNanoseconds,
+                row.Time,
                 maximumTime,
                 FormatTime,
                 performance,
@@ -179,7 +167,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
                 memoryX,
                 y,
                 panelWidth,
-                row.AllocatedBytesPerOperation,
+                row.Memory,
                 maximumMemory,
                 FormatBytes,
                 memory,
@@ -507,7 +495,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
     }
 
     private static float Scale(double current, double maximum, float width) =>
-        (float)MatrixOverviews.Scale(current, maximum, width);
+        (float)MatrixMetrics.Scale(current, maximum, width);
 
     private static void DrawFittedText(
         SKCanvas canvas,
@@ -567,10 +555,10 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             style.Paint);
 
     private static string FormatTime(double nanoseconds) =>
-        MatrixOverviews.FormatTime(nanoseconds);
+        MatrixMetrics.FormatTime(nanoseconds);
 
     private static string FormatBytes(double bytes) =>
-        MatrixOverviews.FormatBytes(bytes);
+        MatrixMetrics.FormatBytes(bytes);
 
     private sealed class LibraryLogos : IDisposable
     {

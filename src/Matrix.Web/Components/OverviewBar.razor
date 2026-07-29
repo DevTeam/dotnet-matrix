@@ -23,12 +23,6 @@
 </div>
 
 @code {
-    /// <summary>
-    /// The bar width the readme renderer uses, kept so that the lower bound of
-    /// <see cref="MatrixOverviews.Scale"/> lands on the same fraction of the track.
-    /// </summary>
-    private const double BarWidth = 330;
-
     private bool _hasValues;
     private double _total;
     private double _filled;
@@ -46,25 +40,20 @@
     public bool Memory { get; set; }
 
     private string Label => _hasValues
-        ? Memory
-            ? MatrixOverviews.FormatBytes(_total)
-            : MatrixOverviews.FormatTime(_total)
+        ? MatrixMetrics.Format(_total, Memory)
         : "n/a";
 
     protected override void OnParametersSet()
     {
-        _hasValues = MatrixOverviews.HasValues(Values);
-        _total = MatrixOverviews.Total(Values);
-        _filled = MatrixOverviews.Scale(_total, Maximum, BarWidth) / BarWidth * 100;
+        _hasValues = MatrixMetrics.HasValues(Values);
+        _total = MatrixMetrics.Total(Values);
+        _filled = MatrixMetrics.ScalePercent(_total, Maximum);
     }
 
     private string SegmentTitle(int index)
     {
         var name = index < FeatureNames.Count ? FeatureNames[index] : string.Empty;
-        var value = Values[index] ?? 0;
-        return Memory
-            ? $"{name}: {MatrixOverviews.FormatBytes(value)}"
-            : $"{name}: {MatrixOverviews.FormatTime(value)}";
+        return $"{name}: {MatrixMetrics.Format(Values[index] ?? 0, Memory)}";
     }
 
     private static string Percent(double value) =>

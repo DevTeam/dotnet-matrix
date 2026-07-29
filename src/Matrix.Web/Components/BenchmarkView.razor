@@ -22,14 +22,19 @@ else
 
     @foreach (var report in Reports)
     {
-        var values = (report.Benchmarks?.Features
-                          .FirstOrDefault(feature => feature.Id == SelectedFeature)?.Results
-                      ?? [])
-            .Where(item => MatrixView.IsSelected(report, SelectedLibraries, item.LibraryId))
-            .Where(item => Memory
-                ? item.AllocatedBytesPerOperation is not null
-                : item.MeanNanoseconds is not null)
-            .OrderBy(item => Memory ? item.AllocatedBytesPerOperation : item.MeanNanoseconds)
+        var scenario = report.Benchmarks?.Features
+            .FirstOrDefault(feature => feature.Id == SelectedFeature);
+        if (report.Benchmarks is null || scenario is null)
+        {
+            continue;
+        }
+
+        var values = MatrixScenarios
+            .Create(
+                report.Benchmarks,
+                scenario,
+                libraryId => MatrixView.IsSelected(report, SelectedLibraries, libraryId))
+            .Where(row => MatrixScenarios.Value(row, Memory) is not null)
             .ToArray();
         if (values.Length == 0)
         {
@@ -57,50 +62,35 @@ else
                 <div class="benchmark-list">
                     @foreach (var environmentGroup in environmentGroups)
                     {
-                        var minimum = environmentGroup
-                            .Select(value => Memory
-                                ? value.AllocatedBytesPerOperation!.Value
-                                : value.MeanNanoseconds!.Value)
-                            .DefaultIfEmpty(0)
-                            .Min();
+                        var ordered = MatrixScenarios.Order(environmentGroup, Memory);
+                        var minimum = MatrixScenarios.Minimum(ordered, Memory);
+                        var maximum = MatrixScenarios.Maximum(ordered, Memory);
                         @if (environmentGroups.Length > 1)
                         {
                             <div class="benchmark-environment">Environment @environmentGroup.Key</div>
                         }
-                        @foreach (var value in environmentGroup)
+                        @foreach (var value in ordered)
                         {
-                            var current = Memory
-                                ? value.AllocatedBytesPerOperation!.Value
-                                : value.MeanNanoseconds!.Value;
-                            var ratio = minimum > 0
-                                ? $"{current / minimum:0.00}x"
-                                : current > 0
-                                    ? "∞x"
-                                    : "1.00x";
-                            var efficiency = minimum > 0
-                                ? Math.Clamp(minimum / current * 100, 8, 100)
-                                : current > 0
-                                    ? 8
-                                    : 100;
+                            var current = MatrixScenarios.Value(value, Memory)!.Value;
                             <div class="benchmark-row">
                                 <div class="benchmark-name">
                                     <LibraryLogo Source="@MatrixView.Logo(report, value.LibraryId)"
-                                                 Name="@DisplayLibrary(report, value)"
+                                                 Name="@value.Name"
                                                  Size="sm"/>
                                     <div>
-                                        <strong>@DisplayLibrary(report, value)</strong>
-                                        <span>library result</span>
+                                        <strong>@value.Name</strong>
+                                        <span>@MatrixMetrics.Ratio(current, minimum)</span>
                                     </div>
                                 </div>
                                 <div class="meter">
-                                    <span style="@MeterStyle(efficiency)"></span>
+                                    <span class="@(Memory ? "is-memory" : "is-performance")"
+                                          style="@MeterStyle(MatrixMetrics.ScalePercent(current, maximum))"></span>
                                 </div>
                                 <div class="benchmark-value">
-                                    <strong>@(Memory ? FormatBytes(current) : FormatTime(current))</strong>
-                                    <span>@ratio</span>
-                                    @if (!Memory && value.StandardErrorNanoseconds is not null)
+                                    <strong>@MatrixMetrics.Format(current, Memory)</strong>
+                                    @if (!Memory && value.TimeStandardError is not null)
                                     {
-                                        <small>± @FormatTime(value.StandardErrorNanoseconds.Value)</small>
+                                        <span>± @MatrixMetrics.FormatTime(value.TimeStandardError.Value)</span>
                                     }
                                 </div>
                             </div>
@@ -152,26 +142,6 @@ else
         }
     }
 
-    private static string DisplayLibrary(CategoryReport report, BenchmarkResult result) =>
-        report.Benchmarks?.Libraries
-            .FirstOrDefault(library =>
-                library.Id.Equals(result.LibraryId, StringComparison.OrdinalIgnoreCase))?.Name
-        ?? result.LibraryId;
-
-    private static string MeterStyle(double efficiency) =>
-        $"width: {efficiency.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
-
-    private static string FormatTime(double nanoseconds) => nanoseconds switch
-    {
-        < 1_000 => $"{nanoseconds:0.##} ns",
-        < 1_000_000 => $"{nanoseconds / 1_000:0.##} μs",
-        _ => $"{nanoseconds / 1_000_000:0.##} ms"
-    };
-
-    private static string FormatBytes(double bytes) => bytes switch
-    {
-        < 1_024 => $"{bytes:0.##} B",
-        < 1_048_576 => $"{bytes / 1_024:0.##} KB",
-        _ => $"{bytes / 1_048_576:0.##} MB"
-    };
+    private static string MeterStyle(double percent) =>
+        $"width: {percent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
 }
