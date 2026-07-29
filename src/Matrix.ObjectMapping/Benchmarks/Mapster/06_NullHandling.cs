@@ -6,6 +6,7 @@ public partial class NullHandling
 {
     private TypeAdapterConfig _mapster = null!;
 
+    [GlobalSetup(Target = nameof(Mapster))]
     public void SetupMapster() => _mapster = MapsterFactory.CreateConfiguration();
 
     [Benchmark]

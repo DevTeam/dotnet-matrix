@@ -6,6 +6,7 @@ public partial class Flattening
 {
     private IMapper _autoMapper = null!;
 
+    [GlobalSetup(Target = nameof(AutoMapper))]
     public void SetupAutoMapper() => _autoMapper = AutoMapperFactory.CreateMapper();
 
     [Benchmark]
