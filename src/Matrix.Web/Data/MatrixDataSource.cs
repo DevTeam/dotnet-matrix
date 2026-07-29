@@ -22,17 +22,8 @@ public sealed record CategoryReport(
     FeatureReport? Features,
     BenchmarkReport? Benchmarks,
     MatrixLibraryMetadataCatalog? LibraryCatalog,
-    MatrixReportCharts? Charts,
+    MatrixChartCatalog? ChartCatalog,
     string? Error);
-
-public sealed record MatrixReportCharts(
-    IReadOnlyList<MatrixReportChart> Overviews,
-    IReadOnlyList<MatrixReportChart> Features);
-
-public sealed record MatrixReportChart(
-    string Id,
-    string Name,
-    string Source);
 
 internal sealed class GitHubMatrixDataSource(
     HttpClient httpClient,
@@ -123,13 +114,6 @@ internal sealed class GitHubMatrixDataSource(
                 category,
                 metadataRoot,
                 cancellationToken);
-            var charts = await ResolveChartsAsync(
-                await chartCatalogTask,
-                benchmarks,
-                isLocal,
-                category,
-                reportsRoot,
-                cancellationToken);
             var error = features is null && benchmarks is null
                 ? "No reports were published for this category and version."
                 : null;
@@ -138,7 +122,7 @@ internal sealed class GitHubMatrixDataSource(
                 features,
                 benchmarks,
                 libraryCatalog,
-                charts,
+                await chartCatalogTask,
                 error);
         }
         catch (Exception exception)
@@ -279,79 +263,6 @@ internal sealed class GitHubMatrixDataSource(
             _ => "image/png"
         };
         return $"data:{mediaType};base64,{Convert.ToBase64String(buffer.ToArray())}";
-    }
-
-    private static async Task<MatrixReportCharts?> ResolveChartsAsync(
-        MatrixChartCatalog? catalog,
-        BenchmarkReport? benchmarks,
-        bool isLocal,
-        MatrixCategory category,
-        string reportsRoot,
-        CancellationToken cancellationToken)
-    {
-        if (catalog is null || benchmarks is null)
-        {
-            return null;
-        }
-
-        var overviews = new List<MatrixReportChart>(catalog.Groups.Count);
-        foreach (var group in catalog.Groups)
-        {
-            var fileName = MatrixChartPaths.Overview(group);
-            var source = await ResolveChartSourceAsync(
-                isLocal,
-                category,
-                reportsRoot,
-                fileName,
-                cancellationToken);
-            if (source is not null)
-            {
-                overviews.Add(new MatrixReportChart(group.Id, group.Name, source));
-            }
-        }
-
-        var features = new List<MatrixReportChart>(benchmarks.Features.Count);
-        foreach (var feature in benchmarks.Features.OrderBy(feature => feature.Order))
-        {
-            var fileName = MatrixChartPaths.Feature(feature);
-            var source = await ResolveChartSourceAsync(
-                isLocal,
-                category,
-                reportsRoot,
-                fileName,
-                cancellationToken);
-            if (source is not null)
-            {
-                features.Add(new MatrixReportChart(feature.Id, feature.Name, source));
-            }
-        }
-
-        return new MatrixReportCharts(overviews, features);
-    }
-
-    private static async Task<string?> ResolveChartSourceAsync(
-        bool isLocal,
-        MatrixCategory category,
-        string reportsRoot,
-        string fileName,
-        CancellationToken cancellationToken)
-    {
-        if (!isLocal)
-        {
-            return $"{reportsRoot}/{MatrixChartPaths.DirectoryName}/{fileName}";
-        }
-
-        await using var stream = GetLocalResourceStream(
-            $"Matrix.Web.Reports/{category.ReportDirectory}/"
-            + $"{MatrixChartPaths.DirectoryName}/{fileName}");
-        if (stream is null)
-        {
-            return null;
-        }
-
-        using var buffer = new MemoryStream();
-        await stream.CopyToAsync(buffer, cancellationToken);
-        return $"data:image/png;base64,{Convert.ToBase64String(buffer.ToArray())}";
     }
 
     private static Stream? GetLocalResourceStream(string resourceName)

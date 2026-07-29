@@ -30,17 +30,9 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
     private static readonly SKColor Muted = SKColor.Parse("#8E98A8");
     private static readonly SKColor Performance = SKColor.Parse("#68D8EF");
     private static readonly SKColor Memory = SKColor.Parse("#B7F34A");
-    private static readonly SKColor[] FeatureColors =
-    [
-        SKColor.Parse("#68D8EF"),
-        SKColor.Parse("#B7F34A"),
-        SKColor.Parse("#B86BE3"),
-        SKColor.Parse("#FF7B7F"),
-        SKColor.Parse("#F4BD50"),
-        SKColor.Parse("#57D6B9"),
-        SKColor.Parse("#7F9CFF"),
-        SKColor.Parse("#E78CC8")
-    ];
+    private static readonly SKColor[] FeatureColors = MatrixChartPalette.Features
+        .Select(SKColor.Parse)
+        .ToArray();
     private static readonly SKSamplingOptions LogoSampling =
         new(SKCubicResampler.Mitchell);
     private static readonly JsonSerializerOptions JsonOptions =
@@ -205,31 +197,22 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         LibraryLogos logos,
         string outputPath)
     {
-        var names = report.Libraries.ToDictionary(
-            library => library.Id,
-            library => library.Name,
-            StringComparer.OrdinalIgnoreCase);
-        var rows = report.Libraries
-            .Select(library => CreateOverviewRow(library, features))
-            .ToArray();
-        var rankedRows = rows
-            .Where(row => row.MissingFeatures.Count == 0)
-            .OrderBy(row => row.PerformanceValues.Sum())
-            .ThenBy(row => names.GetValueOrDefault(row.LibraryId, row.LibraryId))
-            .ToArray();
-        var unrankedRows = rows
-            .Where(row => row.MissingFeatures.Count > 0)
-            .OrderBy(row => row.MissingFeatures.Count)
-            .ThenBy(row => names.GetValueOrDefault(row.LibraryId, row.LibraryId))
-            .ToArray();
+        var overview = MatrixOverviews.Create(report, group);
+        if (overview is null)
+        {
+            return;
+        }
+
+        var rankedRows = overview.Ranked;
+        var unrankedRows = overview.Unranked;
         var legendRows = (int)Math.Ceiling(features.Count / 3d);
-        var unrankedHeight = unrankedRows.Length == 0
+        var unrankedHeight = unrankedRows.Count == 0
             ? 0
-            : 38 + unrankedRows.Length * 72;
+            : 38 + unrankedRows.Count * 72;
         var height = Math.Max(
             420,
             176
-            + rankedRows.Length * 62
+            + rankedRows.Count * 62
             + unrankedHeight
             + legendRows * 30);
         using var surface = CreateSurface(height);
@@ -259,23 +242,14 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         DrawPanelHeading(canvas, "PERFORMANCE", "total mean time", performanceX, panelWidth, subtitle, hint);
         DrawPanelHeading(canvas, "MEMORY", "total allocated", memoryX, panelWidth, subtitle, hint);
 
-        var scaleRows = rankedRows.Length > 0
-            ? rankedRows
-            : unrankedRows;
-        var maximumTime = scaleRows
-            .Select(row => row.PerformanceValues.Sum(i => i ?? 0))
-            .DefaultIfEmpty()
-            .Max();
-        var maximumMemory = scaleRows
-            .Select(row => row.MemoryValues.Sum(i => i ?? 0))
-            .DefaultIfEmpty()
-            .Max();
+        var maximumTime = overview.MaximumTime;
+        var maximumMemory = overview.MaximumMemory;
         var y = 132f;
         var stripeIndex = 0;
-        for (var index = 0; index < rankedRows.Length; index++)
+        for (var index = 0; index < rankedRows.Count; index++)
         {
             var row = rankedRows[index];
-            var rankedName = names.GetValueOrDefault(row.LibraryId, row.LibraryId);
+            var rankedName = row.Name;
             DrawStripe(canvas, stripeIndex++, y, 50);
             DrawLogo(canvas, logos.Find(row.LibraryId), rankedName, y);
             DrawFittedText(
@@ -308,7 +282,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             y += 62;
         }
 
-        if (unrankedRows.Length > 0)
+        if (unrankedRows.Count > 0)
         {
             DrawText(canvas, "NOT RANKED · PARTIAL COVERAGE", OuterPadding, y + 4, partial);
             using var separator = Fill(Line);
@@ -322,7 +296,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
             foreach (var row in unrankedRows)
             {
-                var unrankedName = names.GetValueOrDefault(row.LibraryId, row.LibraryId);
+                var unrankedName = row.Name;
                 DrawStripe(canvas, stripeIndex++, y, 62);
                 DrawLogo(canvas, logos.Find(row.LibraryId), unrankedName, y + 6);
                 DrawFittedText(
@@ -366,25 +340,6 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
         DrawLegend(canvas, features, y + 20, hint);
         Save(surface, outputPath);
-    }
-
-    private static OverviewRow CreateOverviewRow(
-        BenchmarkLibrary library,
-        IReadOnlyList<BenchmarkReportEntry> features)
-    {
-        var results = features
-            .Select(feature => feature.Results.FirstOrDefault(result =>
-                result.Successful
-                && result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase)))
-            .ToArray();
-        return new OverviewRow(
-            library.Id,
-            results.Select(result => result?.MeanNanoseconds).ToArray(),
-            results.Select(result => result?.AllocatedBytesPerOperation).ToArray(),
-            features
-                .Where((_, index) => results[index] is null)
-                .Select(feature => feature.Name)
-                .ToArray());
     }
 
     private static void DrawStripe(SKCanvas canvas, int index, float y, float height)
@@ -551,22 +506,8 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         }
     }
 
-    private static float Scale(double current, double maximum, float width)
-    {
-        if (current <= 0)
-        {
-            return 7;
-        }
-
-        if (maximum <= 0)
-        {
-            return width;
-        }
-
-        return Math.Min(
-            width,
-            Math.Max(7, (float)(Math.Log10(current + 1) / Math.Log10(maximum + 1) * width)));
-    }
+    private static float Scale(double current, double maximum, float width) =>
+        (float)MatrixOverviews.Scale(current, maximum, width);
 
     private static void DrawFittedText(
         SKCanvas canvas,
@@ -625,21 +566,11 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             style.Font,
             style.Paint);
 
-    private static string FormatTime(double nanoseconds) => nanoseconds switch
-    {
-        0 => "0 ns",
-        < 1_000 => $"{nanoseconds:0.##} ns",
-        < 1_000_000 => $"{nanoseconds / 1_000:0.##} μs",
-        _ => $"{nanoseconds / 1_000_000:0.##} ms"
-    };
+    private static string FormatTime(double nanoseconds) =>
+        MatrixOverviews.FormatTime(nanoseconds);
 
-    private static string FormatBytes(double bytes) => bytes switch
-    {
-        0 => "0 B",
-        < 1_024 => $"{bytes:0.##} B",
-        < 1_048_576 => $"{bytes / 1_024:0.##} KB",
-        _ => $"{bytes / 1_048_576:0.##} MB"
-    };
+    private static string FormatBytes(double bytes) =>
+        MatrixOverviews.FormatBytes(bytes);
 
     private sealed class LibraryLogos : IDisposable
     {
@@ -736,11 +667,6 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         }
     }
 
-    private sealed record OverviewRow(
-        string LibraryId,
-        IReadOnlyList<double?> PerformanceValues,
-        IReadOnlyList<double?> MemoryValues,
-        IReadOnlyList<string> MissingFeatures);
 
     private sealed class TextStyle : IDisposable
     {

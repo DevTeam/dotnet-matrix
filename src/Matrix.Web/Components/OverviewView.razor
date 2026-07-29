@@ -1,7 +1,7 @@
 @foreach (var report in Reports)
 {
-    if (report.Charts is not { } charts
-        || charts.Overviews.Count == 0 && charts.Features.Count == 0)
+    if (report.ChartCatalog is not { Groups.Count: > 0 } chartCatalog
+        || report.Benchmarks is null)
     {
         continue;
     }
@@ -14,31 +14,11 @@
             </div>
             <span class="section-meta">Performance · Memory</span>
         </div>
-        @if (charts.Overviews.Count > 0)
+        @foreach (var group in chartCatalog.Groups)
         {
-            <div class="report-chart-grid overview-chart-grid">
-                @foreach (var chart in charts.Overviews)
-                {
-                    <figure class="report-chart">
-                        <img src="@chart.Source"
-                             alt="@($"{report.Category.Name} {chart.Name} benchmark overview")"/>
-                    </figure>
-                }
-            </div>
-        }
-        @if (charts.Features.Count > 0)
-        {
-            <h3 class="chart-section-title">Scenarios</h3>
-            <div class="report-chart-grid feature-chart-grid">
-                @foreach (var chart in charts.Features)
-                {
-                    <figure class="report-chart">
-                        <img src="@chart.Source"
-                             loading="lazy"
-                             alt="@($"{report.Category.Name} {chart.Name} benchmark")"/>
-                    </figure>
-                }
-            </div>
+            <OverviewChart Report="@report"
+                           Group="@group"
+                           SelectedLibraries="@SelectedLibraries"/>
         }
     </section>
 }

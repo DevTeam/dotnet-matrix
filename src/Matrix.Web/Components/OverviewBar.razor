@@ -1,0 +1,72 @@
+@using System.Globalization
+
+<div class="overview-metric">
+    <div class="overview-bar">
+        @if (_total > 0)
+        {
+            @for (var index = 0; index < Values.Count; index++)
+            {
+                var share = (Values[index] ?? 0) / _total;
+                if (share > 0)
+                {
+                    <span style="width: @Percent(_filled * share); background: @MatrixChartPalette.Feature(index)"
+                          title="@SegmentTitle(index)"></span>
+                }
+            }
+        }
+        else if (_hasValues)
+        {
+            <span class="overview-bar-zero" style="background: @MatrixChartPalette.Feature(0)"></span>
+        }
+    </div>
+    <strong>@Label</strong>
+</div>
+
+@code {
+    /// <summary>
+    /// The bar width the readme renderer uses, kept so that the lower bound of
+    /// <see cref="MatrixOverviews.Scale"/> lands on the same fraction of the track.
+    /// </summary>
+    private const double BarWidth = 330;
+
+    private bool _hasValues;
+    private double _total;
+    private double _filled;
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<double?> Values { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<string> FeatureNames { get; set; }
+
+    [Parameter, EditorRequired]
+    public required double Maximum { get; set; }
+
+    [Parameter]
+    public bool Memory { get; set; }
+
+    private string Label => _hasValues
+        ? Memory
+            ? MatrixOverviews.FormatBytes(_total)
+            : MatrixOverviews.FormatTime(_total)
+        : "n/a";
+
+    protected override void OnParametersSet()
+    {
+        _hasValues = MatrixOverviews.HasValues(Values);
+        _total = MatrixOverviews.Total(Values);
+        _filled = MatrixOverviews.Scale(_total, Maximum, BarWidth) / BarWidth * 100;
+    }
+
+    private string SegmentTitle(int index)
+    {
+        var name = index < FeatureNames.Count ? FeatureNames[index] : string.Empty;
+        var value = Values[index] ?? 0;
+        return Memory
+            ? $"{name}: {MatrixOverviews.FormatBytes(value)}"
+            : $"{name}: {MatrixOverviews.FormatTime(value)}";
+    }
+
+    private static string Percent(double value) =>
+        value.ToString("0.###", CultureInfo.InvariantCulture) + "%";
+}

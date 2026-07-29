@@ -362,35 +362,188 @@ select {
     background: var(--surface);
 }
 
-.report-chart-grid {
-    display: grid;
-    gap: 16px;
-}
-
-.overview-chart-grid {
-    margin-bottom: 28px;
-}
-
-.chart-section-title {
-    margin: 0 0 15px;
-    color: var(--muted);
-    font-size: 12px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-}
-
-.report-chart {
-    margin: 0;
-    overflow: hidden;
+/* Live counterpart of the readme charts: same layout and palette, but driven by
+   the current library selection and rendered as text rather than a scaled image. */
+.overview-chart {
+    margin: 0 0 16px;
+    padding: 22px 24px 24px;
     border: 1px solid var(--line-soft);
     border-radius: 14px;
     background: var(--bg);
 }
 
-.report-chart img {
+.overview-chart:last-child {
+    margin-bottom: 0;
+}
+
+.overview-chart-head h3 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -.03em;
+}
+
+.overview-chart-head p {
+    margin: 5px 0 20px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.overview-chart-row {
+    display: grid;
+    grid-template-columns: minmax(0, 29fr) minmax(0, 32fr) minmax(0, 32fr);
+    align-items: center;
+    gap: 24px;
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+.overview-chart-row.is-striped {
+    background: var(--surface);
+}
+
+.overview-chart-columns {
+    align-items: end;
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+}
+
+.overview-panel-head strong,
+.overview-panel-head small {
     display: block;
-    width: 100%;
-    height: auto;
+}
+
+.overview-panel-head strong {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.overview-panel-head small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.overview-chart-label {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.overview-chart-label > div {
+    min-width: 0;
+}
+
+.overview-chart-label strong {
+    display: block;
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.overview-chart-label small {
+    display: block;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.overview-chart-rank {
+    min-width: 22px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+}
+
+.overview-chart-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 18px 0 10px;
+    padding: 0 10px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.overview-chart-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+}
+
+.overview-metric {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    align-items: center;
+    gap: 12px;
+}
+
+.overview-bar {
+    display: flex;
+    height: 22px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--surface-2);
+}
+
+.overview-bar span {
+    flex: 0 0 auto;
+    height: 100%;
+}
+
+.overview-bar-zero {
+    width: 8px;
+    border-radius: 50%;
+    align-self: center;
+    height: 8px;
+    margin-left: 4px;
+}
+
+.overview-metric strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+}
+
+.overview-chart-legend {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 26px 0 0;
+    padding: 0;
+    gap: 9px 20px;
+    color: var(--muted);
+    font-size: 12px;
+    list-style: none;
+}
+
+.overview-chart-legend li {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
+}
+
+.overview-chart-legend li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.overview-chart-swatch {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    border-radius: 3px;
 }
 
 .library-card {

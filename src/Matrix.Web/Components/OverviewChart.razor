@@ -1,0 +1,109 @@
+@if (_overview is { } overview && _rows.Length > 0)
+{
+    var featureNames = overview.Features.Select(feature => feature.Name).ToArray();
+    <figure class="overview-chart">
+        <figcaption class="overview-chart-head">
+            <h3>@overview.Group.Name overview</h3>
+            <p>
+                @overview.Features.Count/@overview.Features.Count coverage required for ranking
+                · lower is better
+            </p>
+        </figcaption>
+
+        <div class="overview-chart-row overview-chart-columns">
+            <div></div>
+            <div class="overview-panel-head">
+                <strong>Performance</strong>
+                <small>total mean time</small>
+            </div>
+            <div class="overview-panel-head">
+                <strong>Memory</strong>
+                <small>total allocated</small>
+            </div>
+        </div>
+
+        @for (var index = 0; index < _rows.Length; index++)
+        {
+            var item = _rows[index];
+            @if (index == overview.Ranked.Count && overview.Unranked.Count > 0)
+            {
+                <p class="overview-chart-divider">
+                    <span>Not ranked · partial coverage</span>
+                </p>
+            }
+            <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)">
+                <div class="overview-chart-label">
+                    @if (item.Rank is not null)
+                    {
+                        <span class="overview-chart-rank">@item.Rank</span>
+                    }
+                    <LibraryLogo Source="@MatrixView.Logo(Report, item.Row.LibraryId)"
+                                 Name="@item.Row.Name"
+                                 Size="sm"/>
+                    <div>
+                        <strong>@item.Row.Name</strong>
+                        @if (item.Coverage is not null)
+                        {
+                            <small>@item.Coverage</small>
+                        }
+                    </div>
+                </div>
+                <OverviewBar Values="@item.Row.PerformanceValues"
+                             FeatureNames="@featureNames"
+                             Maximum="@overview.MaximumTime"/>
+                <OverviewBar Values="@item.Row.MemoryValues"
+                             FeatureNames="@featureNames"
+                             Maximum="@overview.MaximumMemory"
+                             Memory="true"/>
+            </div>
+        }
+
+        <ul class="overview-chart-legend">
+            @for (var index = 0; index < overview.Features.Count; index++)
+            {
+                <li>
+                    <span class="overview-chart-swatch"
+                          style="background: @MatrixChartPalette.Feature(index)"></span>
+                    @overview.Features[index].Name
+                </li>
+            }
+        </ul>
+    </figure>
+}
+
+@code {
+    private MatrixOverview? _overview;
+    private RowView[] _rows = [];
+
+    [Parameter, EditorRequired]
+    public required CategoryReport Report { get; set; }
+
+    [Parameter, EditorRequired]
+    public required MatrixChartGroup Group { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _overview = Report.Benchmarks is null
+            ? null
+            : MatrixOverviews.Create(
+                Report.Benchmarks,
+                Group,
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+        _rows = _overview is null
+            ? []
+            : _overview.Ranked
+                .Select((row, index) => new RowView(row, $"{index + 1}.", null))
+                .Concat(_overview.Unranked.Select(row =>
+                    new RowView(row, null, Coverage(_overview, row))))
+                .ToArray();
+    }
+
+    private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
+        $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}"
+        + $" · Missing: {string.Join(", ", row.MissingFeatures)}";
+
+    private sealed record RowView(MatrixOverviewRow Row, string? Rank, string? Coverage);
+}
