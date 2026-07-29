@@ -37,7 +37,7 @@
             }
             <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)">
                 @{
-                    var rated = MatrixView.IsRated(Report, item.Row.LibraryId);
+                    var mark = Mark(item);
                 }
                 <div class="overview-chart-label">
                     <span class="overview-chart-rank">@item.Rank</span>
@@ -53,14 +53,10 @@
                     </div>
                     @* Always rendered, so medals and the out-of-rating mark keep to
                        one column at the right edge of the label. *@
-                    <span class="overview-chart-medal" title="@MedalTitle(item, rated)">
-                        @if (!rated)
+                    <span class="overview-chart-medal" title="@mark.Title">
+                        @if (mark.Icon is { } icon)
                         {
-                            <RatingIcon Place="unrated"/>
-                        }
-                        else if (item.Place is { } place)
-                        {
-                            <RatingIcon Place="@place"/>
+                            <RatingIcon Place="@icon"/>
                         }
                     </span>
                 </div>
@@ -146,9 +142,28 @@
         _ => "bronze"
     };
 
-    private string? MedalTitle(RowView item, bool rated) => rated
-        ? item.Place is { } place ? PlaceTitle(place) : null
-        : $"{Report.Category.Name}: not part of the rating";
+    /// <summary>
+    /// A crossed star means the row could not win a medal here at all: either the
+    /// library is out of the rating, or it does not cover the whole group.
+    /// </summary>
+    private (string? Icon, string? Title) Mark(RowView item)
+    {
+        if (!MatrixView.IsRated(Report, item.Row.LibraryId))
+        {
+            return ("unrated", $"{Report.Category.Name}: not part of the rating");
+        }
+
+        if (item.Place is { } place)
+        {
+            return (place, PlaceTitle(place));
+        }
+
+        return item.Coverage is null
+            ? (null, null)
+            : ("unrated",
+                $"{Report.Category.Name}: not ranked in the {Group.Name} overview"
+                + " — partial coverage");
+    }
 
     private string PlaceTitle(string place) =>
         $"{Report.Category.Name} · {place} ({place switch
