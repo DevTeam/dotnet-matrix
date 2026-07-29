@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable NotAccessedPositionalProperty.Global
@@ -31,6 +32,7 @@ public static class MatrixChartPalette
         "#E78CC8"
     ];
 
+    [SuppressMessage("ReSharper", "ArrangeRedundantParentheses")]
     public static string Feature(int index) =>
         Features[((index % Features.Count) + Features.Count) % Features.Count];
 }

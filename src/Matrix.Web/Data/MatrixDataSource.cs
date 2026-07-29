@@ -39,13 +39,13 @@ public sealed record CategoryReport(
     MatrixFeatureCatalog? FeatureCatalog,
     string? Error);
 
-internal sealed class GitHubMatrixDataSource(
+internal sealed partial class GitHubMatrixDataSource(
     HttpClient httpClient,
     IWebAssemblyHostEnvironment hostEnvironment,
     NavigationManager navigationManager) : IMatrixDataSource
 {
-    private static readonly Regex VersionPattern =
-        new(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant);
+    private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
+    private static readonly Regex VersionPattern = VersionRegex();
 
     public async Task<MatrixCatalogResult> LoadCatalogAsync(
         CancellationToken cancellationToken = default)
@@ -299,10 +299,7 @@ internal sealed class GitHubMatrixDataSource(
             $"Matrix.Web.{resourceGroup}/{category.ReportDirectory}/{fileName}");
         return stream is null
             ? default
-            : await JsonSerializer.DeserializeAsync<T>(
-                stream,
-                new JsonSerializerOptions(JsonSerializerDefaults.Web),
-                cancellationToken);
+            : await JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions, cancellationToken);
     }
 
     private static async Task<MatrixLibraryMetadataCatalog?> ResolveLogosAsync(
@@ -395,4 +392,7 @@ internal sealed class GitHubMatrixDataSource(
     private sealed record GitHubCommitData(GitHubCommitter Committer);
 
     private sealed record GitHubCommitter(DateTimeOffset Date);
+
+    [GeneratedRegex(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant)]
+    private static partial Regex VersionRegex();
 }

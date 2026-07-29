@@ -81,7 +81,7 @@ public static class MatrixMetadata
     /// Features are declared on the classes that benchmark them, so they are read
     /// from the module assembly rather than from the embedded project file.
     /// </summary>
-    private static IReadOnlyList<MatrixFeatureMetadata> ReadFeatures(Assembly assembly)
+    private static MatrixFeatureMetadata[] ReadFeatures(Assembly assembly)
     {
         var features = assembly
             .GetTypes()

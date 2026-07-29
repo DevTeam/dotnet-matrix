@@ -1,4 +1,5 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
+// ReSharper disable UseCollectionExpression
 namespace Matrix;
 
 /// <summary>
@@ -29,6 +30,8 @@ public static class MatrixOverviews
     /// <summary>
     /// Returns null when the group names no feature present in the report.
     /// </summary>
+    /// <param name="report"></param>
+    /// <param name="group"></param>
     /// <param name="includeLibrary">
     /// Optional library filter; the web application passes the current selection.
     /// </param>

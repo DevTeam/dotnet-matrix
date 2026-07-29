@@ -223,10 +223,10 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             74,
             subtitle);
 
-        var contentWidth = ImageWidth - OuterPadding * 2 - LabelWidth - PanelGap;
-        var panelWidth = contentWidth / 2;
-        var performanceX = OuterPadding + LabelWidth;
-        var memoryX = performanceX + panelWidth + PanelGap;
+        const float contentWidth = ImageWidth - OuterPadding * 2 - LabelWidth - PanelGap;
+        const float panelWidth = contentWidth / 2;
+        const float performanceX = OuterPadding + LabelWidth;
+        const float memoryX = performanceX + panelWidth + PanelGap;
         DrawPanelHeading(canvas, "PERFORMANCE", "total mean time", performanceX, panelWidth, subtitle, hint);
         DrawPanelHeading(canvas, "MEMORY", "total allocated", memoryX, panelWidth, subtitle, hint);
 
@@ -236,6 +236,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         var stripeIndex = 0;
         for (var index = 0; index < rankedRows.Count; index++)
         {
+            // ReSharper disable once UseDeconstruction
             var row = rankedRows[index];
             var rankedName = row.Name;
             DrawStripe(canvas, stripeIndex++, y, 50);
@@ -362,13 +363,11 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         }
 
         using var fill = Fill(Surface2);
-        using var border = new SKPaint
-        {
-            Color = Line,
-            IsAntialias = true,
-            Style = SKPaintStyle.Stroke,
-            StrokeWidth = 1
-        };
+        using var border = new SKPaint();
+        border.Color = Line;
+        border.IsAntialias = true;
+        border.Style = SKPaintStyle.Stroke;
+        border.StrokeWidth = 1;
         canvas.DrawRoundRect(rect, 6, 6, fill);
         canvas.DrawRoundRect(rect, 6, 6, border);
 
@@ -621,6 +620,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
                 ? null
                 : Normalize(
                     SKRect.Create(bitmap.Width, bitmap.Height),
+                    // ReSharper disable once AccessToDisposedClosure
                     canvas => canvas.DrawBitmap(bitmap, 0, 0, LogoSampling));
         }
 

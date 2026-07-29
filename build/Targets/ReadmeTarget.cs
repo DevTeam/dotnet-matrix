@@ -123,7 +123,7 @@ internal sealed class ReadmeTarget(
             .Select(library => library.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var rating = MatrixRatings
-            .Create(report, charts, libraryId => rated.Contains(libraryId))
+            .Create(report, charts, rated.Contains)
             .Select((medals, index) => new ReadmeRating(
                 index + 1,
                 medals.Name,
