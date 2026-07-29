@@ -41,15 +41,9 @@ internal sealed class ReadmeTarget(
             .Where(category => category is not null)
             .Select(category => category!)
             .ToArray();
-        var catalog = Read<MatrixWebCatalog>(Path.Combine(
-            buildPaths.SolutionDirectory,
-            "src",
-            "Matrix.Web",
-            "wwwroot",
-            "data",
-            "catalog.json"));
+        // var catalog = Read<MatrixWebCatalog>(Path.Combine(buildPaths.SolutionDirectory, "src", "Matrix.Web", "wwwroot", "data", "catalog.json"));
         // var applicationUrl = $"https://{catalog.Repository.Owner.ToLowerInvariant()}.github.io/{catalog.Repository.Name}/";
-        var applicationUrl = "https://matrix.dev-team.org/";
+        const string applicationUrl = "https://matrix.dev-team.org/";
         var model = new ReadmeModel(applicationUrl, categories);
         var path = Path.Combine(buildPaths.SolutionDirectory, "README.md");
         await using var stream = File.Create(path);
