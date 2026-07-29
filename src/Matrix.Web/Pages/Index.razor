@@ -74,7 +74,7 @@
                         <p class="eyebrow">Scope</p>
                         <h2>Compare</h2>
                     </div>
-                    <button class="text-button" @onclick="SelectEverything">Select all</button>
+                    <button class="text-button" @onclick="SelectAllLibraries">Select all libraries</button>
                 </div>
 
                 <section class="filter-section">
@@ -82,9 +82,13 @@
                     @foreach (var category in _catalog!.Categories)
                     {
                         <label class="check-row">
-                            <input type="checkbox"
-                                   checked="@_selectedCategories.Contains(category.Id)"
-                                   @onchange="eventArgs => ToggleCategoryAsync(category.Id, eventArgs)"/>
+                            <input type="radio"
+                                   name="category"
+                                   value="@category.Id"
+                                   checked="@category.Id.Equals(
+                                                _selectedCategoryId,
+                                                StringComparison.OrdinalIgnoreCase)"
+                                   @onchange="() => SelectCategory(category.Id)"/>
                             <span>@category.Name</span>
                         </label>
                     }
@@ -147,7 +151,7 @@
                     </div>
                     <div class="hero-summary">
                         <span><strong>@SelectedLibraryCount</strong> libraries</span>
-                        <span><strong>@_selectedCategories.Count</strong> categories</span>
+                        <span><strong>@SelectedCategoryCount</strong> category</span>
                         <span><strong>@FeatureCount</strong> scenarios</span>
                     </div>
                 </section>
@@ -168,10 +172,10 @@
                         <p>Loading reports from GitHub…</p>
                     </section>
                 }
-                else if (_selectedCategories.Count == 0)
+                else if (_selectedCategoryId is null)
                 {
                     <EmptyState Title="Select a category"
-                                Text="Choose one or more library categories in the filter panel."/>
+                                Text="Choose a library category in the filter panel."/>
                 }
                 else
                 {
@@ -225,7 +229,7 @@
 
     private MatrixWebCatalog? _catalog;
     private IReadOnlyList<CategoryReport> _reports = [];
-    private readonly HashSet<string> _selectedCategories = new(StringComparer.OrdinalIgnoreCase);
+    private string? _selectedCategoryId;
     private readonly HashSet<string> _selectedLibraries = new(StringComparer.OrdinalIgnoreCase);
     private string? _selectedVersion;
     private string _view = "overview";
@@ -238,9 +242,16 @@
         _catalog?.Versions.FirstOrDefault(version => version.Version == _selectedVersion);
 
     private IEnumerable<CategoryReport> VisibleReports =>
-        _reports.Where(report => _selectedCategories.Contains(report.Category.Id));
+        _reports.Where(report => report.Category.Id.Equals(
+            _selectedCategoryId,
+            StringComparison.OrdinalIgnoreCase));
 
-    private int SelectedLibraryCount => _selectedLibraries.Count;
+    private int SelectedLibraryCount => VisibleReports
+        .SelectMany(Libraries)
+        .Count(library => _selectedLibraries.Contains(
+            LibraryKey(_selectedCategoryId!, library.Id)));
+
+    private int SelectedCategoryCount => _selectedCategoryId is null ? 0 : 1;
 
     private int FeatureCount => VisibleReports
         .SelectMany(report => report.Features?.Features ?? [])
@@ -255,10 +266,7 @@
             var result = await DataSource.LoadCatalogAsync();
             _catalog = result.Catalog;
             _catalogWarning = result.Warning;
-            foreach (var category in _catalog.Categories)
-            {
-                _selectedCategories.Add(category.Id);
-            }
+            _selectedCategoryId = _catalog.Categories.FirstOrDefault()?.Id;
 
             _selectedVersion = _catalog.Versions.FirstOrDefault()?.Version;
             if (SelectedVersion is not null)
@@ -283,18 +291,9 @@
         await LoadReportsAsync();
     }
 
-    private async Task ToggleCategoryAsync(string categoryId, ChangeEventArgs eventArgs)
+    private void SelectCategory(string categoryId)
     {
-        if (eventArgs.Value is true)
-        {
-            _selectedCategories.Add(categoryId);
-        }
-        else
-        {
-            _selectedCategories.Remove(categoryId);
-        }
-
-        await Task.CompletedTask;
+        _selectedCategoryId = categoryId;
     }
 
     private void ToggleLibrary(string key, ChangeEventArgs eventArgs)
@@ -309,19 +308,9 @@
         }
     }
 
-    private void SelectEverything()
+    private void SelectAllLibraries()
     {
-        if (_catalog is null)
-        {
-            return;
-        }
-
-        foreach (var category in _catalog.Categories)
-        {
-            _selectedCategories.Add(category.Id);
-        }
-
-        foreach (var report in _reports)
+        foreach (var report in VisibleReports)
         {
             foreach (var library in Libraries(report))
             {
@@ -344,7 +333,7 @@
                 _catalog,
                 SelectedVersion,
                 _catalog.Categories);
-            SelectEverything();
+            SelectAllLibrariesInEveryCategory();
         }
         finally
         {
@@ -380,6 +369,17 @@
 
     private static IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
         MatrixView.Libraries(report);
+
+    private void SelectAllLibrariesInEveryCategory()
+    {
+        foreach (var report in _reports)
+        {
+            foreach (var library in Libraries(report))
+            {
+                _selectedLibraries.Add(LibraryKey(report.Category.Id, library.Id));
+            }
+        }
+    }
     
     private static string LibraryKey(string categoryId, string libraryId) =>
         $"{categoryId}\u001f{libraryId}";
