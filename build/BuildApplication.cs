@@ -14,6 +14,7 @@ internal sealed class BuildApplication(
     IReportChartsTarget reportChartsTarget,
     IReadmeTarget readmeTarget,
     IPrepareCommitTarget prepareCommitTarget,
+    ICiMatrixTarget ciMatrixTarget,
     ICiReportsTarget ciReportsTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebTarget webTarget)
@@ -34,6 +35,7 @@ internal sealed class BuildApplication(
         RegisterReportCharts(root, modules, reportChartsTarget);
         RegisterReadme(root, modules, readmeTarget);
         RegisterPrepareCommit(root, modules, prepareCommitTarget);
+        RegisterCiMatrix(root, modules);
         RegisterCiReports(root, modules);
         RegisterWeb(root, modules);
         return root.Parse(args).InvokeAsync();
@@ -97,6 +99,10 @@ internal sealed class BuildApplication(
         RootCommand root,
         IReadOnlyList<DiscoveredMatrixModule> modules)
     {
+        var category = new Option<string?>("--category")
+        {
+            Description = "Exact case-insensitive matrix category id. Empty = all categories."
+        };
         var libraries = new Option<string?>("--libraries")
         {
             Description = "Case-insensitive library filter. Comma-separated values and '*' are supported."
@@ -116,6 +122,7 @@ internal sealed class BuildApplication(
         var command = new Command(
             MatrixNames.CiReportsCommand,
             "Validate features, benchmark when validation succeeds, then stage the reports for a CI artifact");
+        command.Options.Add(category);
         command.Options.Add(libraries);
         command.Options.Add(smoke);
         command.Options.Add(skipBenchmarks);
@@ -123,11 +130,30 @@ internal sealed class BuildApplication(
         command.SetAction(async parseResult => await ciReportsTarget.RunAsync(
             modules,
             new CiReportsOptions(
+                parseResult.GetValue(category),
                 parseResult.GetValue(libraries),
                 parseResult.GetValue(smoke),
                 parseResult.GetValue(skipBenchmarks),
                 parseResult.GetValue(output)),
             cancellationToken));
+        root.Subcommands.Add(command);
+    }
+
+    private void RegisterCiMatrix(
+        RootCommand root,
+        IReadOnlyList<DiscoveredMatrixModule> modules)
+    {
+        var output = new Option<string?>("--output")
+        {
+            Description = "JSON output file. Default: artifacts/ci-matrix.json."
+        };
+        var command = new Command(
+            MatrixNames.CiMatrixCommand,
+            "Write discovered matrix category ids as JSON for a CI job matrix");
+        command.Options.Add(output);
+        command.SetAction(parseResult => ciMatrixTarget.Run(
+            modules,
+            parseResult.GetValue(output)));
         root.Subcommands.Add(command);
     }
 

@@ -17,12 +17,22 @@ internal sealed class CiReportsTarget(
         CiReportsOptions options,
         CancellationToken cancellationToken)
     {
+        var selectedModules = SelectModules(modules, options.Category);
+        if (selectedModules.Count == 0)
+        {
+            await Console.Error.WriteLineAsync(
+                $"Unknown matrix category '{options.Category}'. "
+                + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.");
+            return 1;
+        }
+
         var output = ResolveOutputDirectory(options.OutputDirectory);
         RecreateDirectory(output);
 
         var summary = new StringBuilder()
             .AppendLine("## .NET Matrix reports")
             .AppendLine()
+            .AppendLine($"- Category: `{options.Category ?? "*"}`")
             .AppendLine($"- Libraries: `{options.Libraries ?? "*"}`")
             .AppendLine(
                 options.Smoke
@@ -31,7 +41,7 @@ internal sealed class CiReportsTarget(
 
         var exitCode = 0;
         var validationFailed = false;
-        foreach (var module in modules)
+        foreach (var module in selectedModules)
         {
             var result = await matrixTarget.RunAsync(
                 module,
@@ -63,7 +73,7 @@ internal sealed class CiReportsTarget(
         }
         else
         {
-            foreach (var module in modules)
+            foreach (var module in selectedModules)
             {
                 var result = await matrixTarget.RunAsync(
                     module,
@@ -76,8 +86,8 @@ internal sealed class CiReportsTarget(
             }
         }
 
-        Stage(modules, output, benchmarked);
-        WriteSummary(output, summary);
+        Stage(selectedModules, output, benchmarked);
+        WriteSummary(output, options.Category ?? "all", summary);
         Console.WriteLine($"Report artifact: {output}");
         return exitCode;
     }
@@ -178,12 +188,28 @@ internal sealed class CiReportsTarget(
         }
     }
 
-    private static void WriteSummary(string output, StringBuilder summary)
+    private static void WriteSummary(
+        string output,
+        string category,
+        StringBuilder summary)
     {
-        var path = $"{output}-summary.md";
+        var directory = Path.Combine(output, "summaries");
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, $"{category}.md");
         File.WriteAllText(path, summary.ToString());
         Console.WriteLine($"Report summary: {path}");
     }
+
+    private static IReadOnlyList<DiscoveredMatrixModule> SelectModules(
+        IReadOnlyList<DiscoveredMatrixModule> modules,
+        string? category) =>
+        string.IsNullOrWhiteSpace(category)
+            ? modules
+            : modules
+                .Where(module => module.Metadata.Id.Equals(
+                    category,
+                    StringComparison.OrdinalIgnoreCase))
+                .ToArray();
 
     private string ReportPath(DiscoveredMatrixModule module, string fileName) =>
         Path.Combine(

@@ -613,6 +613,7 @@ readme
 build-web
 prepare-commit
 finalize-commit
+ci-matrix
 ci-reports
 ```
 
@@ -620,23 +621,29 @@ ci-reports
 for every library and for all libraries, plus the per-library update workflow.
 Do not add category-specific names to the shared target.
 
-No GitHub Actions change should normally be necessary: report generation and
-Pages deployment operate on discovered modules. The generated reports,
-metadata, logos, charts, README, and Web artifacts must exist in the tagged
-commit deployed by Pages.
+No GitHub Actions change should normally be necessary. The `reports.yml`
+discovery job runs `ci-matrix`, then starts one parallel `ci-reports --category
+<module-id>` job per discovered module. Each job uploads a uniquely named
+intermediate artifact; the merge job combines them into the single
+`matrix-reports` artifact and removes the intermediates. Pages deployment also
+operates on discovered modules. The generated reports, metadata, logos, charts,
+README, and Web artifacts must exist in the tagged commit deployed by Pages.
 
 ### Current filtered-CI limitation
 
-The aggregate `ci-reports --libraries <filter>` currently sends the same filter
-to every discovered module. With several categories, a library filter that
-matches one category may match no libraries in another category and cause that
-module to fail.
+`ci-reports --category <module-id> --libraries <filter>` scopes both validation
+and benchmarks to one exact category and is safe for category-specific CI jobs.
+Without `--category`, the aggregate `ci-reports --libraries <filter>` still
+sends the same filter to every discovered module. A filter that matches one
+category may match no libraries in another category and cause that module to
+fail.
 
-Until shared filtering becomes category-aware, use the category-specific
-validation, benchmark, or update target for filtered work. Do not advertise the
-aggregate filtered target as safe across unrelated categories. A future shared
-fix should either qualify filters with a module ID or skip nonmatching modules
-without weakening the category-specific “no match” error.
+Until shared filtering becomes category-aware, combine `--category` with
+`--libraries`, or use the category-specific validation, benchmark, or update
+target for filtered work. Do not advertise the aggregate filtered target as
+safe across unrelated categories. A future shared fix should either qualify
+filters with a module ID or skip nonmatching modules without weakening the
+category-specific “no match” error.
 
 ## 14. Verification commands for an LLM
 

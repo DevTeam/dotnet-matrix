@@ -27,6 +27,7 @@ internal partial class Composition
             .Bind<IReportChartsTarget>().As(Lifetime.Singleton).To<ReportChartsTarget>()
             .Bind<IReadmeTarget>().As(Lifetime.Singleton).To<ReadmeTarget>()
             .Bind<IPrepareCommitTarget>().As(Lifetime.Singleton).To<PrepareCommitTarget>()
+            .Bind<ICiMatrixTarget>().As(Lifetime.Singleton).To<CiMatrixTarget>()
             .Bind<ICiReportsTarget>().As(Lifetime.Singleton).To<CiReportsTarget>()
             .Bind<IWebTarget>().As(Lifetime.Singleton).To<WebTarget>()
             .Bind<IRunConfigurationsTarget>().As(Lifetime.Singleton)

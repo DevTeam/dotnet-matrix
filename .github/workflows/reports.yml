@@ -24,9 +24,36 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  discover:
+    name: Discover categories
+    runs-on: ubuntu-latest
+    outputs:
+      categories: ${{ steps.matrix.outputs.categories }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build category matrix
+        id: matrix
+        run: |
+          dotnet run --project ./build -- ci-matrix --output artifacts/ci-matrix.json
+          echo "categories=$(jq -c . artifacts/ci-matrix.json)" >> "$GITHUB_OUTPUT"
+
   reports:
+    name: Reports (${{ matrix.category }})
+    needs: discover
     runs-on: ubuntu-latest
     timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        category: ${{ fromJSON(needs.discover.outputs.categories) }}
 
     steps:
       - name: Checkout repository
@@ -38,21 +65,61 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Run .NET Matrix reports
-        run: >
-          dotnet run --project ./build -- ci-reports
-          ${{ inputs.libraries != '' && format('--libraries {0}', inputs.libraries) || '' }}
-          ${{ inputs.smoke && '--smoke' || '' }}
-          ${{ !inputs.benchmarks && '--skip-benchmarks' || '' }}
+        env:
+          CATEGORY: ${{ matrix.category }}
+          LIBRARIES: ${{ inputs.libraries }}
+          RUN_BENCHMARKS: ${{ inputs.benchmarks }}
+          SMOKE: ${{ inputs.smoke }}
+        run: |
+          args=(ci-reports --category "$CATEGORY")
+          if [[ -n "$LIBRARIES" ]]; then
+            args+=(--libraries "$LIBRARIES")
+          fi
+          if [[ "$SMOKE" == "true" ]]; then
+            args+=(--smoke)
+          fi
+          if [[ "$RUN_BENCHMARKS" != "true" ]]; then
+            args+=(--skip-benchmarks)
+          fi
+          dotnet run --project ./build -- "${args[@]}"
 
       - name: Publish summary
         if: always()
-        run: cat artifacts/ci-reports-summary.md >> "$GITHUB_STEP_SUMMARY"
+        run: cat "artifacts/ci-reports/summaries/${{ matrix.category }}.md" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: matrix-reports
+          name: matrix-reports-${{ matrix.category }}
           path: artifacts/ci-reports
           if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Merge reports
+    needs: reports
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download category reports
+        uses: actions/download-artifact@v7
+        with:
+          pattern: matrix-reports-*
+          path: artifacts/merged
+          merge-multiple: true
+
+      - name: Publish combined summary
+        run: |
+          find artifacts/merged/summaries -type f -name '*.md' -print0 \
+            | sort -z \
+            | xargs -0 cat >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Merge report artifacts
+        uses: actions/upload-artifact/merge@v4
+        with:
+          name: matrix-reports
+          pattern: matrix-reports-*
+          delete-merged: true
           retention-days: 30
