@@ -10,6 +10,22 @@ Evidence-based feature and performance comparisons for .NET libraries.
 <text>
 ## @category.Name
 
+@if (category.Rating.Count > 0)
+{
+<text>### Rating
+
+A gold, silver and bronze star for the first three places of every benchmark overview.
+
+| # | Library | 🥇 | 🥈 | 🥉 | Won |
+|---|---|---|---|---|---|
+@foreach (var item in category.Rating)
+{
+<text>| @item.Place | @item.Name | @(item.Gold == 0 ? "" : item.Gold.ToString()) | @(item.Silver == 0 ? "" : item.Silver.ToString()) | @(item.Bronze == 0 ? "" : item.Bronze.ToString()) | @item.Awards |
+</text>
+}
+
+</text>
+}
 ### Benchmark overview
 
 Performance and allocated memory are shown together. Lower values are better.

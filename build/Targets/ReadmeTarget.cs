@@ -125,12 +125,37 @@ internal sealed class ReadmeTarget(
                     MatrixChartPaths.DirectoryName,
                     MatrixChartPaths.Feature(feature)))))
             .ToArray();
+        var rated = module.Metadata.LibraryMetadata.Libraries
+            .Where(library => library.Rated)
+            .Select(library => library.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var rating = MatrixRatings
+            .Create(report, charts, libraryId => rated.Contains(libraryId))
+            .Select((medals, index) => new ReadmeRating(
+                index + 1,
+                medals.Name,
+                medals.Gold,
+                medals.Silver,
+                medals.Bronze,
+                string.Join(
+                    ", ",
+                    medals.Awards.Select(award =>
+                        $"{Place(award.Place)} in {award.GroupName}"))))
+            .ToArray();
         return new ReadmeCategory(
             module.Metadata.Name,
             libraries,
             overviews,
-            features);
+            features,
+            rating);
     }
+
+    private static string Place(int place) => place switch
+    {
+        1 => "gold",
+        2 => "silver",
+        _ => "bronze"
+    };
 
     private string RelativePath(string path) =>
         Path.GetRelativePath(buildPaths.SolutionDirectory, path).Replace('\\', '/');
@@ -148,7 +173,16 @@ public sealed record ReadmeCategory(
     string Name,
     IReadOnlyList<ReadmeLibrary> Libraries,
     IReadOnlyList<ReadmeChart> Overviews,
-    IReadOnlyList<ReadmeFeature> Features);
+    IReadOnlyList<ReadmeFeature> Features,
+    IReadOnlyList<ReadmeRating> Rating);
+
+public sealed record ReadmeRating(
+    int Place,
+    string Name,
+    int Gold,
+    int Silver,
+    int Bronze,
+    string Awards);
 
 public sealed record ReadmeLibrary(
     string Name,

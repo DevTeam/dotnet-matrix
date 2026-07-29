@@ -7,6 +7,19 @@ Evidence-based feature and performance comparisons for .NET libraries.
 
 ## Dependency Injection
 
+### Rating
+
+A gold, silver and bronze star for the first three places of every benchmark overview.
+
+| # | Library | 🥇 | 🥈 | 🥉 | Won |
+|---|---|---|---|---|---|
+| 1 | Pure.DI | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | Grace |  | 2 |  | silver in Advanced, silver in Basic |
+| 3 | MvvmCross |  | 1 |  | silver in Prepare |
+| 4 | DryIoc |  |  | 1 | bronze in Prepare |
+| 5 | Singularity |  |  | 1 | bronze in Basic |
+| 6 | Stashbox |  |  | 1 | bronze in Advanced |
+
 ### Benchmark overview
 
 Performance and allocated memory are shown together. Lower values are better.

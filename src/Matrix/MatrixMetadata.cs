@@ -151,7 +151,26 @@ public static class MatrixMetadata
                 Required(packageReference, "MatrixDescription"),
                 documentationUrl,
                 repositoryUrl,
-                Required(packageReference, "MatrixLogo")));
+                Required(packageReference, "MatrixLogo"),
+                ReadRated(packageReference, id)));
+    }
+
+    /// <summary>
+    /// Opt out of the medal rating with <c>&lt;MatrixRating&gt;false&lt;/MatrixRating&gt;</c>.
+    /// Absent means rated, so a new library competes unless it says otherwise.
+    /// </summary>
+    private static bool ReadRated(XElement packageReference, string id)
+    {
+        var value = Value(packageReference, "MatrixRating");
+        if (value is null)
+        {
+            return true;
+        }
+
+        return bool.TryParse(value, out var rated)
+            ? rated
+            : throw new InvalidOperationException(
+                $"Matrix library '{id}' has a non-boolean MatrixRating value '{value}'.");
     }
 
     private static void EnsureUnique(

@@ -1,0 +1,21 @@
+<svg class="rating-icon rating-@Place"
+     viewBox="0 0 16 16"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.4"
+     stroke-linejoin="round"
+     aria-hidden="true"
+     focusable="false">
+    <path d="M8 1.9l1.85 3.9 4.15.6-3 3 .71 4.25L8 11.65 4.29 13.65 5 9.4 2 6.4l4.15-.6z"
+          fill="@(Place == "unrated" ? "none" : "currentColor")"/>
+    @if (Place == "unrated")
+    {
+        <path d="M2.4 13.6L13.6 2.4" stroke-linecap="round"/>
+    }
+</svg>
+
+@code {
+    /// <summary>gold | silver | bronze | unrated</summary>
+    [Parameter, EditorRequired]
+    public required string Place { get; set; }
+}

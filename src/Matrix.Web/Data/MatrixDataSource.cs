@@ -6,9 +6,22 @@ using System.Text.RegularExpressions;
 
 namespace Matrix.Web;
 
+/// <summary>
+/// <paramref name="Warning"/> is set when the release list could not be read but the
+/// application can still work with whatever versions it does have.
+/// </summary>
+public sealed record MatrixCatalogResult(
+    MatrixWebCatalog Catalog,
+    string? Warning);
+
 public interface IMatrixDataSource
 {
-    Task<MatrixWebCatalog> LoadCatalogAsync(CancellationToken cancellationToken = default);
+    Task<MatrixCatalogResult> LoadCatalogAsync(CancellationToken cancellationToken = default);
+
+    Task<DateTimeOffset?> LoadVersionDateAsync(
+        MatrixWebCatalog catalog,
+        MatrixVersion version,
+        CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<CategoryReport>> LoadAsync(
         MatrixWebCatalog catalog,
@@ -34,7 +47,7 @@ internal sealed class GitHubMatrixDataSource(
     private static readonly Regex VersionPattern =
         new(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant);
 
-    public async Task<MatrixWebCatalog> LoadCatalogAsync(
+    public async Task<MatrixCatalogResult> LoadCatalogAsync(
         CancellationToken cancellationToken = default)
     {
         var catalog = await httpClient.GetFromJsonAsync<MatrixWebCatalog>(
@@ -42,8 +55,25 @@ internal sealed class GitHubMatrixDataSource(
                           cancellationToken)
                       ?? throw new InvalidOperationException("The matrix catalog is empty.");
 
-        var versions = await LoadVersionsAsync(catalog.Repository, cancellationToken);
-        return catalog with { Versions = versions };
+        var versions = new List<MatrixVersion>();
+        if (UseLocalReports)
+        {
+            versions.Add(new MatrixVersion("local", null, string.Empty));
+        }
+
+        string? warning = null;
+        try
+        {
+            versions.AddRange(await LoadVersionsAsync(catalog.Repository, cancellationToken));
+        }
+        catch (Exception exception)
+        {
+            // Losing the release list must not take down a page that can still
+            // render the versions it already has.
+            warning = exception.Message;
+        }
+
+        return new MatrixCatalogResult(catalog with { Versions = versions }, warning);
     }
 
     public async Task<IReadOnlyList<CategoryReport>> LoadAsync(
@@ -173,31 +203,38 @@ internal sealed class GitHubMatrixDataSource(
             }
         }
 
-        var versions = await Task.WhenAll(tags.Select(async tag =>
-        {
-            var uri =
-                $"https://api.github.com/repos/{repository.Owner}/{repository.Name}/commits/"
-                + Uri.EscapeDataString(tag.Commit.Sha);
-            var commit = await GetRequiredAsync<GitHubCommit>(uri, cancellationToken);
-            return (
-                Value: new MatrixVersion(
-                    tag.Name,
-                    commit.Commit.Committer.Date,
-                    commit.Sha),
-                SortKey: Version.Parse(tag.Name));
-        }));
-
-        var result =  versions
+        return tags
+            .Select(tag => (
+                Value: new MatrixVersion(tag.Name, null, tag.Commit.Sha),
+                SortKey: Version.Parse(tag.Name)))
             .OrderByDescending(version => version.SortKey)
             .Select(version => version.Value)
-            .ToList();
+            .ToArray();
+    }
 
-        if (UseLocalReports)
+    public async Task<DateTimeOffset?> LoadVersionDateAsync(
+        MatrixWebCatalog catalog,
+        MatrixVersion version,
+        CancellationToken cancellationToken = default)
+    {
+        if (version.Commit.Length == 0)
         {
-            result.Insert(0, new MatrixVersion("local", DateTimeOffset.MinValue, string.Empty));
+            return null;
         }
 
-        return result;
+        try
+        {
+            var uri =
+                $"https://api.github.com/repos/{catalog.Repository.Owner}/{catalog.Repository.Name}"
+                + $"/commits/{Uri.EscapeDataString(version.Commit)}";
+            var commit = await GetRequiredAsync<GitHubCommit>(uri, cancellationToken);
+            return commit.Commit.Committer.Date;
+        }
+        catch (Exception)
+        {
+            // A missing date only removes a caption; it must not break the page.
+            return null;
+        }
     }
 
     private async Task<T> GetRequiredAsync<T>(
@@ -208,9 +245,39 @@ internal sealed class GitHubMatrixDataSource(
         request.Headers.Accept.ParseAdd("application/vnd.github+json");
         request.Headers.Add("X-GitHub-Api-Version", "2022-11-28");
         using var response = await httpClient.SendAsync(request, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException(Describe(response));
+        }
+
         return await response.Content.ReadFromJsonAsync<T>(cancellationToken)
                ?? throw new InvalidOperationException($"GitHub returned an empty response for '{uri}'.");
+    }
+
+    /// <summary>
+    /// The trimmed runtime strips the resource strings behind EnsureSuccessStatusCode,
+    /// so a failure would otherwise surface as an unreadable resource key.
+    /// </summary>
+    private static string Describe(HttpResponseMessage response)
+    {
+        var rateLimited =
+            response.StatusCode is System.Net.HttpStatusCode.Forbidden
+                or System.Net.HttpStatusCode.TooManyRequests
+            && response.Headers.TryGetValues("X-RateLimit-Remaining", out var remaining)
+            && remaining.FirstOrDefault() == "0";
+        if (!rateLimited)
+        {
+            return $"GitHub returned {(int)response.StatusCode} {response.StatusCode} "
+                   + $"for '{response.RequestMessage?.RequestUri}'.";
+        }
+
+        var reset = response.Headers.TryGetValues("X-RateLimit-Reset", out var values)
+                    && long.TryParse(values.FirstOrDefault(), out var seconds)
+            ? DateTimeOffset.FromUnixTimeSeconds(seconds).ToLocalTime().ToString("HH:mm")
+            : null;
+        return "The GitHub API rate limit for this network has been reached"
+               + (reset is null ? "." : $"; it resets at {reset}.")
+               + " Released reports stay available once the limit resets.";
     }
 
     private static async Task<T?> TryGetLocalAsync<T>(

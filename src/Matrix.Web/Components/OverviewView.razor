@@ -1,4 +1,4 @@
-@foreach (var report in Reports)
+﻿@foreach (var report in Reports)
 {
     if (report.ChartCatalog is not { Groups.Count: > 0 } chartCatalog
         || report.Benchmarks is null)
@@ -6,6 +6,7 @@
         continue;
     }
 
+    var medals = MatrixView.Rating(report, SelectedLibraries);
     <section class="overview-report">
         <div class="section-heading">
             <div>
@@ -14,6 +15,9 @@
             </div>
             <span class="section-meta">Performance · Memory</span>
         </div>
+        <RatingBoard Report="@report"
+                     Medals="@medals"
+                     SelectedLibraries="@SelectedLibraries"/>
         @foreach (var group in chartCatalog.Groups)
         {
             <OverviewChart Report="@report"
@@ -30,6 +34,7 @@
             .Where(library => MatrixView.IsSelected(report, SelectedLibraries, library.Id))
             .Where(library => MatrixView.Metadata(report, library.Id) is not null)
             .ToArray();
+        var cardMedals = MatrixView.Rating(report, SelectedLibraries);
         @foreach (var library in libraries)
         {
             var metadata = MatrixView.Metadata(report, library.Id);
@@ -47,7 +52,13 @@
             <article class="library-card">
                 <div class="card-heading">
                     <span class="category-chip">@report.Category.Name</span>
-                    <span class="status-dot @(benchmarkResults.All(item => item.Successful) ? "ok" : "bad")"></span>
+                    <span class="card-heading-end">
+                        <RatingBadge Category="@report.Category.Name"
+                                     Rated="@(metadata?.Rated ?? false)"
+                                     Medals="@cardMedals.FirstOrDefault(item =>
+                                                 item.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))"/>
+                        <span class="status-dot @(benchmarkResults.All(item => item.Successful) ? "ok" : "bad")"></span>
+                    </span>
                 </div>
                 <div class="library-identity">
                     <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"

@@ -10,4 +10,5 @@ public sealed record MatrixLibraryMetadata(
     string Description,
     string? DocumentationUrl,
     string? RepositoryUrl,
-    string Logo);
+    string Logo,
+    bool Rated);

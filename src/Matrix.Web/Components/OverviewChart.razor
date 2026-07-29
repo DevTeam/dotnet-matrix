@@ -36,11 +36,11 @@
                 </p>
             }
             <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)">
+                @{
+                    var rated = MatrixView.IsRated(Report, item.Row.LibraryId);
+                }
                 <div class="overview-chart-label">
-                    @if (item.Rank is not null)
-                    {
-                        <span class="overview-chart-rank">@item.Rank</span>
-                    }
+                    <span class="overview-chart-rank">@item.Rank</span>
                     <LibraryLogo Source="@MatrixView.Logo(Report, item.Row.LibraryId)"
                                  Name="@item.Row.Name"
                                  Size="sm"/>
@@ -51,6 +51,18 @@
                             <small>@item.Coverage</small>
                         }
                     </div>
+                    @* Always rendered, so medals and the out-of-rating mark keep to
+                       one column at the right edge of the label. *@
+                    <span class="overview-chart-medal" title="@MedalTitle(item, rated)">
+                        @if (!rated)
+                        {
+                            <RatingIcon Place="unrated"/>
+                        }
+                        else if (item.Place is { } place)
+                        {
+                            <RatingIcon Place="@place"/>
+                        }
+                    </span>
                 </div>
                 <OverviewBar Values="@item.Row.PerformanceValues"
                              FeatureNames="@featureNames"
@@ -97,18 +109,62 @@
                 Report.Benchmarks,
                 Group,
                 libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+
+        // The medal ranking drops libraries that are out of the rating, so a place
+        // here does not have to match the row number of the chart.
+        var places = _overview is null || Report.Benchmarks is null
+            ? []
+            : MatrixOverviews.Create(
+                    Report.Benchmarks,
+                    Group,
+                    libraryId => MatrixView.IsRated(Report, libraryId)
+                                 && MatrixView.IsSelected(Report, SelectedLibraries, libraryId))
+                ?.Ranked
+                .Take(MatrixRatings.Places)
+                .Select((row, index) => (row.LibraryId, Place: PlaceName(index)))
+                .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
+            ?? [];
+
         _rows = _overview is null
             ? []
             : _overview.Ranked
-                .Select((row, index) => new RowView(row, $"{index + 1}.", null))
+                .Select((row, index) => new RowView(row, $"{index + 1}.", null, Place(places, row)))
                 .Concat(_overview.Unranked.Select(row =>
-                    new RowView(row, null, Coverage(_overview, row))))
+                    new RowView(row, null, Coverage(_overview, row), Place(places, row))))
                 .ToArray();
     }
+
+    private static string? Place(
+        IReadOnlyDictionary<string, string> places,
+        MatrixOverviewRow row) =>
+        places.GetValueOrDefault(row.LibraryId);
+
+    private static string PlaceName(int index) => index switch
+    {
+        0 => "gold",
+        1 => "silver",
+        _ => "bronze"
+    };
+
+    private string? MedalTitle(RowView item, bool rated) => rated
+        ? item.Place is { } place ? PlaceTitle(place) : null
+        : $"{Report.Category.Name}: not part of the rating";
+
+    private string PlaceTitle(string place) =>
+        $"{Report.Category.Name} · {place} ({place switch
+        {
+            "gold" => "1st",
+            "silver" => "2nd",
+            _ => "3rd"
+        }} place) in the {Group.Name} overview";
 
     private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
         $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}"
         + $" · Missing: {string.Join(", ", row.MissingFeatures)}";
 
-    private sealed record RowView(MatrixOverviewRow Row, string? Rank, string? Coverage);
+    private sealed record RowView(
+        MatrixOverviewRow Row,
+        string? Rank,
+        string? Coverage,
+        string? Place);
 }

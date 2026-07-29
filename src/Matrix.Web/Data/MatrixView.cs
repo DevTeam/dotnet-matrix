@@ -24,6 +24,24 @@ internal static class MatrixView
         report.LibraryCatalog?.Libraries.FirstOrDefault(metadata =>
             metadata.Id.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
 
+    /// <summary>
+    /// Only declared libraries compete, and only while they keep the flag. The
+    /// hand-coded baseline has no catalog entry, so it never enters the rating.
+    /// </summary>
+    public static bool IsRated(CategoryReport report, string libraryId) =>
+        Metadata(report, libraryId) is { Rated: true };
+
+    public static IReadOnlyList<MatrixMedals> Rating(
+        CategoryReport report,
+        IReadOnlySet<string> selectedLibraries) =>
+        report.Benchmarks is null || report.ChartCatalog is null
+            ? []
+            : MatrixRatings.Create(
+                report.Benchmarks,
+                report.ChartCatalog,
+                libraryId => IsRated(report, libraryId),
+                libraryId => IsSelected(report, selectedLibraries, libraryId));
+
     public static string? FeatureDescription(CategoryReport report, string featureId) =>
         report.FeatureCatalog?.Features
             .FirstOrDefault(feature =>

@@ -1,0 +1,63 @@
+@if (!Rated)
+{
+    <span class="rating-badge is-unrated" title="@($"{Category}: not part of the rating")">
+        <RatingIcon Place="unrated"/>
+    </span>
+}
+else if (Medals is { Total: > 0 } medals)
+{
+    <span class="rating-badge">
+        @for (var place = 1; place <= MatrixRatings.Places; place++)
+        {
+            var count = medals.Count(place);
+            if (count > 0)
+            {
+                <span class="rating-medal" title="@Title(medals, place)">
+                    <RatingIcon Place="@Name(place)"/>
+                    @if (count > 1 || AlwaysCount)
+                    {
+                        <b>@count</b>
+                    }
+                </span>
+            }
+        }
+    </span>
+}
+
+@code {
+    [Parameter]
+    public MatrixMedals? Medals { get; set; }
+
+    [Parameter]
+    public bool Rated { get; set; } = true;
+
+    /// <summary>Named in every tooltip: the rating is per category.</summary>
+    [Parameter, EditorRequired]
+    public required string Category { get; set; }
+
+    /// <summary>Show the count even when a library won a place exactly once.</summary>
+    [Parameter]
+    public bool AlwaysCount { get; set; }
+
+    private static string Name(int place) => place switch
+    {
+        1 => "gold",
+        2 => "silver",
+        _ => "bronze"
+    };
+
+    private string Title(MatrixMedals medals, int place) =>
+        $"{Category} · {Name(place)} ({Ordinal(place)} place) in: "
+        + string.Join(
+            ", ",
+            medals.Awards
+                .Where(award => award.Place == place)
+                .Select(award => award.GroupName));
+
+    private static string Ordinal(int place) => place switch
+    {
+        1 => "1st",
+        2 => "2nd",
+        _ => "3rd"
+    };
+}

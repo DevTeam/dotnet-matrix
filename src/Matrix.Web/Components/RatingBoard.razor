@@ -1,0 +1,50 @@
+﻿@if (Medals.Count > 0)
+{
+    <section class="rating-board">
+        <div class="rating-board-head">
+            <div>
+                <p class="eyebrow">Rating</p>
+                <h3>Medal table</h3>
+            </div>
+            <span class="section-meta">@Groups overview@(Groups == 1 ? "" : "s") · @Rated of @Total libraries rated</span>
+        </div>
+        <ol class="rating-board-list">
+            @for (var index = 0; index < Medals.Count; index++)
+            {
+                var item = Medals[index];
+                <li>
+                    <span class="rating-place">@(index + 1)</span>
+                    <LibraryLogo Source="@MatrixView.Logo(Report, item.LibraryId)"
+                                 Name="@item.Name"
+                                 Size="sm"/>
+                    <span class="rating-name">@item.Name</span>
+                    <RatingBadge Medals="@item"
+                                 Category="@Report.Category.Name"
+                                 AlwaysCount="true"/>
+                </li>
+            }
+        </ol>
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required CategoryReport Report { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<MatrixMedals> Medals { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    private int Groups => Report.ChartCatalog?.Groups.Count ?? 0;
+
+    private MatrixLibrary[] Selected => MatrixView
+        .Libraries(Report)
+        .Where(library => MatrixView.IsSelected(Report, SelectedLibraries, library.Id))
+        .ToArray();
+
+    private int Total => Selected.Length;
+
+    private int Rated => Selected.Count(library => MatrixView.IsRated(Report, library.Id));
+}
