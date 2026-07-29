@@ -40,6 +40,8 @@ internal sealed partial class WebTarget(
         }
 
         var repository = await ReadRepositoryAsync(cancellationToken);
+        var versions = await ReadVersionsAsync(cancellationToken);
+        Console.WriteLine($"Releases baked into the catalog: {versions.Count}");
         var catalog = new MatrixWebCatalog(
             1,
             repository,
@@ -50,7 +52,7 @@ internal sealed partial class WebTarget(
                     module.Metadata.ReportDirectory))
                 .OrderBy(category => category.Name, StringComparer.OrdinalIgnoreCase)
                 .ToArray(),
-            []);
+            versions);
 
         var artifactsDirectory = Path.Combine(buildPaths.SolutionDirectory, "artifacts");
         var generatedDirectory = Path.Combine(artifactsDirectory, "generated");
@@ -98,6 +100,49 @@ internal sealed partial class WebTarget(
             true);
         Console.WriteLine($"Web application: {wwwRoot}");
         return 0;
+    }
+
+    /// <summary>
+    /// Releases are baked into the catalog from the local clone, so the published
+    /// application needs no GitHub API call to list them. The unauthenticated API
+    /// allows 60 requests an hour per address, which a shared network exhausts fast.
+    /// </summary>
+    private async Task<IReadOnlyList<MatrixVersion>> ReadVersionsAsync(
+        CancellationToken cancellationToken)
+    {
+        var output = await GitAsync(
+            [
+                "for-each-ref",
+                "--format=%(refname:short)\t%(objectname)\t%(*objectname)\t%(creatordate:iso-strict)",
+                "refs/tags"
+            ],
+            cancellationToken);
+        var versions = new List<(MatrixVersion Value, Version SortKey)>();
+        foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
+        {
+            var parts = line.Trim().Split('\t');
+            if (parts.Length < 4 || !VersionRegex().IsMatch(parts[0]))
+            {
+                continue;
+            }
+
+            // An annotated tag points at a tag object; the dereferenced commit is
+            // in the third column and is what the report URLs must use.
+            var commit = parts[2].Length > 0 ? parts[2] : parts[1];
+            if (!DateTimeOffset.TryParse(parts[3], out var date))
+            {
+                continue;
+            }
+
+            versions.Add((
+                new MatrixVersion(parts[0], date, commit),
+                Version.Parse(parts[0])));
+        }
+
+        return versions
+            .OrderByDescending(version => version.SortKey)
+            .Select(version => version.Value)
+            .ToArray();
     }
 
     private async Task<GitHubRepository> ReadRepositoryAsync(CancellationToken cancellationToken)
@@ -150,4 +195,7 @@ internal sealed partial class WebTarget(
 
     [GeneratedRegex(@"github\.com[/:](?<owner>[^/]+)/(?<name>[^/]+?)(?:\.git)?$", RegexOptions.IgnoreCase, "ru-RU")]
     private static partial Regex GitHubRegex();
+
+    [GeneratedRegex(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant)]
+    private static partial Regex VersionRegex();
 }

@@ -62,15 +62,24 @@ internal sealed class GitHubMatrixDataSource(
         }
 
         string? warning = null;
-        try
+        if (catalog.Versions.Count > 0)
         {
-            versions.AddRange(await LoadVersionsAsync(catalog.Repository, cancellationToken));
+            // The build bakes the releases in from the git clone, which keeps the
+            // published application off the rate limited GitHub API entirely.
+            versions.AddRange(catalog.Versions);
         }
-        catch (Exception exception)
+        else
         {
-            // Losing the release list must not take down a page that can still
-            // render the versions it already has.
-            warning = exception.Message;
+            try
+            {
+                versions.AddRange(await LoadVersionsAsync(catalog.Repository, cancellationToken));
+            }
+            catch (Exception exception)
+            {
+                // Losing the release list must not take down a page that can still
+                // render the versions it already has.
+                warning = exception.Message;
+            }
         }
 
         return new MatrixCatalogResult(catalog with { Versions = versions }, warning);
