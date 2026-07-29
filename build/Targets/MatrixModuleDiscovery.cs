@@ -1,21 +1,8 @@
-using System.Reflection;
-using System.Runtime.Loader;
 using System.Diagnostics;
 using System.Xml.Linq;
 using Matrix;
-// ReSharper disable NotAccessedPositionalProperty.Global
 
 namespace Build.Targets;
-
-internal sealed record DiscoveredMatrixModule(
-    MatrixModule Metadata,
-    string ProjectPath,
-    string AssemblyPath);
-
-internal interface IMatrixModuleDiscovery
-{
-    IReadOnlyList<DiscoveredMatrixModule> Discover();
-}
 
 internal sealed class MatrixModuleDiscovery(IBuildPaths buildPaths) : IMatrixModuleDiscovery
 {
@@ -129,22 +116,5 @@ internal sealed class MatrixModuleDiscovery(IBuildPaths buildPaths) : IMatrixMod
         }
 
         return output;
-    }
-
-    private sealed class MatrixAssemblyLoadContext(string assemblyPath)
-        : AssemblyLoadContext(isCollectible: true)
-    {
-        private readonly AssemblyDependencyResolver _resolver = new(assemblyPath);
-
-        protected override Assembly? Load(AssemblyName assemblyName)
-        {
-            if (assemblyName.Name == typeof(MatrixModule).Assembly.GetName().Name)
-            {
-                return typeof(MatrixModule).Assembly;
-            }
-
-            var path = _resolver.ResolveAssemblyToPath(assemblyName);
-            return path is null ? null : LoadFromAssemblyPath(path);
-        }
     }
 }

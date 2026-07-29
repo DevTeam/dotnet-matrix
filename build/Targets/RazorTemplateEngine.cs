@@ -8,15 +8,6 @@ using System.Text.Encodings.Web;
 
 namespace Build.Targets;
 
-internal interface ITemplateEngine
-{
-    Task RenderAsync<TModel>(
-        string templateName,
-        TModel model,
-        Stream stream,
-        CancellationToken cancellationToken);
-}
-
 internal sealed class RazorTemplateEngine : ITemplateEngine
 {
     private static readonly IReadOnlyList<RazorCompiledItem> CompiledItems =

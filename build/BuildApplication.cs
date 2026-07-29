@@ -15,7 +15,7 @@ internal sealed class BuildApplication(
     IReadmeTarget readmeTarget,
     IPrepareCommitTarget prepareCommitTarget,
     ICiReportsTarget ciReportsTarget,
-    RunConfigurationsTarget runConfigurationsTarget,
+    IRunConfigurationsTarget runConfigurationsTarget,
     IWebTarget webTarget)
 {
     public Task<int> RunAsync()

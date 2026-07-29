@@ -18,18 +18,10 @@ internal partial class MatrixComposition
             .Arg<string[]>("args")
             .Arg<Assembly>("moduleAssembly")
             .Arg<MatrixRunMode>("mode")
-            .Bind<MatrixModule>().As(Lifetime.Singleton)
-                .To(context =>
-                {
-                    context.Inject(out Assembly moduleAssembly);
-                    return MatrixMetadata.Read(moduleAssembly);
-                })
-            .Bind<MatrixModuleAssembly>().As(Lifetime.Singleton)
-                .To((Assembly moduleAssembly) => new MatrixModuleAssembly(moduleAssembly))
-            .Bind<IRunnerOptionsParser>().As(Lifetime.Singleton).To<RunnerOptionsParser>()
-            .Bind<IMatrixLibraryCatalog>().As(Lifetime.Singleton).To<MatrixLibraryCatalog>()
-            .Bind<IMatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
-            .Bind<IBenchmarkEnvironmentProvider>().As(Lifetime.Singleton)
-                .To<BenchmarkEnvironmentProvider>()
-            .Bind<IMatrixRunner>().As(Lifetime.Singleton).To<MatrixRunnerSelector>();
+            .Singleton(context => {
+                context.Inject(out Assembly moduleAssembly);
+                return MatrixMetadata.Read(moduleAssembly);
+            })
+            .Singleton((Assembly moduleAssembly) => new MatrixModuleAssembly(moduleAssembly))
+            .Singleton<RunnerOptionsParser, MatrixLibraryCatalog, MatrixReportStore, BenchmarkEnvironmentProvider, MatrixRunnerSelector>();
 }

@@ -3,11 +3,6 @@ using System.Text.Json;
 
 namespace Build.Targets;
 
-internal interface IMetadataTarget
-{
-    int Run(IReadOnlyList<DiscoveredMatrixModule> modules);
-}
-
 internal sealed class MetadataTarget(IBuildPaths buildPaths) : IMetadataTarget
 {
     private static readonly JsonSerializerOptions JsonOptions =

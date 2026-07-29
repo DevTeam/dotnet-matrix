@@ -6,13 +6,6 @@ using System.Text.RegularExpressions;
 
 namespace Build.Targets;
 
-internal interface IWebTarget
-{
-    Task<int> RunAsync(
-        IReadOnlyList<DiscoveredMatrixModule> modules,
-        CancellationToken cancellationToken);
-}
-
 internal sealed partial class WebTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,

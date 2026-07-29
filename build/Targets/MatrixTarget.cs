@@ -3,16 +3,6 @@ using System.Diagnostics;
 
 namespace Build.Targets;
 
-internal interface IMatrixTarget
-{
-    Task<int> RunAsync(
-        DiscoveredMatrixModule module,
-        MatrixMode mode,
-        string? libraries,
-        bool smoke,
-        CancellationToken cancellationToken);
-}
-
 internal sealed class MatrixTarget(IBuildPaths buildPaths) : IMatrixTarget
 {
     public async Task<int> RunAsync(

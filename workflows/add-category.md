@@ -79,7 +79,8 @@ The repository has three layers:
    reports, run configurations, charts, README sections, and the production Web
    catalog.
 
-Apply these source architecture rules in every layer:
+Apply these source architecture rules in every assembly, including `Matrix`,
+category modules, `Matrix.Web`, and `build`:
 
 - Put every named type in its own source file. This includes classes,
   interfaces, records, structs, enums, delegates, and attributes. Name the file
@@ -91,6 +92,14 @@ Apply these source architecture rules in every layer:
   inside category services.
 - Data records, attributes, pure static helpers, and category scenario models
   do not need artificial interfaces.
+- Keep interfaces, implementations, DTO records, transport records, and
+  disposable rendering helpers in their own files even when they are used by
+  only one service. Do not hide named types as nested declarations merely to
+  reduce the file count.
+- At a Pure.DI composition root, register application and infrastructure
+  services explicitly as interface-to-implementation bindings. Composition
+  arguments such as configured `HttpClient` instances are allowed when they
+  cross a framework boundary.
 - Benchmark methods remain direct strongly typed calls to the compared library.
   Do not add a universal mapper interface, DI resolution, or interface dispatch
   to a measured hot path merely to satisfy the orchestration rule.

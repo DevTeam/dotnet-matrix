@@ -19,15 +19,16 @@ internal partial class Composition
             .Arg<CancellationToken>("cancellationToken")
             .Bind<IBuildPaths>().As(Lifetime.Singleton).To<BuildPaths>()
             .Bind<IMatrixModuleDiscovery>().As(Lifetime.Singleton).To<MatrixModuleDiscovery>()
+            .Bind<ITemplateEngine>().As(Lifetime.Singleton).To<RazorTemplateEngine>()
+            .Bind<IMatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
             .Bind<IMatrixTarget>().As(Lifetime.Singleton).To<MatrixTarget>()
             .Bind<IMetadataTarget>().As(Lifetime.Singleton).To<MetadataTarget>()
             .Bind<ILibraryTarget>().As(Lifetime.Singleton).To<LibraryTarget>()
             .Bind<IReportChartsTarget>().As(Lifetime.Singleton).To<ReportChartsTarget>()
-            .Bind<ITemplateEngine>().As(Lifetime.Singleton).To<RazorTemplateEngine>()
             .Bind<IReadmeTarget>().As(Lifetime.Singleton).To<ReadmeTarget>()
             .Bind<IPrepareCommitTarget>().As(Lifetime.Singleton).To<PrepareCommitTarget>()
-            .Bind<IMatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
             .Bind<ICiReportsTarget>().As(Lifetime.Singleton).To<CiReportsTarget>()
             .Bind<IWebTarget>().As(Lifetime.Singleton).To<WebTarget>()
-            .Bind<RunConfigurationsTarget>().As(Lifetime.Singleton).To<RunConfigurationsTarget>();
+            .Bind<IRunConfigurationsTarget>().As(Lifetime.Singleton)
+                .To<RunConfigurationsTarget>();
 }

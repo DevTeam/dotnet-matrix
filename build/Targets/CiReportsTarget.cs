@@ -3,20 +3,6 @@ using System.Text;
 
 namespace Build.Targets;
 
-internal sealed record CiReportsOptions(
-    string? Libraries,
-    bool Smoke,
-    bool SkipBenchmarks,
-    string? OutputDirectory);
-
-internal interface ICiReportsTarget
-{
-    Task<int> RunAsync(
-        IReadOnlyList<DiscoveredMatrixModule> modules,
-        CiReportsOptions options,
-        CancellationToken cancellationToken);
-}
-
 internal sealed class CiReportsTarget(
     IBuildPaths buildPaths,
     IMatrixTarget matrixTarget,

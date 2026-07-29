@@ -12,5 +12,6 @@ internal partial class Composition : ServiceProviderFactory<Composition>
             .Hint(Hint.ThreadSafe, "Off")
             .Root<IMatrixDataSource>()
             .Arg<HttpClient>("httpClient")
-            .Bind<IMatrixDataSource>().As(Lifetime.Singleton).To<GitHubMatrixDataSource>();
+            .Bind<IMatrixDataSource>().As(Lifetime.Singleton)
+                .To<GitHubMatrixDataSource>();
 }

@@ -1,43 +1,8 @@
 using System.Text.RegularExpressions;
 // ReSharper disable CheckNamespace
 // ReSharper disable UseCollectionExpression
-// ReSharper disable ClassNeverInstantiated.Local
-// ReSharper disable NotAccessedPositionalProperty.Global
 
 namespace Matrix.Web;
-
-/// <summary>
-/// <paramref name="Warning"/> is set when the release list could not be read but the
-/// application can still work with whatever versions it does have.
-/// </summary>
-public sealed record MatrixCatalogResult(
-    MatrixWebCatalog Catalog,
-    string? Warning);
-
-public interface IMatrixDataSource
-{
-    Task<MatrixCatalogResult> LoadCatalogAsync(CancellationToken cancellationToken = default);
-
-    Task<DateTimeOffset?> LoadVersionDateAsync(
-        MatrixWebCatalog catalog,
-        MatrixVersion version,
-        CancellationToken cancellationToken = default);
-
-    Task<IReadOnlyList<CategoryReport>> LoadAsync(
-        MatrixWebCatalog catalog,
-        MatrixVersion version,
-        IEnumerable<MatrixCategory> categories,
-        CancellationToken cancellationToken = default);
-}
-
-public sealed record CategoryReport(
-    MatrixCategory Category,
-    FeatureReport? Features,
-    BenchmarkReport? Benchmarks,
-    MatrixLibraryMetadataCatalog? LibraryCatalog,
-    MatrixChartCatalog? ChartCatalog,
-    MatrixFeatureCatalog? FeatureCatalog,
-    string? Error);
 
 internal sealed partial class GitHubMatrixDataSource(
     HttpClient httpClient,
@@ -378,20 +343,6 @@ internal sealed partial class GitHubMatrixDataSource(
 
         return string.Empty;
     }
-
-    private sealed record GitHubTag(
-        string Name,
-        GitHubTagCommit Commit);
-
-    private sealed record GitHubTagCommit(string Sha);
-
-    private sealed record GitHubCommit(
-        string Sha,
-        GitHubCommitData Commit);
-
-    private sealed record GitHubCommitData(GitHubCommitter Committer);
-
-    private sealed record GitHubCommitter(DateTimeOffset Date);
 
     [GeneratedRegex(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant)]
     private static partial Regex VersionRegex();

@@ -1,10 +1,5 @@
 namespace Build.Targets;
 
-internal interface IBuildPaths
-{
-    string SolutionDirectory { get; }
-}
-
 internal sealed class BuildPaths : IBuildPaths
 {
     public BuildPaths()

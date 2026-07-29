@@ -3,13 +3,6 @@ using System.Text.Json;
 
 namespace Build.Targets;
 
-internal interface IReadmeTarget
-{
-    Task<int> RunAsync(
-        IReadOnlyList<DiscoveredMatrixModule> modules,
-        CancellationToken cancellationToken);
-}
-
 internal sealed class ReadmeTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
@@ -157,39 +150,3 @@ internal sealed class ReadmeTarget(
         JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
 }
-
-public sealed record ReadmeModel(
-    string ApplicationUrl,
-    IReadOnlyList<ReadmeCategory> Categories);
-
-public sealed record ReadmeCategory(
-    string Name,
-    IReadOnlyList<ReadmeLibrary> Libraries,
-    IReadOnlyList<ReadmeChart> Overviews,
-    IReadOnlyList<ReadmeFeature> Features,
-    IReadOnlyList<ReadmeRating> Rating);
-
-public sealed record ReadmeRating(
-    int Place,
-    string Name,
-    int Gold,
-    int Silver,
-    int Bronze,
-    string Awards);
-
-public sealed record ReadmeLibrary(
-    string Name,
-    string Version,
-    string Description,
-    string? Url,
-    string Logo);
-
-public sealed record ReadmeChart(
-    string Name,
-    string Path);
-
-public sealed record ReadmeFeature(
-    int Order,
-    string Name,
-    string? Description,
-    string ChartPath);

@@ -86,7 +86,7 @@
 
 @code {
     private MatrixOverview? _overview;
-    private RowView[] _rows = [];
+    private OverviewChartRowView[] _rows = [];
 
     [Parameter, EditorRequired]
     public required CategoryReport Report { get; set; }
@@ -124,9 +124,17 @@
         _rows = _overview is null
             ? []
             : _overview.Ranked
-                .Select((row, index) => new RowView(row, $"{index + 1}.", null, Place(places, row)))
+                .Select((row, index) => new OverviewChartRowView(
+                    row,
+                    $"{index + 1}.",
+                    null,
+                    Place(places, row)))
                 .Concat(_overview.Unranked.Select(row =>
-                    new RowView(row, null, Coverage(_overview, row), Place(places, row))))
+                    new OverviewChartRowView(
+                        row,
+                        null,
+                        Coverage(_overview, row),
+                        Place(places, row))))
                 .ToArray();
     }
 
@@ -146,7 +154,7 @@
     /// A crossed star means the row could not win a medal here at all: either the
     /// library is out of the rating, or it does not cover the whole group.
     /// </summary>
-    private (string? Icon, string? Title) Mark(RowView item)
+    private (string? Icon, string? Title) Mark(OverviewChartRowView item)
     {
         if (!MatrixView.IsRated(Report, item.Row.LibraryId))
         {
@@ -176,10 +184,4 @@
     private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
         $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}"
         + $" · Missing: {string.Join(", ", row.MissingFeatures)}";
-
-    private sealed record RowView(
-        MatrixOverviewRow Row,
-        string? Rank,
-        string? Coverage,
-        string? Place);
 }

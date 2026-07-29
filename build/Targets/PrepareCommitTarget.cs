@@ -2,17 +2,9 @@ using Matrix;
 
 namespace Build.Targets;
 
-internal interface IPrepareCommitTarget
-{
-    Task<int> RunAsync(
-        IReadOnlyList<DiscoveredMatrixModule> modules,
-        bool runMatrix,
-        CancellationToken cancellationToken);
-}
-
 internal sealed class PrepareCommitTarget(
     IMatrixTarget matrixTarget,
-    RunConfigurationsTarget runConfigurationsTarget,
+    IRunConfigurationsTarget runConfigurationsTarget,
     IReadmeTarget readmeTarget) : IPrepareCommitTarget
 {
     public async Task<int> RunAsync(
