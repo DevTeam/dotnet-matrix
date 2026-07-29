@@ -1,32 +1,6 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
+// ReSharper disable UseCollectionExpression
 namespace Matrix;
-
-/// <summary>
-/// One medal: the overview group it was won in and the place, 1 to 3.
-/// </summary>
-public sealed record MatrixMedal(
-    string GroupId,
-    string GroupName,
-    int Place);
-
-/// <summary>
-/// What one library won across the overview groups of a category.
-/// </summary>
-public sealed record MatrixMedals(
-    string LibraryId,
-    string Name,
-    IReadOnlyList<MatrixMedal> Awards)
-{
-    public int Gold => Count(1);
-
-    public int Silver => Count(2);
-
-    public int Bronze => Count(3);
-
-    public int Total => Awards.Count;
-
-    public int Count(int place) => Awards.Count(award => award.Place == place);
-}
 
 /// <summary>
 /// Medals are derived from the overview rankings rather than computed separately:

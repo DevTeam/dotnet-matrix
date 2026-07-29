@@ -1,4 +1,3 @@
-// ReSharper disable NotAccessedPositionalProperty.Global
 namespace Matrix;
 
 /// <summary>
@@ -21,13 +20,3 @@ public sealed class MatrixFeatureAttribute(
 
     public string Description { get; } = description;
 }
-
-public sealed record MatrixFeatureMetadata(
-    string Id,
-    int Order,
-    string Name,
-    string Description);
-
-public sealed record MatrixFeatureCatalog(
-    int SchemaVersion,
-    IReadOnlyList<MatrixFeatureMetadata> Features);

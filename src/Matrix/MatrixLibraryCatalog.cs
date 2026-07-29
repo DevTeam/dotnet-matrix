@@ -1,13 +1,6 @@
 // ReSharper disable UnusedMemberInSuper.Global
 namespace Matrix;
 
-public interface IMatrixLibraryCatalog
-{
-    IReadOnlyList<MatrixLibrary> All { get; }
-
-    IReadOnlyList<MatrixLibrary> Filter(IEnumerable<string> filters);
-}
-
 public sealed class MatrixLibraryCatalog(MatrixModule module) : IMatrixLibraryCatalog
 {
     public IReadOnlyList<MatrixLibrary> All => module.Libraries;

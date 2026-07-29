@@ -3,21 +3,6 @@ using System.Xml.Linq;
 
 namespace Matrix;
 
-public sealed record MatrixLibrary(
-    string Id,
-    string Name,
-    string Package,
-    string Version);
-
-public sealed record MatrixModule(
-    string Id,
-    string Name,
-    string RunConfigurationPrefix,
-    string ReportDirectory,
-    IReadOnlyList<MatrixLibrary> Libraries,
-    MatrixLibraryMetadataCatalog LibraryMetadata,
-    MatrixFeatureCatalog FeatureMetadata);
-
 public static class MatrixMetadata
 {
     private const string ProjectResourceName = "Matrix.Project.csproj";

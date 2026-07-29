@@ -18,11 +18,3 @@ public enum FeatureId
     PrepareAndRegister,
     PrepareAndRegisterAndSimpleResolve
 }
-
-public enum FeatureStatus
-{
-    Supported,
-    Unsupported,
-    NotApplicable,
-    Failed
-}

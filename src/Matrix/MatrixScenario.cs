@@ -2,17 +2,6 @@
 namespace Matrix;
 
 /// <summary>
-/// One library's result for a single benchmark scenario.
-/// </summary>
-public sealed record MatrixScenarioRow(
-    string LibraryId,
-    string Name,
-    double? Time,
-    double? TimeStandardError,
-    double? Memory,
-    string? EnvironmentId);
-
-/// <summary>
 /// Selection, ordering and scaling for a single scenario. The readme renderer draws
 /// one table with both metrics side by side; the web application draws two ranked
 /// lists. Both take their rows and their bar lengths from here.
