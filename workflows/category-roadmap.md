@@ -120,7 +120,7 @@ Keep in `Matrix.DependencyInjection`:
 - DI scenario models and roots;
 - DI-specific validation such as lifetime, disposal, property injection, and
   lazy collection checks;
-- the Pure.DI composition root;
+- Pure.DI benchmark compositions and their shared `DefaultComposition`;
 - every direct library benchmark method;
 - category-specific unavailable reasons and policies.
 

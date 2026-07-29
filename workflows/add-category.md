@@ -86,8 +86,9 @@ Apply these source architecture rules in every layer:
   after the type. Generated source and compiler-generated types are the only
   exceptions.
 - Application and infrastructure services collaborate through interfaces and
-  constructor injection. Bind their implementations in Pure.DI rather than
-  constructing service implementations inside other services.
+  constructor injection. The shared `MatrixApplicationHost` composes their
+  implementations in Pure.DI rather than constructing service implementations
+  inside category services.
 - Data records, attributes, pure static helpers, and category scenario models
   do not need artificial interfaces.
 - Benchmark methods remain direct strongly typed calls to the compared library.
@@ -122,7 +123,7 @@ Read these files before changing shared behavior:
 | Library filtering | `src/Matrix/MatrixLibraryCatalog.cs` |
 | Feature declaration | `src/Matrix/MatrixFeatureAttribute.cs`, `src/Matrix/MatrixFeatureCatalog.cs`, `src/Matrix/MatrixFeatureMetadata.cs` |
 | Report schema and storage | `src/Matrix/FeatureReport.cs`, `src/Matrix/BenchmarkReport.cs`, related one-type report files, `src/Matrix/MatrixReportStore.cs` |
-| Shared application and runners | `src/Matrix/MatrixApplication.cs`, `src/Matrix/MatrixFeatureValidationRunner.cs`, `src/Matrix/MatrixBenchmarkRunner.cs` |
+| Shared application and runners | `src/Matrix/MatrixApplicationHost.cs`, `src/Matrix/MatrixComposition.cs`, `src/Matrix/MatrixApplication.cs`, `src/Matrix/MatrixRunnerSelector.cs`, `src/Matrix/MatrixFeatureValidationRunner.cs`, `src/Matrix/MatrixBenchmarkRunner.cs` |
 | Benchmark and availability declarations | `src/Matrix/LibraryBenchmarkAttribute.cs`, `src/Matrix/ReportedBenchmarkAttribute.cs`, `src/Matrix/FeatureUnavailableAttribute.cs`, `src/Matrix/FeatureStatus.cs` |
 | Environment identity | `src/Matrix/BenchmarkEnvironment.cs`, `src/Matrix/BenchmarkEnvironmentProvider.cs`, `src/Matrix/BenchmarkEnvironmentComparer.cs` |
 | Charts, metrics, overviews, and ratings | `src/Matrix/MatrixChartCatalog.cs`, `src/Matrix/MatrixMetrics.cs`, `src/Matrix/MatrixOverviews.cs`, `src/Matrix/MatrixRating.cs` |
@@ -213,7 +214,6 @@ src/Matrix.<Category>/
   Model/
   Scenarios/
   Validation/
-  Composition.cs
   GlobalUsings.cs
   Program.cs
   Matrix.<Category>.csproj
@@ -265,10 +265,6 @@ The category project must be an executable and reference the shared project:
     <ItemGroup>
         <ProjectReference Include="..\Matrix\Matrix.csproj"/>
         <PackageReference Include="BenchmarkDotNet" Version="..."/>
-        <PackageReference Include="Pure.DI" Version="...">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
     </ItemGroup>
 
     <Import Project="..\Matrix\Matrix.Module.targets"/>
@@ -343,33 +339,43 @@ Annotated `PackageReference` and package-less `MatrixLibrary` items feed the
 same generated catalog and module metadata. Package and version remain required
 for package-backed libraries and are absent for a package-less baseline.
 
-## 5. Use dependency injection in the category application
+## 5. Use the shared application host
 
-Internal orchestration must use Pure.DI. Keep `Program.cs` minimal:
+Internal orchestration is composed once through Pure.DI in `src/Matrix`.
+Categories must not copy the application composition. Keep `Program.cs`
+limited to the module assembly and compile-time run mode:
 
 ```csharp
-return new Composition(args).Root.Run();
+using System.Reflection;
+using Matrix;
+
+#if MATRIX_VALIDATION
+const MatrixRunMode mode = MatrixRunMode.Validation;
+#elif MATRIX_BENCHMARK
+const MatrixRunMode mode = MatrixRunMode.Benchmark;
+#else
+#error MatrixMode must be Validation or Benchmark.
+#endif
+
+return MatrixApplicationHost.Run(args, Assembly.GetExecutingAssembly(), mode);
 ```
 
-In `Composition.cs`, compose at least:
+The explicit assembly is required because feature and benchmark declarations
+live in the category executable, while the host and runners live in `Matrix`.
+Do not add a category `Composition.cs` for shared orchestration.
 
-- `MatrixMetadata.Read(typeof(Composition).Assembly)` as the `MatrixModule`;
-- `new MatrixModuleAssembly(typeof(Composition).Assembly)`;
-- the command-line options parser;
-- `MatrixLibraryCatalog`;
-- the feature and benchmark report stores;
-- `MatrixFeatureValidationRunner` for `MATRIX_VALIDATION`;
-- `MatrixBenchmarkRunner` for `MATRIX_BENCHMARK`;
-- `MatrixApplication` as the application root.
-
-Follow `src/Matrix.DependencyInjection/Composition.cs` for composition style,
-not for category-specific registrations or policies.
+A category may still contain Pure.DI setup files when Pure.DI itself is part of
+the category workload. For example, Dependency Injection keeps
+`DefaultComposition.cs` and scenario compositions used by its benchmarks.
+Those benchmark fixtures are category code, not application orchestration.
 
 ## 6. Reuse shared category infrastructure
 
 Every category uses the execution framework from `src/Matrix`:
 
 - `MatrixApplication`;
+- `MatrixApplicationHost`;
+- `MatrixRunnerSelector`;
 - `MatrixFeatureValidationRunner`;
 - `MatrixBenchmarkRunner`;
 - `LibraryBenchmarkAttribute`;
@@ -709,7 +715,8 @@ specification for other categories.
 - [ ] All five `MatrixModule*` properties are present and unique.
 - [ ] The project imports `src/Matrix/Matrix.Module.targets`.
 - [ ] Validation and benchmark outputs are isolated by `MatrixMode`.
-- [ ] Pure.DI composes internal application services through interfaces.
+- [ ] The category starts through `MatrixApplicationHost` and does not copy the
+      shared Pure.DI application composition.
 - [ ] No DI resolution or infrastructure interface dispatch was added to a
       measured benchmark hot path.
 - [ ] Every compared package has exact version and complete matrix metadata.
