@@ -85,13 +85,13 @@ public partial class PerResolve
     private void Validate(string library, PerResolveRoot root)
     {
 #if MATRIX_VALIDATION
-        Validation.Validation.Same(
+        MatrixValidation.Same(
             root.First,
             root.Second,
             $"{library} PerResolve dependency differs inside a graph.");
         if (_validationStates.TryGetValue(library, out var previous))
         {
-            Validation.Validation.Different(
+            MatrixValidation.Different(
                 root.First,
                 previous,
                 $"{library} PerResolve dependency leaked between resolves.");

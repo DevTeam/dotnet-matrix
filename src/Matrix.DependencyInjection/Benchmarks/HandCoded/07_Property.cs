@@ -7,7 +7,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class Property
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<PropertyRoot1, PropertyRoot2, PropertyRoot3> HandCoded()
     {

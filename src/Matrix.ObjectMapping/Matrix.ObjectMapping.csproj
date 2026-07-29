@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>object-mapping</MatrixModuleId>
+        <MatrixModuleName>Object Mapping</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Mapping</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>ObjectMapping</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.ObjectMapping.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Pure.DI" Version="2.5.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="AutoMapper" Version="16.2.0">
+            <MatrixLibraryId>AutoMapper</MatrixLibraryId>
+            <MatrixLibraryName>AutoMapper</MatrixLibraryName>
+            <MatrixCodeName>AutoMapper</MatrixCodeName>
+            <MatrixDescription>A convention-based object-object mapper with runtime configuration and compiled mapping plans.</MatrixDescription>
+            <MatrixDocumentationUrl>https://docs.automapper.io/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/LuckyPennySoftware/AutoMapper</MatrixRepositoryUrl>
+            <MatrixLogo>logos/auto-mapper.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Mapster" Version="10.0.11">
+            <MatrixLibraryId>Mapster</MatrixLibraryId>
+            <MatrixLibraryName>Mapster</MatrixLibraryName>
+            <MatrixCodeName>Mapster</MatrixCodeName>
+            <MatrixDescription>An object mapper with runtime configuration, expression compilation, and projection support.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MapsterMapper/Mapster/wiki</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MapsterMapper/Mapster</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mapster.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Riok.Mapperly" Version="4.3.1">
+            <PrivateAssets>all</PrivateAssets>
+            <MatrixLibraryId>Mapperly</MatrixLibraryId>
+            <MatrixLibraryName>Mapperly</MatrixLibraryName>
+            <MatrixCodeName>Mapperly</MatrixCodeName>
+            <MatrixDescription>A source generator that creates readable object mapping code at compile time.</MatrixDescription>
+            <MatrixDocumentationUrl>https://mapperly.riok.app/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/riok/mapperly</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mapperly.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MatrixLibrary Include="HandCoded">
+            <MatrixLibraryName>Hand-coded</MatrixLibraryName>
+            <MatrixCodeName>HandCoded</MatrixCodeName>
+            <MatrixDescription>Direct object mapping written in C# without a mapping library.</MatrixDescription>
+            <MatrixLogo>logos/hand-coded.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>false</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

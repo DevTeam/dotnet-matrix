@@ -120,11 +120,13 @@ Read these files before changing shared behavior:
 | Module project contract and generated library catalog | `src/Matrix/Matrix.Module.targets` |
 | Embedded project metadata parsing | `src/Matrix/MatrixMetadata.cs` |
 | Library filtering | `src/Matrix/MatrixLibraryCatalog.cs` |
-| Feature declaration | `src/Matrix/MatrixFeature.cs` |
-| Report schema and storage | `src/Matrix/MatrixReports.cs`, `src/Matrix/MatrixReportStore.cs` |
-| Environment identity | `src/Matrix/BenchmarkEnvironment.cs` |
-| Charts, metrics, overviews, and ratings | `src/Matrix/MatrixCharts.cs`, `src/Matrix/MatrixMetrics.cs`, `src/Matrix/MatrixOverview.cs`, `src/Matrix/MatrixRating.cs` |
-| Command names | `src/Matrix/MatrixRunner.cs` |
+| Feature declaration | `src/Matrix/MatrixFeatureAttribute.cs`, `src/Matrix/MatrixFeatureCatalog.cs`, `src/Matrix/MatrixFeatureMetadata.cs` |
+| Report schema and storage | `src/Matrix/FeatureReport.cs`, `src/Matrix/BenchmarkReport.cs`, related one-type report files, `src/Matrix/MatrixReportStore.cs` |
+| Shared application and runners | `src/Matrix/MatrixApplication.cs`, `src/Matrix/MatrixFeatureValidationRunner.cs`, `src/Matrix/MatrixBenchmarkRunner.cs` |
+| Benchmark and availability declarations | `src/Matrix/LibraryBenchmarkAttribute.cs`, `src/Matrix/ReportedBenchmarkAttribute.cs`, `src/Matrix/FeatureUnavailableAttribute.cs`, `src/Matrix/FeatureStatus.cs` |
+| Environment identity | `src/Matrix/BenchmarkEnvironment.cs`, `src/Matrix/BenchmarkEnvironmentProvider.cs`, `src/Matrix/BenchmarkEnvironmentComparer.cs` |
+| Charts, metrics, overviews, and ratings | `src/Matrix/MatrixChartCatalog.cs`, `src/Matrix/MatrixMetrics.cs`, `src/Matrix/MatrixOverviews.cs`, `src/Matrix/MatrixRating.cs` |
+| Command names | `src/Matrix/MatrixNames.cs` |
 | Build discovery | `build/Targets/MatrixModuleDiscovery.cs` |
 | Validation and benchmark process launch | `build/Targets/MatrixTarget.cs` |
 | Per-library update | `build/Targets/LibraryTarget.cs` |
@@ -323,10 +325,23 @@ The generated catalog constant is then used everywhere:
 LibraryCatalog.MapperOne
 ```
 
-The current metadata contract assumes that each compared library has a primary
-NuGet package. If a category needs to compare something that cannot be
-represented this way, extend the shared metadata contract deliberately instead
-of inventing a fake package.
+Package-less hand-coded baselines use a separate `MatrixLibrary` item and must
+not invent a fake package or version:
+
+```xml
+<MatrixLibrary Include="HandCoded">
+    <MatrixLibraryName>Hand-coded</MatrixLibraryName>
+    <MatrixCodeName>HandCoded</MatrixCodeName>
+    <MatrixDescription>Direct implementation written in C#.</MatrixDescription>
+    <MatrixLogo>logos/hand-coded.svg</MatrixLogo>
+    <MatrixBaseline>true</MatrixBaseline>
+    <MatrixRating>false</MatrixRating>
+</MatrixLibrary>
+```
+
+Annotated `PackageReference` and package-less `MatrixLibrary` items feed the
+same generated catalog and module metadata. Package and version remain required
+for package-backed libraries and are absent for a package-less baseline.
 
 ## 5. Use dependency injection in the category application
 
@@ -339,32 +354,38 @@ return new Composition(args).Root.Run();
 In `Composition.cs`, compose at least:
 
 - `MatrixMetadata.Read(typeof(Composition).Assembly)` as the `MatrixModule`;
+- `new MatrixModuleAssembly(typeof(Composition).Assembly)`;
 - the command-line options parser;
 - `MatrixLibraryCatalog`;
 - the feature and benchmark report stores;
-- the category validation runner for `MATRIX_VALIDATION`;
-- the category benchmark runner for `MATRIX_BENCHMARK`;
-- the application root.
+- `MatrixFeatureValidationRunner` for `MATRIX_VALIDATION`;
+- `MatrixBenchmarkRunner` for `MATRIX_BENCHMARK`;
+- `MatrixApplication` as the application root.
 
 Follow `src/Matrix.DependencyInjection/Composition.cs` for composition style,
 not for category-specific registrations or policies.
 
-## 6. Implement category infrastructure
+## 6. Reuse shared category infrastructure
 
-Each category normally needs local equivalents of:
+Every category uses the execution framework from `src/Matrix`:
 
-- `LibraryBenchmarkAttribute`, containing a required library ID and optional
-  baseline flag;
-- `FeatureUnavailableAttribute`, containing library ID, status, and reason;
-- an application that parses library filters and invokes `IMatrixRunner`;
-- a validation runner;
-- a BenchmarkDotNet runner;
-- feature report and benchmark report merge logic where shared services do not
-  already provide it.
+- `MatrixApplication`;
+- `MatrixFeatureValidationRunner`;
+- `MatrixBenchmarkRunner`;
+- `LibraryBenchmarkAttribute`;
+- `FeatureUnavailableAttribute`;
+- `ReportedBenchmarkAttribute`;
+- `FeatureStatus`;
+- shared filtering, report merging, environment checks, and report storage.
 
-Use the shared `Matrix` models and services whenever their behavior is truly
-category-neutral. Do not move scenario semantics or library API abstractions
-into `src/Matrix`.
+Do not copy or wrap these services in `src/Matrix.<Category>`. The category
+owns only its feature IDs, common models, scenario inputs, semantic validation,
+library setup, direct benchmark methods, and unavailable reasons.
+
+The shared runners discover benchmark types from the explicitly injected
+`MatrixModuleAssembly`. Never replace that with
+`typeof(MatrixFeatureValidationRunner).Assembly` or another shared-assembly
+anchor.
 
 The library ID on every benchmark and unavailability declaration is mandatory.
 Validation must use that ID to associate code, feature support, and report
@@ -454,9 +475,9 @@ categories may have no meaningful baseline. A zero time or zero allocation is
 valid only when the feature contract genuinely requires no runtime work; never
 use zero as a placeholder for missing code.
 
-If a non-package baseline needs to appear in library metadata, first verify
-that the shared metadata model supports it. Extend the shared contract in one
-place if necessary.
+The shared metadata model represents a non-package baseline through the
+package-less `MatrixLibrary` item. Set `MatrixBaseline` explicitly and keep
+`MatrixRating` independent from baseline status.
 
 ## 10. Preserve partial report updates
 

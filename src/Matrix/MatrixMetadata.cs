@@ -37,16 +37,25 @@ public static class MatrixMetadata
             return false;
         }
 
-        var libraries = project
+        var packageLibraries = project
             .Descendants()
             .Where(element =>
                 element.Name.LocalName == "PackageReference"
                 && Value(element, "MatrixLibraryId") is not null)
-            .Select(ReadLibrary)
+            .Select(ReadPackageLibrary);
+        var sourceLibraries = project
+            .Descendants()
+            .Where(element => element.Name.LocalName == "MatrixLibrary")
+            .Select(ReadSourceLibrary);
+        var libraries = packageLibraries
+            .Concat(sourceLibraries)
             .OrderBy(library => library.Library.Id, StringComparer.OrdinalIgnoreCase)
             .ToArray();
         EnsureUnique(libraries, item => item.Library.Id, "library id");
-        EnsureUnique(libraries, item => item.Library.Package, "primary package");
+        EnsureUnique(
+            libraries.Where(item => item.Library.Package is not null).ToArray(),
+            item => item.Library.Package!,
+            "primary package");
         EnsureUnique(libraries, item => item.CodeName, "library code name");
 
         metadata = new MatrixModule(
@@ -98,7 +107,7 @@ public static class MatrixMetadata
                 $"Duplicate matrix feature order '{duplicateOrder.Key}'.");
     }
 
-    private static LibraryDefinition ReadLibrary(XElement packageReference)
+    private static MatrixLibraryDefinition ReadPackageLibrary(XElement packageReference)
     {
         if (packageReference.Attribute("Condition") is not null)
         {
@@ -116,51 +125,87 @@ public static class MatrixMetadata
         }
 
         var id = Required(packageReference, "MatrixLibraryId");
-        var documentationUrl = Value(packageReference, "MatrixDocumentationUrl");
-        var repositoryUrl = Value(packageReference, "MatrixRepositoryUrl");
-        if (documentationUrl is null && repositoryUrl is null)
+        return ReadLibrary(
+            packageReference,
+            id,
+            package,
+            version,
+            ReadBoolean(packageReference, "MatrixBaseline", id, false));
+    }
+
+    private static MatrixLibraryDefinition ReadSourceLibrary(XElement library)
+    {
+        if (library.Attribute("Condition") is not null)
+        {
+            throw new InvalidOperationException(
+                "A package-less MatrixLibrary cannot be conditional.");
+        }
+
+        var id = RequiredAttribute(library, "Include");
+        var baseline = ReadBoolean(library, "MatrixBaseline", id, false);
+        if (!baseline)
+        {
+            throw new InvalidOperationException(
+                $"Package-less matrix library '{id}' must define MatrixBaseline=true.");
+        }
+
+        return ReadLibrary(library, id, null, null, baseline);
+    }
+
+    private static MatrixLibraryDefinition ReadLibrary(
+        XElement element,
+        string id,
+        string? package,
+        string? version,
+        bool baseline)
+    {
+        var documentationUrl = Value(element, "MatrixDocumentationUrl");
+        var repositoryUrl = Value(element, "MatrixRepositoryUrl");
+        if (!baseline && documentationUrl is null && repositoryUrl is null)
         {
             throw new InvalidOperationException(
                 $"Matrix library '{id}' must define documentation or repository URL.");
         }
 
-        return new LibraryDefinition(
+        return new MatrixLibraryDefinition(
             new MatrixLibrary(
                 id,
-                Required(packageReference, "MatrixLibraryName"),
+                Required(element, "MatrixLibraryName"),
                 package,
-                version),
-            Required(packageReference, "MatrixCodeName"),
+                version,
+                baseline),
+            Required(element, "MatrixCodeName"),
             new MatrixLibraryMetadata(
                 id,
-                Required(packageReference, "MatrixDescription"),
+                Required(element, "MatrixDescription"),
                 documentationUrl,
                 repositoryUrl,
-                Required(packageReference, "MatrixLogo"),
-                ReadRated(packageReference, id)));
+                Required(element, "MatrixLogo"),
+                ReadBoolean(element, "MatrixRating", id, !baseline),
+                baseline));
     }
 
-    /// <summary>
-    /// Opt out of the medal rating with <c>&lt;MatrixRating&gt;false&lt;/MatrixRating&gt;</c>.
-    /// Absent means rated, so a new library competes unless it says otherwise.
-    /// </summary>
-    private static bool ReadRated(XElement packageReference, string id)
+    private static bool ReadBoolean(
+        XElement element,
+        string name,
+        string id,
+        bool defaultValue)
     {
-        var value = Value(packageReference, "MatrixRating");
+        var value = Value(element, name);
         if (value is null)
         {
-            return true;
+            return defaultValue;
         }
 
-        return bool.TryParse(value, out var rated)
-            ? rated
+        return bool.TryParse(value, out var result)
+            ? result
             : throw new InvalidOperationException(
-                $"Matrix library '{id}' has a non-boolean MatrixRating value '{value}'.");
+                $"Matrix library '{id}' has a non-boolean {name} value '{value}'.");
     }
 
     private static void EnsureUnique(
-        IReadOnlyList<LibraryDefinition> libraries,
-        Func<LibraryDefinition, string> selector,
+        IReadOnlyList<MatrixLibraryDefinition> libraries,
+        Func<MatrixLibraryDefinition, string> selector,
         string name)
     {
         var duplicate = libraries
@@ -203,12 +248,7 @@ public static class MatrixMetadata
         var value = element.Attribute(name)?.Value.Trim();
         return string.IsNullOrWhiteSpace(value)
             ? throw new InvalidOperationException(
-                $"Matrix PackageReference has no '{name}' attribute.")
+                $"Matrix library item has no '{name}' attribute.")
             : value;
     }
-
-    private sealed record LibraryDefinition(
-        MatrixLibrary Library,
-        string CodeName,
-        MatrixLibraryMetadata Metadata);
 }

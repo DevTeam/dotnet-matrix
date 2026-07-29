@@ -15,8 +15,9 @@ internal static class MatrixView
             .Select(library => new MatrixLibrary(
                 library.Id,
                 library.Name,
-                library.Package ?? string.Empty,
-                library.Version ?? string.Empty)))
+                library.Package,
+                library.Version,
+                library.Baseline)))
         .DistinctBy(library => library.Id, StringComparer.OrdinalIgnoreCase)
         .OrderBy(library => library.Name, StringComparer.OrdinalIgnoreCase);
 
@@ -25,8 +26,8 @@ internal static class MatrixView
             metadata.Id.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
 
     /// <summary>
-    /// Only declared libraries compete, and only while they keep the flag. The
-    /// hand-coded baseline has no catalog entry, so it never enters the rating.
+    /// Only declared libraries compete, and only while they keep the flag.
+    /// Baseline and rating are independent metadata decisions.
     /// </summary>
     public static bool IsRated(CategoryReport report, string libraryId) =>
         Metadata(report, libraryId) is { Rated: true };

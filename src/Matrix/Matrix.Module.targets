@@ -22,22 +22,28 @@
             <MatrixLibraryCatalogPath>$(IntermediateOutputPath)Generated\LibraryCatalog.g.cs</MatrixLibraryCatalogPath>
         </PropertyGroup>
         <ItemGroup>
-            <_MatrixLibrary Include="@(PackageReference)"
-                            Condition="'%(PackageReference.MatrixLibraryId)' != ''"/>
+            <_MatrixPackageLibrary Include="@(PackageReference)"
+                                   Condition="'%(PackageReference.MatrixLibraryId)' != ''"/>
+            <_MatrixSourceLibrary Include="@(MatrixLibrary)">
+                <MatrixLibraryId>%(MatrixLibrary.Identity)</MatrixLibraryId>
+            </_MatrixSourceLibrary>
+            <_MatrixLibrary Include="@(_MatrixPackageLibrary);@(_MatrixSourceLibrary)"/>
         </ItemGroup>
 
-        <Error Condition="'%(_MatrixLibrary.Version)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define Version."/>
+        <Error Condition="'%(_MatrixPackageLibrary.Version)' == ''"
+               Text="Matrix library package '%(_MatrixPackageLibrary.Identity)' must define Version."/>
+        <Error Condition="'%(_MatrixSourceLibrary.MatrixBaseline)' != 'true'"
+               Text="Package-less matrix library '%(_MatrixSourceLibrary.Identity)' must define MatrixBaseline=true."/>
         <Error Condition="'%(_MatrixLibrary.MatrixLibraryName)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixLibraryName."/>
+               Text="Matrix library '%(_MatrixLibrary.Identity)' must define MatrixLibraryName."/>
         <Error Condition="'%(_MatrixLibrary.MatrixCodeName)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixCodeName."/>
+               Text="Matrix library '%(_MatrixLibrary.Identity)' must define MatrixCodeName."/>
         <Error Condition="'%(_MatrixLibrary.MatrixDescription)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixDescription."/>
-        <Error Condition="'%(_MatrixLibrary.MatrixDocumentationUrl)' == '' and '%(_MatrixLibrary.MatrixRepositoryUrl)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define documentation or repository URL."/>
+               Text="Matrix library '%(_MatrixLibrary.Identity)' must define MatrixDescription."/>
+        <Error Condition="'%(_MatrixPackageLibrary.MatrixDocumentationUrl)' == '' and '%(_MatrixPackageLibrary.MatrixRepositoryUrl)' == ''"
+               Text="Matrix library package '%(_MatrixPackageLibrary.Identity)' must define documentation or repository URL."/>
         <Error Condition="'%(_MatrixLibrary.MatrixLogo)' == ''"
-               Text="Matrix library package '%(_MatrixLibrary.Identity)' must define MatrixLogo."/>
+               Text="Matrix library '%(_MatrixLibrary.Identity)' must define MatrixLogo."/>
 
         <ItemGroup>
             <_MatrixLibraryCatalogLine Include="// &lt;auto-generated/&gt;"/>

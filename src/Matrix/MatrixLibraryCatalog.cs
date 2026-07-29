@@ -20,7 +20,7 @@ public sealed class MatrixLibraryCatalog(MatrixModule module) : IMatrixLibraryCa
             .Where(library => patterns.Any(pattern =>
                 Matches(library.Id, pattern)
                 || Matches(library.Name, pattern)
-                || Matches(library.Package, pattern)))
+                || library.Package is not null && Matches(library.Package, pattern)))
             .ToArray();
         if (libraries.Length == 0)
         {

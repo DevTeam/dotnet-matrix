@@ -45,13 +45,13 @@ public partial class Scoped
     private void Validate(string library, ScopedRoot first, ScopedRoot second)
     {
 #if MATRIX_VALIDATION
-        Validation.Validation.Same(
+        MatrixValidation.Same(
             first.Dependency,
             second.Dependency,
             $"{library} scoped dependency differs inside a scope.");
         if (_validationStates.TryGetValue(library, out var previous))
         {
-            Validation.Validation.Different(
+            MatrixValidation.Different(
                 first.Dependency,
                 previous,
                 $"{library} scoped dependency leaked between scopes.");

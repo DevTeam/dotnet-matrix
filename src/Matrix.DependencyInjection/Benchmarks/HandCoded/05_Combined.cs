@@ -9,7 +9,7 @@ public partial class Combined
     private static readonly ICombinedSingleton HandCodedSingleton = new CombinedSingleton();
 
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<CombinedRoot1, CombinedRoot2, CombinedRoot3> HandCoded()
     {

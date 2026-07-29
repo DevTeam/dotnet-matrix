@@ -79,10 +79,10 @@ public partial class ChildContainer
     [Conditional("MATRIX_VALIDATION")]
     private static void Validate(string library, ChildRoot parent, ChildRoot child)
     {
-        Validation.Validation.Require(
+        MatrixValidation.Require(
             parent.Value is ParentValue,
             $"{library} child registration leaked into the parent container.");
-        Validation.Validation.Require(
+        MatrixValidation.Require(
             child.Value is ChildValue,
             $"{library} child registration was not used.");
     }

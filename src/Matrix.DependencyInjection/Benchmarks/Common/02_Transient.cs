@@ -23,7 +23,7 @@ public partial class Transient
 #if MATRIX_VALIDATION
         if (_validationStates.TryGetValue(library, out var previous))
         {
-            Validation.Validation.Different(current, previous, $"{library} transient was reused.");
+            MatrixValidation.Different(current, previous, $"{library} transient was reused.");
         }
 
         _validationStates[library] = current;

@@ -51,7 +51,7 @@ public partial class InterceptionWithProxy
     [Conditional("MATRIX_VALIDATION")]
     private static void Validate(string library, ICalculator calculator, int value)
     {
-        Validation.Validation.Require(library, value == 15, "Intercepted result is invalid.");
-        Validation.Validation.Require(library, calculator is not Calculator, "A proxy was not created.");
+        MatrixValidation.Require(library, value == 15, "Intercepted result is invalid.");
+        MatrixValidation.Require(library, calculator is not Calculator, "A proxy was not created.");
     }
 }

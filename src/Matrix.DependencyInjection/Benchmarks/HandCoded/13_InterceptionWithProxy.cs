@@ -6,7 +6,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class InterceptionWithProxy
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public ICalculator HandCoded()
     {

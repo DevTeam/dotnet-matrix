@@ -13,7 +13,7 @@ public partial class Complex
     private static readonly IThirdService HandThird = new ThirdService();
 
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<ComplexRoot1, ComplexRoot2, ComplexRoot3> HandCoded()
     {

@@ -7,7 +7,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class Generics
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<GenericRoot<int>, GenericRoot<float>, GenericRoot<object>> HandCoded()
     {

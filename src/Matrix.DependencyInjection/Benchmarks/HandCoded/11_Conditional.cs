@@ -7,7 +7,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class Conditional
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<ConditionalRoot1, ConditionalRoot2, ConditionalRoot3> HandCoded()
     {

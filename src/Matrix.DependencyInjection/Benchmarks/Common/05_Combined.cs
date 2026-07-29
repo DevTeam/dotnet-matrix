@@ -20,9 +20,9 @@ public partial class Combined
         ICombinedRoot second,
         ICombinedRoot third)
     {
-        Validation.Validation.Same(library, first.Singleton, second.Singleton, "Combined singleton differs.");
-        Validation.Validation.Same(library, first.Singleton, third.Singleton, "Combined singleton differs.");
-        Validation.Validation.Different(library, first.Transient, second.Transient, "Combined transient was reused.");
-        Validation.Validation.Different(library, first.Transient, third.Transient, "Combined transient was reused.");
+        MatrixValidation.Same(library, first.Singleton, second.Singleton, "Combined singleton differs.");
+        MatrixValidation.Same(library, first.Singleton, third.Singleton, "Combined singleton differs.");
+        MatrixValidation.Different(library, first.Transient, second.Transient, "Combined transient was reused.");
+        MatrixValidation.Different(library, first.Transient, third.Transient, "Combined transient was reused.");
     }
 }

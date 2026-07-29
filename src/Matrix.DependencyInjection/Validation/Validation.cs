@@ -1,31 +1,10 @@
+using static Matrix.MatrixValidation;
+
 namespace Matrix.DependencyInjection.Validation;
 
 internal static class Validation
 {
     private static int _pluginCount;
-
-    public static void Require(bool condition, string message)
-    {
-        if (!condition)
-        {
-            throw new InvalidOperationException(message);
-        }
-    }
-
-    public static void Require(string library, bool condition, string message) =>
-        Require(condition, $"{library}: {message}");
-
-    public static void Same(object? left, object? right, string message) =>
-        Require(ReferenceEquals(left, right), message);
-
-    public static void Same(string library, object? left, object? right, string message) =>
-        Require(library, ReferenceEquals(left, right), message);
-
-    public static void Different(object? left, object? right, string message) =>
-        Require(!ReferenceEquals(left, right), message);
-
-    public static void Different(string library, object? left, object? right, string message) =>
-        Require(library, !ReferenceEquals(left, right), message);
 
     public static void PropertyRoot(string library, IPropertyRoot root) =>
         Require(

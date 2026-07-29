@@ -27,9 +27,9 @@ public partial class Singleton
 #if MATRIX_VALIDATION
         if (_validationStates.TryGetValue(library, out var previous))
         {
-            Validation.Validation.Same(first, previous.First, $"{library} Singleton1 changed.");
-            Validation.Validation.Same(second, previous.Second, $"{library} Singleton2 changed.");
-            Validation.Validation.Same(third, previous.Third, $"{library} Singleton3 changed.");
+            MatrixValidation.Same(first, previous.First, $"{library} Singleton1 changed.");
+            MatrixValidation.Same(second, previous.Second, $"{library} Singleton2 changed.");
+            MatrixValidation.Same(third, previous.Third, $"{library} Singleton3 changed.");
         }
 
         _validationStates[library] = new ValidationState(first, second, third);

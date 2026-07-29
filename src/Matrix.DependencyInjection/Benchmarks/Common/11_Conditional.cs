@@ -31,15 +31,15 @@ public partial class Conditional
         ConditionalRoot2 second,
         ConditionalRoot3 third)
     {
-        Validation.Validation.Require(
+        MatrixValidation.Require(
             library,
             first.Service is ConditionalService1,
             "Conditional binding 1 failed.");
-        Validation.Validation.Require(
+        MatrixValidation.Require(
             library,
             second.Service is ConditionalService2,
             "Conditional binding 2 failed.");
-        Validation.Validation.Require(
+        MatrixValidation.Require(
             library,
             third.Service is ConditionalService3,
             "Conditional binding 3 failed.");

@@ -7,7 +7,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class Transient
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<ITransient1, ITransient2, ITransient3> HandCoded()
     {

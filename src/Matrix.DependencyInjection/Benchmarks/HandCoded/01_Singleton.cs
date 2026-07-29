@@ -7,7 +7,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 public partial class Singleton
 {
     [Benchmark(Baseline = true)]
-    [LibraryBenchmark(LibraryCatalog.HandCoded, true)]
+    [LibraryBenchmark(LibraryCatalog.HandCoded)]
     [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<ISingleton1, ISingleton2, ISingleton3> HandCoded()
     {
