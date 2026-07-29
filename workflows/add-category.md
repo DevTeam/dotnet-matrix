@@ -79,6 +79,21 @@ The repository has three layers:
    reports, run configurations, charts, README sections, and the production Web
    catalog.
 
+Apply these source architecture rules in every layer:
+
+- Put every named type in its own source file. This includes classes,
+  interfaces, records, structs, enums, delegates, and attributes. Name the file
+  after the type. Generated source and compiler-generated types are the only
+  exceptions.
+- Application and infrastructure services collaborate through interfaces and
+  constructor injection. Bind their implementations in Pure.DI rather than
+  constructing service implementations inside other services.
+- Data records, attributes, pure static helpers, and category scenario models
+  do not need artificial interfaces.
+- Benchmark methods remain direct strongly typed calls to the compared library.
+  Do not add a universal mapper interface, DI resolution, or interface dispatch
+  to a measured hot path merely to satisfy the orchestration rule.
+
 A category is discovered from the projects in `dotnet-matrix.slnx`. The build
 loads projects named `Matrix.*`, builds their validation variant, and calls
 `MatrixMetadata.TryRead` on the resulting assembly. A valid module is therefore
@@ -669,10 +684,13 @@ specification for other categories.
 - [ ] The English feature contract exists and defines support precisely.
 - [ ] The project name starts with `Matrix.` and is included in
       `dotnet-matrix.slnx`.
+- [ ] Every named source type is in a separate file named after the type.
 - [ ] All five `MatrixModule*` properties are present and unique.
 - [ ] The project imports `src/Matrix/Matrix.Module.targets`.
 - [ ] Validation and benchmark outputs are isolated by `MatrixMode`.
-- [ ] Pure.DI composes the internal application services.
+- [ ] Pure.DI composes internal application services through interfaces.
+- [ ] No DI resolution or infrastructure interface dispatch was added to a
+      measured benchmark hot path.
 - [ ] Every compared package has exact version and complete matrix metadata.
 - [ ] Library IDs are explicit on every benchmark and availability declaration.
 - [ ] Validation and benchmarks reuse scenario code without adding hot-path

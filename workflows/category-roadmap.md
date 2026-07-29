@@ -68,6 +68,83 @@ incompatible data formats.
 | Run configuration prefix | `Mapping` |
 | Report directory | `ObjectMapping` |
 
+### Implementation sequence
+
+#### 1. Remove category infrastructure duplication
+
+Before defining or implementing Object Mapping, extract the category-neutral
+execution framework from `src/Matrix.DependencyInjection` into `src/Matrix`.
+Object Mapping must consume the extracted implementation rather than copy the
+DI runners and attributes.
+
+Move or generalize:
+
+- `Application`;
+- `FeatureValidationRunner`;
+- `BenchmarkRun`;
+- `LibraryFilter`;
+- `FeatureStatus`;
+- `FeatureUnavailableAttribute`;
+- `LibraryBenchmarkAttribute`;
+- `ReportedBenchmarkAttribute`;
+- the category-neutral `Require`, `Same`, and `Different` validation helpers.
+
+During the extraction:
+
+- put every named class, interface, record, enum, delegate, and attribute in a
+  separate file named after that type;
+- access application and infrastructure services through interfaces and
+  constructor injection;
+- bind implementations in Pure.DI instead of constructing them inside other
+  services;
+- do not introduce service interfaces for data records, attributes, pure
+  helpers, or scenario models;
+- keep direct library calls in benchmark methods, without a universal mapping
+  interface or DI resolution in the measured hot path.
+
+The shared runners must receive the module assembly explicitly. They currently
+discover features through `typeof(FeatureValidationRunner).Assembly` and
+`typeof(BenchmarkRun).Assembly`; after moving to `Matrix`, those expressions
+would inspect the shared assembly instead of the category assembly.
+
+Remove these DI-specific assumptions from the shared benchmark runner:
+
+- `typeof(Singleton).Assembly`;
+- `LibraryCatalog.HandCoded`;
+- construction of a hard-coded `Hand-coded` `BenchmarkLibrary`;
+- namespace references to `Matrix.DependencyInjection`.
+
+Keep in `Matrix.DependencyInjection`:
+
+- the DI `FeatureId` enum;
+- DI scenario models and roots;
+- DI-specific validation such as lifetime, disposal, property injection, and
+  lazy collection checks;
+- the Pure.DI composition root;
+- every direct library benchmark method;
+- category-specific unavailable reasons and policies.
+
+The extraction is complete only when Dependency Injection still builds and
+validates through the shared runners, and the Object Mapping project needs no
+copied runner, filter, report merge, or reflection-discovery code.
+
+#### 2. Define the feature contract
+
+Create `workflows/feature-contracts/object-mapping.md` and approve the exact
+models, inputs, outputs, support conditions, and setup boundaries before
+writing library implementations.
+
+#### 3. Add declarative baseline support
+
+Implement the package-less baseline model described below before adding the
+Object Mapping hand-coded implementation.
+
+#### 4. Scaffold and implement the category
+
+Follow [add-category.md](add-category.md), reuse the extracted shared execution
+framework, implement each library through direct strongly typed hot paths, and
+run validation without running benchmarks.
+
 ### Why it should be first
 
 Object mapping has deterministic inputs and outputs, requires no external
@@ -84,6 +161,120 @@ source-generated libraries.
 
 Other candidates should be added only after checking maintenance status,
 licensing, package identity, and support for the approved feature contract.
+
+### Baseline representation
+
+#### What is wrong now
+
+The current metadata contract treats a compared library as an annotated
+`PackageReference`. This works for NuGet libraries but cannot describe a
+hand-coded implementation, because it has no package or package version.
+
+Dependency Injection works around that limitation in several disconnected
+places:
+
+- `LibraryCatalog.HandCoded` is manually declared in the DI project;
+- `BenchmarkRun` manually prepends a `BenchmarkLibrary` named `Hand-coded`;
+- benchmark methods mark it with `Baseline = true`;
+- it appears in `reports/DependencyInjection/benchmarks.json`;
+- it does not appear in the module `MatrixLibrary` collection;
+- it does not appear in `metadata/DependencyInjection/libraries.json`;
+- `FeatureValidationRunner` iterates only module libraries, so it does not
+  validate Hand-coded feature coverage;
+- metadata-driven filtering, descriptions, logos, URLs, rating policy, and
+  generated catalog behavior therefore do not have one source of truth.
+
+Copying this workaround into Object Mapping would create another category-owned
+special case and make the shared runners only nominally shared.
+
+#### Proposed model
+
+Allow a module to declare both package-backed libraries and package-less
+baselines through one metadata pipeline. A baseline should have:
+
+- stable ID;
+- display name;
+- generated code name;
+- description;
+- optional documentation or repository URL;
+- logo;
+- `Baseline` flag;
+- `Rated` flag;
+- optional package and version.
+
+Package and version remain required for ordinary libraries and absent for a
+package-less baseline. `Baseline` and `Rated` are separate concepts: baseline
+controls reference presentation and benchmark behavior, while `Rated`
+controls medal eligibility.
+
+A possible project declaration is:
+
+```xml
+<ItemGroup>
+  <MatrixLibrary Include="HandCoded">
+    <MatrixLibraryName>Hand-coded</MatrixLibraryName>
+    <MatrixCodeName>HandCoded</MatrixCodeName>
+    <MatrixDescription>Direct object mapping written in C#.</MatrixDescription>
+    <MatrixLogo>logos/hand-coded.svg</MatrixLogo>
+    <MatrixBaseline>true</MatrixBaseline>
+    <MatrixRating>false</MatrixRating>
+  </MatrixLibrary>
+</ItemGroup>
+```
+
+`MatrixLibrary Include="HandCoded"` is intentionally not connected to a NuGet
+package. It declares a package-less participant implemented by source code in
+the category project.
+
+Package-backed libraries remain real `PackageReference` items with matrix
+metadata:
+
+```xml
+<PackageReference Include="AutoMapper" Version="16.2.0">
+  <MatrixLibraryId>AutoMapper</MatrixLibraryId>
+  <MatrixLibraryName>AutoMapper</MatrixLibraryName>
+  <MatrixCodeName>AutoMapper</MatrixCodeName>
+  <MatrixDescription>A convention-based object-object mapper.</MatrixDescription>
+  <MatrixDocumentationUrl>https://docs.automapper.io/</MatrixDocumentationUrl>
+  <MatrixRepositoryUrl>https://github.com/LuckyPennySoftware/AutoMapper</MatrixRepositoryUrl>
+  <MatrixLogo>logos/auto-mapper.png</MatrixLogo>
+</PackageReference>
+```
+
+The metadata reader and catalog generator normalize annotated
+`PackageReference` items and package-less `MatrixLibrary` items into the same
+`MatrixLibrary` model. Keeping the package link on `PackageReference` avoids
+duplicating a package ID or version in a second item and prevents restore
+metadata from drifting away from matrix metadata.
+
+The exact MSBuild item name is an implementation detail, but it must feed the
+same generated catalog and metadata validation as annotated package
+references. Do not invent a fake NuGet package or fake version.
+
+#### Required shared changes
+
+1. Make `MatrixLibrary.Package` and `MatrixLibrary.Version` nullable.
+2. Add `Baseline` to the module library definition or its unified metadata.
+3. Extend `Matrix.Module.targets` to generate catalog constants for both
+   package-backed and package-less declarations.
+4. Extend `MatrixMetadata` to read, validate, and deduplicate both forms.
+5. Require package and version only for package-backed libraries.
+6. Generate the baseline into `libraries.json` with its description, logo,
+   baseline status, and `rated: false`.
+7. Make filtering and validation iterate the same complete module catalog.
+8. Make the shared benchmark runner derive `BenchmarkLibrary` records from
+   module metadata instead of prepending `HandCoded`.
+9. Preserve baselines correctly during partial report updates without
+   hard-coded IDs.
+10. Migrate the DI hand-coded declaration to the new model and delete its
+    manual catalog constant and runner special case.
+
+#### Expected result
+
+AutoMapper, Mapster, Mapperly, and Hand-coded will all be first-class module
+participants. The baseline will be validated, filterable, described in
+metadata, shown in feature and benchmark views, and excluded from medals by
+declaration rather than convention.
 
 ### Candidate features
 
