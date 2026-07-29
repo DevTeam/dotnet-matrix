@@ -1,9 +1,13 @@
-// ReSharper disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Transient, 2, "Transient")]
+[MatrixFeature(
+    nameof(FeatureId.Transient),
+    2,
+    "Transient",
+    "Registers three transient services and resolves each of them repeatedly. Every resolve must create a new instance, never reusing an earlier one.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Transient

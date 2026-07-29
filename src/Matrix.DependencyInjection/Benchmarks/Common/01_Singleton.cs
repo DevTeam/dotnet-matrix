@@ -1,9 +1,13 @@
-// ReSharper disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Singleton, 1, "Singleton")]
+[MatrixFeature(
+    nameof(FeatureId.Singleton),
+    1,
+    "Singleton",
+    "Registers three singleton services and resolves each of them repeatedly. Every resolve of the same service must return the same instance.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Singleton

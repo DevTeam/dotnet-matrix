@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace Matrix.DependencyInjection.Validation;
@@ -17,8 +17,8 @@ public sealed class FeatureValidationRunner(
             .Select(type => (
                 Type: type,
                 Feature: type
-                    .GetCustomAttributes(typeof(FeatureBenchmarkAttribute), false)
-                    .Cast<FeatureBenchmarkAttribute>()
+                    .GetCustomAttributes(typeof(MatrixFeatureAttribute), false)
+                    .Cast<MatrixFeatureAttribute>()
                     .SingleOrDefault()))
             .Where(item => item.Feature is not null)
             .OrderBy(item => item.Feature!.Order)
@@ -165,13 +165,13 @@ public sealed class FeatureValidationRunner(
 
     private static CapturedFeatureResult CreateResult(
         string libraryId,
-        FeatureBenchmarkAttribute feature,
+        MatrixFeatureAttribute feature,
         FeatureStatus status,
         string? reason,
         double durationMilliseconds) =>
         new(
             feature.Order,
-            feature.Id.ToString(),
+            feature.Id,
             feature.Name,
             new FeatureResult(
                 libraryId,

@@ -1,6 +1,10 @@
 @if (_overview is { } overview && _rows.Length > 0)
 {
-    var featureNames = overview.Features.Select(feature => feature.Name).ToArray();
+    var featureNames = overview.Features
+        .Select(feature => MatrixView.FeatureDescription(Report, feature.Id) is { } text
+            ? $"{feature.Name} — {text}"
+            : feature.Name)
+        .ToArray();
     <figure class="overview-chart">
         <figcaption class="overview-chart-head">
             <h3>@overview.Group.Name overview</h3>
@@ -61,10 +65,11 @@
         <ul class="overview-chart-legend">
             @for (var index = 0; index < overview.Features.Count; index++)
             {
-                <li>
+                var feature = overview.Features[index];
+                <li title="@(MatrixView.FeatureDescription(Report, feature.Id) ?? feature.Name)">
                     <span class="overview-chart-swatch"
                           style="background: @MatrixChartPalette.Feature(index)"></span>
-                    @overview.Features[index].Name
+                    @feature.Name
                 </li>
             }
         </ul>

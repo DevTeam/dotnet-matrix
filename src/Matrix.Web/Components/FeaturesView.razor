@@ -58,8 +58,30 @@
                 <tbody>
                 @foreach (var feature in features)
                 {
+                    var description = MatrixView.FeatureDescription(report, feature.Id);
+                    var expanded = _expanded.Contains(feature.Id);
                     <tr>
-                        <th><span class="feature-order">@feature.Order.ToString("00")</span>@feature.Name</th>
+                        <th>
+                            @if (description is null)
+                            {
+                                <span class="feature-order">@feature.Order.ToString("00")</span>
+                                @feature.Name
+                            }
+                            else
+                            {
+                                <button class="feature-toggle"
+                                        type="button"
+                                        aria-expanded="@(expanded ? "true" : "false")"
+                                        title="@description"
+                                        @onclick="() => Toggle(feature.Id)">
+                                    <span class="feature-order">@feature.Order.ToString("00")</span>
+                                    <span>@feature.Name</span>
+                                    <span class="feature-toggle-mark" aria-hidden="true">
+                                        @(expanded ? "−" : "?")
+                                    </span>
+                                </button>
+                            }
+                        </th>
                         @foreach (var library in libraries)
                         {
                             var value = feature.Results.FirstOrDefault(result =>
@@ -82,6 +104,12 @@
                             </td>
                         }
                     </tr>
+                    @if (expanded && description is not null)
+                    {
+                        <tr class="feature-description-row">
+                            <th colspan="@(libraries.Length + 1)">@description</th>
+                        </tr>
+                    }
                 }
                 </tbody>
             </table>
@@ -104,6 +132,16 @@
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    private readonly HashSet<string> _expanded = new(StringComparer.OrdinalIgnoreCase);
+
+    private void Toggle(string featureId)
+    {
+        if (!_expanded.Add(featureId))
+        {
+            _expanded.Remove(featureId);
+        }
+    }
 
     private static string Tooltip(
         FeatureReportEntry feature,

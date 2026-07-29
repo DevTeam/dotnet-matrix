@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Enumerable, 9, "IEnumerable")]
+[MatrixFeature(
+    nameof(FeatureId.Enumerable),
+    9,
+    "IEnumerable",
+    "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.")]
 [FeatureUnavailable(
     LibraryCatalog.Autofac,
     FeatureStatus.Unsupported,

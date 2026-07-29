@@ -15,7 +15,8 @@ public sealed record MatrixModule(
     string RunConfigurationPrefix,
     string ReportDirectory,
     IReadOnlyList<MatrixLibrary> Libraries,
-    MatrixLibraryMetadataCatalog LibraryMetadata);
+    MatrixLibraryMetadataCatalog LibraryMetadata,
+    MatrixFeatureCatalog FeatureMetadata);
 
 public static class MatrixMetadata
 {
@@ -71,8 +72,45 @@ public static class MatrixMetadata
             [.. libraries.Select(item => item.Library)],
             new MatrixLibraryMetadataCatalog(
                 1,
-                [.. libraries.Select(item => item.Metadata)]));
+                [.. libraries.Select(item => item.Metadata)]),
+            new MatrixFeatureCatalog(1, ReadFeatures(assembly)));
         return true;
+    }
+
+    /// <summary>
+    /// Features are declared on the classes that benchmark them, so they are read
+    /// from the module assembly rather than from the embedded project file.
+    /// </summary>
+    private static IReadOnlyList<MatrixFeatureMetadata> ReadFeatures(Assembly assembly)
+    {
+        var features = assembly
+            .GetTypes()
+            .Select(type => type.GetCustomAttribute<MatrixFeatureAttribute>())
+            .Where(feature => feature is not null)
+            .Select(feature => new MatrixFeatureMetadata(
+                feature!.Id,
+                feature.Order,
+                feature.Name,
+                feature.Description.Trim()))
+            .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
+            .OrderBy(feature => feature.Order)
+            .ToArray();
+        foreach (var feature in features)
+        {
+            if (feature.Description.Length == 0)
+            {
+                throw new InvalidOperationException(
+                    $"Matrix feature '{feature.Id}' must define a description.");
+            }
+        }
+
+        var duplicateOrder = features
+            .GroupBy(feature => feature.Order)
+            .FirstOrDefault(group => group.Count() > 1);
+        return duplicateOrder is null
+            ? features
+            : throw new InvalidOperationException(
+                $"Duplicate matrix feature order '{duplicateOrder.Key}'.");
     }
 
     private static LibraryDefinition ReadLibrary(XElement packageReference)

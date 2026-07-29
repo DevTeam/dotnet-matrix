@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Property, 7, "Property")]
+[MatrixFeature(
+    nameof(FeatureId.Property),
+    7,
+    "Property",
+    "Resolves three roots that carry writable service properties. The container, or its intended property-injection extension, must assign them during activation.")]
 [FeatureUnavailable(
     LibraryCatalog.MicrosoftDi,
     FeatureStatus.Unsupported,

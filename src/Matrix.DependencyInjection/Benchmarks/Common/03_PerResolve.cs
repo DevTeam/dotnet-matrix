@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.PerResolve, 3, "PerResolve")]
+[MatrixFeature(
+    nameof(FeatureId.PerResolve),
+    3,
+    "PerResolve",
+    "Resolves an object graph that asks for the same dependency twice. Both requests inside one resolution share an instance, while the next resolution gets a new one.")]
 [FeatureUnavailable(
     LibraryCatalog.Autofac,
     FeatureStatus.Unsupported,

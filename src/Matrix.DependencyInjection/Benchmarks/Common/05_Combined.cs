@@ -1,9 +1,13 @@
-// ReSharper disable CheckNamespace
+﻿// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Combined, 5, "Combined")]
+[MatrixFeature(
+    nameof(FeatureId.Combined),
+    5,
+    "Combined",
+    "Resolves three roots that mix singleton and transient dependencies. The singleton is shared across every root while each transient dependency is distinct.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Combined

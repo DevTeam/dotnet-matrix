@@ -1,4 +1,4 @@
-using BenchmarkDotNet.Configs;
+﻿using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters.Json;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
@@ -86,13 +86,13 @@ public sealed class BenchmarkRun(
                 {
                     var method = report.BenchmarkCase.Descriptor.WorkloadMethod;
                     var library = method.GetCustomAttribute<LibraryBenchmarkAttribute>()!;
-                    var feature = method.DeclaringType!.GetCustomAttribute<FeatureBenchmarkAttribute>()!;
+                    var feature = method.DeclaringType!.GetCustomAttribute<MatrixFeatureAttribute>()!;
                     var allocatedBytes = report.Metrics.TryGetValue("Allocated Memory", out var allocated)
                         ? allocated.Value
                         : (double?)null;
                     return new CapturedBenchmarkResult(
                         feature.Order,
-                        feature.Id.ToString(),
+                        feature.Id,
                         feature.Name,
                         new BenchmarkResult(
                             library.LibraryId,
@@ -242,7 +242,7 @@ public sealed class BenchmarkRun(
             .GetTypes()
             .SelectMany(type =>
             {
-                var feature = type.GetCustomAttribute<FeatureBenchmarkAttribute>();
+                var feature = type.GetCustomAttribute<MatrixFeatureAttribute>();
                 if (feature is null)
                 {
                     return [];
@@ -267,7 +267,7 @@ public sealed class BenchmarkRun(
             })
             .Select(item => new CapturedBenchmarkResult(
                 item.Feature.Order,
-                item.Feature.Id.ToString(),
+                item.Feature.Id,
                 item.Feature.Name,
                 new BenchmarkResult(
                     item.Library!.LibraryId,

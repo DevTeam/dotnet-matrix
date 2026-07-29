@@ -115,11 +115,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>01 · Singleton</strong></summary>
 
+Registers three singleton services and resolves each of them repeatedly. Every resolve of the same service must return the same instance.
+
 ![Dependency Injection Singleton benchmark](reports/DependencyInjection/charts/01-singleton.png)
 
 </details>
 <details>
 <summary><strong>02 · Transient</strong></summary>
+
+Registers three transient services and resolves each of them repeatedly. Every resolve must create a new instance, never reusing an earlier one.
 
 ![Dependency Injection Transient benchmark](reports/DependencyInjection/charts/02-transient.png)
 
@@ -127,11 +131,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>03 · PerResolve</strong></summary>
 
+Resolves an object graph that asks for the same dependency twice. Both requests inside one resolution share an instance, while the next resolution gets a new one.
+
 ![Dependency Injection PerResolve benchmark](reports/DependencyInjection/charts/03-perresolve.png)
 
 </details>
 <details>
 <summary><strong>04 · Scoped</strong></summary>
+
+Resolves scoped services inside explicit scopes. One instance per scope, different instances across scopes, and scope-owned disposables are disposed when the scope ends.
 
 ![Dependency Injection Scoped benchmark](reports/DependencyInjection/charts/04-scoped.png)
 
@@ -139,11 +147,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>05 · Combined</strong></summary>
 
+Resolves three roots that mix singleton and transient dependencies. The singleton is shared across every root while each transient dependency is distinct.
+
 ![Dependency Injection Combined benchmark](reports/DependencyInjection/charts/05-combined.png)
 
 </details>
 <details>
 <summary><strong>06 · Complex</strong></summary>
+
+Registers and resolves three multi-level object graphs, checking that every nested dependency has the expected implementation type and lifetime.
 
 ![Dependency Injection Complex benchmark](reports/DependencyInjection/charts/06-complex.png)
 
@@ -151,11 +163,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>07 · Property</strong></summary>
 
+Resolves three roots that carry writable service properties. The container, or its intended property-injection extension, must assign them during activation.
+
 ![Dependency Injection Property benchmark](reports/DependencyInjection/charts/07-property.png)
 
 </details>
 <details>
 <summary><strong>08 · Generics</strong></summary>
+
+Registers one open generic service mapping and resolves roots closed over int, float and object. Registering every closed type separately does not count.
 
 ![Dependency Injection Generics benchmark](reports/DependencyInjection/charts/08-generics.png)
 
@@ -163,11 +179,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>09 · IEnumerable</strong></summary>
 
+Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.
+
 ![Dependency Injection IEnumerable benchmark](reports/DependencyInjection/charts/09-ienumerable.png)
 
 </details>
 <details>
 <summary><strong>10 · Array</strong></summary>
+
+Resolves three roots that materialise their injected sequence of five plugins into an array while the root is being activated.
 
 ![Dependency Injection Array benchmark](reports/DependencyInjection/charts/10-array.png)
 
@@ -175,11 +195,15 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>11 · Conditional</strong></summary>
 
+Gives each of three consumers a different implementation of one contract, chosen through the metadata, key, predicate or consumer-context mechanism of the library.
+
 ![Dependency Injection Conditional benchmark](reports/DependencyInjection/charts/11-conditional.png)
 
 </details>
 <details>
 <summary><strong>12 · Child Container</strong></summary>
+
+Creates a real nested child container that inherits the registrations of its parent and can add or override them without changing the parent.
 
 ![Dependency Injection Child Container benchmark](reports/DependencyInjection/charts/12-child-container.png)
 
@@ -187,17 +211,23 @@ Performance and allocated memory are shown together. Lower values are better.
 <details>
 <summary><strong>13 · Interception With Proxy</strong></summary>
 
+Resolves a service through the interception or activation extension point of the library. The result must be a proxy whose interceptor proceeds to the real target.
+
 ![Dependency Injection Interception With Proxy benchmark](reports/DependencyInjection/charts/13-interception-with-proxy.png)
 
 </details>
 <details>
 <summary><strong>14 · Prepare And Register</strong></summary>
 
+Measures creating the container and registering the whole prescribed graph, without resolving anything from it.
+
 ![Dependency Injection Prepare And Register benchmark](reports/DependencyInjection/charts/14-prepare-and-register.png)
 
 </details>
 <details>
 <summary><strong>15 · Prepare And Register And Simple Resolve</strong></summary>
+
+Measures the same setup as Prepare And Register, followed by a single resolve of one singleton root.
 
 ![Dependency Injection Prepare And Register And Simple Resolve benchmark](reports/DependencyInjection/charts/15-prepare-and-register-and-simple-resolve.png)
 

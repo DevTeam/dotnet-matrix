@@ -5,16 +5,22 @@
 else
 {
     <section class="benchmark-toolbar">
-        <div>
-            <label for="benchmark-scenario">Scenario</label>
-            <select id="benchmark-scenario" @bind="_selectedFeature">
-                @foreach (var feature in Features)
-                {
-                    <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
-                }
-            </select>
+        <div class="benchmark-toolbar-row">
+            <div>
+                <label for="benchmark-scenario">Scenario</label>
+                <select id="benchmark-scenario" @bind="_selectedFeature">
+                    @foreach (var feature in Features)
+                    {
+                        <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
+                    }
+                </select>
+            </div>
+            <span class="direction-note">↓ Lower is better</span>
         </div>
-        <span class="direction-note">↓ Lower is better</span>
+        @if (Description is { } description)
+        {
+            <p class="scenario-description">@description</p>
+        }
     </section>
     <section class="benchmark-split">
         <div class="benchmark-split-column">
@@ -50,6 +56,12 @@ else
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
 
     private string? _selectedFeature;
+
+    private string? Description => _selectedFeature is null
+        ? null
+        : Reports
+            .Select(report => MatrixView.FeatureDescription(report, _selectedFeature))
+            .FirstOrDefault(description => description is not null);
 
     private (string Id, string Name, int Order)[] Features =>
         Reports

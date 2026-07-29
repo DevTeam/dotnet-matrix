@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.ChildContainer, 12, "Child Container")]
+[MatrixFeature(
+    nameof(FeatureId.ChildContainer),
+    12,
+    "Child Container",
+    "Creates a real nested child container that inherits the registrations of its parent and can add or override them without changing the parent.")]
 [FeatureUnavailable(
     LibraryCatalog.Grace,
     FeatureStatus.Unsupported,

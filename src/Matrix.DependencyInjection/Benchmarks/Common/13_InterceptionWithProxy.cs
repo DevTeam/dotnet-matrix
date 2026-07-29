@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.InterceptionWithProxy, 13, "Interception With Proxy")]
+[MatrixFeature(
+    nameof(FeatureId.InterceptionWithProxy),
+    13,
+    "Interception With Proxy",
+    "Resolves a service through the interception or activation extension point of the library. The result must be a proxy whose interceptor proceeds to the real target.")]
 [FeatureUnavailable(
     LibraryCatalog.MicrosoftDi,
     FeatureStatus.Unsupported,

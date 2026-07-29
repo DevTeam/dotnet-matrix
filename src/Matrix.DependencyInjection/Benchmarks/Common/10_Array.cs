@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Array, 10, "Array")]
+[MatrixFeature(
+    nameof(FeatureId.Array),
+    10,
+    "Array",
+    "Resolves three roots that materialise their injected sequence of five plugins into an array while the root is being activated.")]
 [FeatureUnavailable(
     LibraryCatalog.ZenIoc,
     FeatureStatus.Unsupported,

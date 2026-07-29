@@ -24,6 +24,14 @@ internal static class MatrixView
         report.LibraryCatalog?.Libraries.FirstOrDefault(metadata =>
             metadata.Id.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
 
+    public static string? FeatureDescription(CategoryReport report, string featureId) =>
+        report.FeatureCatalog?.Features
+            .FirstOrDefault(feature =>
+                feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
+            ?.Description is { Length: > 0 } description
+            ? description
+            : null;
+
     public static string? Logo(CategoryReport report, string libraryId) =>
         Metadata(report, libraryId)?.Logo is { Length: > 0 } logo ? logo : null;
 

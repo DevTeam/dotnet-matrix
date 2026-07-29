@@ -1,4 +1,4 @@
-using Matrix;
+﻿using Matrix;
 using System.Text.Json;
 
 namespace Build.Targets;
@@ -116,6 +116,10 @@ internal sealed class ReadmeTarget(
             .Select(feature => new ReadmeFeature(
                 feature.Order,
                 feature.Name,
+                module.Metadata.FeatureMetadata.Features
+                    .FirstOrDefault(item =>
+                        item.Id.Equals(feature.Id, StringComparison.OrdinalIgnoreCase))
+                    ?.Description,
                 RelativePath(Path.Combine(
                     reportRoot,
                     MatrixChartPaths.DirectoryName,
@@ -160,4 +164,5 @@ public sealed record ReadmeChart(
 public sealed record ReadmeFeature(
     int Order,
     string Name,
+    string? Description,
     string ChartPath);

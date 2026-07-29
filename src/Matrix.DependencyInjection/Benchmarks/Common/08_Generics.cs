@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Generics, 8, "Generics")]
+[MatrixFeature(
+    nameof(FeatureId.Generics),
+    8,
+    "Generics",
+    "Registers one open generic service mapping and resolves roots closed over int, float and object. Registering every closed type separately does not count.")]
 [FeatureUnavailable(
     LibraryCatalog.ZenIoc,
     FeatureStatus.Unsupported,

@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Conditional, 11, "Conditional")]
+[MatrixFeature(
+    nameof(FeatureId.Conditional),
+    11,
+    "Conditional",
+    "Gives each of three consumers a different implementation of one contract, chosen through the metadata, key, predicate or consumer-context mechanism of the library.")]
 [FeatureUnavailable(
     LibraryCatalog.Singularity,
     FeatureStatus.Unsupported,

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "features": [
+    {
+      "id": "Singleton",
+      "order": 1,
+      "name": "Singleton",
+      "description": "Registers three singleton services and resolves each of them repeatedly. Every resolve of the same service must return the same instance."
+    },
+    {
+      "id": "Transient",
+      "order": 2,
+      "name": "Transient",
+      "description": "Registers three transient services and resolves each of them repeatedly. Every resolve must create a new instance, never reusing an earlier one."
+    },
+    {
+      "id": "PerResolve",
+      "order": 3,
+      "name": "PerResolve",
+      "description": "Resolves an object graph that asks for the same dependency twice. Both requests inside one resolution share an instance, while the next resolution gets a new one."
+    },
+    {
+      "id": "Scoped",
+      "order": 4,
+      "name": "Scoped",
+      "description": "Resolves scoped services inside explicit scopes. One instance per scope, different instances across scopes, and scope-owned disposables are disposed when the scope ends."
+    },
+    {
+      "id": "Combined",
+      "order": 5,
+      "name": "Combined",
+      "description": "Resolves three roots that mix singleton and transient dependencies. The singleton is shared across every root while each transient dependency is distinct."
+    },
+    {
+      "id": "Complex",
+      "order": 6,
+      "name": "Complex",
+      "description": "Registers and resolves three multi-level object graphs, checking that every nested dependency has the expected implementation type and lifetime."
+    },
+    {
+      "id": "Property",
+      "order": 7,
+      "name": "Property",
+      "description": "Resolves three roots that carry writable service properties. The container, or its intended property-injection extension, must assign them during activation."
+    },
+    {
+      "id": "Generics",
+      "order": 8,
+      "name": "Generics",
+      "description": "Registers one open generic service mapping and resolves roots closed over int, float and object. Registering every closed type separately does not count."
+    },
+    {
+      "id": "Enumerable",
+      "order": 9,
+      "name": "IEnumerable",
+      "description": "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients."
+    },
+    {
+      "id": "Array",
+      "order": 10,
+      "name": "Array",
+      "description": "Resolves three roots that materialise their injected sequence of five plugins into an array while the root is being activated."
+    },
+    {
+      "id": "Conditional",
+      "order": 11,
+      "name": "Conditional",
+      "description": "Gives each of three consumers a different implementation of one contract, chosen through the metadata, key, predicate or consumer-context mechanism of the library."
+    },
+    {
+      "id": "ChildContainer",
+      "order": 12,
+      "name": "Child Container",
+      "description": "Creates a real nested child container that inherits the registrations of its parent and can add or override them without changing the parent."
+    },
+    {
+      "id": "InterceptionWithProxy",
+      "order": 13,
+      "name": "Interception With Proxy",
+      "description": "Resolves a service through the interception or activation extension point of the library. The result must be a proxy whose interceptor proceeds to the real target."
+    },
+    {
+      "id": "PrepareAndRegister",
+      "order": 14,
+      "name": "Prepare And Register",
+      "description": "Measures creating the container and registering the whole prescribed graph, without resolving anything from it."
+    },
+    {
+      "id": "PrepareAndRegisterAndSimpleResolve",
+      "order": 15,
+      "name": "Prepare And Register And Simple Resolve",
+      "description": "Measures the same setup as Prepare And Register, followed by a single resolve of one singleton root."
+    }
+  ]
+}

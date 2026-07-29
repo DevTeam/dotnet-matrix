@@ -1,18 +1,5 @@
 namespace Matrix.DependencyInjection.Infrastructure;
 
-[AttributeUsage(AttributeTargets.Class)]
-public sealed class FeatureBenchmarkAttribute(
-    FeatureId id,
-    int order,
-    string name) : Attribute
-{
-    public FeatureId Id { get; } = id;
-
-    public int Order { get; } = order;
-
-    public string Name { get; } = name;
-}
-
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class LibraryBenchmarkAttribute(
     string libraryId,

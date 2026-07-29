@@ -1,4 +1,4 @@
-@model Build.Targets.ReadmeModel
+﻿@model Build.Targets.ReadmeModel
 # .NET Matrix
 
 > [**Open the interactive .NET Matrix →**](@Model.ApplicationUrl)
@@ -43,6 +43,12 @@ else
 <details>
 <summary><strong>@feature.Order.ToString("00") · @feature.Name</strong></summary>
 
+@if (feature.Description is not null)
+{
+<text>@feature.Description
+
+</text>
+}
 ![@category.Name @feature.Name benchmark](@feature.ChartPath)
 
 </details>

@@ -838,6 +838,70 @@ tbody th {
     font-family: 'DM Mono', monospace;
 }
 
+/* The scenario name doubles as the control that reveals what it measures. */
+.feature-toggle {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    gap: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+}
+
+.feature-toggle:hover .feature-toggle-mark,
+.feature-toggle[aria-expanded="true"] .feature-toggle-mark {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.feature-toggle > span:nth-child(2) {
+    flex: 1;
+}
+
+.feature-toggle-mark {
+    display: grid;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 16px;
+    place-items: center;
+    margin-left: 8px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    line-height: 1;
+}
+
+/* Spans the whole matrix, so it must opt out of the sticky first column. */
+.feature-table .feature-description-row th {
+    position: static;
+    width: auto;
+    min-width: 0;
+    padding: 4px 15px 16px;
+    border-right: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.55;
+}
+
+.scenario-description {
+    max-width: 90ch;
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
 .feature-status {
     position: relative;
     display: inline-grid;
@@ -915,14 +979,20 @@ tbody th {
 
 
 .benchmark-toolbar {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
+    display: grid;
+    gap: 13px;
     margin-bottom: 16px;
     padding: 16px 18px;
     border: 1px solid var(--line);
     border-radius: 14px;
     background: var(--surface);
+}
+
+.benchmark-toolbar-row {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
 }
 
 .benchmark-split {
@@ -962,7 +1032,7 @@ tbody th {
     --logo-size: 20px;
 }
 
-.benchmark-toolbar div {
+.benchmark-toolbar-row > div {
     display: grid;
     gap: 6px;
 }

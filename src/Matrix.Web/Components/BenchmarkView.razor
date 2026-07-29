@@ -7,16 +7,18 @@ else
     @if (ShowToolbar)
     {
         <section class="benchmark-toolbar">
-            <div>
-                <label for="@ControlId">Scenario</label>
-                <select id="@ControlId" @bind="_selectedFeature">
-                    @foreach (var feature in Features)
-                    {
-                        <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
-                    }
-                </select>
+            <div class="benchmark-toolbar-row">
+                <div>
+                    <label for="@ControlId">Scenario</label>
+                    <select id="@ControlId" @bind="_selectedFeature">
+                        @foreach (var feature in Features)
+                        {
+                            <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
+                        }
+                    </select>
+                </div>
+                <span class="direction-note">↓ Lower is better</span>
             </div>
-            <span class="direction-note">↓ Lower is better</span>
         </section>
     }
 

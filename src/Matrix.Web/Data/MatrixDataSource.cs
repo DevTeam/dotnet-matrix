@@ -23,6 +23,7 @@ public sealed record CategoryReport(
     BenchmarkReport? Benchmarks,
     MatrixLibraryMetadataCatalog? LibraryCatalog,
     MatrixChartCatalog? ChartCatalog,
+    MatrixFeatureCatalog? FeatureCatalog,
     string? Error);
 
 internal sealed class GitHubMatrixDataSource(
@@ -101,11 +102,21 @@ internal sealed class GitHubMatrixDataSource(
                 : TryGetAsync<MatrixChartCatalog>(
                     $"{metadataRoot}/charts.json",
                     cancellationToken);
+            var featureCatalogTask = isLocal
+                ? TryGetLocalAsync<MatrixFeatureCatalog>(
+                    "Metadata",
+                    category,
+                    "features.json",
+                    cancellationToken)
+                : TryGetAsync<MatrixFeatureCatalog>(
+                    $"{metadataRoot}/features.json",
+                    cancellationToken);
             await Task.WhenAll(
                 featuresTask,
                 benchmarksTask,
                 libraryCatalogTask,
-                chartCatalogTask);
+                chartCatalogTask,
+                featureCatalogTask);
             var features = await featuresTask;
             var benchmarks = await benchmarksTask;
             var libraryCatalog = await ResolveLogosAsync(
@@ -123,11 +134,12 @@ internal sealed class GitHubMatrixDataSource(
                 benchmarks,
                 libraryCatalog,
                 await chartCatalogTask,
+                await featureCatalogTask,
                 error);
         }
         catch (Exception exception)
         {
-            return new CategoryReport(category, null, null, null, null, exception.Message);
+            return new CategoryReport(category, null, null, null, null, null, exception.Message);
         }
     }
 

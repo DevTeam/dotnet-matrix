@@ -3,7 +3,11 @@
 
 namespace Matrix.DependencyInjection.Benchmarks;
 
-[FeatureBenchmark(FeatureId.Scoped, 4, "Scoped")]
+[MatrixFeature(
+    nameof(FeatureId.Scoped),
+    4,
+    "Scoped",
+    "Resolves scoped services inside explicit scopes. One instance per scope, different instances across scopes, and scope-owned disposables are disposed when the scope ends.")]
 [FeatureUnavailable(
     LibraryCatalog.ZenIoc,
     FeatureStatus.Unsupported,
