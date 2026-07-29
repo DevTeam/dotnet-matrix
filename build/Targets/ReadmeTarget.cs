@@ -48,9 +48,8 @@ internal sealed class ReadmeTarget(
             "wwwroot",
             "data",
             "catalog.json"));
-        var applicationUrl =
-            $"https://{catalog.Repository.Owner.ToLowerInvariant()}.github.io/"
-            + $"{catalog.Repository.Name}/";
+        // var applicationUrl = $"https://{catalog.Repository.Owner.ToLowerInvariant()}.github.io/{catalog.Repository.Name}/";
+        var applicationUrl = "https://matrix.dev-team.org/";
         var model = new ReadmeModel(applicationUrl, categories);
         var path = Path.Combine(buildPaths.SolutionDirectory, "README.md");
         await using var stream = File.Create(path);

@@ -1,6 +1,6 @@
 # .NET Matrix
 
-> [**Open the interactive .NET Matrix →**](https://devteam.github.io/dotnet-matrix/)
+> [**Open the interactive .NET Matrix →**](http://matrix.dev-team.org/)
 
 Evidence-based feature and performance comparisons for .NET libraries.
 
