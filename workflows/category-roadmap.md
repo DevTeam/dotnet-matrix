@@ -29,6 +29,13 @@ Popularity alone is not sufficient. Categories in which libraries operate at
 different abstraction levels, use incompatible output formats, or depend on
 external services require additional care and should be implemented later.
 
+## Current state
+
+- Dependency Injection is implemented in `src/Matrix.DependencyInjection`.
+- Object Mapping is implemented in `src/Matrix.ObjectMapping`.
+- Validation is implemented in `src/Matrix.Validation`; its feature validation
+  passes, and benchmark reports still need to be produced.
+
 ## Recommended order
 
 | Priority | Category | Initial assessment |
@@ -605,18 +612,6 @@ Before starting any category, answer these questions explicitly:
 
 ## Next action
 
-Start with Object Mapping. Before writing its module, create
-`workflows/feature-contracts/object-mapping.md` and agree on:
-
-- exact source and destination models;
-- feature names and order;
-- null and collection semantics;
-- setup versus measured work;
-- initial library list;
-- baseline behavior;
-- rating groups;
-- whether query projection is feature-only or deferred.
-
-After the contract is approved, implement the category by following
-[add-category.md](add-category.md). Do not copy Dependency Injection feature
-semantics into the new module.
+Produce the Validation benchmark report, then regenerate its charts, README
+content, and Web data through the shared workflow. After Validation is
+complete, JSON Serialization is the next recommended category.

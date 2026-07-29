@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>validation</MatrixModuleId>
+        <MatrixModuleName>Validation</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Validation</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>Validation</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.Validation.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="FluentValidation" Version="12.1.1">
+            <MatrixLibraryId>FluentValidation</MatrixLibraryId>
+            <MatrixLibraryName>FluentValidation</MatrixLibraryName>
+            <MatrixCodeName>FluentValidation</MatrixCodeName>
+            <MatrixDescription>A strongly typed validation library with fluent rules, nested validators, cascade modes, and asynchronous validation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://docs.fluentvalidation.net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/FluentValidation/FluentValidation</MatrixRepositoryUrl>
+            <MatrixLogo>logos/fluent-validation.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="MiniValidation" Version="0.10.0">
+            <MatrixLibraryId>MiniValidation</MatrixLibraryId>
+            <MatrixLibraryName>MiniValidation</MatrixLibraryName>
+            <MatrixCodeName>MiniValidation</MatrixCodeName>
+            <MatrixDescription>A minimal DataAnnotations-based validator with recursive object graph traversal and cycle detection.</MatrixDescription>
+            <MatrixRepositoryUrl>https://github.com/DamianEdwards/MiniValidation</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mini-validation.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MatrixLibrary Include="DataAnnotations">
+            <MatrixLibraryName>DataAnnotations</MatrixLibraryName>
+            <MatrixCodeName>DataAnnotations</MatrixCodeName>
+            <MatrixDescription>The validation attributes and validation APIs included with the .NET framework.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations</MatrixDocumentationUrl>
+            <MatrixLogo>logos/data-annotations.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>false</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

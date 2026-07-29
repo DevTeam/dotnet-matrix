@@ -1,0 +1,444 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "object-mapping",
+  "GeneratedAtUtc": "2026-07-29T15:55:03.6426769+00:00",
+  "Environments": [
+    {
+      "Id": "d216e5c2b817",
+      "OperatingSystem": "Ubuntu 24.04.4 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.10",
+      "RuntimeVersion": "10.0.10",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.302",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "AutoMapper",
+      "Name": "AutoMapper",
+      "Package": "AutoMapper",
+      "Version": "16.2.0",
+      "Baseline": false
+    },
+    {
+      "Id": "HandCoded",
+      "Name": "Hand-coded",
+      "Baseline": true
+    },
+    {
+      "Id": "Mapperly",
+      "Name": "Mapperly",
+      "Package": "Riok.Mapperly",
+      "Version": "4.3.1",
+      "Baseline": false
+    },
+    {
+      "Id": "Mapster",
+      "Name": "Mapster",
+      "Package": "Mapster",
+      "Version": "10.0.11",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "SimpleObject",
+      "Name": "Simple Object",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 75.79654431343079,
+          "StandardErrorNanoseconds": 0.038583001268430596,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 8.687758448719979,
+          "StandardErrorNanoseconds": 0.0601770562209046,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 8.875907099246978,
+          "StandardErrorNanoseconds": 0.05476172220737181,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 23.540768432617188,
+          "StandardErrorNanoseconds": 0.12007600374927625,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "NestedObject",
+      "Name": "Nested Object",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 110.38982255458832,
+          "StandardErrorNanoseconds": 0.12375811037338913,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 48.74704966545105,
+          "StandardErrorNanoseconds": 0.37375513119980325,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 44.638879489898684,
+          "StandardErrorNanoseconds": 0.37730262275903187,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 61.19129664897919,
+          "StandardErrorNanoseconds": 0.6814792617394635,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "Collection",
+      "Name": "Collection",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 1159.8195659637452,
+          "StandardErrorNanoseconds": 8.697244054342905,
+          "AllocatedBytesPerOperation": 6424,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 1007.560299873352,
+          "StandardErrorNanoseconds": 5.834157498024562,
+          "AllocatedBytesPerOperation": 6424,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 954.9335006713867,
+          "StandardErrorNanoseconds": 2.742903466529447,
+          "AllocatedBytesPerOperation": 6424,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 1083.2852787017823,
+          "StandardErrorNanoseconds": 1.981224024745765,
+          "AllocatedBytesPerOperation": 6424,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "Flattening",
+      "Name": "Flattening",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 75.50331589579582,
+          "StandardErrorNanoseconds": 0.2278183953680195,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 10.134454238414765,
+          "StandardErrorNanoseconds": 0.05595409209400739,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 10.902087643742561,
+          "StandardErrorNanoseconds": 0.01589702130824767,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 19.928738260269164,
+          "StandardErrorNanoseconds": 0.1438184917354639,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "MapToExisting",
+      "Name": "Map To Existing",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 67.02629697322845,
+          "StandardErrorNanoseconds": 0.12773426972910668,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 3.7996268570423126,
+          "StandardErrorNanoseconds": 0.008898274749519973,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 3.704104211181402,
+          "StandardErrorNanoseconds": 0.0018645039563434957,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 12.5056802213192,
+          "StandardErrorNanoseconds": 0.0528942977049332,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "NullHandling",
+      "Name": "Null Handling",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 75.59995119571686,
+          "StandardErrorNanoseconds": 0.1321613460641494,
+          "AllocatedBytesPerOperation": 40,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 8.85441578924656,
+          "StandardErrorNanoseconds": 0.018708884223642523,
+          "AllocatedBytesPerOperation": 40,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 8.539352422952652,
+          "StandardErrorNanoseconds": 0.05856207731337692,
+          "AllocatedBytesPerOperation": 40,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 31.101146161556244,
+          "StandardErrorNanoseconds": 0.10512352084460323,
+          "AllocatedBytesPerOperation": 40,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "CustomConversion",
+      "Name": "Custom Conversion",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 142.94772250652312,
+          "StandardErrorNanoseconds": 0.3824146365020049,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 79.3853072822094,
+          "StandardErrorNanoseconds": 0.03922989482276001,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 78.94659367203712,
+          "StandardErrorNanoseconds": 0.09706083556613804,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 100.63785341978073,
+          "StandardErrorNanoseconds": 0.10291362062016537,
+          "AllocatedBytesPerOperation": 112,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "PolymorphicMapping",
+      "Name": "Polymorphic Mapping",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 322.0254040718079,
+          "StandardErrorNanoseconds": 0.6923908674652361,
+          "AllocatedBytesPerOperation": 144,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 34.244610166549684,
+          "StandardErrorNanoseconds": 0.28962699238764494,
+          "AllocatedBytesPerOperation": 144,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 32.491582199931145,
+          "StandardErrorNanoseconds": 0.06057905503562264,
+          "AllocatedBytesPerOperation": 144,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 135.03763020038605,
+          "StandardErrorNanoseconds": 0.121556501689164,
+          "AllocatedBytesPerOperation": 144,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "PrepareConfiguration",
+      "Name": "Prepare Configuration",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 10234047.675,
+          "StandardErrorNanoseconds": 99148.82703473096,
+          "AllocatedBytesPerOperation": 641986,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 0,
+          "StandardErrorNanoseconds": 0,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 0,
+          "StandardErrorNanoseconds": 0,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 16111605.26875,
+          "StandardErrorNanoseconds": 749243.5900130692,
+          "AllocatedBytesPerOperation": 2545772,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 10,
+      "Id": "PrepareAndSimpleMap",
+      "Name": "Prepare And Simple Map",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Successful": true,
+          "MeanNanoseconds": 10723316.39375,
+          "StandardErrorNanoseconds": 61379.475090266336,
+          "AllocatedBytesPerOperation": 674804,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 8.898052540421485,
+          "StandardErrorNanoseconds": 0.03371274358561005,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Successful": true,
+          "MeanNanoseconds": 8.873908957839012,
+          "StandardErrorNanoseconds": 0.08284081869904357,
+          "AllocatedBytesPerOperation": 56,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Successful": true,
+          "MeanNanoseconds": 15768918.6640625,
+          "StandardErrorNanoseconds": 263530.7277338684,
+          "AllocatedBytesPerOperation": 2704770,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    }
+  ]
+}

@@ -80,7 +80,7 @@ public sealed class MatrixFeatureValidationRunner(
                     InvokeIfExists(item.Type, instance, $"Setup{method.Name}");
                     for (var iteration = 0; iteration < 3; iteration++)
                     {
-                        method.Invoke(instance, null);
+                        Invoke(method, instance);
                     }
 
                     stopwatch.Stop();
@@ -164,8 +164,40 @@ public sealed class MatrixFeatureValidationRunner(
         return successful ? 0 : 1;
     }
 
-    private static void InvokeIfExists(Type type, object instance, string methodName) =>
-        type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public)?.Invoke(instance, null);
+    private static void InvokeIfExists(Type type, object instance, string methodName)
+    {
+        var method = type.GetMethod(methodName, BindingFlags.Instance | BindingFlags.Public);
+        if (method is not null)
+        {
+            Invoke(method, instance);
+        }
+    }
+
+    private static void Invoke(MethodInfo method, object instance)
+    {
+        var result = method.Invoke(instance, null);
+        if (result is Task task)
+        {
+            task.GetAwaiter().GetResult();
+            return;
+        }
+
+        if (result is ValueTask valueTask)
+        {
+            valueTask.GetAwaiter().GetResult();
+            return;
+        }
+
+        var returnType = method.ReturnType;
+        if (returnType.IsGenericType
+            && returnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
+        {
+            var asTask = returnType.GetMethod(nameof(ValueTask<int>.AsTask))
+                         ?? throw new InvalidOperationException(
+                             $"Cannot await {returnType.FullName} returned by {method.Name}.");
+            ((Task)asTask.Invoke(result, null)!).GetAwaiter().GetResult();
+        }
+    }
 
     private static CapturedFeatureResult CreateResult(
         string libraryId,

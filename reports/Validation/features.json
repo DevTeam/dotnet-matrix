@@ -1,0 +1,253 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "validation",
+  "GeneratedAtUtc": "2026-07-29T16:30:48.8775379+00:00",
+  "Framework": ".NET 10.0.10",
+  "OperatingSystem": "Microsoft Windows 10.0.19045",
+  "Libraries": [
+    {
+      "Id": "DataAnnotations",
+      "Name": "DataAnnotations",
+      "Baseline": true
+    },
+    {
+      "Id": "FluentValidation",
+      "Name": "FluentValidation",
+      "Package": "FluentValidation",
+      "Version": "12.1.1",
+      "Baseline": false
+    },
+    {
+      "Id": "MiniValidation",
+      "Name": "MiniValidation",
+      "Package": "MiniValidation",
+      "Version": "0.10.0",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "ValidObject",
+      "Name": "Valid Object",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 35.5208
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 5.6563
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 54.2563
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "SingleFailure",
+      "Name": "Single Failure",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.2836
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 9.0751
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.833
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "MultipleFailures",
+      "Name": "Multiple Failures",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.5969
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.3666
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.8334
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "NestedObject",
+      "Name": "Nested Object",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.4554
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.6428
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.298
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "Collection",
+      "Name": "Collection",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 6.1743
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 5.8234
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 6.2449
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "ConditionalRule",
+      "Name": "Conditional Rule",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 4.9246
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.7928
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.5149
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "CustomRule",
+      "Name": "Custom Rule",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.2589
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.8311
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.365
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "StopOnFirstFailure",
+      "Name": "Stop On First Failure",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.4872
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.3467
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Unsupported",
+          "Reason": "MiniValidation has no fail-fast or cascade mode and always collects the object errors.",
+          "DurationMilliseconds": 0
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "AsyncValidation",
+      "Name": "Async Validation",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Unsupported",
+          "Reason": "DataAnnotations exposes only synchronous validation APIs.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 39.3197
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Unsupported",
+          "Reason": "MiniValidation exposes only synchronous validation APIs.",
+          "DurationMilliseconds": 0
+        }
+      ]
+    },
+    {
+      "Order": 10,
+      "Id": "PrepareValidator",
+      "Name": "Prepare Validator",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.134
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.2256
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.1395
+        }
+      ]
+    }
+  ]
+}

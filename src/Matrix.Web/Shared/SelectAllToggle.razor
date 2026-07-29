@@ -1,0 +1,55 @@
+@* A checkbox cannot show a mixed state without JavaScript, so the three states
+   are drawn instead: a tick for all, a dash for some, an empty box for none. *@
+<button class="select-all @StateClass"
+        type="button"
+        role="checkbox"
+        aria-checked="@AriaChecked"
+        title="@Title"
+        @onclick="OnToggle">
+    <svg viewBox="0 0 16 16"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="2.2"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         aria-hidden="true"
+         focusable="false">
+        @if (All)
+        {
+            <path d="M3.6 8.4l2.9 2.9 5.9-6.4"/>
+        }
+        else if (Selected > 0)
+        {
+            <path d="M4 8h8"/>
+        }
+    </svg>
+</button>
+
+@code {
+    [Parameter, EditorRequired]
+    public required int Selected { get; set; }
+
+    [Parameter, EditorRequired]
+    public required int Total { get; set; }
+
+    [Parameter, EditorRequired]
+    public required EventCallback OnToggle { get; set; }
+
+    private bool All => Total > 0 && Selected == Total;
+
+    private string StateClass => All
+        ? "is-all"
+        : Selected > 0
+            ? "is-some"
+            : "is-none";
+
+    private string AriaChecked => All
+        ? "true"
+        : Selected > 0
+            ? "mixed"
+            : "false";
+
+    private string Title => All
+        ? "Clear the selection"
+        : "Select everything shown";
+}

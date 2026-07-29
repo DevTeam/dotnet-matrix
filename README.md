@@ -1,6 +1,6 @@
 # .NET Matrix
 
-> [**Open the interactive .NET Matrix →**](http://matrix.dev-team.org/)
+> [**Open the interactive .NET Matrix →**](https://matrix.dev-team.org/)
 
 Evidence-based feature and performance comparisons for .NET libraries.
 
@@ -56,6 +56,10 @@ Performance and allocated memory are shown together. Lower values are better.
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/grace.png" width="48" height="48" alt="Grace logo"></td>
 <td><strong><a href="https://github.com/ipjohnson/Grace/wiki">Grace</a></strong> 7.2.1<br>A container with a fluent registration model, per-object-graph lifestyles and decorator support.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/DependencyInjection/logos/hand-coded.svg" width="48" height="48" alt="Hand-coded logo"></td>
+<td><strong>Hand-coded</strong><br>Direct dependency injection written in C# without a container.</td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/lamar.png" width="48" height="48" alt="Lamar logo"></td>
@@ -243,5 +247,131 @@ Measures creating the container and registering the whole prescribed graph, with
 Measures the same setup as Prepare And Register, followed by a single resolve of one singleton root.
 
 ![Dependency Injection Prepare And Register And Simple Resolve benchmark](reports/DependencyInjection/charts/15-prepare-and-register-and-simple-resolve.png)
+
+</details>
+
+## Object Mapping
+
+### Rating
+
+A gold, silver and bronze star for the first three places of every benchmark overview.
+
+| # | Library | 🥇 | 🥈 | 🥉 | Won |
+|---|---|---|---|---|---|
+| 1 | Mapperly | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | Mapster |  | 2 | 1 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | AutoMapper |  | 1 | 2 | silver in Prepare, bronze in Advanced, bronze in Basic |
+
+### Benchmark overview
+
+Performance and allocated memory are shown together. Lower values are better.
+
+![Object Mapping Basic benchmark overview](reports/ObjectMapping/charts/overview-basic.png)
+
+![Object Mapping Advanced benchmark overview](reports/ObjectMapping/charts/overview-advanced.png)
+
+![Object Mapping Prepare benchmark overview](reports/ObjectMapping/charts/overview-prepare.png)
+
+### Libraries
+
+<table>
+<tr>
+<td width="64"><img src="metadata/ObjectMapping/logos/auto-mapper.svg" width="48" height="48" alt="AutoMapper logo"></td>
+<td><strong><a href="https://docs.automapper.io/">AutoMapper</a></strong> 16.2.0<br>A convention-based object-object mapper with runtime configuration and compiled mapping plans.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/ObjectMapping/logos/hand-coded.svg" width="48" height="48" alt="Hand-coded logo"></td>
+<td><strong>Hand-coded</strong><br>Direct object mapping written in C# without a mapping library.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/ObjectMapping/logos/mapperly.svg" width="48" height="48" alt="Mapperly logo"></td>
+<td><strong><a href="https://mapperly.riok.app/">Mapperly</a></strong> 4.3.1<br>A source generator that creates readable object mapping code at compile time.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/ObjectMapping/logos/mapster.svg" width="48" height="48" alt="Mapster logo"></td>
+<td><strong><a href="https://github.com/MapsterMapper/Mapster/wiki">Mapster</a></strong> 10.0.11<br>An object mapper with runtime configuration, expression compilation, and projection support.</td>
+</tr>
+</table>
+
+### Benchmark scenarios
+
+<details>
+<summary><strong>01 · Simple Object</strong></summary>
+
+Maps one object with scalar values to a newly allocated destination object.
+
+![Object Mapping Simple Object benchmark](reports/ObjectMapping/charts/01-simple-object.png)
+
+</details>
+<details>
+<summary><strong>02 · Nested Object</strong></summary>
+
+Maps an order with nested customer and address objects to a new destination graph.
+
+![Object Mapping Nested Object benchmark](reports/ObjectMapping/charts/02-nested-object.png)
+
+</details>
+<details>
+<summary><strong>03 · Collection</strong></summary>
+
+Maps an array of 100 objects while preserving count, order and member values.
+
+![Object Mapping Collection benchmark](reports/ObjectMapping/charts/03-collection.png)
+
+</details>
+<details>
+<summary><strong>04 · Flattening</strong></summary>
+
+Maps nested customer values into a flat order summary through member-path configuration.
+
+![Object Mapping Flattening benchmark](reports/ObjectMapping/charts/04-flattening.png)
+
+</details>
+<details>
+<summary><strong>05 · Map To Existing</strong></summary>
+
+Overwrites a supplied destination object and returns that same instance.
+
+![Object Mapping Map To Existing benchmark](reports/ObjectMapping/charts/05-map-to-existing.png)
+
+</details>
+<details>
+<summary><strong>06 · Null Handling</strong></summary>
+
+Preserves null text, nested object and collection members in the destination.
+
+![Object Mapping Null Handling benchmark](reports/ObjectMapping/charts/06-null-handling.png)
+
+</details>
+<details>
+<summary><strong>07 · Custom Conversion</strong></summary>
+
+Maps string values through registered code and invariant decimal conversions.
+
+![Object Mapping Custom Conversion benchmark](reports/ObjectMapping/charts/07-custom-conversion.png)
+
+</details>
+<details>
+<summary><strong>08 · Polymorphic Mapping</strong></summary>
+
+Maps a base array containing cats and dogs to matching destination runtime types.
+
+![Object Mapping Polymorphic Mapping benchmark](reports/ObjectMapping/charts/08-polymorphic-mapping.png)
+
+</details>
+<details>
+<summary><strong>09 · Prepare Configuration</strong></summary>
+
+Creates the complete mapper configuration and eagerly prepares its runtime mapping plans.
+
+![Object Mapping Prepare Configuration benchmark](reports/ObjectMapping/charts/09-prepare-configuration.png)
+
+</details>
+<details>
+<summary><strong>10 · Prepare And Simple Map</strong></summary>
+
+Creates the complete mapper configuration and maps one simple object.
+
+![Object Mapping Prepare And Simple Map benchmark](reports/ObjectMapping/charts/10-prepare-and-simple-map.png)
 
 </details>

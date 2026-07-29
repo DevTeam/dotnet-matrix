@@ -74,7 +74,9 @@
                         <p class="eyebrow">Scope</p>
                         <h2>Compare</h2>
                     </div>
-                    <button class="text-button" @onclick="SelectAllLibraries">Select all libraries</button>
+                    <button class="text-button"
+                            title="Clear the name filter and select every library"
+                            @onclick="ResetFilters">Reset</button>
                 </div>
 
                 <section class="filter-section">
@@ -95,17 +97,37 @@
                 </section>
 
                 <section class="filter-section">
-                    <h3>Libraries</h3>
+                    <div class="filter-section-head">
+                        <SelectAllToggle Selected="@SelectedShownCount"
+                                         Total="@ShownLibraryCount"
+                                         OnToggle="ToggleShownLibraries"/>
+                        <h3>Libraries</h3>
+                        <span class="filter-count">
+                            @SelectedShownCount / @ShownLibraryCount
+                        </span>
+                    </div>
+                    <input class="filter-search"
+                           type="search"
+                           placeholder="Filter by name"
+                           aria-label="Filter libraries by name"
+                           @bind="_librarySearch"
+                           @bind:event="oninput"
+                           @onkeydown="ClearSearchOnEscape"/>
+                    @if (ShownLibraryCount == 0)
+                    {
+                        <p class="muted">Nothing matches “@_librarySearch”.</p>
+                    }
                     @foreach (var report in VisibleReports)
                     {
-                        var libraries = Libraries(report).ToArray();
+                        var libraries = Libraries(report).Where(Matches).ToArray();
+                        if (libraries.Length == 0)
+                        {
+                            continue;
+                        }
+
                         var medals = MatrixView.Rating(report, _selectedLibraries);
                         <div class="library-group">
                             <div class="group-label">@report.Category.Name</div>
-                            @if (libraries.Length == 0)
-                            {
-                                <p class="muted">No library data</p>
-                            }
                             @foreach (var library in libraries)
                             {
                                 var key = LibraryKey(report.Category.Id, library.Id);
@@ -237,6 +259,7 @@
     private bool _loadingReports;
     private string? _fatalError;
     private string? _catalogWarning;
+    private string _librarySearch = string.Empty;
 
     private MatrixVersion? SelectedVersion =>
         _catalog?.Versions.FirstOrDefault(version => version.Version == _selectedVersion);
@@ -252,6 +275,45 @@
             LibraryKey(_selectedCategoryId!, library.Id)));
 
     private int SelectedCategoryCount => _selectedCategoryId is null ? 0 : 1;
+
+    /// <summary>
+    /// The rows the name filter currently leaves visible. Bulk selection works on
+    /// this set, so narrowing the list and taking everything shown is one move.
+    /// </summary>
+    private IEnumerable<string> ShownLibraryKeys => VisibleReports
+        .SelectMany(report => Libraries(report)
+            .Where(Matches)
+            .Select(library => LibraryKey(report.Category.Id, library.Id)));
+
+    private int ShownLibraryCount => ShownLibraryKeys.Count();
+
+    private int SelectedShownCount => ShownLibraryKeys.Count(_selectedLibraries.Contains);
+
+    private bool Matches(MatrixLibrary library) =>
+        _librarySearch.Length == 0
+        || library.Name.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase)
+        // Reports may omit the package, the hand-coded baseline has none.
+        || library.Package?.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase) == true;
+
+    private void ToggleShownLibraries()
+    {
+        var keys = ShownLibraryKeys.ToArray();
+        if (keys.Length > 0 && keys.All(_selectedLibraries.Contains))
+        {
+            _selectedLibraries.ExceptWith(keys);
+            return;
+        }
+
+        _selectedLibraries.UnionWith(keys);
+    }
+
+    private void ClearSearchOnEscape(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Key == "Escape")
+        {
+            _librarySearch = string.Empty;
+        }
+    }
 
     private int FeatureCount => VisibleReports
         .SelectMany(report => report.Features?.Features ?? [])
@@ -306,6 +368,12 @@
         {
             _selectedLibraries.Remove(key);
         }
+    }
+
+    private void ResetFilters()
+    {
+        _librarySearch = string.Empty;
+        SelectAllLibraries();
     }
 
     private void SelectAllLibraries()
