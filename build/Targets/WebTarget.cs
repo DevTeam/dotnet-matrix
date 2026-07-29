@@ -94,12 +94,59 @@ internal sealed partial class WebTarget(
 
         var wwwRoot = Path.Combine(outputDirectory, "wwwroot");
         await File.WriteAllTextAsync(Path.Combine(wwwRoot, ".nojekyll"), string.Empty, cancellationToken);
-        File.Copy(
-            Path.Combine(wwwRoot, "index.html"),
-            Path.Combine(wwwRoot, "404.html"),
-            true);
+        await WriteNotFoundAsync(wwwRoot, cancellationToken);
+        CopyCustomDomain(wwwRoot);
         Console.WriteLine($"Web application: {wwwRoot}");
         return 0;
+    }
+
+    /// <summary>
+    /// The application has a single route, so an unknown path is always a wrong URL.
+    /// Serving a copy of index.html there does not work: its base href is relative,
+    /// so the framework files would be requested under the unknown path and 404,
+    /// leaving the page stuck on the loading screen. Redirect to the site root
+    /// instead, which differs between a project page and a custom domain.
+    /// </summary>
+    private static async Task WriteNotFoundAsync(
+        string wwwRoot,
+        CancellationToken cancellationToken) =>
+        await File.WriteAllTextAsync(
+            Path.Combine(wwwRoot, "404.html"),
+            """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="utf-8"/>
+                <title>.NET Matrix</title>
+                <script>
+                    var root = location.hostname.endsWith('.github.io')
+                        ? '/' + location.pathname.split('/')[1] + '/'
+                        : '/';
+                    if (location.pathname !== root) {
+                        location.replace(root);
+                    }
+                </script>
+            </head>
+            <body></body>
+            </html>
+
+            """,
+            cancellationToken);
+
+    /// <summary>
+    /// An Actions based deployment publishes exactly the artifact, so the custom
+    /// domain has to travel with it or GitHub Pages drops it on the next deploy.
+    /// </summary>
+    private void CopyCustomDomain(string wwwRoot)
+    {
+        var source = Path.Combine(buildPaths.SolutionDirectory, "CNAME");
+        if (!File.Exists(source))
+        {
+            return;
+        }
+
+        File.Copy(source, Path.Combine(wwwRoot, "CNAME"), true);
+        Console.WriteLine($"Custom domain: {File.ReadAllText(source).Trim()}");
     }
 
     /// <summary>
