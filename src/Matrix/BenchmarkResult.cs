@@ -6,4 +6,5 @@ public sealed record BenchmarkResult(
     double? MeanNanoseconds,
     double? StandardErrorNanoseconds,
     double? AllocatedBytesPerOperation,
-    string? EnvironmentId);
+    string? EnvironmentId,
+    int? PayloadSizeBytes = null);

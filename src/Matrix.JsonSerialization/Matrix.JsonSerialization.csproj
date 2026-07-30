@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>json-serialization</MatrixModuleId>
+        <MatrixModuleName>JSON Serialization</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>JSON</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>JsonSerialization</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.JsonSerialization.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.4">
+            <MatrixLibraryId>Newtonsoft.Json</MatrixLibraryId>
+            <MatrixLibraryName>Newtonsoft.Json</MatrixLibraryName>
+            <MatrixCodeName>NewtonsoftJson</MatrixCodeName>
+            <MatrixDescription>A mature JSON framework for .NET with configurable contracts, converters, and streaming readers and writers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.newtonsoft.com/json/help/html/Introduction.htm</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/JamesNK/Newtonsoft.Json</MatrixRepositoryUrl>
+            <MatrixLogo>logos/newtonsoft-json.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ServiceStack.Text" Version="10.0.8">
+            <MatrixLibraryId>ServiceStack.Text</MatrixLibraryId>
+            <MatrixLibraryName>ServiceStack.Text</MatrixLibraryName>
+            <MatrixCodeName>ServiceStackText</MatrixCodeName>
+            <MatrixDescription>A high-performance text library with typed JSON, stream, collection, and type-specific serialization APIs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://docs.servicestack.net/text</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ServiceStack/ServiceStack</MatrixRepositoryUrl>
+            <MatrixLogo>logos/service-stack-text.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MatrixLibrary Include="System.Text.Json">
+            <MatrixLibraryName>System.Text.Json</MatrixLibraryName>
+            <MatrixCodeName>SystemTextJson</MatrixCodeName>
+            <MatrixDescription>The reflection-based and source-generated JSON serializer included with .NET.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/overview</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-text-json.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>false</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

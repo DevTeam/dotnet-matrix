@@ -90,6 +90,7 @@ public sealed class MatrixBenchmarkRunner(
                     var method = report.BenchmarkCase.Descriptor.WorkloadMethod;
                     var library = method.GetCustomAttribute<LibraryBenchmarkAttribute>()!;
                     var feature = method.DeclaringType!.GetCustomAttribute<MatrixFeatureAttribute>()!;
+                    var payloadSize = method.GetCustomAttribute<PayloadSizeAttribute>();
                     var allocatedBytes = report.Metrics.TryGetValue("Allocated Memory", out var allocated)
                         ? allocated.Value
                         : (double?)null;
@@ -103,7 +104,8 @@ public sealed class MatrixBenchmarkRunner(
                             report.ResultStatistics?.Mean,
                             report.ResultStatistics?.StandardError,
                             allocatedBytes,
-                            environment.Id));
+                            environment.Id,
+                            payloadSize?.Bytes));
                 })
                 .ToArray();
             var reportedResults = CaptureReportedResults(runLibraries, environment.Id);
@@ -249,6 +251,7 @@ public sealed class MatrixBenchmarkRunner(
                 return type
                     .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                     .Select(method => (
+                        Method: method,
                         Feature: feature,
                         Library: method.GetCustomAttribute<LibraryBenchmarkAttribute>(),
                         Reported: method.GetCustomAttribute<ReportedBenchmarkAttribute>()))
@@ -267,7 +270,8 @@ public sealed class MatrixBenchmarkRunner(
                     item.Reported!.MeanNanoseconds,
                     0,
                     item.Reported.AllocatedBytesPerOperation,
-                    environmentId)))
+                    environmentId,
+                    item.Method.GetCustomAttribute<PayloadSizeAttribute>()?.Bytes)))
             .ToArray();
     }
 }

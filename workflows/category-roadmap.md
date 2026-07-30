@@ -34,7 +34,9 @@ external services require additional care and should be implemented later.
 - Dependency Injection is implemented in `src/Matrix.DependencyInjection`.
 - Object Mapping is implemented in `src/Matrix.ObjectMapping`.
 - Validation is implemented in `src/Matrix.Validation`; its feature validation
-  passes, and benchmark reports still need to be produced.
+  and benchmark reports are complete.
+- JSON Serialization is implemented in `src/Matrix.JsonSerialization`; its
+  feature validation passes, and benchmark reports still need to be produced.
 
 ## Recommended order
 
@@ -612,6 +614,6 @@ Before starting any category, answer these questions explicitly:
 
 ## Next action
 
-Produce the Validation benchmark report, then regenerate its charts, README
-content, and Web data through the shared workflow. After Validation is
-complete, JSON Serialization is the next recommended category.
+Produce the JSON Serialization benchmark report, then regenerate its charts,
+README content, and Web data through the shared workflow. After JSON
+Serialization is complete, CSV Processing is the next recommended category.
