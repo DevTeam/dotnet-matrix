@@ -37,7 +37,7 @@
 | [**JSON Serialization**](#json-serialization) | System.Text.Json | 3 | 14 |
 | [**Logging**](#logging) | Microsoft.Extensions.Logging | 5 | 8 |
 | [**Object Mapping**](#object-mapping) | Mapperly | 4 | 10 |
-| [**Validation**](#validation) | MiniValidation | 3 | 10 |
+| [**Validation**](#validation) | DataAnnotations | 3 | 10 |
 
 ## How to read the results
 
@@ -189,11 +189,12 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
 | 1 | **Pure.DI** | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | **Grace** |  | 1 | 1 | silver in Advanced, bronze in Basic |
+| 2 | **Grace** |  | 1 |  | silver in Advanced |
 | 3 | **MvvmCross** |  | 1 |  | silver in Prepare |
 | 4 | **Simple Injector** |  | 1 |  | silver in Basic |
 | 5 | **DryIoc** |  |  | 1 | bronze in Prepare |
-| 6 | **Stashbox** |  |  | 1 | bronze in Advanced |
+| 6 | **Microsoft Extensions Dependency Injection** |  |  | 1 | bronze in Basic |
+| 7 | **Stashbox** |  |  | 1 | bronze in Advanced |
 
 ### Benchmark overview
 
@@ -816,7 +817,7 @@ Creates the complete mapper configuration and maps one simple object.
 ## Validation
 
 <blockquote>
-<strong>MiniValidation</strong> leads the current rating · 3 libraries · 10 scenarios
+<strong>DataAnnotations</strong> leads the current rating · 3 libraries · 10 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
@@ -826,9 +827,9 @@ Creates the complete mapper configuration and maps one simple object.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **MiniValidation** | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
-| 2 | **DataAnnotations** | 2 |  | 2 | gold in Prepare, gold in Rules, bronze in Basic, bronze in Object Graph |
-| 3 | **FluentValidation** |  | 3 | 1 | silver in Basic, silver in Object Graph, silver in Rules, bronze in Prepare |
+| 1 | **DataAnnotations** | 2 | 2 |  | gold in Prepare, gold in Rules, silver in Basic, silver in Object Graph |
+| 2 | **MiniValidation** | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
+| 3 | **FluentValidation** |  | 1 | 3 | silver in Rules, bronze in Basic, bronze in Object Graph, bronze in Prepare |
 
 ### Benchmark overview
 
