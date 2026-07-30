@@ -1,4 +1,4 @@
-@if (Features.Length == 0)
+﻿@if (Features.Length == 0)
 {
     <EmptyState Title="No benchmark data" Text="No benchmark report is available for this selection."/>
 }
@@ -6,16 +6,24 @@ else
 {
     <section class="benchmark-toolbar">
         <div class="benchmark-toolbar-row">
-            <div>
-                <label for="benchmark-scenario">Scenario</label>
-                <select id="benchmark-scenario" @bind="_selectedFeature">
-                    @foreach (var feature in Features)
-                    {
-                        <option value="@feature.Id">@feature.Order.ToString("00") · @feature.Name</option>
-                    }
-                </select>
-            </div>
+            <h3 class="scenario-heading">Scenario</h3>
             <span class="direction-note">↓ Lower is better</span>
+        </div>
+        @* Every scenario stays on screen; radios keep exactly one of them chosen. *@
+        <div class="scenario-list" role="radiogroup" aria-label="Benchmark scenario">
+            @foreach (var feature in Features)
+            {
+                <label class="check-row">
+                    <input type="radio"
+                           name="scenario"
+                           value="@feature.Id"
+                           checked="@(feature.Id == _selectedFeature)"
+                           @onchange="() => _selectedFeature = feature.Id"/>
+                    <span>
+                        <span class="feature-order">@feature.Order.ToString("00")</span>@feature.Name
+                    </span>
+                </label>
+            }
         </div>
         @if (Description is { } description)
         {
@@ -31,7 +39,6 @@ else
             <BenchmarkView Reports="@Reports"
                            SelectedLibraries="@SelectedLibraries"
                            Feature="@_selectedFeature"
-                           ShowToolbar="false"
                            Memory="false"/>
         </div>
         <div class="benchmark-split-column">
@@ -42,7 +49,6 @@ else
             <BenchmarkView Reports="@Reports"
                            SelectedLibraries="@SelectedLibraries"
                            Feature="@_selectedFeature"
-                           ShowToolbar="false"
                            Memory="true"/>
         </div>
     </section>

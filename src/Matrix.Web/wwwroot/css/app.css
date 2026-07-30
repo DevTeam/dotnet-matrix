@@ -102,7 +102,7 @@ a {
 }
 
 .release-picker label,
-.benchmark-toolbar label {
+.scenario-heading {
     color: var(--muted);
     font-size: 12px;
     font-weight: 700;
@@ -1182,6 +1182,31 @@ tbody th {
     align-items: end;
     justify-content: space-between;
     gap: 18px;
+}
+
+.scenario-heading {
+    margin: 0;
+}
+
+/* All scenarios stay visible; the content column is wide enough for columns. */
+.scenario-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+    gap: 0 20px;
+}
+
+.scenario-list .check-row {
+    min-height: 30px;
+    padding-right: 6px;
+}
+
+.scenario-list .check-row input {
+    accent-color: var(--accent);
+}
+
+.scenario-list .feature-order {
+    margin-right: 8px;
+    font-size: 11px;
 }
 
 .benchmark-split {
