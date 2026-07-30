@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 // ReSharper disable CheckNamespace
 // ReSharper disable UseCollectionExpression
 
@@ -23,7 +23,7 @@ internal sealed partial class GitHubMatrixDataSource(
         var versions = new List<MatrixVersion>();
         if (UseLocalReports)
         {
-            versions.Add(new MatrixVersion("local", null, string.Empty));
+            versions.Add(new MatrixVersion("local", null, string.Empty, false));
         }
 
         string? warning = null;
@@ -179,7 +179,7 @@ internal sealed partial class GitHubMatrixDataSource(
 
         return tags
             .Select(tag => (
-                Value: new MatrixVersion(tag.Name, null, tag.Commit.Sha),
+                Value: new MatrixVersion(tag.Name, null, tag.Commit.Sha, true),
                 SortKey: Version.Parse(tag.Name)))
             .OrderByDescending(version => version.SortKey)
             .Select(version => version.Value)

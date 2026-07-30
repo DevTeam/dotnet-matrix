@@ -25,7 +25,7 @@
                         </option>
                     }
                 </select>
-                @if (SelectedVersion is { Commit.Length: > 0 })
+                @if (SelectedVersion is { Released: true, Commit.Length: > 0 })
                 {
                     <a class="commit-link"
                        href="@CommitUrl(SelectedVersion)"
@@ -34,6 +34,13 @@
                        title="Open commit on GitHub">
                         @ShortCommit(SelectedVersion.Commit) ↗
                     </a>
+                }
+                else if (SelectedVersion is { Released: false, Commit.Length: > 0 })
+                {
+                    <span class="release-chip"
+                          title="Reports are read from the branch and change with every merge">
+                        unreleased
+                    </span>
                 }
             </div>
         }
@@ -452,19 +459,21 @@
         commit[..Math.Min(7, commit.Length)];
 
     private static string VersionLabel(MatrixVersion version) =>
-        version.Version switch
+        version switch
         {
-            "local" => "Local reports · workspace",
-            _ => version.DateUtc is { } date
-                ? $"{version.Version} · {date:dd MMM yyyy}"
-                : version.Version
+            { Version: "local" } => "Local reports · workspace",
+            { Released: false } => $"{version.Version} · latest",
+            { DateUtc: { } date } => $"{version.Version} · {date:dd MMM yyyy}",
+            _ => version.Version
         };
 
     private static string SnapshotLabel(MatrixVersion version) =>
-        version.Version switch
+        version switch
         {
-            "local" => "Local files",
-            _ => version.DateUtc is { } date ? date.ToString("dd MMM yyyy") : version.Version
+            { Version: "local" } => "Local files",
+            { Released: false } => $"{version.Version} · unreleased",
+            { DateUtc: { } date } => date.ToString("dd MMM yyyy"),
+            _ => version.Version
         };
 
 }

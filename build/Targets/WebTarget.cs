@@ -157,6 +157,14 @@ internal sealed partial class WebTarget(
                 "refs/tags"
             ],
             cancellationToken);
+        // The head of the default branch is offered as a live version: its reports
+        // are read straight from the branch, so they follow every merge without a
+        // redeploy. It leads the list because it is newer than any tag.
+        var branch = await ReadDefaultBranchAsync(cancellationToken);
+        var result = new List<MatrixVersion>
+        {
+            new(branch, null, branch, false)
+        };
         var versions = new List<(MatrixVersion Value, Version SortKey)>();
         foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
         {
@@ -175,14 +183,48 @@ internal sealed partial class WebTarget(
             }
 
             versions.Add((
-                new MatrixVersion(parts[0], date, commit),
+                new MatrixVersion(parts[0], date, commit, true),
                 Version.Parse(parts[0])));
         }
 
-        return versions
+        result.AddRange(versions
             .OrderByDescending(version => version.SortKey)
-            .Select(version => version.Value)
-            .ToArray();
+            .Select(version => version.Value));
+        return result;
+    }
+
+    /// <summary>
+    /// The branch is discovered rather than hardcoded, so renaming master to main
+    /// needs no change here. CI checkouts do not always set the origin head, hence
+    /// the fallbacks.
+    /// </summary>
+    private async Task<string> ReadDefaultBranchAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var reference = (await GitAsync(
+                ["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"],
+                cancellationToken)).Trim();
+            var name = reference.Split('/').LastOrDefault();
+            if (!string.IsNullOrEmpty(name))
+            {
+                return name;
+            }
+        }
+        catch (InvalidOperationException)
+        {
+            // The origin head is not set in this clone.
+        }
+
+        if (Environment.GetEnvironmentVariable("GITHUB_REF_NAME") is { Length: > 0 } fromCi)
+        {
+            return fromCi;
+        }
+
+        var current = (await GitAsync(
+            ["rev-parse", "--abbrev-ref", "HEAD"],
+            cancellationToken)).Trim();
+        return current is "HEAD" or "" ? "master" : current;
     }
 
     private async Task<GitHubRepository> ReadRepositoryAsync(CancellationToken cancellationToken)
