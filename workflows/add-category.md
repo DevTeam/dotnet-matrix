@@ -321,8 +321,10 @@ Requirements:
 - Provide at least a documentation or repository URL.
 - `MatrixLogo` is relative to `metadata/<ReportDirectory>`.
 - Add secondary integration packages as ordinary, unannotated references.
-- Add `<MatrixRating>false</MatrixRating>` only when the library must be visible
-  but excluded from category ratings.
+- `MatrixRating` defaults to `true` for ordinary libraries and `false` for
+  baselines. Set it explicitly to `true` when a baseline must participate in
+  category ratings, or to `false` when an ordinary library must remain visible
+  but excluded.
 
 The generated catalog constant is then used everywhere:
 

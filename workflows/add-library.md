@@ -171,8 +171,10 @@ Requirements:
 - `MatrixDescription` is short, factual, and English.
 - Provide official documentation, a canonical repository, or both.
 - `MatrixLogo` is relative to `metadata/<ReportDirectory>`.
-- Add `<MatrixRating>false</MatrixRating>` only when the library must be visible
-  but excluded from ratings. Omission means it participates in ratings.
+- `MatrixRating` defaults to `true` for ordinary libraries and `false` for
+  baselines. Set it explicitly to `true` when a baseline must participate in
+  ratings, or to `false` when an ordinary library must remain visible but
+  excluded.
 
 Add packages required for optional integrations as ordinary, unannotated
 references. Only one primary package receives `MatrixLibraryId`.

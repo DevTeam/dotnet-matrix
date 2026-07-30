@@ -34,8 +34,8 @@
 |---|---|---:|---:|
 | [**CSV Processing**](#csv-processing) | Sep | 3 | 10 |
 | [**Dependency Injection**](#dependency-injection) | Pure.DI | 23 | 15 |
-| [**JSON Serialization**](#json-serialization) | ServiceStack.Text | 3 | 14 |
-| [**Logging**](#logging) | NLog | 5 | 8 |
+| [**JSON Serialization**](#json-serialization) | System.Text.Json | 3 | 14 |
+| [**Logging**](#logging) | Microsoft.Extensions.Logging | 5 | 8 |
 | [**Object Mapping**](#object-mapping) | Mapperly | 4 | 10 |
 | [**Validation**](#validation) | MiniValidation | 3 | 10 |
 
@@ -413,7 +413,7 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 ## JSON Serialization
 
 <blockquote>
-<strong>ServiceStack.Text</strong> leads the current rating · 3 libraries · 14 scenarios
+<strong>System.Text.Json</strong> leads the current rating · 3 libraries · 14 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
@@ -423,8 +423,9 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **ServiceStack.Text** | 5 |  |  | gold in Basic, gold in Collections, gold in Nested, gold in Prepare, gold in Stream |
-| 2 | **Newtonsoft.Json** | 1 | 5 |  | gold in Advanced, silver in Basic, silver in Collections, silver in Nested, silver in Prepare, silver in Stream |
+| 1 | **System.Text.Json** | 5 | 1 |  | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
+| 2 | **ServiceStack.Text** | 1 | 4 |  | gold in Prepare, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
+| 3 | **Newtonsoft.Json** |  | 1 | 5 | silver in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
 
 ### Benchmark overview
 
@@ -570,7 +571,7 @@ Creates fresh serializer settings and explicit type metadata without serializing
 ## Logging
 
 <blockquote>
-<strong>NLog</strong> leads the current rating · 5 libraries · 8 scenarios
+<strong>Microsoft.Extensions.Logging</strong> leads the current rating · 5 libraries · 8 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
@@ -580,9 +581,10 @@ Creates fresh serializer settings and explicit type metadata without serializing
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **NLog** | 2 | 1 |  | gold in Core, gold in Structured, silver in Prepare |
-| 2 | **Serilog** | 1 | 2 |  | gold in Prepare, silver in Core, silver in Structured |
-| 3 | **log4net** |  |  | 3 | bronze in Core, bronze in Prepare, bronze in Structured |
+| 1 | **Microsoft.Extensions.Logging** | 2 |  |  | gold in Core, gold in Structured |
+| 2 | **Serilog** | 1 |  | 2 | gold in Prepare, bronze in Core, bronze in Structured |
+| 3 | **NLog** |  | 3 |  | silver in Core, silver in Prepare, silver in Structured |
+| 4 | **log4net** |  |  | 1 | bronze in Prepare |
 
 ### Benchmark overview
 
@@ -824,8 +826,9 @@ Creates the complete mapper configuration and maps one simple object.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **MiniValidation** | 3 |  |  | gold in Basic, gold in Object Graph, gold in Prepare |
-| 2 | **FluentValidation** | 1 | 3 |  | gold in Rules, silver in Basic, silver in Object Graph, silver in Prepare |
+| 1 | **MiniValidation** | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
+| 2 | **DataAnnotations** | 2 |  | 2 | gold in Prepare, gold in Rules, bronze in Basic, bronze in Object Graph |
+| 3 | **FluentValidation** |  | 3 | 1 | silver in Basic, silver in Object Graph, silver in Rules, bronze in Prepare |
 
 ### Benchmark overview
 
