@@ -7,7 +7,8 @@ internal sealed class LocalWebTarget(
     IBuildPaths buildPaths,
     IQuietProcessRunner processRunner) : ILocalWebTarget
 {
-    internal const string Url = "http://localhost:5290";
+    private const string DynamicUrl = "http://127.0.0.1:0";
+    private const string ListeningMarker = "Now listening on: ";
     private readonly ICommandLineRunner commandLineRunner =
         Host.GetService<ICommandLineRunner>();
 
@@ -38,7 +39,7 @@ internal sealed class LocalWebTarget(
             return result;
         }
 
-        var ready = new TaskCompletionSource(
+        var ready = new TaskCompletionSource<string>(
             TaskCreationOptions.RunContinuationsAsynchronously);
         var server = processRunner.RunAsync(
             DotNet(
@@ -52,33 +53,60 @@ internal sealed class LocalWebTarget(
                 "--no-launch-profile",
                 "--",
                 "--urls",
-                Url),
+                DynamicUrl),
             "local Web application",
             cancellationToken,
             cancellationIsSuccess: true,
             outputHandler: output =>
             {
-                if (!output.IsError
-                    && output.Line.Contains(
-                        $"Now listening on: {Url}",
-                        StringComparison.OrdinalIgnoreCase))
+                if (TryGetLocalUrl(output, out var url))
                 {
-                    ready.TrySetResult();
+                    ready.TrySetResult(url);
                 }
             },
             suppressConsoleOutput: false);
         if (await Task.WhenAny(ready.Task, server) == ready.Task)
         {
-            Host.Info($"Local .NET Matrix: {Url}");
+            var url = await ready.Task;
+            Host.Info($"Local .NET Matrix: {url}");
             if (launchBrowser)
             {
-                await OpenBrowserAsync(cancellationToken);
+                await OpenBrowserAsync(url, cancellationToken);
             }
 
             Host.Info("Press Ctrl+C to stop the Web application.");
         }
 
         return await server;
+    }
+
+    private static bool TryGetLocalUrl(Output output, out string url)
+    {
+        url = string.Empty;
+        if (output.IsError)
+        {
+            return false;
+        }
+
+        var markerIndex = output.Line.IndexOf(
+            ListeningMarker,
+            StringComparison.OrdinalIgnoreCase);
+        if (markerIndex < 0)
+        {
+            return false;
+        }
+
+        var candidate = output.Line[(markerIndex + ListeningMarker.Length)..].Trim();
+        if (!Uri.TryCreate(candidate, UriKind.Absolute, out var uri)
+            || !uri.IsLoopback
+            || uri.Scheme != Uri.UriSchemeHttp
+            || uri.Port <= 0)
+        {
+            return false;
+        }
+
+        url = uri.GetLeftPart(UriPartial.Authority);
+        return true;
     }
 
     private HostCommandLine DotNet(string operation, params string[] arguments) =>
@@ -89,9 +117,11 @@ internal sealed class LocalWebTarget(
             [],
             operation);
 
-    private async Task OpenBrowserAsync(CancellationToken cancellationToken)
+    private async Task OpenBrowserAsync(
+        string url,
+        CancellationToken cancellationToken)
     {
-        var commandLine = BrowserCommand();
+        var commandLine = BrowserCommand(url);
         var errors = new List<string>();
         var consoleOutput = Console.Out;
         ICommandLineResult result;
@@ -130,17 +160,17 @@ internal sealed class LocalWebTarget(
             details = errors.Count == 0 ? string.Empty : $" {string.Join(' ', errors)}";
         }
 
-        Host.Warning($"Could not open the default browser.{details} Open {Url} manually.");
+        Host.Warning($"Could not open the default browser.{details} Open {url} manually.");
     }
 
-    private HostCommandLine BrowserCommand()
+    private HostCommandLine BrowserCommand(string url)
     {
         if (OperatingSystem.IsWindows())
         {
             return new HostCommandLine(
                 "cmd.exe",
                 buildPaths.SolutionDirectory,
-                ["/c", "start", string.Empty, Url],
+                ["/c", "start", string.Empty, url],
                 [],
                 "default browser");
         }
@@ -148,7 +178,7 @@ internal sealed class LocalWebTarget(
         return new HostCommandLine(
             OperatingSystem.IsMacOS() ? "open" : "xdg-open",
             buildPaths.SolutionDirectory,
-            [Url],
+            [url],
             [],
             "default browser");
     }

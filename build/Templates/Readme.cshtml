@@ -174,9 +174,7 @@ The complete workflow requires:
   package cache;
 - a writable repository checkout and several GB of free space for build,
   BenchmarkDotNet, report, and Web artifacts;
-- at least 8 GB of RAM as a practical minimum;
-- TCP port `5290` available on localhost and a browser, unless
-  `--no-browser` is used.
+- at least 8 GB of RAM as a practical minimum.
 
 For meaningful performance comparisons, run on an otherwise idle machine,
 connected to power, without a debugger, with a fixed performance-oriented power
@@ -184,16 +182,16 @@ profile. Do not combine results produced by different frameworks, runtimes,
 operating systems, architectures, or processors without reviewing the recorded
 benchmark environment.
 
-Run the complete reproducible workflow and open the Web application locally:
+Run the complete reproducible workflow:
 
 ```powershell
 dotnet run --project .\build -- reproduce
 ```
 
 The target validates and benchmarks every library, regenerates reports, charts,
-metadata, README, and Rider configurations, then opens
-`http://localhost:5290` in the default browser after the local server starts
-listening. Press `Ctrl+C` to stop the local application.
+metadata, README, and Rider configurations, and starts the local Web application
+on an automatically selected available port. Use `--no-browser` to suppress
+automatic browser opening. Press `Ctrl+C` to stop the local application.
 
 To use the reports already on disk and go directly to artifact generation and
 the local application:
