@@ -165,14 +165,6 @@ internal sealed partial class WebTarget(
                 "refs/tags"
             ],
             cancellationToken);
-        // The head of the default branch is offered as a live version: its reports
-        // are read straight from the branch, so they follow every merge without a
-        // redeploy. It leads the list because it is newer than any tag.
-        var branch = await ReadDefaultBranchAsync(cancellationToken);
-        var result = new List<MatrixVersion>
-        {
-            new(branch, null, branch, false)
-        };
         var versions = new List<(MatrixVersion Value, Version SortKey)>();
         foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
         {
@@ -195,10 +187,43 @@ internal sealed partial class WebTarget(
                 Version.Parse(parts[0])));
         }
 
-        result.AddRange(versions
+        var releases = versions
             .OrderByDescending(version => version.SortKey)
-            .Select(version => version.Value));
-        return result;
+            .Select(version => version.Value)
+            .ToArray();
+
+        // The head of the default branch is offered as a live version: its reports
+        // are read straight from the branch, so they follow every merge without a
+        // redeploy. It leads the list because it is newer than any tag. When the
+        // head is itself tagged, the two entries would serve identical reports, so
+        // only the release is kept.
+        var branch = await ReadDefaultBranchAsync(cancellationToken);
+        var head = await ReadCommitAsync(branch, cancellationToken);
+        var tagged = head is not null && releases.Any(release =>
+            release.Commit.Equals(head, StringComparison.OrdinalIgnoreCase));
+        if (tagged)
+        {
+            Host.Info($"Branch {branch} is at a released commit, omitting it from the list");
+            return releases;
+        }
+
+        return [new MatrixVersion(branch, null, branch, false), .. releases];
+    }
+
+    private async Task<string?> ReadCommitAsync(
+        string reference,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            return (await GitAsync(
+                ["rev-parse", "--verify", "--quiet", $"{reference}^{{commit}}"],
+                cancellationToken)).Trim();
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
     }
 
     /// <summary>
