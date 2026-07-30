@@ -74,9 +74,6 @@
                         <p class="eyebrow">Scope</p>
                         <h2>Compare</h2>
                     </div>
-                    <button class="text-button"
-                            title="Clear the name filter and select every library"
-                            @onclick="ResetFilters">Reset</button>
                 </div>
 
                 <section class="filter-section">
@@ -368,12 +365,6 @@
         {
             _selectedLibraries.Remove(key);
         }
-    }
-
-    private void ResetFilters()
-    {
-        _librarySearch = string.Empty;
-        SelectAllLibraries();
     }
 
     private void SelectAllLibraries()
