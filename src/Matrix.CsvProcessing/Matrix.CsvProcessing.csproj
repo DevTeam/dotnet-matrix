@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>csv-processing</MatrixModuleId>
+        <MatrixModuleName>CSV Processing</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>CSV</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>CsvProcessing</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.CsvProcessing.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="CsvHelper" Version="33.1.0">
+            <MatrixLibraryId>CsvHelper</MatrixLibraryId>
+            <MatrixLibraryName>CsvHelper</MatrixLibraryName>
+            <MatrixCodeName>CsvHelper</MatrixCodeName>
+            <MatrixDescription>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://joshclose.github.io/CsvHelper/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/JoshClose/CsvHelper</MatrixRepositoryUrl>
+            <MatrixLogo>logos/csv-helper.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Sylvan.Data.Csv" Version="1.4.4">
+            <MatrixLibraryId>Sylvan.Data.Csv</MatrixLibraryId>
+            <MatrixLibraryName>Sylvan.Data.Csv</MatrixLibraryName>
+            <MatrixCodeName>Sylvan</MatrixCodeName>
+            <MatrixDescription>A high-performance forward-only CSV data reader and writer with strongly typed accessors and asynchronous I/O.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MarkPflug/Sylvan/blob/main/docs/Csv.md</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MarkPflug/Sylvan</MatrixRepositoryUrl>
+            <MatrixLogo>logos/sylvan.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Sylvan.Data" Version="0.2.17"/>
+        <PackageReference Include="Sep" Version="0.15.1">
+            <MatrixLibraryId>Sep</MatrixLibraryId>
+            <MatrixLibraryName>Sep</MatrixLibraryName>
+            <MatrixCodeName>Sep</MatrixCodeName>
+            <MatrixDescription>A modern SIMD-accelerated separated-values reader and writer with span-based conversion and async enumeration.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/nietras/Sep</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/nietras/Sep</MatrixRepositoryUrl>
+            <MatrixLogo>logos/sep.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Fixtures\*.csv"/>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
+

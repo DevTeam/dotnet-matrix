@@ -32,7 +32,7 @@
 
         <Error Condition="'%(_MatrixPackageLibrary.Version)' == ''"
                Text="Matrix library package '%(_MatrixPackageLibrary.Identity)' must define Version."/>
-        <Error Condition="'%(_MatrixSourceLibrary.MatrixBaseline)' != 'true'"
+        <Error Condition="'%(_MatrixSourceLibrary.Identity)' != '' and '%(_MatrixSourceLibrary.MatrixBaseline)' != 'true'"
                Text="Package-less matrix library '%(_MatrixSourceLibrary.Identity)' must define MatrixBaseline=true."/>
         <Error Condition="'%(_MatrixLibrary.MatrixLibraryName)' == ''"
                Text="Matrix library '%(_MatrixLibrary.Identity)' must define MatrixLibraryName."/>
