@@ -36,16 +36,14 @@ internal sealed class MetadataTarget(IBuildPaths buildPaths) : IMetadataTarget
                 path,
                 JsonSerializer.Serialize(module.Metadata.LibraryMetadata, JsonOptions)
                 + Environment.NewLine);
-            Console.WriteLine($"Library metadata: {path}");
-
             var featurePath = Path.Combine(directory, "features.json");
             File.WriteAllText(
                 featurePath,
                 JsonSerializer.Serialize(module.Metadata.FeatureMetadata, JsonOptions)
                 + Environment.NewLine);
-            Console.WriteLine($"Feature metadata: {featurePath}");
         }
 
+        Host.Info($"Metadata: {modules.Count} categories generated.");
         return 0;
     }
 }

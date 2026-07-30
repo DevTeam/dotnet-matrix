@@ -17,7 +17,8 @@ internal sealed class BuildApplication(
     ICiMatrixTarget ciMatrixTarget,
     ICiReportsTarget ciReportsTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
-    IWebTarget webTarget)
+    IWebTarget webTarget,
+    IReproduceTarget reproduceTarget)
 {
     public Task<int> RunAsync()
     {
@@ -38,6 +39,7 @@ internal sealed class BuildApplication(
         RegisterCiMatrix(root, modules);
         RegisterCiReports(root, modules);
         RegisterWeb(root, modules);
+        RegisterReproduce(root, modules);
         return root.Parse(args).InvokeAsync();
     }
 
@@ -251,6 +253,31 @@ internal sealed class BuildApplication(
             MatrixNames.BuildWebCommand,
             "Build the .NET Matrix Blazor WebAssembly application");
         command.SetAction(_ => webTarget.RunAsync(modules, cancellationToken));
+        root.Subcommands.Add(command);
+    }
+
+    private void RegisterReproduce(
+        RootCommand root,
+        IReadOnlyList<DiscoveredMatrixModule> modules)
+    {
+        var skipBenchmarks = new Option<bool>("--skip-benchmarks")
+        {
+            Description = "Use reports already on disk instead of validating and benchmarking every library."
+        };
+        var noBrowser = new Option<bool>("--no-browser")
+        {
+            Description = "Start the local Web application without opening a browser."
+        };
+        var command = new Command(
+            MatrixNames.ReproduceCommand,
+            "Reproduce all results and run the complete Web application locally");
+        command.Options.Add(skipBenchmarks);
+        command.Options.Add(noBrowser);
+        command.SetAction(parseResult => reproduceTarget.RunAsync(
+            modules,
+            parseResult.GetValue(skipBenchmarks),
+            !parseResult.GetValue(noBrowser),
+            cancellationToken));
         root.Subcommands.Add(command);
     }
 }

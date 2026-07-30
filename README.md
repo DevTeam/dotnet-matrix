@@ -941,13 +941,48 @@ Creates the complete scalar validator or rule graph without validating an input.
 
 ## Reproduce the results
 
-Validate and benchmark every library, then regenerate the source-controlled reports:
+### Environment requirements
+
+The complete workflow requires:
+
+- a 64-bit operating system supported by the .NET 10 SDK;
+- the .NET 10 SDK available as `dotnet` on `PATH`;
+- access to the configured NuGet sources on the first run, or a populated local
+  package cache;
+- a writable repository checkout and several GB of free space for build,
+  BenchmarkDotNet, report, and Web artifacts;
+- at least 8 GB of RAM as a practical minimum;
+- TCP port `5290` available on localhost and a browser, unless
+  `--no-browser` is used.
+
+For meaningful performance comparisons, run on an otherwise idle machine,
+connected to power, without a debugger, with a fixed performance-oriented power
+profile. Do not combine results produced by different frameworks, runtimes,
+operating systems, architectures, or processors without reviewing the recorded
+benchmark environment.
+
+Run the complete reproducible workflow and open the Web application locally:
 
 ```powershell
-dotnet run --project .\build -- prepare-commit
+dotnet run --project .\build -- reproduce
 ```
 
-To regenerate charts and this README from reports already on disk:
+The target validates and benchmarks every library, regenerates reports, charts,
+metadata, README, and Rider configurations, then opens
+`http://localhost:5290` in the default browser after the local server starts
+listening. Press `Ctrl+C` to stop the local application.
+
+To use the reports already on disk and go directly to artifact generation and
+the local application:
+
+```powershell
+dotnet run --project .\build -- reproduce --skip-benchmarks
+```
+
+Child-process output is saved under `artifacts/logs`; the console shows concise
+progress and prints the relevant log tail if an operation fails.
+
+To regenerate source-controlled artifacts without starting the local application:
 
 ```powershell
 dotnet run --project .\build -- finalize-commit

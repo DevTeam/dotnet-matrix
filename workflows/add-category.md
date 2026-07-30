@@ -615,6 +615,7 @@ readme
 build-web
 prepare-commit
 finalize-commit
+reproduce
 ci-matrix
 ci-reports
 ```
@@ -703,7 +704,10 @@ dotnet run --project build/build.csproj -- prepare-commit
 
 `prepare-commit` runs benchmarks for discovered modules and can be expensive.
 `finalize-commit` regenerates derived artifacts from existing reports without
-running benchmarks. The user chooses which command is appropriate.
+running benchmarks. `reproduce` performs the full refresh, then builds and
+opens the local Web application with all current report and metadata resources;
+`reproduce --skip-benchmarks` uses reports already on disk. The user chooses
+which command is appropriate.
 
 ## Category-specific decisions that must not be copied from DI
 

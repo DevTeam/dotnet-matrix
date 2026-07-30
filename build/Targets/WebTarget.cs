@@ -1,7 +1,8 @@
+using HostApi;
 using Matrix;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using HostCommandLine = HostApi.CommandLine;
 // ReSharper disable UseCollectionExpression
 
 namespace Build.Targets;
@@ -9,8 +10,12 @@ namespace Build.Targets;
 internal sealed partial class WebTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
-    IReportChartsTarget reportChartsTarget) : IWebTarget
+    IReportChartsTarget reportChartsTarget,
+    IQuietProcessRunner processRunner) : IWebTarget
 {
+    private readonly ICommandLineRunner commandLineRunner =
+        Host.GetService<ICommandLineRunner>();
+
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web)
     {
         WriteIndented = true
@@ -34,7 +39,7 @@ internal sealed partial class WebTarget(
 
         var repository = await ReadRepositoryAsync(cancellationToken);
         var versions = await ReadVersionsAsync(cancellationToken);
-        Console.WriteLine($"Releases baked into the catalog: {versions.Count}");
+        Host.Info($"Releases baked into the catalog: {versions.Count}");
         var catalog = new MatrixWebCatalog(
             1,
             repository,
@@ -62,34 +67,37 @@ internal sealed partial class WebTarget(
             "src",
             "Matrix.Web",
             "Matrix.Web.csproj");
-        var startInfo = new ProcessStartInfo("dotnet")
-        {
-            WorkingDirectory = buildPaths.SolutionDirectory,
-            UseShellExecute = false
-        };
-        startInfo.ArgumentList.Add("publish");
-        startInfo.ArgumentList.Add(projectPath);
-        startInfo.ArgumentList.Add("--configuration");
-        startInfo.ArgumentList.Add("Release");
-        startInfo.ArgumentList.Add("--output");
-        startInfo.ArgumentList.Add(outputDirectory);
-        startInfo.ArgumentList.Add($"-p:MatrixCatalogPath={catalogPath}");
-        startInfo.ArgumentList.Add("-p:MatrixProduction=true");
+        var commandLine = new HostCommandLine(
+            "dotnet",
+            buildPaths.SolutionDirectory,
+            [
+                "publish",
+                projectPath,
+                "--configuration",
+                "Release",
+                "--output",
+                outputDirectory,
+                $"-p:MatrixCatalogPath={catalogPath}",
+                "-p:MatrixProduction=true"
+            ],
+            [],
+            "production Web application");
 
-        Console.WriteLine($"Building .NET Matrix for {repository.Owner}/{repository.Name}");
-        using var process = Process.Start(startInfo)
-                            ?? throw new InvalidOperationException("Could not start dotnet publish.");
-        await process.WaitForExitAsync(cancellationToken);
-        if (process.ExitCode != 0)
+        Host.Info($"Building .NET Matrix for {repository.Owner}/{repository.Name}");
+        var result = await processRunner.RunAsync(
+            commandLine,
+            "production Web application",
+            cancellationToken);
+        if (result != 0)
         {
-            return process.ExitCode;
+            return result;
         }
 
         var wwwRoot = Path.Combine(outputDirectory, "wwwroot");
         await File.WriteAllTextAsync(Path.Combine(wwwRoot, ".nojekyll"), string.Empty, cancellationToken);
         await WriteNotFoundAsync(wwwRoot, cancellationToken);
         CopyCustomDomain(wwwRoot);
-        Console.WriteLine($"Web application: {wwwRoot}");
+        Host.Info($"Web application: {wwwRoot}");
         return 0;
     }
 
@@ -139,7 +147,7 @@ internal sealed partial class WebTarget(
         }
 
         File.Copy(source, Path.Combine(wwwRoot, "CNAME"), true);
-        Console.WriteLine($"Custom domain: {File.ReadAllText(source).Trim()}");
+        Host.Info($"Custom domain: {File.ReadAllText(source).Trim()}");
     }
 
     /// <summary>
@@ -246,33 +254,44 @@ internal sealed partial class WebTarget(
         IReadOnlyList<string> arguments,
         CancellationToken cancellationToken)
     {
-        var startInfo = new ProcessStartInfo("git")
+        var standardOutput = new List<string>();
+        var standardError = new List<string>();
+        var sync = new object();
+        ICommandLineResult result;
+        var consoleOutput = Console.Out;
+        try
         {
-            WorkingDirectory = buildPaths.SolutionDirectory,
-            UseShellExecute = false,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            CreateNoWindow = true
-        };
-        foreach (var argument in arguments)
+            Console.SetOut(TextWriter.Null);
+            result = await commandLineRunner.RunAsync(
+                new HostCommandLine(
+                    "git",
+                    buildPaths.SolutionDirectory,
+                    arguments,
+                    [],
+                    $"git {arguments[0]}"),
+                output =>
+                {
+                    output.Handled = true;
+                    lock (sync)
+                    {
+                        (output.IsError ? standardError : standardOutput).Add(output.Line);
+                    }
+                },
+                cancellationToken);
+        }
+        finally
         {
-            startInfo.ArgumentList.Add(argument);
+            Console.SetOut(consoleOutput);
         }
 
-        using var process = Process.Start(startInfo)
-                            ?? throw new InvalidOperationException("Could not start git.");
-        var outputTask = process.StandardOutput.ReadToEndAsync(cancellationToken);
-        var errorTask = process.StandardError.ReadToEndAsync(cancellationToken);
-        await process.WaitForExitAsync(cancellationToken);
-        var output = await outputTask;
-        var error = await errorTask;
-        if (process.ExitCode != 0)
+        if (result.State != ProcessState.Finished || result.ExitCode != 0)
         {
             throw new InvalidOperationException(
-                $"git {string.Join(' ', arguments)} failed: {error.Trim()}");
+                $"git {string.Join(' ', arguments)} failed: "
+                + string.Join(Environment.NewLine, standardError));
         }
 
-        return output;
+        return string.Join(Environment.NewLine, standardOutput);
     }
 
     [GeneratedRegex(@"github\.com[/:](?<owner>[^/]+)/(?<name>[^/]+?)(?:\.git)?$", RegexOptions.IgnoreCase, "ru-RU")]

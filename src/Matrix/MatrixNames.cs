@@ -11,12 +11,14 @@ public static class MatrixNames
     public const string CiMatrixCommand = "ci-matrix";
     public const string CiReportsCommand = "ci-reports";
     public const string BuildWebCommand = "build-web";
+    public const string ReproduceCommand = "reproduce";
     public const string BuildWebConfiguration = "Build .NET Matrix";
     public const string MetadataConfiguration = "Generate Metadata";
     public const string RenderReportsConfiguration = "Render Reports";
     public const string ReadmeConfiguration = "Generate README";
     public const string PrepareCommitConfiguration = "Prepare Commit";
     public const string FinalizeCommitConfiguration = "Finalize Commit";
+    public const string ReproduceConfiguration = "Reproduce Results";
 
     public static string Command(MatrixModule module, MatrixMode mode) =>
         $"{module.Id}-{(mode == MatrixMode.Validation ? "validate" : "benchmarks")}";

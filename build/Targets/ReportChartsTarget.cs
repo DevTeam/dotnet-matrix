@@ -34,15 +34,17 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
     public int Run(IReadOnlyList<DiscoveredMatrixModule> modules)
     {
+        var chartCount = 0;
         foreach (var module in modules)
         {
-            Render(module);
+            chartCount += Render(module);
         }
 
+        Host.Info($"Charts: {chartCount} rendered.");
         return 0;
     }
 
-    private void Render(DiscoveredMatrixModule module)
+    private int Render(DiscoveredMatrixModule module)
     {
         var reportDirectory = Path.Combine(
             buildPaths.SolutionDirectory,
@@ -59,7 +61,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             Console.Error.WriteLine(
                 $"WARNING: Cannot render charts for {module.Metadata.Name}: "
                 + "benchmarks.json or charts.json is missing.");
-            return;
+            return 0;
         }
 
         var report = Read<BenchmarkReport>(reportPath);
@@ -67,12 +69,13 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         var chartsDirectory = Path.Combine(reportDirectory, MatrixChartPaths.DirectoryName);
         Directory.CreateDirectory(chartsDirectory);
         using var logos = LibraryLogos.Load(metadataDirectory, module.Metadata.LibraryMetadata);
+        var chartCount = 0;
 
         foreach (var feature in report.Features.OrderBy(feature => feature.Order))
         {
             var path = Path.Combine(chartsDirectory, MatrixChartPaths.Feature(feature));
             RenderFeature(module.Metadata.Name, report, feature, logos, path);
-            Console.WriteLine($"Benchmark chart: {path}");
+            chartCount++;
         }
 
         foreach (var group in catalog.Groups)
@@ -90,8 +93,10 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
             var path = Path.Combine(chartsDirectory, MatrixChartPaths.Overview(group));
             RenderOverview(report, group, features, logos, path);
-            Console.WriteLine($"Benchmark overview: {path}");
+            chartCount++;
         }
+
+        return chartCount;
     }
 
     private static T Read<T>(string path) =>

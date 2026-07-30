@@ -21,6 +21,7 @@ internal partial class Composition
             .Bind<IMatrixModuleDiscovery>().As(Lifetime.Singleton).To<MatrixModuleDiscovery>()
             .Bind<ITemplateEngine>().As(Lifetime.Singleton).To<RazorTemplateEngine>()
             .Bind<IMatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
+            .Bind<IQuietProcessRunner>().As(Lifetime.Singleton).To<QuietProcessRunner>()
             .Bind<IMatrixTarget>().As(Lifetime.Singleton).To<MatrixTarget>()
             .Bind<IMetadataTarget>().As(Lifetime.Singleton).To<MetadataTarget>()
             .Bind<ILibraryTarget>().As(Lifetime.Singleton).To<LibraryTarget>()
@@ -30,6 +31,8 @@ internal partial class Composition
             .Bind<ICiMatrixTarget>().As(Lifetime.Singleton).To<CiMatrixTarget>()
             .Bind<ICiReportsTarget>().As(Lifetime.Singleton).To<CiReportsTarget>()
             .Bind<IWebTarget>().As(Lifetime.Singleton).To<WebTarget>()
+            .Bind<ILocalWebTarget>().As(Lifetime.Singleton).To<LocalWebTarget>()
+            .Bind<IReproduceTarget>().As(Lifetime.Singleton).To<ReproduceTarget>()
             .Bind<IRunConfigurationsTarget>().As(Lifetime.Singleton)
                 .To<RunConfigurationsTarget>();
 }

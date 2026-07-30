@@ -1,9 +1,12 @@
+using HostApi;
 using Matrix;
-using System.Diagnostics;
+using HostCommandLine = HostApi.CommandLine;
 
 namespace Build.Targets;
 
-internal sealed class MatrixTarget(IBuildPaths buildPaths) : IMatrixTarget
+internal sealed class MatrixTarget(
+    IBuildPaths buildPaths,
+    IQuietProcessRunner processRunner) : IMatrixTarget
 {
     public async Task<int> RunAsync(
         DiscoveredMatrixModule module,
@@ -19,36 +22,46 @@ internal sealed class MatrixTarget(IBuildPaths buildPaths) : IMatrixTarget
             mode == MatrixMode.Validation ? "features.json" : "benchmarks.json");
         Directory.CreateDirectory(Path.GetDirectoryName(report)!);
 
-        var startInfo = new ProcessStartInfo("dotnet")
+        var arguments = new List<string>
         {
-            WorkingDirectory = buildPaths.SolutionDirectory,
-            UseShellExecute = false
+            "run",
+            "--project",
+            module.ProjectPath,
+            "--configuration",
+            "Release",
+            $"-p:MatrixMode={mode}",
+            "--",
+            "--output",
+            report
         };
-        startInfo.ArgumentList.Add("run");
-        startInfo.ArgumentList.Add("--project");
-        startInfo.ArgumentList.Add(module.ProjectPath);
-        startInfo.ArgumentList.Add("--configuration");
-        startInfo.ArgumentList.Add("Release");
-        startInfo.ArgumentList.Add($"-p:MatrixMode={mode}");
-        startInfo.ArgumentList.Add("--");
-        startInfo.ArgumentList.Add("--output");
-        startInfo.ArgumentList.Add(report);
         if (!string.IsNullOrWhiteSpace(libraries))
         {
-            startInfo.ArgumentList.Add("--libraries");
-            startInfo.ArgumentList.Add(libraries);
+            arguments.Add("--libraries");
+            arguments.Add(libraries);
         }
 
         if (smoke)
         {
-            startInfo.ArgumentList.Add("--smoke");
+            arguments.Add("--smoke");
         }
 
-        Console.WriteLine(
-            $"Running {mode} for {module.Metadata.Name}: {libraries ?? "all libraries"}");
-        using var process = Process.Start(startInfo)
-                            ?? throw new InvalidOperationException("Could not start dotnet.");
-        await process.WaitForExitAsync(cancellationToken);
-        return process.ExitCode;
+        var selection = libraries ?? "all libraries";
+        var operation = $"{mode} {module.Metadata.Name}";
+        Host.Info($"{operation}: {selection}");
+        var result = await processRunner.RunAsync(
+            new HostCommandLine(
+                "dotnet",
+                buildPaths.SolutionDirectory,
+                arguments,
+                [],
+                operation),
+            operation,
+            cancellationToken);
+        if (result == 0)
+        {
+            Host.Info($"{operation} completed.");
+        }
+
+        return result;
     }
 }

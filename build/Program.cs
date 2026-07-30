@@ -1,3 +1,17 @@
 using Build;
 
-return await new Composition(args, CancellationToken.None).Root.RunAsync();
+using var cancellation = new CancellationTokenSource();
+ConsoleCancelEventHandler cancel = (_, eventArgs) =>
+{
+    eventArgs.Cancel = true;
+    cancellation.Cancel();
+};
+Console.CancelKeyPress += cancel;
+try
+{
+    return await new Composition(args, cancellation.Token).Root.RunAsync();
+}
+finally
+{
+    Console.CancelKeyPress -= cancel;
+}

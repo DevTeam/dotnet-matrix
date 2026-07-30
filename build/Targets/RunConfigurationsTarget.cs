@@ -21,9 +21,9 @@ internal sealed class RunConfigurationsTarget(IBuildPaths buildPaths)
         {
             var path = Path.Combine(directory, $"{ToFileName(configuration.Name)}.run.xml");
             File.WriteAllText(path, CreateDocument(configuration) + Environment.NewLine);
-            Console.WriteLine($"Run configuration: {path}");
         }
 
+        Host.Info($"Run configurations: {configurations.Length} generated.");
         return 0;
     }
 
@@ -57,6 +57,10 @@ internal sealed class RunConfigurationsTarget(IBuildPaths buildPaths)
         yield return new RunConfiguration(
             MatrixNames.FinalizeCommitConfiguration,
             MatrixNames.FinalizeCommitCommand,
+            null);
+        yield return new RunConfiguration(
+            MatrixNames.ReproduceConfiguration,
+            MatrixNames.ReproduceCommand,
             null);
 
         foreach (var module in modules)
@@ -104,6 +108,7 @@ internal sealed class RunConfigurationsTarget(IBuildPaths buildPaths)
             .Append(MatrixNames.ReadmeCommand)
             .Append(MatrixNames.PrepareCommitCommand)
             .Append(MatrixNames.FinalizeCommitCommand)
+            .Append(MatrixNames.ReproduceCommand)
             .Append(MatrixNames.CiReportsCommand)
             .Append(MatrixNames.BuildWebCommand)
             .ToArray();

@@ -46,7 +46,7 @@ internal sealed class ReadmeTarget(
             model,
             stream,
             cancellationToken);
-        Console.WriteLine($"README: {path}");
+        Host.Info($"README: {path}");
         return 0;
     }
 
