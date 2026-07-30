@@ -1,5 +1,6 @@
 ﻿using Matrix;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Build.Targets;
 
@@ -129,12 +130,16 @@ internal sealed class ReadmeTarget(
                         $"{Place(award.Place)} in {award.GroupName}"))))
             .ToArray();
         return new ReadmeCategory(
+            Anchor(module.Metadata.Name),
             module.Metadata.Name,
             libraries,
             overviews,
             features,
             rating);
     }
+
+    private static string Anchor(string value) =>
+        Regex.Replace(value.ToLowerInvariant(), "[^a-z0-9]+", "-").Trim('-');
 
     private static string Place(int place) => place switch
     {
