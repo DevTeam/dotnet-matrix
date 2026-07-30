@@ -1,0 +1,391 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "logging",
+  "GeneratedAtUtc": "2026-07-30T05:50:37.0988062+00:00",
+  "Environments": [
+    {
+      "Id": "d216e5c2b817",
+      "OperatingSystem": "Ubuntu 24.04.4 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.10",
+      "RuntimeVersion": "10.0.10",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.302",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "log4net",
+      "Name": "log4net",
+      "Package": "log4net",
+      "Version": "3.3.2",
+      "Baseline": false
+    },
+    {
+      "Id": "Microsoft.Extensions.Logging",
+      "Name": "Microsoft.Extensions.Logging",
+      "Package": "Microsoft.Extensions.Logging",
+      "Version": "10.0.10",
+      "Baseline": true
+    },
+    {
+      "Id": "NLog",
+      "Name": "NLog",
+      "Package": "NLog",
+      "Version": "6.1.4",
+      "Baseline": false
+    },
+    {
+      "Id": "Serilog",
+      "Name": "Serilog",
+      "Package": "Serilog",
+      "Version": "4.4.0",
+      "Baseline": false
+    },
+    {
+      "Id": "ZLogger",
+      "Name": "ZLogger",
+      "Package": "ZLogger",
+      "Version": "2.5.10",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "DisabledLog",
+      "Name": "Disabled Log",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 9.337816890329123,
+          "StandardErrorNanoseconds": 0.006067470475121246,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 11.172443273663522,
+          "StandardErrorNanoseconds": 0.008712689999307134,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 1.392599218338728,
+          "StandardErrorNanoseconds": 0.000554251026468932,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 1.4581371704116464,
+          "StandardErrorNanoseconds": 0.00011759670998839322,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "ZLogger",
+          "Successful": true,
+          "MeanNanoseconds": 4.07791043817997,
+          "StandardErrorNanoseconds": 0.0029325725504990305,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "SimpleMessage",
+      "Name": "Simple Message",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 114.08266999721528,
+          "StandardErrorNanoseconds": 0.2178451700061047,
+          "AllocatedBytesPerOperation": 168,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 19.184324257075787,
+          "StandardErrorNanoseconds": 0.004687324531244363,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 45.048169219493865,
+          "StandardErrorNanoseconds": 0.15188406833228763,
+          "AllocatedBytesPerOperation": 120,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 89.8361839056015,
+          "StandardErrorNanoseconds": 0.17695952517204183,
+          "AllocatedBytesPerOperation": 160,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "StructuredProperties",
+      "Name": "Structured Properties",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 700.7240865707397,
+          "StandardErrorNanoseconds": 2.307843378505492,
+          "AllocatedBytesPerOperation": 1816,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 47.58840928077698,
+          "StandardErrorNanoseconds": 0.19044090351590834,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 84.09276601076127,
+          "StandardErrorNanoseconds": 0.43748679692461884,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 200.0443371295929,
+          "StandardErrorNanoseconds": 0.9692907830102351,
+          "AllocatedBytesPerOperation": 448,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "ExceptionLogging",
+      "Name": "Exception",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 135.4060898423195,
+          "StandardErrorNanoseconds": 0.10892515034731723,
+          "AllocatedBytesPerOperation": 168,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 19.675448149442673,
+          "StandardErrorNanoseconds": 0.005412960115380228,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 46.808100688457486,
+          "StandardErrorNanoseconds": 0.15074853800713087,
+          "AllocatedBytesPerOperation": 120,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 95.55567730665207,
+          "StandardErrorNanoseconds": 0.1684267141697896,
+          "AllocatedBytesPerOperation": 160,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "ScopeOrContext",
+      "Name": "Scope Or Context",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 351.8353782653809,
+          "StandardErrorNanoseconds": 0.30789582829097273,
+          "AllocatedBytesPerOperation": 848,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 75.07424281835556,
+          "StandardErrorNanoseconds": 0.2957564247779096,
+          "AllocatedBytesPerOperation": 120,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 95.62010754346848,
+          "StandardErrorNanoseconds": 0.826072854181987,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 226.06270694732666,
+          "StandardErrorNanoseconds": 0.6062048752534464,
+          "AllocatedBytesPerOperation": 544,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "TemplateRendering",
+      "Name": "Template Rendering",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 140.82900371551514,
+          "StandardErrorNanoseconds": 0.33936273213524126,
+          "AllocatedBytesPerOperation": 280,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 36.40797513127327,
+          "StandardErrorNanoseconds": 0.006683025015710367,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 82.98382159471512,
+          "StandardErrorNanoseconds": 0.1651311101568117,
+          "AllocatedBytesPerOperation": 232,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 219.8145339012146,
+          "StandardErrorNanoseconds": 0.20767357501696784,
+          "AllocatedBytesPerOperation": 432,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "BufferedLogging",
+      "Name": "Buffered Logging",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 24825.6854095459,
+          "StandardErrorNanoseconds": 75.33853404684675,
+          "AllocatedBytesPerOperation": 16155,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 821.2126316070556,
+          "StandardErrorNanoseconds": 20.742868979275254,
+          "AllocatedBytesPerOperation": 120,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 418.2351356506348,
+          "StandardErrorNanoseconds": 0.21141655614659544,
+          "AllocatedBytesPerOperation": 160,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "ZLogger",
+          "Successful": true,
+          "MeanNanoseconds": 123.96699249744415,
+          "StandardErrorNanoseconds": 0.2885931966178279,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "PrepareLogger",
+      "Name": "Prepare Logger",
+      "Results": [
+        {
+          "LibraryId": "log4net",
+          "Successful": true,
+          "MeanNanoseconds": 14822.070153808594,
+          "StandardErrorNanoseconds": 83.37897159867808,
+          "AllocatedBytesPerOperation": 7527,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Logging",
+          "Successful": true,
+          "MeanNanoseconds": 27064.944549560547,
+          "StandardErrorNanoseconds": 142.23434401862784,
+          "AllocatedBytesPerOperation": 21691,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "NLog",
+          "Successful": true,
+          "MeanNanoseconds": 5345.910314941406,
+          "StandardErrorNanoseconds": 46.699378372854966,
+          "AllocatedBytesPerOperation": 25042,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "Serilog",
+          "Successful": true,
+          "MeanNanoseconds": 1104.0510840415955,
+          "StandardErrorNanoseconds": 8.92154712368515,
+          "AllocatedBytesPerOperation": 3144,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "ZLogger",
+          "Successful": true,
+          "MeanNanoseconds": 39120.39001464844,
+          "StandardErrorNanoseconds": 2324.789454329251,
+          "AllocatedBytesPerOperation": 21774,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    }
+  ]
+}

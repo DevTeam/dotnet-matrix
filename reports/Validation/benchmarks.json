@@ -1,0 +1,333 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "validation",
+  "GeneratedAtUtc": "2026-07-30T05:48:35.2036225+00:00",
+  "Environments": [
+    {
+      "Id": "d216e5c2b817",
+      "OperatingSystem": "Ubuntu 24.04.4 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.10",
+      "RuntimeVersion": "10.0.10",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.302",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "DataAnnotations",
+      "Name": "DataAnnotations",
+      "Baseline": true
+    },
+    {
+      "Id": "FluentValidation",
+      "Name": "FluentValidation",
+      "Package": "FluentValidation",
+      "Version": "12.1.1",
+      "Baseline": false
+    },
+    {
+      "Id": "MiniValidation",
+      "Name": "MiniValidation",
+      "Package": "MiniValidation",
+      "Version": "0.10.0",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "ValidObject",
+      "Name": "Valid Object",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 1075.9697332382202,
+          "StandardErrorNanoseconds": 0.9594938123348513,
+          "AllocatedBytesPerOperation": 1848,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 202.72636222839355,
+          "StandardErrorNanoseconds": 0.921110120689916,
+          "AllocatedBytesPerOperation": 632,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 493.32520513534547,
+          "StandardErrorNanoseconds": 3.099867179630893,
+          "AllocatedBytesPerOperation": 760,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "SingleFailure",
+      "Name": "Single Failure",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 1307.8316078186035,
+          "StandardErrorNanoseconds": 5.751686200629834,
+          "AllocatedBytesPerOperation": 1928,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 927.959377861023,
+          "StandardErrorNanoseconds": 6.877857009511031,
+          "AllocatedBytesPerOperation": 1800,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 911.8911140441894,
+          "StandardErrorNanoseconds": 7.2161736744171465,
+          "AllocatedBytesPerOperation": 1368,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "MultipleFailures",
+      "Name": "Multiple Failures",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 2000.5744834899901,
+          "StandardErrorNanoseconds": 4.7469777995534885,
+          "AllocatedBytesPerOperation": 2472,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 3136.513707733154,
+          "StandardErrorNanoseconds": 11.402863825872883,
+          "AllocatedBytesPerOperation": 6160,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 1622.4601593017578,
+          "StandardErrorNanoseconds": 10.71056550545596,
+          "AllocatedBytesPerOperation": 2216,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "NestedObject",
+      "Name": "Nested Object",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 1582.2920791625977,
+          "StandardErrorNanoseconds": 16.665477249908133,
+          "AllocatedBytesPerOperation": 2368,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 1250.2508792877197,
+          "StandardErrorNanoseconds": 6.710297505876013,
+          "AllocatedBytesPerOperation": 2440,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 1193.9073608398437,
+          "StandardErrorNanoseconds": 3.0613496963530658,
+          "AllocatedBytesPerOperation": 1904,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "Collection",
+      "Name": "Collection",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 3486.136173248291,
+          "StandardErrorNanoseconds": 18.49984959815,
+          "AllocatedBytesPerOperation": 5400,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 3738.512516975403,
+          "StandardErrorNanoseconds": 16.860011394651075,
+          "AllocatedBytesPerOperation": 6728,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 2363.042691230774,
+          "StandardErrorNanoseconds": 5.6119700685378815,
+          "AllocatedBytesPerOperation": 2840,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "ConditionalRule",
+      "Name": "Conditional Rule",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 435.067592048645,
+          "StandardErrorNanoseconds": 3.4479683102303134,
+          "AllocatedBytesPerOperation": 1224,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 800.4895820617676,
+          "StandardErrorNanoseconds": 7.518815707083037,
+          "AllocatedBytesPerOperation": 1808,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 342.1137414932251,
+          "StandardErrorNanoseconds": 2.1171173246808723,
+          "AllocatedBytesPerOperation": 1008,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "CustomRule",
+      "Name": "Custom Rule",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 782.2076900482177,
+          "StandardErrorNanoseconds": 3.2731575852256514,
+          "AllocatedBytesPerOperation": 1104,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 803.3359453678131,
+          "StandardErrorNanoseconds": 1.5389201870245652,
+          "AllocatedBytesPerOperation": 1896,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 751.088563156128,
+          "StandardErrorNanoseconds": 2.8768004393710753,
+          "AllocatedBytesPerOperation": 1344,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "StopOnFirstFailure",
+      "Name": "Stop On First Failure",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 395.95659122467043,
+          "StandardErrorNanoseconds": 2.148008518895894,
+          "AllocatedBytesPerOperation": 576,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 798.2982162475586,
+          "StandardErrorNanoseconds": 2.6636283610943092,
+          "AllocatedBytesPerOperation": 1800,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "AsyncValidation",
+      "Name": "Async Validation",
+      "Results": [
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 3121.9150924682617,
+          "StandardErrorNanoseconds": 5.46293004540822,
+          "AllocatedBytesPerOperation": 2744,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    },
+    {
+      "Order": 10,
+      "Id": "PrepareValidator",
+      "Name": "Prepare Validator",
+      "Results": [
+        {
+          "LibraryId": "DataAnnotations",
+          "Successful": true,
+          "MeanNanoseconds": 0,
+          "StandardErrorNanoseconds": 0,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "FluentValidation",
+          "Successful": true,
+          "MeanNanoseconds": 2877.7180671691895,
+          "StandardErrorNanoseconds": 9.935259018033634,
+          "AllocatedBytesPerOperation": 6480,
+          "EnvironmentId": "d216e5c2b817"
+        },
+        {
+          "LibraryId": "MiniValidation",
+          "Successful": true,
+          "MeanNanoseconds": 0,
+          "StandardErrorNanoseconds": 0,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "d216e5c2b817"
+        }
+      ]
+    }
+  ]
+}

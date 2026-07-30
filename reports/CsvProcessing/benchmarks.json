@@ -1,0 +1,354 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "csv-processing",
+  "GeneratedAtUtc": "2026-07-30T05:48:37.477615+00:00",
+  "Environments": [
+    {
+      "Id": "3157699415c0",
+      "OperatingSystem": "Ubuntu 24.04.4 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.10",
+      "RuntimeVersion": "10.0.10",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.302",
+      "Processor": "AMD EPYC 9V74 80-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "CsvHelper",
+      "Name": "CsvHelper",
+      "Package": "CsvHelper",
+      "Version": "33.1.0",
+      "Baseline": false
+    },
+    {
+      "Id": "Sep",
+      "Name": "Sep",
+      "Package": "Sep",
+      "Version": "0.15.1",
+      "Baseline": false
+    },
+    {
+      "Id": "Sylvan.Data.Csv",
+      "Name": "Sylvan.Data.Csv",
+      "Package": "Sylvan.Data.Csv",
+      "Version": "1.4.4",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "ReadSimpleRows",
+      "Name": "Read Simple Rows",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 2974.890874481201,
+          "StandardErrorNanoseconds": 25.227831536259252,
+          "AllocatedBytesPerOperation": 22480,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 621.2149206161499,
+          "StandardErrorNanoseconds": 1.0334807670014652,
+          "AllocatedBytesPerOperation": 1936,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1768.1095188140869,
+          "StandardErrorNanoseconds": 5.140629943560343,
+          "AllocatedBytesPerOperation": 36224,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "ReadTypedRecords",
+      "Name": "Read Typed Records",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 642609.8464355469,
+          "StandardErrorNanoseconds": 3793.900000221659,
+          "AllocatedBytesPerOperation": 57398,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 699.1809955596924,
+          "StandardErrorNanoseconds": 0.9564523901891849,
+          "AllocatedBytesPerOperation": 1736,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1877.9932489395142,
+          "StandardErrorNanoseconds": 4.658847404609779,
+          "AllocatedBytesPerOperation": 35952,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "ReadLargeDataset",
+      "Name": "Read Large Dataset",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 4153590.3140625,
+          "StandardErrorNanoseconds": 33705.032949478744,
+          "AllocatedBytesPerOperation": 2777243,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 986834.1928710938,
+          "StandardErrorNanoseconds": 1506.7509261030546,
+          "AllocatedBytesPerOperation": 1041376,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1053968.381640625,
+          "StandardErrorNanoseconds": 1967.6238274611776,
+          "AllocatedBytesPerOperation": 1075605,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "QuotedFields",
+      "Name": "Quoted Fields",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 510217.694921875,
+          "StandardErrorNanoseconds": 22040.896062940436,
+          "AllocatedBytesPerOperation": 42179,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 504.62488679885865,
+          "StandardErrorNanoseconds": 0.5809975854899303,
+          "AllocatedBytesPerOperation": 1376,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1475.1402711868286,
+          "StandardErrorNanoseconds": 5.389122388164149,
+          "AllocatedBytesPerOperation": 35168,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "EscapedDelimiters",
+      "Name": "Escaped Delimiters",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 508186.55703125,
+          "StandardErrorNanoseconds": 22047.052379932968,
+          "AllocatedBytesPerOperation": 42187,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 488.5352369308472,
+          "StandardErrorNanoseconds": 1.9834437243634164,
+          "AllocatedBytesPerOperation": 1384,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1365.8849948883058,
+          "StandardErrorNanoseconds": 5.380473641112624,
+          "AllocatedBytesPerOperation": 35120,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "HeaderMapping",
+      "Name": "Header Mapping",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 642880.2565917969,
+          "StandardErrorNanoseconds": 4578.188921956838,
+          "AllocatedBytesPerOperation": 57270,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 752.0408384799957,
+          "StandardErrorNanoseconds": 0.1249586145005382,
+          "AllocatedBytesPerOperation": 1736,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1987.4014122009278,
+          "StandardErrorNanoseconds": 6.205154127958731,
+          "AllocatedBytesPerOperation": 35952,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "CustomConversion",
+      "Name": "Custom Conversion",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 2652.138433074951,
+          "StandardErrorNanoseconds": 11.483284171912025,
+          "AllocatedBytesPerOperation": 22472,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 359.48927342891693,
+          "StandardErrorNanoseconds": 0.13575088504477584,
+          "AllocatedBytesPerOperation": 1136,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "StreamingRead",
+      "Name": "Streaming Read",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 3948400.509765625,
+          "StandardErrorNanoseconds": 4152.994088508182,
+          "AllocatedBytesPerOperation": 2183312,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 804839.5805664062,
+          "StandardErrorNanoseconds": 248.16009684986415,
+          "AllocatedBytesPerOperation": 1368,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 840186.1765136719,
+          "StandardErrorNanoseconds": 248.022221207544,
+          "AllocatedBytesPerOperation": 35585,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "WriteRows",
+      "Name": "Write Rows",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 711091.735546875,
+          "StandardErrorNanoseconds": 12766.586883908953,
+          "AllocatedBytesPerOperation": 41414,
+          "EnvironmentId": "3157699415c0",
+          "PayloadSizeBytes": 30
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 456.0095489501953,
+          "StandardErrorNanoseconds": 0.5444640930398872,
+          "AllocatedBytesPerOperation": 1936,
+          "EnvironmentId": "3157699415c0",
+          "PayloadSizeBytes": 30
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1174.894081878662,
+          "StandardErrorNanoseconds": 3.238462040253318,
+          "AllocatedBytesPerOperation": 33568,
+          "EnvironmentId": "3157699415c0",
+          "PayloadSizeBytes": 30
+        }
+      ]
+    },
+    {
+      "Order": 10,
+      "Id": "AsyncRead",
+      "Name": "Async Read",
+      "Results": [
+        {
+          "LibraryId": "CsvHelper",
+          "Successful": true,
+          "MeanNanoseconds": 4310781.62109375,
+          "StandardErrorNanoseconds": 1700.0745322415696,
+          "AllocatedBytesPerOperation": 2267880,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sep",
+          "Successful": true,
+          "MeanNanoseconds": 841746.3671875,
+          "StandardErrorNanoseconds": 1294.5095923122885,
+          "AllocatedBytesPerOperation": 1472,
+          "EnvironmentId": "3157699415c0"
+        },
+        {
+          "LibraryId": "Sylvan.Data.Csv",
+          "Successful": true,
+          "MeanNanoseconds": 1046288.4796875,
+          "StandardErrorNanoseconds": 3677.1689261121915,
+          "AllocatedBytesPerOperation": 36913,
+          "EnvironmentId": "3157699415c0"
+        }
+      ]
+    }
+  ]
+}
