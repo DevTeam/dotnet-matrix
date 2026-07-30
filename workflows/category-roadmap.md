@@ -39,6 +39,8 @@ external services require additional care and should be implemented later.
   feature validation passes, and benchmark reports still need to be produced.
 - CSV Processing is implemented in `src/Matrix.CsvProcessing`; its feature
   validation passes, and benchmark reports still need to be produced.
+- Logging is implemented in `src/Matrix.Logging`; its feature validation
+  passes, and benchmark reports still need to be produced.
 
 ## Recommended order
 
@@ -616,7 +618,7 @@ Before starting any category, answer these questions explicitly:
 
 ## Next action
 
-Produce the JSON Serialization and CSV Processing benchmark reports, then
-regenerate their charts, README content, and Web data through the shared
-workflow. Logging is the next recommended category after those reports are
-complete.
+Produce the JSON Serialization, CSV Processing, and Logging benchmark reports,
+then regenerate their charts, README content, and Web data through the shared
+workflow. Binary Serialization is the next recommended category after those
+reports are complete.

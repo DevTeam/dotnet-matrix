@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>logging</MatrixModuleId>
+        <MatrixModuleName>Logging</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Logging</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>Logging</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.Logging.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.10">
+            <MatrixLibraryId>Microsoft.Extensions.Logging</MatrixLibraryId>
+            <MatrixLibraryName>Microsoft.Extensions.Logging</MatrixLibraryName>
+            <MatrixCodeName>MicrosoftExtensionsLogging</MatrixCodeName>
+            <MatrixDescription>The standard .NET logging abstraction and logger factory with providers, filtering, structured state, and scopes.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/core/extensions/logging</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/microsoft-extensions-logging.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>false</MatrixRating>
+        </PackageReference>
+        <PackageReference Include="Serilog" Version="4.4.0">
+            <MatrixLibraryId>Serilog</MatrixLibraryId>
+            <MatrixLibraryName>Serilog</MatrixLibraryName>
+            <MatrixCodeName>Serilog</MatrixCodeName>
+            <MatrixDescription>A structured event logger with message templates, contextual enrichment, and a broad sink ecosystem.</MatrixDescription>
+            <MatrixDocumentationUrl>https://serilog.net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/serilog/serilog</MatrixRepositoryUrl>
+            <MatrixLogo>logos/serilog.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0"/>
+        <PackageReference Include="NLog" Version="6.1.4">
+            <MatrixLibraryId>NLog</MatrixLibraryId>
+            <MatrixLibraryName>NLog</MatrixLibraryName>
+            <MatrixCodeName>NLog</MatrixCodeName>
+            <MatrixDescription>A configurable logging platform with structured events, scope context, targets, layouts, and asynchronous wrappers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://nlog-project.org/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/NLog/NLog</MatrixRepositoryUrl>
+            <MatrixLogo>logos/nlog.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="log4net" Version="3.3.2">
+            <MatrixLibraryId>log4net</MatrixLibraryId>
+            <MatrixLibraryName>log4net</MatrixLibraryName>
+            <MatrixCodeName>Log4Net</MatrixCodeName>
+            <MatrixDescription>A mature Apache logging framework with hierarchical repositories, contextual properties, layouts, and appenders.</MatrixDescription>
+            <MatrixDocumentationUrl>https://logging.apache.org/log4net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/apache/logging-log4net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/log4net.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ZLogger" Version="2.5.10">
+            <MatrixLibraryId>ZLogger</MatrixLibraryId>
+            <MatrixLibraryName>ZLogger</MatrixLibraryName>
+            <MatrixCodeName>ZLogger</MatrixCodeName>
+            <MatrixDescription>A source-generated and interpolated-string logger built on Microsoft.Extensions.Logging with UTF-8 and processor APIs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cysharp/ZLogger</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cysharp/ZLogger</MatrixRepositoryUrl>
+            <MatrixLogo>logos/zlogger.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
+
