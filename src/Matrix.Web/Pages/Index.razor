@@ -19,7 +19,7 @@
         {
             <div class="release-picker">
                 <label for="release">Release</label>
-                <select id="release" value="@_selectedVersion" @onchange="ChangeVersionAsync">
+                <select id="release" value="@_selectedVersion" @onchange="ChangeVersion">
                     @foreach (var version in _catalog.Versions)
                     {
                         <option value="@version.Version">
@@ -313,6 +313,8 @@
 
     private const string CategoryParameter = "category";
     private const string LibraryParameter = "library";
+    private const string VersionParameter = "version";
+    private const string LatestVersion = "latest";
 
     /// <summary>
     /// A link published elsewhere can name the category to open, as in
@@ -330,6 +332,14 @@
     [Parameter]
     [SupplyParameterFromQuery(Name = LibraryParameter)]
     public string? Library { get; set; }
+
+    /// <summary>
+    /// Pins the reports to one release, as in <c>?version=1.4.0</c>. Absent, or
+    /// <c>latest</c>, means the newest entry of the catalog.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = VersionParameter)]
+    public string? Version { get; set; }
 
     private MatrixWebCatalog? _catalog;
     private string? _openLibraryId;
@@ -412,7 +422,7 @@
             _selectedCategoryId =
                 ResolveCategory(Category) ?? _catalog.Categories.FirstOrDefault()?.Id;
 
-            _selectedVersion = _catalog.Versions.FirstOrDefault()?.Version;
+            _selectedVersion = ResolveVersion(Version) ?? LatestVersionId;
             if (SelectedVersion is not null)
             {
                 await LoadReportsAsync();
@@ -428,12 +438,51 @@
         }
     }
 
-    private async Task ChangeVersionAsync(ChangeEventArgs eventArgs)
+    /// <summary>
+    /// The picker only writes the address; loading is driven from there, so the
+    /// selection has one source whether it came from a link or from this control.
+    /// </summary>
+    private void ChangeVersion(ChangeEventArgs eventArgs)
     {
-        _selectedVersion = eventArgs.Value?.ToString();
-        _selectedLibraries.Clear();
-        await LoadReportsAsync();
+        if (eventArgs.Value?.ToString() is { Length: > 0 } version)
+        {
+            Navigation.NavigateTo(VersionLink(version), replace: true);
+        }
     }
+
+    private string? LatestVersionId => _catalog?.Versions.FirstOrDefault()?.Version;
+
+    /// <summary>
+    /// Unlike a category, a version is matched exactly: dropping the punctuation of
+    /// 1.2.3 would make it indistinguishable from 12.3.
+    /// </summary>
+    private string? ResolveVersion(string? value)
+    {
+        if (_catalog is null || string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var wanted = value.Trim();
+        return wanted.Equals(LatestVersion, StringComparison.OrdinalIgnoreCase)
+            ? LatestVersionId
+            : _catalog.Versions
+                .FirstOrDefault(version =>
+                    version.Version.Equals(wanted, StringComparison.OrdinalIgnoreCase))
+                ?.Version;
+    }
+
+    /// <summary>
+    /// The newest release is left out of the address, so a link shared from the
+    /// default view keeps following new releases instead of freezing on today's.
+    /// </summary>
+    private bool IsLatest(string? version) =>
+        version is null || version == LatestVersionId;
+
+    private string VersionLink(string version) =>
+        Navigation.GetUriWithQueryParameter(
+            VersionParameter,
+            IsLatest(version) ? null : version);
 
     private void SelectCategory(string categoryId)
     {
@@ -494,6 +543,7 @@
     private string LibraryLink(string libraryId) =>
         Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
         {
+            [VersionParameter] = IsLatest(_selectedVersion) ? null : _selectedVersion,
             [CategoryParameter] = _selectedCategoryId,
             [LibraryParameter] = libraryId
         });
@@ -536,11 +586,20 @@
         return null;
     }
 
-    protected override void OnParametersSet()
+    protected override async Task OnParametersSetAsync()
     {
         if (_catalog is null)
         {
             return;
+        }
+
+        // Before anything else: the reports of the other views are read from here.
+        var version = ResolveVersion(Version) ?? LatestVersionId;
+        if (version is not null && version != _selectedVersion)
+        {
+            _selectedVersion = version;
+            _selectedLibraries.Clear();
+            await LoadReportsAsync();
         }
 
         if (ResolveCategory(Category) is { } categoryId)

@@ -59,20 +59,28 @@ The README is a generated snapshot of the reports committed to this repository.
 
 ## Link to a category or a library
 
-The application reads two optional query parameters, so a page about a library can
+The application reads three optional query parameters, so a page about a library can
 link straight to the relevant comparison instead of the front page:
 
 | Link | Opens |
 |---|---|
-| [@(Model.ApplicationUrl)](@Model.ApplicationUrl) | the default category |
+| [@(Model.ApplicationUrl)](@Model.ApplicationUrl) | the default category, newest reports |
 | [@(Model.ApplicationUrl)?category=@Model.SampleCategory](@(Model.ApplicationUrl)?category=@Model.SampleCategory) | that category |
 | [@(Model.ApplicationUrl)?library=@Model.SampleLibrary](@(Model.ApplicationUrl)?library=@Model.SampleLibrary) | the library overview, in its own category |
+| [@(Model.ApplicationUrl)?version=latest&amp;library=@Model.SampleLibrary](@(Model.ApplicationUrl)?version=latest&amp;library=@Model.SampleLibrary) | the same overview, release stated explicitly |
 
 `category` accepts the category id or its displayed name. `library` accepts the
 library id, its displayed name or its NuGet package id, and finds the category on its
 own. Matching ignores case, spaces and punctuation, so `?library=Sylvan.Data.Csv` and
 `?library=sylvan-data-csv` are the same link. An unknown value falls back to the
 default view rather than to an error.
+
+`version` pins the reports to one release. It takes a release name exactly as the
+picker shows it, for example `?version=1.2.0`, or the word `latest`. Leave it out to
+follow every new release: a link without it always shows the newest reports, which is
+what a page about a library normally wants. The copy buttons in the application
+follow the same rule and only write the release into the link when an older one is
+being viewed.
 
 @foreach (var category in Model.Categories)
 {
