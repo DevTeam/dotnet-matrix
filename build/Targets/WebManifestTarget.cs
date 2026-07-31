@@ -67,7 +67,7 @@ internal sealed class WebManifestTarget(IBuildPaths buildPaths) : IWebManifestTa
     private static WebManifest Create(IReadOnlyList<DiscoveredMatrixModule> modules) =>
         new(
             "./",
-            ".NET Matrix",
+            "dot NET Matrix",
             "Matrix",
             "Compare .NET libraries by features, performance, and memory.",
             "./",
