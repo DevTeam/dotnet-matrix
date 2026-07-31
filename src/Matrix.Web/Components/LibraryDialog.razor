@@ -82,12 +82,8 @@
                     <span>medal@(_medals?.Total == 1 ? "" : "s")</span>
                 </div>
                 <div>
-                    <strong>@_supported<small>/@_featureCount</small></strong>
-                    <span>features</span>
-                </div>
-                <div>
-                    <strong>@_scenarios.Length</strong>
-                    <span>scenario@(_scenarios.Length == 1 ? "" : "s")</span>
+                    <strong>@_supported<small>/@_rows.Length</small></strong>
+                    <span>scenarios supported</span>
                 </div>
             </div>
 
@@ -142,64 +138,73 @@
                 </section>
             }
 
-            @if (_features.Length > 0)
+            @* Support and measurement are one list: the two reports name the same
+               scenarios, and a missing result is explained by the status beside it. *@
+            @if (_rows.Length > 0)
             {
                 <section class="modal-section">
                     <div class="modal-section-head">
-                        <h3>Features</h3>
-                        <span class="section-meta">@_supported of @_featureCount supported</span>
+                        <h3>Scenarios</h3>
+                        <span class="section-meta">
+                            @_supported of @_rows.Length supported · ratio against the best of @Compared
+                        </span>
                     </div>
-                    <ul class="modal-feature-list">
-                        @foreach (var feature in _features)
-                        {
-                            <li>
-                                <span class="feature-status @feature.StatusClass" title="@feature.StatusLabel">
-                                    <StatusIcon Kind="@feature.StatusClass"/>
-                                </span>
-                                <span class="modal-feature-name">
-                                    <span class="feature-order">@feature.Order.ToString("00")</span>@feature.Name
-                                    @if (feature.Note is { } note)
+                    <div class="modal-scenarios">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Time</th>
+                                <th>Memory</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var row in _rows)
+                            {
+                                <tr class="@(row.HasResult ? null : "is-quiet")">
+                                    <td>
+                                        <span class="modal-scenario-name" title="@row.Description">
+                                            <span class="feature-status @row.StatusClass"
+                                                  title="@row.StatusLabel">
+                                                <StatusIcon Kind="@row.StatusClass"/>
+                                            </span>
+                                            <span>
+                                                <span class="feature-order">@row.Order.ToString("00")</span>@row.Name
+                                            </span>
+                                        </span>
+                                    </td>
+                                    @if (row.HasResult)
                                     {
-                                        <small>@note</small>
+                                        <td>
+                                            <span class="modal-scenario-metric">
+                                                <span class="meter">
+                                                    <span class="is-performance"
+                                                          style="@Width(row.TimePercent)"></span>
+                                                </span>
+                                                <strong>@row.Time</strong>
+                                                <small class="@Best(row.TimeRatio)">@row.TimeRatio</small>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="modal-scenario-metric">
+                                                <span class="meter">
+                                                    <span class="is-memory"
+                                                          style="@Width(row.MemoryPercent)"></span>
+                                                </span>
+                                                <strong>@row.Memory</strong>
+                                                <small class="@Best(row.MemoryRatio)">@row.MemoryRatio</small>
+                                            </span>
+                                        </td>
                                     }
-                                </span>
-                            </li>
-                        }
-                    </ul>
-                </section>
-            }
-
-            @if (_scenarios.Length > 0)
-            {
-                <section class="modal-section">
-                    <div class="modal-section-head">
-                        <h3>Benchmarks</h3>
-                        <span class="section-meta">ratio against the best of @Compared</span>
+                                    else
+                                    {
+                                        <td class="modal-scenario-note" colspan="2">@row.Note</td>
+                                    }
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
                     </div>
-                    <ul class="modal-scenario-list">
-                        @foreach (var scenario in _scenarios)
-                        {
-                            <li>
-                                <span class="modal-scenario-name">
-                                    <span class="feature-order">@scenario.Order.ToString("00")</span>@scenario.Name
-                                </span>
-                                <span class="modal-scenario-metric">
-                                    <span class="meter">
-                                        <span class="is-performance" style="@Width(scenario.TimePercent)"></span>
-                                    </span>
-                                    <strong>@scenario.Time</strong>
-                                    <small class="@Best(scenario.TimeRatio)">@scenario.TimeRatio</small>
-                                </span>
-                                <span class="modal-scenario-metric">
-                                    <span class="meter">
-                                        <span class="is-memory" style="@Width(scenario.MemoryPercent)"></span>
-                                    </span>
-                                    <strong>@scenario.Memory</strong>
-                                    <small class="@Best(scenario.MemoryRatio)">@scenario.MemoryRatio</small>
-                                </span>
-                            </li>
-                        }
-                    </ul>
                 </section>
             }
         </div>
@@ -213,11 +218,9 @@
     private MatrixMedals? _medals;
     private string _ratingPlace = "—";
     private int _supported;
-    private int _featureCount;
     private Standing[] _standings = [];
     private (string Name, string Title)[] _legend = [];
-    private Feature[] _features = [];
-    private Scenario[] _scenarios = [];
+    private Row[] _rows = [];
 
     [Parameter, EditorRequired]
     public required CategoryReport Report { get; set; }
@@ -252,9 +255,8 @@
         _medals = rating.FirstOrDefault(Matches);
         var place = rating.ToList().FindIndex(Matches);
         _ratingPlace = place < 0 ? "—" : $"{place + 1}{Suffix(place + 1)}";
-        ReadFeatures();
         ReadStandings();
-        ReadScenarios();
+        ReadRows();
     }
 
     /// <summary>
@@ -283,26 +285,65 @@
         }
     }
 
-    private void ReadFeatures()
+    /// <summary>
+    /// The feature report and the benchmark report name the same scenarios, so one
+    /// row carries both: whether the library supports it and what it costs. A
+    /// scenario present in only one of the two reports still gets its row.
+    /// </summary>
+    private void ReadRows()
     {
-        var features = (Report.Features?.Features ?? []).OrderBy(feature => feature.Order);
-        _features = features
-            .Select(feature =>
-            {
-                var result = feature.Results.FirstOrDefault(item =>
-                    item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
-                return new Feature(
-                    feature.Order,
-                    feature.Name,
-                    StatusClass(result?.Status),
-                    StatusLabel(result?.Status),
-                    result?.Reason is { Length: > 0 } reason
-                        ? reason
-                        : MatrixView.FeatureDescription(Report, feature.Id));
-            })
+        var order = new Dictionary<string, (int Order, string Name)>(StringComparer.OrdinalIgnoreCase);
+        foreach (var feature in Report.Benchmarks?.Features ?? [])
+        {
+            order[feature.Id] = (feature.Order, feature.Name);
+        }
+
+        // The feature report wins the name: it is the one the matrix shows.
+        foreach (var feature in Report.Features?.Features ?? [])
+        {
+            order[feature.Id] = (feature.Order, feature.Name);
+        }
+
+        _rows = order
+            .OrderBy(entry => entry.Value.Order)
+            .Select(entry => ReadRow(entry.Key, entry.Value.Order, entry.Value.Name))
             .ToArray();
-        _featureCount = _features.Length;
-        _supported = _features.Count(feature => feature.StatusClass == "supported");
+        _supported = _rows.Count(row => row.StatusClass == "supported");
+    }
+
+    private Row ReadRow(string featureId, int order, string name)
+    {
+        var status = (Report.Features?.Features ?? [])
+            .FirstOrDefault(feature => feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
+            ?.Results
+            .FirstOrDefault(result =>
+                result.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+        var scenario = Report.Benchmarks is { } benchmarks
+            ? benchmarks.Features.FirstOrDefault(feature =>
+                feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
+            : null;
+        var rows = scenario is null || Report.Benchmarks is null
+            ? []
+            : MatrixScenarios.Create(
+                Report.Benchmarks,
+                scenario,
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+        var row = rows.FirstOrDefault(item =>
+            item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+        return new Row(
+            order,
+            name,
+            MatrixView.FeatureDescription(Report, featureId),
+            StatusClass(status?.Status),
+            StatusLabel(status?.Status),
+            Note(status),
+            row is not null,
+            Value(row?.Time, false),
+            Value(row?.Memory, true),
+            MatrixMetrics.ScalePercent(row?.Time ?? 0, MatrixScenarios.Maximum(rows, false)),
+            MatrixMetrics.ScalePercent(row?.Memory ?? 0, MatrixScenarios.Maximum(rows, true)),
+            Ratio(row?.Time, MatrixScenarios.Minimum(rows, false)),
+            Ratio(row?.Memory, MatrixScenarios.Minimum(rows, true)));
     }
 
     private void ReadStandings()
@@ -367,41 +408,18 @@
             .ToArray();
     }
 
-    private void ReadScenarios()
+    /// <summary>
+    /// Stands in for the two numeric columns, so the row explains its own gap. A
+    /// supported scenario with no result is a hole in the report, not a limitation
+    /// of the library, and says so.
+    /// </summary>
+    private static string Note(FeatureResult? status) => status switch
     {
-        if (Report.Benchmarks is not { } benchmarks)
-        {
-            _scenarios = [];
-            return;
-        }
-
-        var scenarios = new List<Scenario>();
-        foreach (var feature in benchmarks.Features.OrderBy(feature => feature.Order))
-        {
-            var rows = MatrixScenarios.Create(
-                benchmarks,
-                feature,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
-            var row = rows.FirstOrDefault(item =>
-                item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
-            if (row is null)
-            {
-                continue;
-            }
-
-            scenarios.Add(new Scenario(
-                feature.Order,
-                feature.Name,
-                Value(row.Time, false),
-                Value(row.Memory, true),
-                MatrixMetrics.ScalePercent(row.Time ?? 0, MatrixScenarios.Maximum(rows, false)),
-                MatrixMetrics.ScalePercent(row.Memory ?? 0, MatrixScenarios.Maximum(rows, true)),
-                Ratio(row.Time, MatrixScenarios.Minimum(rows, false)),
-                Ratio(row.Memory, MatrixScenarios.Minimum(rows, true))));
-        }
-
-        _scenarios = scenarios.ToArray();
-    }
+        { Reason: { Length: > 0 } reason } => $"{StatusLabel(status.Status)} — {reason}",
+        { Status: "Supported" } => "No benchmark result",
+        null => "No benchmark result",
+        _ => StatusLabel(status.Status)
+    };
 
     private static string Value(double? value, bool memory) =>
         value is null ? "n/a" : MatrixMetrics.Format(value.Value, memory);
@@ -467,16 +485,14 @@
         string TimeTitle,
         string MemoryTitle);
 
-    private sealed record Feature(
+    private sealed record Row(
         int Order,
         string Name,
+        string? Description,
         string StatusClass,
         string StatusLabel,
-        string? Note);
-
-    private sealed record Scenario(
-        int Order,
-        string Name,
+        string Note,
+        bool HasResult,
         string Time,
         string Memory,
         double TimePercent,
