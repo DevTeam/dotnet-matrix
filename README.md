@@ -18,6 +18,8 @@
   <a href="#how-to-read-the-results">How to read the results</a>
   ·
   <a href="#reproduce-the-results">Reproduce the results</a>
+  ·
+  <a href="#link-to-a-category-or-a-library">Link to the matrix</a>
 </p>
 
 <table align="center">
@@ -32,12 +34,12 @@
 
 | Category | Leader | Libraries | Scenarios |
 |---|---|---:|---:|
-| [**CSV Processing**](#csv-processing) | Sep | 4 | 10 |
-| [**Dependency Injection**](#dependency-injection) | Pure.DI | 23 | 15 |
-| [**JSON Serialization**](#json-serialization) | System.Text.Json | 3 | 14 |
-| [**Logging**](#logging) | Microsoft.Extensions.Logging | 5 | 8 |
-| [**Object Mapping**](#object-mapping) | Mapperly | 4 | 10 |
-| [**Validation**](#validation) | DataAnnotations | 4 | 10 |
+| [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 | 10 |
+| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 |
+| [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 |
+| [**Logging**](#logging) | [Microsoft.Extensions.Logging](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 5 | 8 |
+| [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 |
+| [**Validation**](#validation) | [DataAnnotations](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 4 | 10 |
 
 ## How to read the results
 
@@ -48,36 +50,11 @@
 
 The README is a generated snapshot of the reports committed to this repository.
 
-## Link to a category or a library
-
-The application reads three optional query parameters, so a page about a library can
-link straight to the relevant comparison instead of the front page:
-
-| Link | Opens |
-|---|---|
-| [https://matrix.dev-team.org/](https://matrix.dev-team.org/) | the default category, newest reports |
-| [https://matrix.dev-team.org/?category=csv-processing](https://matrix.dev-team.org/?category=csv-processing) | that category |
-| [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
-| [https://matrix.dev-team.org/?version=latest&amp;library=CsvHelper](https://matrix.dev-team.org/?version=latest&amp;library=CsvHelper) | the same overview, release stated explicitly |
-
-`category` accepts the category id or its displayed name. `library` accepts the
-library id, its displayed name or its NuGet package id, and finds the category on its
-own. Matching ignores case, spaces and punctuation, so `?library=Sylvan.Data.Csv` and
-`?library=sylvan-data-csv` are the same link. An unknown value falls back to the
-default view rather than to an error.
-
-`version` pins the reports to one release. It takes a release name exactly as the
-picker shows it, for example `?version=1.2.0`, or the word `latest`. Leave it out to
-follow every new release: a link without it always shows the newest reports, which is
-what a page about a library normally wants. The copy buttons in the application
-follow the same rule and only write the release into the link when an older one is
-being viewed.
-
 
 ## CSV Processing
 
 <blockquote>
-<strong>Sep</strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sep">Sep</a></strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=csv-processing"><strong>Explore interactively →</strong></a></p>
@@ -87,9 +64,9 @@ being viewed.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **Sep** | 4 |  |  | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
-| 2 | **Sylvan.Data.Csv** |  | 4 |  | silver in Correctness, silver in Read, silver in Throughput, silver in Write |
-| 3 | **CsvHelper** |  |  | 4 | bronze in Correctness, bronze in Read, bronze in Throughput, bronze in Write |
+| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 |  |  | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
+| 2 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) |  | 4 |  | silver in Correctness, silver in Read, silver in Throughput, silver in Write |
+| 3 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) |  |  | 4 | bronze in Correctness, bronze in Read, bronze in Throughput, bronze in Write |
 
 ### Benchmark overview
 
@@ -211,7 +188,7 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 ## Dependency Injection
 
 <blockquote>
-<strong>Pure.DI</strong> leads the current rating · 23 libraries · 15 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 23 libraries · 15 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=dependency-injection"><strong>Explore interactively →</strong></a></p>
@@ -221,13 +198,13 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **Pure.DI** | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | **Grace** |  | 1 |  | silver in Advanced |
-| 3 | **MvvmCross** |  | 1 |  | silver in Prepare |
-| 4 | **Simple Injector** |  | 1 |  | silver in Basic |
-| 5 | **DryIoc** |  |  | 1 | bronze in Prepare |
-| 6 | **Microsoft Extensions Dependency Injection** |  |  | 1 | bronze in Basic |
-| 7 | **Stashbox** |  |  | 1 | bronze in Advanced |
+| 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) |  | 1 |  | silver in Advanced |
+| 3 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) |  | 1 |  | silver in Prepare |
+| 4 | [**Simple Injector**](https://matrix.dev-team.org/?category=dependency-injection&library=SimpleInjector) |  | 1 |  | silver in Basic |
+| 5 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) |  |  | 1 | bronze in Prepare |
+| 6 | [**Microsoft Extensions Dependency Injection**](https://matrix.dev-team.org/?category=dependency-injection&library=Microsoft.DI) |  |  | 1 | bronze in Basic |
+| 7 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) |  |  | 1 | bronze in Advanced |
 
 ### Benchmark overview
 
@@ -470,7 +447,7 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 ## JSON Serialization
 
 <blockquote>
-<strong>System.Text.Json</strong> leads the current rating · 3 libraries · 14 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=System.Text.Json">System.Text.Json</a></strong> leads the current rating · 3 libraries · 14 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=json-serialization"><strong>Explore interactively →</strong></a></p>
@@ -480,9 +457,9 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **System.Text.Json** | 5 | 1 |  | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
-| 2 | **ServiceStack.Text** | 1 | 4 |  | gold in Prepare, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
-| 3 | **Newtonsoft.Json** |  | 1 | 5 | silver in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
+| 1 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 5 | 1 |  | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
+| 2 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 1 | 4 |  | gold in Prepare, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
+| 3 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) |  | 1 | 5 | silver in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
 
 ### Benchmark overview
 
@@ -631,7 +608,7 @@ Creates fresh serializer settings and explicit type metadata without serializing
 ## Logging
 
 <blockquote>
-<strong>Microsoft.Extensions.Logging</strong> leads the current rating · 5 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=Microsoft.Extensions.Logging">Microsoft.Extensions.Logging</a></strong> leads the current rating · 5 libraries · 8 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=logging"><strong>Explore interactively →</strong></a></p>
@@ -641,10 +618,10 @@ Creates fresh serializer settings and explicit type metadata without serializing
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **Microsoft.Extensions.Logging** | 2 |  |  | gold in Core, gold in Structured |
-| 2 | **Serilog** | 1 |  | 2 | gold in Prepare, bronze in Core, bronze in Structured |
-| 3 | **NLog** |  | 3 |  | silver in Core, silver in Prepare, silver in Structured |
-| 4 | **log4net** |  |  | 1 | bronze in Prepare |
+| 1 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 2 |  |  | gold in Core, gold in Structured |
+| 2 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 1 |  | 2 | gold in Prepare, bronze in Core, bronze in Structured |
+| 3 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) |  | 3 |  | silver in Core, silver in Prepare, silver in Structured |
+| 4 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) |  |  | 1 | bronze in Prepare |
 
 ### Benchmark overview
 
@@ -755,7 +732,7 @@ Creates, verifies, and releases one Information-enabled logger with an in-memory
 ## Object Mapping
 
 <blockquote>
-<strong>Mapperly</strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=Mapperly">Mapperly</a></strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=object-mapping"><strong>Explore interactively →</strong></a></p>
@@ -765,9 +742,9 @@ Creates, verifies, and releases one Information-enabled logger with an in-memory
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **Mapperly** | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | **Mapster** |  | 2 | 1 | silver in Advanced, silver in Basic, bronze in Prepare |
-| 3 | **AutoMapper** |  | 1 | 2 | silver in Prepare, bronze in Advanced, bronze in Basic |
+| 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) |  | 2 | 1 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) |  | 1 | 2 | silver in Prepare, bronze in Advanced, bronze in Basic |
 
 ### Benchmark overview
 
@@ -885,7 +862,7 @@ Creates the complete mapper configuration and maps one simple object.
 ## Validation
 
 <blockquote>
-<strong>DataAnnotations</strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=validation&amp;library=DataAnnotations">DataAnnotations</a></strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=validation"><strong>Explore interactively →</strong></a></p>
@@ -895,9 +872,9 @@ Creates the complete mapper configuration and maps one simple object.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | **DataAnnotations** | 2 | 2 |  | gold in Prepare, gold in Rules, silver in Basic, silver in Object Graph |
-| 2 | **MiniValidation** | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
-| 3 | **FluentValidation** |  | 1 | 3 | silver in Rules, bronze in Basic, bronze in Object Graph, bronze in Prepare |
+| 1 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 2 | 2 |  | gold in Prepare, gold in Rules, silver in Basic, silver in Object Graph |
+| 2 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
+| 3 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) |  | 1 | 3 | silver in Rules, bronze in Basic, bronze in Object Graph, bronze in Prepare |
 
 ### Benchmark overview
 
@@ -1066,3 +1043,49 @@ dotnet run --project .\build -- finalize-commit
 > Running the complete benchmark matrix can take a long time. Use
 > `dotnet run --project .\build -- --help` to find commands for a single category
 > or library.
+
+## Link to a category or a library
+
+The application reads three optional query parameters, so a page about a library can
+link straight to the relevant comparison instead of the front page:
+
+| Link | Opens |
+|---|---|
+| [https://matrix.dev-team.org/](https://matrix.dev-team.org/) | the default category, newest reports |
+| [https://matrix.dev-team.org/?category=csv-processing](https://matrix.dev-team.org/?category=csv-processing) | that category |
+| [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
+| [https://matrix.dev-team.org/?version=latest&library=CsvHelper](https://matrix.dev-team.org/?version=latest&library=CsvHelper) | the same overview, newest release named explicitly |
+
+The three are independent and combine freely; the links in the tables above are the
+same thing with the values filled in.
+
+### `category`
+
+Accepts the category id or its displayed name, for example `?category=csv-processing`.
+Matching ignores case, spaces and punctuation.
+
+### `library`
+
+Accepts the library id, its displayed name or its NuGet package id, and finds the
+category on its own, so `?library=CsvHelper` needs no `category` beside it.
+Add `category` only to break a tie between two categories that use the same library
+id. The library overview opens as a dialog over the matrix.
+
+### `version`
+
+Pins the reports to one release. It takes a release name exactly as the picker shows
+it, for example `?version=1.2.0`, or the word `latest`. Unlike the other two, the
+value is matched exactly: dropping punctuation would make `1.2.3` and `12.3`
+indistinguishable.
+
+Leave it out to follow every new release — a link without it always shows the newest
+reports, which is what a page about a library normally wants. Use it when the link
+has to keep showing the numbers it was written against, for example next to a quoted
+result in an article.
+
+The release picker in the application writes the parameter into the address, and the
+copy buttons follow the same rule: the release appears in the copied link only while
+an older one is being viewed.
+
+An unknown value of any of the three falls back to the default view rather than to an
+error, so a typo in a link published elsewhere still lands the reader in the matrix.

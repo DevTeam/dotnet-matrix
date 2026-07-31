@@ -121,6 +121,7 @@ internal sealed class ReadmeTarget(
             .Create(report, charts, rated.Contains)
             .Select((medals, index) => new ReadmeRating(
                 index + 1,
+                medals.LibraryId,
                 medals.Name,
                 medals.Gold,
                 medals.Silver,
