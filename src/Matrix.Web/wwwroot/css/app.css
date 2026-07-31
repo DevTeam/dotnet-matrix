@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
     color-scheme: dark;
@@ -50,16 +50,21 @@ a {
     min-height: 100vh;
 }
 
+/* A minimum rather than a fixed height: on a narrow tablet the release picker and
+   the links no longer fit beside the brand and move to a second row, which a fixed
+   76px would clip. Wrapping happens on the bar, not inside the group, so the
+   picker, the chip and the links always travel together. */
 .topbar {
-    height: 76px;
+    min-height: 76px;
     position: sticky;
     top: 0;
     z-index: 20;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 24px;
-    padding: 0 32px;
+    gap: 12px 24px;
+    padding: 12px 32px;
     border-bottom: 1px solid var(--line);
     background: rgba(11, 13, 18, .9);
     backdrop-filter: blur(18px);
@@ -67,6 +72,7 @@ a {
 
 .brand {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     gap: 12px;
     text-decoration: none;
@@ -93,13 +99,20 @@ a {
     font-size: 11px;
     letter-spacing: .08em;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .topbar-end {
     display: flex;
+    min-width: 0;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px 22px;
+    margin-left: auto;
+    gap: 10px 18px;
+}
+
+/* The option text is long; without a cap the picker alone pushes the links out. */
+.topbar-end select {
+    max-width: 260px;
 }
 
 .topbar-links {
@@ -341,20 +354,6 @@ select {
     font-size: 12px;
 }
 
-.filter-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 36px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.filter-footer strong {
-    color: var(--text);
-}
-
 .content {
     min-width: 0;
     padding: 42px clamp(24px, 4vw, 64px) 80px;
@@ -388,7 +387,7 @@ select {
 .hero-summary {
     display: grid;
     flex: 0 0 auto;
-    grid-template-columns: repeat(3, auto);
+    grid-auto-flow: column;
     gap: 20px;
     padding: 18px 22px;
     border: 1px solid var(--line);

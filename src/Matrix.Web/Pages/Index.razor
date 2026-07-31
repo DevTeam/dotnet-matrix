@@ -187,13 +187,6 @@
                     }
                 </section>
 
-                @if (SelectedVersion is not null)
-                {
-                    <footer class="filter-footer">
-                        <span>Report snapshot</span>
-                        <strong>@SnapshotLabel(SelectedVersion)</strong>
-                    </footer>
-                }
             </aside>
 
             <main class="content">
@@ -208,7 +201,6 @@
                     </div>
                     <div class="hero-summary">
                         <span><strong>@SelectedLibraryCount</strong> libraries</span>
-                        <span><strong>@SelectedCategoryCount</strong> category</span>
                         <span><strong>@FeatureCount</strong> scenarios</span>
                     </div>
                 </section>
@@ -308,8 +300,6 @@
         .SelectMany(Libraries)
         .Count(library => _selectedLibraries.Contains(
             LibraryKey(_selectedCategoryId!, library.Id)));
-
-    private int SelectedCategoryCount => _selectedCategoryId is null ? 0 : 1;
 
     /// <summary>
     /// The rows the name filter currently leaves visible. Bulk selection works on
@@ -505,15 +495,6 @@
             { Version: "local" } => "Local reports · workspace",
             { Released: false } => $"{version.Version} · latest",
             { DateUtc: { } date } => $"{version.Version} · {date:dd MMM yyyy}",
-            _ => version.Version
-        };
-
-    private static string SnapshotLabel(MatrixVersion version) =>
-        version switch
-        {
-            { Version: "local" } => "Local files",
-            { Released: false } => $"{version.Version} · unreleased",
-            { DateUtc: { } date } => date.ToString("dd MMM yyyy"),
             _ => version.Version
         };
 
