@@ -65,8 +65,9 @@ The README is a generated snapshot of the reports committed to this repository.
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
 | 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 |  |  | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
-| 2 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) |  | 4 |  | silver in Correctness, silver in Read, silver in Throughput, silver in Write |
-| 3 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) |  |  | 4 | bronze in Correctness, bronze in Read, bronze in Throughput, bronze in Write |
+| 2 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) |  | 2 | 2 | silver in Throughput, silver in Write, bronze in Correctness, bronze in Read |
+| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) |  | 2 | 1 | silver in Correctness, silver in Read, bronze in Throughput |
+| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) |  |  | 1 | bronze in Write |
 
 ### Benchmark overview
 
@@ -199,12 +200,11 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
 | 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) |  | 1 |  | silver in Advanced |
+| 2 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) |  | 2 |  | silver in Advanced, silver in Basic |
 | 3 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) |  | 1 |  | silver in Prepare |
-| 4 | [**Simple Injector**](https://matrix.dev-team.org/?category=dependency-injection&library=SimpleInjector) |  | 1 |  | silver in Basic |
-| 5 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) |  |  | 1 | bronze in Prepare |
-| 6 | [**Microsoft Extensions Dependency Injection**](https://matrix.dev-team.org/?category=dependency-injection&library=Microsoft.DI) |  |  | 1 | bronze in Basic |
-| 7 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) |  |  | 1 | bronze in Advanced |
+| 4 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) |  |  | 1 | bronze in Prepare |
+| 5 | [**Singularity**](https://matrix.dev-team.org/?category=dependency-injection&library=Singularity) |  |  | 1 | bronze in Basic |
+| 6 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) |  |  | 1 | bronze in Advanced |
 
 ### Benchmark overview
 
@@ -872,9 +872,10 @@ Creates the complete mapper configuration and maps one simple object.
 
 | # | Library | 🥇 | 🥈 | 🥉 | Won |
 |---:|---|---:|---:|---:|---|
-| 1 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 2 | 2 |  | gold in Prepare, gold in Rules, silver in Basic, silver in Object Graph |
-| 2 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 2 | 1 |  | gold in Basic, gold in Object Graph, silver in Prepare |
-| 3 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) |  | 1 | 3 | silver in Rules, bronze in Basic, bronze in Object Graph, bronze in Prepare |
+| 1 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 2 |  | 2 | gold in Prepare, gold in Rules, bronze in Basic, bronze in Object Graph |
+| 2 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 1 | 2 |  | gold in Basic, silver in Object Graph, silver in Prepare |
+| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 1 | 1 | 1 | gold in Object Graph, silver in Basic, bronze in Prepare |
+| 4 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) |  | 1 |  | silver in Rules |
 
 ### Benchmark overview
 
