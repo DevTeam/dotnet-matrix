@@ -23,7 +23,7 @@
 <table align="center">
 <tr>
 <td width="180" align="center"><strong>6</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>40</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>42</strong><br><sub>LIBRARIES</sub></td>
 <td width="180" align="center"><strong>67</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
@@ -32,12 +32,12 @@
 
 | Category | Leader | Libraries | Scenarios |
 |---|---|---:|---:|
-| [**CSV Processing**](#csv-processing) | Sep | 3 | 10 |
+| [**CSV Processing**](#csv-processing) | Sep | 4 | 10 |
 | [**Dependency Injection**](#dependency-injection) | Pure.DI | 23 | 15 |
 | [**JSON Serialization**](#json-serialization) | System.Text.Json | 3 | 14 |
 | [**Logging**](#logging) | Microsoft.Extensions.Logging | 5 | 8 |
 | [**Object Mapping**](#object-mapping) | Mapperly | 4 | 10 |
-| [**Validation**](#validation) | DataAnnotations | 3 | 10 |
+| [**Validation**](#validation) | DataAnnotations | 4 | 10 |
 
 ## How to read the results
 
@@ -52,10 +52,10 @@ The README is a generated snapshot of the reports committed to this repository.
 ## CSV Processing
 
 <blockquote>
-<strong>Sep</strong> leads the current rating · 3 libraries · 10 scenarios
+<strong>Sep</strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=csv-processing"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -90,7 +90,7 @@ The README is a generated snapshot of the reports committed to this repository.
 </details>
 
 <details>
-<summary><strong>Compared libraries (3)</strong></summary>
+<summary><strong>Compared libraries (4)</strong></summary>
 
 <table>
 <tr>
@@ -104,6 +104,10 @@ The README is a generated snapshot of the reports committed to this repository.
 <tr>
 <td width="64"><img src="metadata/CsvProcessing/logos/sylvan.svg" width="48" height="48" alt="Sylvan.Data.Csv logo"></td>
 <td><strong><a href="https://github.com/MarkPflug/Sylvan/blob/main/docs/Csv.md">Sylvan.Data.Csv</a></strong> 1.4.4<br>A high-performance forward-only CSV data reader and writer with strongly typed accessors and asynchronous I/O.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/CsvProcessing/logos/tiny-csv-parser.svg" width="48" height="48" alt="TinyCsvParser logo"></td>
+<td><strong><a href="https://github.com/TinyCsvParser/TinyCsvParser">TinyCsvParser</a></strong> 3.0.11<br>A strongly typed CSV parser with declarative property mapping, custom converters, lazy streaming, and asynchronous readers.</td>
 </tr>
 </table>
 
@@ -181,7 +185,7 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 <strong>Pure.DI</strong> leads the current rating · 23 libraries · 15 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=dependency-injection"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -417,7 +421,7 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 <strong>System.Text.Json</strong> leads the current rating · 3 libraries · 14 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=json-serialization"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -575,7 +579,7 @@ Creates fresh serializer settings and explicit type metadata without serializing
 <strong>Microsoft.Extensions.Logging</strong> leads the current rating · 5 libraries · 8 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=logging"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -694,7 +698,7 @@ Creates, verifies, and releases one Information-enabled logger with an in-memory
 <strong>Mapperly</strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=object-mapping"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -817,10 +821,10 @@ Creates the complete mapper configuration and maps one simple object.
 ## Validation
 
 <blockquote>
-<strong>DataAnnotations</strong> leads the current rating · 3 libraries · 10 scenarios
+<strong>DataAnnotations</strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
-<p><a href="https://matrix.dev-team.org/"><strong>Explore interactively →</strong></a></p>
+<p><a href="https://matrix.dev-team.org/?category=validation"><strong>Explore interactively →</strong></a></p>
 
 
 ### Rating
@@ -855,7 +859,7 @@ Creates the complete mapper configuration and maps one simple object.
 </details>
 
 <details>
-<summary><strong>Compared libraries (3)</strong></summary>
+<summary><strong>Compared libraries (4)</strong></summary>
 
 <table>
 <tr>
@@ -865,6 +869,10 @@ Creates the complete mapper configuration and maps one simple object.
 <tr>
 <td width="64"><img src="metadata/Validation/logos/fluent-validation.svg" width="48" height="48" alt="FluentValidation logo"></td>
 <td><strong><a href="https://docs.fluentvalidation.net/">FluentValidation</a></strong> 12.1.1<br>A strongly typed validation library with fluent rules, nested validators, cascade modes, and asynchronous validation.</td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/Validation/logos/microsoft-extensions-validation.svg" width="48" height="48" alt="Microsoft.Extensions.Validation logo"></td>
+<td><strong><a href="https://learn.microsoft.com/aspnet/core/validation/overview">Microsoft.Extensions.Validation</a></strong> 10.0.10<br>The official source-generated validation infrastructure for DataAnnotations-based object graph validation outside ASP.NET Core.</td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Validation/logos/mini-validation.svg" width="48" height="48" alt="MiniValidation logo"></td>

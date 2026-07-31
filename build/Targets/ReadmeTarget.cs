@@ -130,6 +130,7 @@ internal sealed class ReadmeTarget(
                         $"{Place(award.Place)} in {award.GroupName}"))))
             .ToArray();
         return new ReadmeCategory(
+            module.Metadata.Id,
             Anchor(module.Metadata.Name),
             module.Metadata.Name,
             libraries,

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IMatrixDataSource DataSource
+@inject NavigationManager Navigation
 
 <PageTitle>.NET Matrix — compare .NET libraries</PageTitle>
 
@@ -276,6 +277,17 @@
         ("environment", "Environment")
     ];
 
+    private const string CategoryParameter = "category";
+
+    /// <summary>
+    /// A link published elsewhere can name the category to open, as in
+    /// <c>?category=dependency-injection</c>. The query string is used rather than a
+    /// route because GitHub Pages serves only the root document of this application.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = CategoryParameter)]
+    public string? Category { get; set; }
+
     private MatrixWebCatalog? _catalog;
     private IReadOnlyList<CategoryReport> _reports = [];
     private string? _selectedCategoryId;
@@ -353,7 +365,8 @@
             var result = await DataSource.LoadCatalogAsync();
             _catalog = result.Catalog;
             _catalogWarning = result.Warning;
-            _selectedCategoryId = _catalog.Categories.FirstOrDefault()?.Id;
+            _selectedCategoryId =
+                ResolveCategory(Category) ?? _catalog.Categories.FirstOrDefault()?.Id;
 
             _selectedVersion = _catalog.Versions.FirstOrDefault()?.Version;
             if (SelectedVersion is not null)
@@ -381,7 +394,37 @@
     private void SelectCategory(string categoryId)
     {
         _selectedCategoryId = categoryId;
+        // The address bar stays a link worth copying. Replacing the entry keeps the
+        // back button pointing at wherever the visitor came from.
+        Navigation.NavigateTo(
+            Navigation.GetUriWithQueryParameter(CategoryParameter, categoryId),
+            replace: true);
     }
+
+    /// <summary>
+    /// An unknown category falls back to the default one: a typo in a link published
+    /// on another site is nothing the visitor reading it can fix.
+    /// </summary>
+    private string? ResolveCategory(string? value)
+    {
+        if (_catalog is null || string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var wanted = Simplify(value);
+        return _catalog.Categories
+            .FirstOrDefault(category =>
+                Simplify(category.Id) == wanted || Simplify(category.Name) == wanted)
+            ?.Id;
+    }
+
+    /// <summary>
+    /// dependency-injection, DependencyInjection and "Dependency Injection" all name
+    /// the same category: a hand-written link should not have to match the id exactly.
+    /// </summary>
+    private static string Simplify(string value) =>
+        string.Concat(value.Where(char.IsLetterOrDigit)).ToLowerInvariant();
 
     private void ToggleLibrary(string key, ChangeEventArgs eventArgs)
     {
