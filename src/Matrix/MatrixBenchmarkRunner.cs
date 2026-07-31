@@ -158,7 +158,9 @@ public sealed class MatrixBenchmarkRunner(
                     measuredEvidenceId,
                     "measured",
                     jobId,
-                    environment));
+                    environment,
+                    runLibraries,
+                    options.Smoke));
             }
 
             if (reportedResults.Length > 0)
@@ -185,6 +187,7 @@ public sealed class MatrixBenchmarkRunner(
             }
 
             reportStore.Write(outputPath, report);
+            PruneEvidence(options.EvidenceDirectory, report.Evidence ?? []);
             Console.WriteLine($"Benchmark report: {outputPath}");
             return successful ? 0 : 1;
         }
@@ -332,7 +335,9 @@ public sealed class MatrixBenchmarkRunner(
         string evidenceId,
         string kind,
         string job,
-        BenchmarkEnvironment environment)
+        BenchmarkEnvironment environment,
+        IReadOnlyList<MatrixLibrary> libraries,
+        bool smoke)
     {
         if (string.IsNullOrWhiteSpace(evidenceRoot))
         {
@@ -342,7 +347,7 @@ public sealed class MatrixBenchmarkRunner(
         var evidenceDirectory = Path.Combine(Path.GetFullPath(evidenceRoot), evidenceId);
         var rawDirectory = Path.Combine(evidenceDirectory, "benchmarkdotnet");
         Directory.CreateDirectory(evidenceDirectory);
-        CopyDirectory(artifactsDirectory, rawDirectory);
+        CopyEvidenceFiles(artifactsDirectory, rawDirectory);
         File.WriteAllText(
             Path.Combine(evidenceDirectory, "environment.json"),
             JsonSerializer.Serialize(environment, EvidenceJsonOptions) + Environment.NewLine);
@@ -350,6 +355,8 @@ public sealed class MatrixBenchmarkRunner(
             Path.Combine(evidenceDirectory, "command.txt"),
             $"dotnet run --project src/{moduleAssembly.Value.GetName().Name} --configuration Release "
             + $"-p:MatrixMode=Benchmark -- --output reports/{module.ReportDirectory}/benchmarks.json"
+            + $" --libraries \"{string.Join(',', libraries.Select(library => library.Id))}\""
+            + (smoke ? " --smoke" : string.Empty)
             + Environment.NewLine);
 
         var files = Directory
@@ -367,7 +374,7 @@ public sealed class MatrixBenchmarkRunner(
             kind,
             job,
             environment.Id,
-            $"evidence/{module.ReportDirectory}/{evidenceId}/manifest.json");
+            $"reports/{module.ReportDirectory}/evidence/{evidenceId}/manifest.json");
         File.WriteAllText(
             Path.Combine(evidenceDirectory, "manifest.json"),
             JsonSerializer.Serialize(new
@@ -401,7 +408,8 @@ public sealed class MatrixBenchmarkRunner(
             job,
             environmentId,
             "matrix-reports",
-            manifestPath);
+            manifestPath,
+            repository);
     }
 
     private static string CreateEvidenceId(string moduleId)
@@ -414,20 +422,42 @@ public sealed class MatrixBenchmarkRunner(
         return $"{run}-{moduleId}";
     }
 
-    private static void CopyDirectory(string source, string destination)
+    private static void CopyEvidenceFiles(string source, string destination)
     {
         Directory.CreateDirectory(destination);
-        foreach (var directory in Directory.EnumerateDirectories(source, "*", SearchOption.AllDirectories))
-        {
-            Directory.CreateDirectory(
-                Path.Combine(destination, Path.GetRelativePath(source, directory)));
-        }
-
-        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        foreach (var file in Directory
+                     .EnumerateFiles(source, "*", SearchOption.AllDirectories)
+                     .Where(IsEvidenceFile))
         {
             var target = Path.Combine(destination, Path.GetRelativePath(source, file));
             Directory.CreateDirectory(Path.GetDirectoryName(target)!);
             File.Copy(file, target, true);
+        }
+    }
+
+    private static bool IsEvidenceFile(string path) =>
+        path.EndsWith("-report-full.json", StringComparison.OrdinalIgnoreCase)
+        || Path.GetExtension(path).Equals(".log", StringComparison.OrdinalIgnoreCase);
+
+    private static void PruneEvidence(
+        string? evidenceRoot,
+        IReadOnlyList<BenchmarkEvidence> evidence)
+    {
+        if (string.IsNullOrWhiteSpace(evidenceRoot) || !Directory.Exists(evidenceRoot))
+        {
+            return;
+        }
+
+        var activeIds = evidence
+            .Where(item => item.ManifestPath is not null)
+            .Select(item => item.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var directory in Directory.EnumerateDirectories(evidenceRoot))
+        {
+            if (!activeIds.Contains(Path.GetFileName(directory)))
+            {
+                Directory.Delete(directory, true);
+            }
         }
     }
 }

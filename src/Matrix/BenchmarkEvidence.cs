@@ -13,4 +13,5 @@ public sealed record BenchmarkEvidence(
     string Job,
     string EnvironmentId,
     string? ArchiveName,
-    string? ManifestPath);
+    string? ManifestPath,
+    string? Repository = null);

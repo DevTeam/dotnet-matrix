@@ -275,6 +275,8 @@
                         case "benchmarks":
                             <BenchmarksView Reports="@VisibleReports.ToArray()"
                                             SelectedLibraries="@_selectedLibraries"
+                                            Repository="@_catalog!.Repository"
+                                            ReportReference="@SelectedVersion?.Commit"
                                             OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "environment":

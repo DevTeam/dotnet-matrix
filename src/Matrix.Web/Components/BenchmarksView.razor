@@ -75,6 +75,12 @@ else
                                 </p>
                             }
                             <div class="evidence-actions">
+                                @if (EvidenceRepositoryUrl(evidence) is { } evidenceUrl)
+                                {
+                                    <a href="@evidenceUrl" target="_blank" rel="noopener">
+                                        Open evidence in repository
+                                    </a>
+                                }
                                 @if (evidence.WorkflowRunUrl is { } workflowRunUrl)
                                 {
                                     <a href="@workflowRunUrl" target="_blank" rel="noopener">
@@ -120,6 +126,12 @@ else
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter, EditorRequired]
+    public required GitHubRepository Repository { get; set; }
+
+    [Parameter]
+    public string? ReportReference { get; set; }
 
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
@@ -191,4 +203,10 @@ else
 
     private static string ShortCommit(string commit) =>
         commit[..Math.Min(8, commit.Length)];
+
+    private string? EvidenceRepositoryUrl(BenchmarkEvidence evidence) =>
+        !string.IsNullOrWhiteSpace(ReportReference)
+        && evidence.ManifestPath is { } path
+            ? $"https://github.com/{Repository.Owner}/{Repository.Name}/blob/{ReportReference}/{path}"
+            : null;
 }

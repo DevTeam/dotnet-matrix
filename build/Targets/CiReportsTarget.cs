@@ -81,7 +81,11 @@ internal sealed class CiReportsTarget(
                     options.Libraries,
                     options.Smoke,
                     cancellationToken,
-                    Path.Combine(output, "evidence", module.Metadata.ReportDirectory));
+                    Path.Combine(
+                        output,
+                        "reports",
+                        module.Metadata.ReportDirectory,
+                        "evidence"));
                 exitCode = Combine(exitCode, result);
                 AppendBenchmarks(summary, module, result);
             }
@@ -186,6 +190,55 @@ internal sealed class CiReportsTarget(
                 File.Copy(source, destination, true);
                 Console.WriteLine($"Staged: {destination}");
             }
+
+            if (benchmarked)
+            {
+                StageEvidence(module, directory);
+            }
+        }
+    }
+
+    private void StageEvidence(DiscoveredMatrixModule module, string reportDestination)
+    {
+        var report = reportStore.Read<BenchmarkReport>(ReportPath(module, BenchmarksFileName));
+        var activeIds = (report?.Evidence ?? [])
+            .Where(evidence => evidence.ManifestPath is not null)
+            .Select(evidence => evidence.Id)
+            .ToHashSet(StringComparer.Ordinal);
+        var sourceRoot = Path.Combine(
+            buildPaths.SolutionDirectory,
+            "reports",
+            module.Metadata.ReportDirectory,
+            "evidence");
+        var destinationRoot = Path.Combine(reportDestination, "evidence");
+        Directory.CreateDirectory(destinationRoot);
+
+        foreach (var evidenceId in activeIds)
+        {
+            var source = Path.Combine(sourceRoot, evidenceId);
+            var destination = Path.Combine(destinationRoot, evidenceId);
+            if (Directory.Exists(source) && !Directory.Exists(destination))
+            {
+                CopyDirectory(source, destination);
+            }
+        }
+
+        foreach (var directory in Directory.EnumerateDirectories(destinationRoot))
+        {
+            if (!activeIds.Contains(Path.GetFileName(directory)))
+            {
+                Directory.Delete(directory, true);
+            }
+        }
+    }
+
+    private static void CopyDirectory(string source, string destination)
+    {
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(destination, Path.GetRelativePath(source, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(file, target, true);
         }
     }
 

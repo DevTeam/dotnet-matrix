@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using System.Security.Cryptography;
+using System.Text.Json;
 
 namespace Build.Targets;
 
@@ -82,6 +83,31 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
                 "The archive must contain manifest.json, checksums.sha256, and reports/.");
         }
 
+        using (var document = JsonDocument.Parse(File.ReadAllText(manifest)))
+        {
+            var value = document.RootElement;
+            if (!value.TryGetProperty("schemaVersion", out var schemaVersion)
+                || schemaVersion.GetInt32() != 1
+                || !value.TryGetProperty("archive", out var archive)
+                || archive.GetString() != "matrix-reports"
+                || !value.TryGetProperty("categories", out var categories)
+                || categories.ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidDataException("The archive manifest is invalid or unsupported.");
+            }
+
+            foreach (var category in categories.EnumerateArray())
+            {
+                var name = category.GetString();
+                if (string.IsNullOrWhiteSpace(name)
+                    || !File.Exists(Path.Combine(reports, name, "features.json")))
+                {
+                    throw new InvalidDataException($"Category '{name}' has no feature report.");
+                }
+            }
+        }
+
+        var checkedFiles = new HashSet<string>(StringComparer.Ordinal);
         foreach (var line in File.ReadLines(checksums).Where(line => !string.IsNullOrWhiteSpace(line)))
         {
             if (line.Length < 66)
@@ -90,7 +116,13 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
             }
 
             var expected = line[..64];
-            var relativePath = line[64..].TrimStart(' ', '*').Replace('/', Path.DirectorySeparatorChar);
+            var relativeName = NormalizeRelativePath(line[64..].TrimStart(' ', '*'));
+            if (!checkedFiles.Add(relativeName))
+            {
+                throw new InvalidDataException($"Duplicate checksum for '{relativeName}'.");
+            }
+
+            var relativePath = relativeName.Replace('/', Path.DirectorySeparatorChar);
             var path = Path.GetFullPath(Path.Combine(root, relativePath));
             var rootPrefix = Path.GetFullPath(root) + Path.DirectorySeparatorChar;
             if (!path.StartsWith(rootPrefix, StringComparison.OrdinalIgnoreCase) || !File.Exists(path))
@@ -104,6 +136,17 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
                 throw new InvalidDataException($"Checksum mismatch for '{relativePath}'.");
             }
         }
+
+
+        var archiveFiles = Directory
+            .EnumerateFiles(root, "*", SearchOption.AllDirectories)
+            .Where(path => !path.Equals(checksums, StringComparison.OrdinalIgnoreCase))
+            .Select(path => NormalizeRelativePath(Path.GetRelativePath(root, path)))
+            .ToHashSet(StringComparer.Ordinal);
+        if (!checkedFiles.SetEquals(archiveFiles))
+        {
+            throw new InvalidDataException("The checksum list does not cover every archive file.");
+        }
     }
 
     private void Import(string root)
@@ -112,8 +155,6 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
         {
             (Source: Path.Combine(root, "reports"),
                 Destination: Path.Combine(buildPaths.SolutionDirectory, "reports")),
-            (Source: Path.Combine(root, "evidence"),
-                Destination: Path.Combine(buildPaths.SolutionDirectory, "artifacts", "evidence")),
             (Source: Path.Combine(root, "summaries"),
                 Destination: Path.Combine(buildPaths.SolutionDirectory, "artifacts", "report-summaries"))
         };
@@ -139,8 +180,17 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
 
         var backupRoot = Path.Combine(root, ".backup");
         var completed = new List<(string Destination, string? Backup)>();
+        var removedDirectories = new List<(string Destination, string Backup)>();
         try
         {
+            foreach (var obsolete in FindObsoleteEvidenceDirectories(root))
+            {
+                var backup = Path.Combine(backupRoot, $"directory-{removedDirectories.Count:D8}");
+                CopyDirectory(obsolete, backup);
+                Directory.Delete(obsolete, true);
+                removedDirectories.Add((obsolete, backup));
+            }
+
             foreach (var (source, destination) in files)
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
@@ -172,7 +222,57 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
                 }
             }
 
+            foreach (var (destination, backup) in removedDirectories.AsEnumerable().Reverse())
+            {
+                CopyDirectory(backup, destination);
+            }
+
             throw;
         }
     }
+
+    private IEnumerable<string> FindObsoleteEvidenceDirectories(string root)
+    {
+        var sourceReports = Path.Combine(root, "reports");
+        foreach (var sourceEvidence in Directory.EnumerateDirectories(
+                     sourceReports,
+                     "evidence",
+                     SearchOption.AllDirectories))
+        {
+            var relative = Path.GetRelativePath(sourceReports, sourceEvidence);
+            var destinationEvidence = Path.Combine(
+                buildPaths.SolutionDirectory,
+                "reports",
+                relative);
+            if (!Directory.Exists(destinationEvidence))
+            {
+                continue;
+            }
+
+            var activeIds = Directory
+                .EnumerateDirectories(sourceEvidence)
+                .Select(Path.GetFileName)
+                .ToHashSet(StringComparer.Ordinal);
+            foreach (var destination in Directory.EnumerateDirectories(destinationEvidence))
+            {
+                if (!activeIds.Contains(Path.GetFileName(destination)))
+                {
+                    yield return destination;
+                }
+            }
+        }
+    }
+
+    private static void CopyDirectory(string source, string destination)
+    {
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(destination, Path.GetRelativePath(source, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(file, target, true);
+        }
+    }
+
+    private static string NormalizeRelativePath(string path) =>
+        path.Replace('\\', '/').TrimStart('.', '/');
 }

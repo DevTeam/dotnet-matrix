@@ -1044,8 +1044,9 @@ that archive and import the complete verified snapshot manually with:
 dotnet run --project .\build -- import-reports --archive .\matrix-reports.zip
 ```
 
-Repository report JSON files are updated from the archive. Evidence is unpacked
-under `artifacts/evidence`, which remains outside version control.
+Repository report JSON files and their evidence are updated under `reports` from
+the same archive. Evidence is committed with the report, so a Git tag preserves
+the measurements and their provenance together.
 
 To regenerate source-controlled artifacts without starting the local application:
 

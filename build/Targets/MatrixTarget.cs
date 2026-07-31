@@ -46,10 +46,20 @@ internal sealed class MatrixTarget(
             arguments.Add("--smoke");
         }
 
-        if (!string.IsNullOrWhiteSpace(evidenceDirectory))
+        var resolvedEvidenceDirectory = evidenceDirectory;
+        if (mode == MatrixMode.Benchmark && string.IsNullOrWhiteSpace(resolvedEvidenceDirectory))
+        {
+            resolvedEvidenceDirectory = Path.Combine(
+                buildPaths.SolutionDirectory,
+                "reports",
+                module.Metadata.ReportDirectory,
+                "evidence");
+        }
+
+        if (!string.IsNullOrWhiteSpace(resolvedEvidenceDirectory))
         {
             arguments.Add("--evidence");
-            arguments.Add(evidenceDirectory);
+            arguments.Add(resolvedEvidenceDirectory);
         }
 
         var selection = libraries ?? "all libraries";
