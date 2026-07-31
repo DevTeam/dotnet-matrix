@@ -167,22 +167,43 @@
                             @foreach (var library in libraries)
                             {
                                 var key = LibraryKey(report.Category.Id, library.Id);
-                                <label class="check-row library-row">
-                                    <input type="checkbox"
-                                           checked="@_selectedLibraries.Contains(key)"
-                                           @onchange="eventArgs => ToggleLibrary(key, eventArgs)"/>
-                                    <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
-                                                 Name="@library.Name"
-                                                 Size="xs"/>
-                                    <span>
-                                        @library.Name
-                                        <small>@library.Version</small>
-                                    </span>
+                                @* The label wraps only the checkbox, so the details
+                                   button beside it does not toggle the selection. *@
+                                <div class="library-row">
+                                    <label class="check-row">
+                                        <input type="checkbox"
+                                               checked="@_selectedLibraries.Contains(key)"
+                                               @onchange="eventArgs => ToggleLibrary(key, eventArgs)"/>
+                                        <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                                     Name="@library.Name"
+                                                     Size="xs"/>
+                                        <span>
+                                            @library.Name
+                                            <small>@library.Version</small>
+                                        </span>
+                                    </label>
                                     <RatingBadge Category="@report.Category.Name"
                                                  Rated="@MatrixView.IsRated(report, library.Id)"
                                                  Medals="@medals.FirstOrDefault(item =>
                                                              item.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))"/>
-                                </label>
+                                    <button class="library-info"
+                                            type="button"
+                                            title="@($"Open the {library.Name} overview")"
+                                            aria-label="@($"Open the {library.Name} overview")"
+                                            @onclick="() => OpenLibrary(library.Id)">
+                                        <svg viewBox="0 0 16 16"
+                                             fill="none"
+                                             stroke="currentColor"
+                                             stroke-width="1.6"
+                                             stroke-linecap="round"
+                                             aria-hidden="true"
+                                             focusable="false">
+                                            <circle cx="8" cy="8" r="6.3"/>
+                                            <path d="M8 7.2v4"/>
+                                            <path d="M8 4.7v.1"/>
+                                        </svg>
+                                    </button>
+                                </div>
                             }
                         </div>
                     }
@@ -248,23 +269,36 @@
                     {
                         case "features":
                             <FeaturesView Reports="@VisibleReports.ToArray()"
-                                          SelectedLibraries="@_selectedLibraries"/>
+                                          SelectedLibraries="@_selectedLibraries"
+                                          OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "benchmarks":
                             <BenchmarksView Reports="@VisibleReports.ToArray()"
-                                            SelectedLibraries="@_selectedLibraries"/>
+                                            SelectedLibraries="@_selectedLibraries"
+                                            OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "environment":
                             <EnvironmentView Reports="@VisibleReports.ToArray()"/>
                             break;
                         default:
                             <OverviewView Reports="@VisibleReports.ToArray()"
-                                          SelectedLibraries="@_selectedLibraries"/>
+                                          SelectedLibraries="@_selectedLibraries"
+                                          OnOpenLibrary="@OpenLibrary"
+                                          LibraryLink="@LibraryLink"/>
                             break;
                     }
                 }
             </main>
         </div>
+
+        @if (OpenReport is { } openReport && OpenLibraryValue is { } openLibrary)
+        {
+            <LibraryDialog Report="@openReport"
+                           Library="@openLibrary"
+                           SelectedLibraries="@_selectedLibraries"
+                           Link="@LibraryLink(openLibrary.Id)"
+                           OnClose="CloseLibrary"/>
+        }
     }
 </div>
 
@@ -278,6 +312,7 @@
     ];
 
     private const string CategoryParameter = "category";
+    private const string LibraryParameter = "library";
 
     /// <summary>
     /// A link published elsewhere can name the category to open, as in
@@ -288,7 +323,16 @@
     [SupplyParameterFromQuery(Name = CategoryParameter)]
     public string? Category { get; set; }
 
+    /// <summary>
+    /// Opens the overview of one library, as in <c>?library=sep</c>. The category is
+    /// found from the library, so a page about a library needs only this one value.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = LibraryParameter)]
+    public string? Library { get; set; }
+
     private MatrixWebCatalog? _catalog;
+    private string? _openLibraryId;
     private IReadOnlyList<CategoryReport> _reports = [];
     private string? _selectedCategoryId;
     private readonly HashSet<string> _selectedLibraries = new(StringComparer.OrdinalIgnoreCase);
@@ -394,10 +438,16 @@
     private void SelectCategory(string categoryId)
     {
         _selectedCategoryId = categoryId;
+        _openLibraryId = null;
         // The address bar stays a link worth copying. Replacing the entry keeps the
         // back button pointing at wherever the visitor came from.
         Navigation.NavigateTo(
-            Navigation.GetUriWithQueryParameter(CategoryParameter, categoryId),
+            Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+            {
+                [CategoryParameter] = categoryId,
+                // The library of the previous category has no meaning here.
+                [LibraryParameter] = null
+            }),
             replace: true);
     }
 
@@ -417,6 +467,101 @@
             .FirstOrDefault(category =>
                 Simplify(category.Id) == wanted || Simplify(category.Name) == wanted)
             ?.Id;
+    }
+
+    /// <summary>
+    /// The dialog follows the address rather than a field of its own. Opening pushes
+    /// a history entry, so the back button closes the dialog for a visitor who
+    /// opened it here, and leaves the site for one who arrived on the link.
+    /// </summary>
+    private void OpenLibrary(string libraryId) =>
+        Navigation.NavigateTo(
+            Navigation.GetUriWithQueryParameter(LibraryParameter, libraryId));
+
+    /// <summary>
+    /// Closing leaves the category behind, so the address stays a link to what is on
+    /// screen even for a visitor who arrived on a bare <c>?library=…</c>.
+    /// </summary>
+    private void CloseLibrary() =>
+        Navigation.NavigateTo(
+            Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+            {
+                [CategoryParameter] = _selectedCategoryId,
+                [LibraryParameter] = null
+            }),
+            replace: true);
+
+    private string LibraryLink(string libraryId) =>
+        Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+        {
+            [CategoryParameter] = _selectedCategoryId,
+            [LibraryParameter] = libraryId
+        });
+
+    private CategoryReport? OpenReport => _openLibraryId is null
+        ? null
+        : VisibleReports.FirstOrDefault();
+
+    private MatrixLibrary? OpenLibraryValue => OpenReport is { } report
+        ? Libraries(report).FirstOrDefault(library =>
+            library.Id.Equals(_openLibraryId, StringComparison.OrdinalIgnoreCase))
+        : null;
+
+    /// <summary>
+    /// The library is looked up in every loaded category, the selected one first, so
+    /// <c>?library=…</c> alone is enough and <c>?category=…</c> only breaks a tie.
+    /// Package names are matched too: a page about a library knows its package id
+    /// long before it knows the id used here.
+    /// </summary>
+    private (string CategoryId, string LibraryId)? FindLibrary(string value)
+    {
+        var wanted = Simplify(value);
+        var reports = _reports
+            .OrderByDescending(report => report.Category.Id.Equals(
+                _selectedCategoryId,
+                StringComparison.OrdinalIgnoreCase));
+        foreach (var report in reports)
+        {
+            foreach (var library in Libraries(report))
+            {
+                if (Simplify(library.Id) == wanted
+                    || Simplify(library.Name) == wanted
+                    || (library.Package is { Length: > 0 } package && Simplify(package) == wanted))
+                {
+                    return (report.Category.Id, library.Id);
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (_catalog is null)
+        {
+            return;
+        }
+
+        if (ResolveCategory(Category) is { } categoryId)
+        {
+            _selectedCategoryId = categoryId;
+        }
+
+        if (string.IsNullOrWhiteSpace(Library))
+        {
+            _openLibraryId = null;
+            return;
+        }
+
+        if (FindLibrary(Library) is not { } found)
+        {
+            _openLibraryId = null;
+            return;
+        }
+
+        _selectedCategoryId = found.CategoryId;
+        _openLibraryId = found.LibraryId;
     }
 
     /// <summary>

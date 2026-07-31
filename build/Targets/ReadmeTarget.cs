@@ -81,6 +81,7 @@ internal sealed class ReadmeTarget(
             {
                 moduleLibraries.TryGetValue(library.Id, out var moduleLibrary);
                 return new ReadmeLibrary(
+                    library.Id,
                     moduleLibrary?.Name ?? library.Id,
                     moduleLibrary?.Version ?? string.Empty,
                     library.Description,

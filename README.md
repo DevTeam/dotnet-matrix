@@ -48,6 +48,23 @@
 
 The README is a generated snapshot of the reports committed to this repository.
 
+## Link to a category or a library
+
+The application reads two optional query parameters, so a page about a library can
+link straight to the relevant comparison instead of the front page:
+
+| Link | Opens |
+|---|---|
+| [https://matrix.dev-team.org/](https://matrix.dev-team.org/) | the default category |
+| [https://matrix.dev-team.org/?category=csv-processing](https://matrix.dev-team.org/?category=csv-processing) | that category |
+| [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
+
+`category` accepts the category id or its displayed name. `library` accepts the
+library id, its displayed name or its NuGet package id, and finds the category on its
+own. Matching ignores case, spaces and punctuation, so `?library=Sylvan.Data.Csv` and
+`?library=sylvan-data-csv` are the same link. An unknown value falls back to the
+default view rather than to an error.
+
 
 ## CSV Processing
 
@@ -96,18 +113,22 @@ The README is a generated snapshot of the reports committed to this repository.
 <tr>
 <td width="64"><img src="metadata/CsvProcessing/logos/csv-helper.svg" width="48" height="48" alt="CsvHelper logo"></td>
 <td><strong><a href="https://joshclose.github.io/CsvHelper/">CsvHelper</a></strong> 33.1.0<br>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/CsvProcessing/logos/sep.svg" width="48" height="48" alt="Sep logo"></td>
 <td><strong><a href="https://github.com/nietras/Sep">Sep</a></strong> 0.15.1<br>A modern SIMD-accelerated separated-values reader and writer with span-based conversion and async enumeration.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sep">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/CsvProcessing/logos/sylvan.svg" width="48" height="48" alt="Sylvan.Data.Csv logo"></td>
 <td><strong><a href="https://github.com/MarkPflug/Sylvan/blob/main/docs/Csv.md">Sylvan.Data.Csv</a></strong> 1.4.4<br>A high-performance forward-only CSV data reader and writer with strongly typed accessors and asynchronous I/O.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sylvan.Data.Csv">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/CsvProcessing/logos/tiny-csv-parser.svg" width="48" height="48" alt="TinyCsvParser logo"></td>
 <td><strong><a href="https://github.com/TinyCsvParser/TinyCsvParser">TinyCsvParser</a></strong> 3.0.11<br>A strongly typed CSV parser with declarative property mapping, custom converters, lazy streaming, and asynchronous readers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=TinyCsvParser">Compare →</a></td>
 </tr>
 </table>
 
@@ -226,94 +247,117 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/autofac.png" width="48" height="48" alt="Autofac logo"></td>
 <td><strong><a href="https://autofac.readthedocs.io/en/latest/">Autofac</a></strong> 9.3.1<br>A flexible inversion of control container for building extensible .NET applications.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Autofac">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/windsor.png" width="48" height="48" alt="Castle Windsor logo"></td>
 <td><strong><a href="https://github.com/castleproject/Windsor/blob/master/docs/README.md">Castle Windsor</a></strong> 6.0.0<br>The Castle Project container, with bound lifestyles and Castle DynamicProxy interception.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Windsor">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/catel.png" width="48" height="48" alt="Catel logo"></td>
 <td><strong><a href="https://www.catelproject.com/">Catel</a></strong> 6.2.0<br>An MVVM application framework whose service locator and type factory perform constructor injection.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Catel">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/dry-ioc.png" width="48" height="48" alt="DryIoc logo"></td>
 <td><strong><a href="https://github.com/dadhi/DryIoc/blob/master/docs/DryIoc.Docs/README.md">DryIoc</a></strong> 5.4.3<br>A fast, small and feature-rich container with expression-compiled resolution and rich reuse options.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=DryIoc">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/faster-ioc.svg" width="48" height="48" alt="Faster.Ioc logo"></td>
 <td><strong><a href="https://github.com/Wsm2110/Faster.Ioc#readme">Faster.Ioc</a></strong> 5.0.0<br>A minimalistic container focused on the shortest possible resolve path.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Faster.Ioc">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/grace.png" width="48" height="48" alt="Grace logo"></td>
 <td><strong><a href="https://github.com/ipjohnson/Grace/wiki">Grace</a></strong> 7.2.1<br>A container with a fluent registration model, per-object-graph lifestyles and decorator support.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Grace">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/hand-coded.svg" width="48" height="48" alt="Hand-coded logo"></td>
 <td><strong>Hand-coded</strong><br>Direct dependency injection written in C# without a container.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=HandCoded">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/lamar.png" width="48" height="48" alt="Lamar logo"></td>
 <td><strong><a href="https://jasperfx.github.io/lamar/">Lamar</a></strong> 16.0.0<br>The successor to StructureMap, built around runtime code generation.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Lamar">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/light-inject.svg" width="48" height="48" alt="LightInject logo"></td>
 <td><strong><a href="https://www.lightinject.net/">LightInject</a></strong> 7.1.0<br>A lightweight container with an ultra-small API surface and its own interception package.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=LightInject">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/maestro.svg" width="48" height="48" alt="Maestro logo"></td>
 <td><strong><a href="https://github.com/JonasSamuelsson/Maestro#readme">Maestro</a></strong> 3.6.6<br>A small container with a fluent configuration API and pluggable activation interceptors.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Maestro">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/mef2.svg" width="48" height="48" alt="Managed Extensibility Framework 2 logo"></td>
 <td><strong><a href="https://learn.microsoft.com/dotnet/framework/mef/">Managed Extensibility Framework 2</a></strong> 10.0.10<br>The lightweight Managed Extensibility Framework composition engine shipped as System.Composition.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=MEF2">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/microsoft-di.png" width="48" height="48" alt="Microsoft Extensions Dependency Injection logo"></td>
 <td><strong><a href="https://learn.microsoft.com/dotnet/core/extensions/dependency-injection">Microsoft Extensions Dependency Injection</a></strong> 10.0.10<br>The built-in .NET dependency injection container and its service collection abstractions.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Microsoft.DI">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/mvvm-cross.png" width="48" height="48" alt="MvvmCross logo"></td>
 <td><strong><a href="https://www.mvvmcross.com/documentation/">MvvmCross</a></strong> 10.1.2<br>A cross-platform MVVM framework with its own inversion of control provider.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=MvvmCross">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/ninject.png" width="48" height="48" alt="Ninject logo"></td>
 <td><strong><a href="https://github.com/ninject/Ninject/wiki">Ninject</a></strong> 3.3.6<br>A container built around fluent bindings, contextual conditions and pluggable extensions.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Ninject">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/pure-di.png" width="48" height="48" alt="Pure.DI logo"></td>
 <td><strong><a href="https://github.com/DevTeam/Pure.DI#readme">Pure.DI</a></strong> 2.5.2<br>A compile-time dependency injection framework that generates strongly typed compositions.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/simple-injector.svg" width="48" height="48" alt="Simple Injector logo"></td>
 <td><strong><a href="https://docs.simpleinjector.org/">Simple Injector</a></strong> 5.6.0<br>A fast, opinionated dependency injection library that promotes explicit configuration and maintainable application design.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=SimpleInjector">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/singularity.png" width="48" height="48" alt="Singularity logo"></td>
 <td><strong><a href="https://github.com/Barsonax/Singularity#readme">Singularity</a></strong> 0.18.0<br>An expression-tree based container that validates the whole object graph when the container is built.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Singularity">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/spring.png" width="48" height="48" alt="Spring.NET logo"></td>
 <td><strong><a href="https://www.springframework.net/">Spring.NET</a></strong> 3.0.3<br>The Spring.NET application framework and its XML or code configured object factory.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Spring">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/stashbox.png" width="48" height="48" alt="Stashbox logo"></td>
 <td><strong><a href="https://z4kn4fein.github.io/stashbox/">Stashbox</a></strong> 5.20.0<br>A fast container with per-request lifetimes, conditional registrations and child containers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Stashbox">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/structure-map.svg" width="48" height="48" alt="StructureMap logo"></td>
 <td><strong><a href="https://structuremap.github.io/">StructureMap</a></strong> 4.7.1<br>A mature container with a fluent registry DSL, nested containers and decorators.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=StructureMap">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/unity.png" width="48" height="48" alt="Unity logo"></td>
 <td><strong><a href="https://unitycontainer.org/">Unity</a></strong> 5.11.10<br>The Unity container, offering per-resolve lifetimes and hierarchical child containers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Unity">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/vs-mef.png" width="48" height="48" alt="Visual Studio MEF logo"></td>
 <td><strong><a href="https://github.com/microsoft/vs-mef/blob/main/doc/index.md">Visual Studio MEF</a></strong> 17.13.41<br>The Visual Studio composition engine, a fast attribute-driven MEF implementation.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=VS.MEF">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/zen-ioc.png" width="48" height="48" alt="ZenIoc logo"></td>
 <td><strong><a href="https://github.com/zenmvvm/ZenIoc#readme">ZenIoc</a></strong> 1.0.1<br>A tiny container with compiled registrations, named resolution and nested containers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=ZenIoc">Compare →</a></td>
 </tr>
 </table>
 
@@ -470,14 +514,17 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 <tr>
 <td width="64"><img src="metadata/JsonSerialization/logos/newtonsoft-json.svg" width="48" height="48" alt="Newtonsoft.Json logo"></td>
 <td><strong><a href="https://www.newtonsoft.com/json/help/html/Introduction.htm">Newtonsoft.Json</a></strong> 13.0.4<br>A mature JSON framework for .NET with configurable contracts, converters, and streaming readers and writers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=Newtonsoft.Json">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/JsonSerialization/logos/service-stack-text.svg" width="48" height="48" alt="ServiceStack.Text logo"></td>
 <td><strong><a href="https://docs.servicestack.net/text">ServiceStack.Text</a></strong> 10.0.8<br>A high-performance text library with typed JSON, stream, collection, and type-specific serialization APIs.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=ServiceStack.Text">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/JsonSerialization/logos/system-text-json.svg" width="48" height="48" alt="System.Text.Json logo"></td>
 <td><strong><a href="https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/overview">System.Text.Json</a></strong><br>The reflection-based and source-generated JSON serializer included with .NET.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=System.Text.Json">Compare →</a></td>
 </tr>
 </table>
 
@@ -617,22 +664,27 @@ Creates fresh serializer settings and explicit type metadata without serializing
 <tr>
 <td width="64"><img src="metadata/Logging/logos/log4net.svg" width="48" height="48" alt="log4net logo"></td>
 <td><strong><a href="https://logging.apache.org/log4net/">log4net</a></strong> 3.3.2<br>A mature Apache logging framework with hierarchical repositories, contextual properties, layouts, and appenders.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=log4net">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Logging/logos/microsoft-extensions-logging.svg" width="48" height="48" alt="Microsoft.Extensions.Logging logo"></td>
 <td><strong><a href="https://learn.microsoft.com/dotnet/core/extensions/logging">Microsoft.Extensions.Logging</a></strong> 10.0.10<br>The standard .NET logging abstraction and logger factory with providers, filtering, structured state, and scopes.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=Microsoft.Extensions.Logging">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Logging/logos/nlog.svg" width="48" height="48" alt="NLog logo"></td>
 <td><strong><a href="https://nlog-project.org/">NLog</a></strong> 6.1.4<br>A configurable logging platform with structured events, scope context, targets, layouts, and asynchronous wrappers.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=NLog">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Logging/logos/serilog.svg" width="48" height="48" alt="Serilog logo"></td>
 <td><strong><a href="https://serilog.net/">Serilog</a></strong> 4.4.0<br>A structured event logger with message templates, contextual enrichment, and a broad sink ecosystem.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=Serilog">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Logging/logos/zlogger.svg" width="48" height="48" alt="ZLogger logo"></td>
 <td><strong><a href="https://github.com/Cysharp/ZLogger">ZLogger</a></strong> 2.5.10<br>A source-generated and interpolated-string logger built on Microsoft.Extensions.Logging with UTF-8 and processor APIs.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">Compare →</a></td>
 </tr>
 </table>
 
@@ -735,18 +787,22 @@ Creates, verifies, and releases one Information-enabled logger with an in-memory
 <tr>
 <td width="64"><img src="metadata/ObjectMapping/logos/auto-mapper.svg" width="48" height="48" alt="AutoMapper logo"></td>
 <td><strong><a href="https://docs.automapper.io/">AutoMapper</a></strong> 16.2.0<br>A convention-based object-object mapper with runtime configuration and compiled mapping plans.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=AutoMapper">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/ObjectMapping/logos/hand-coded.svg" width="48" height="48" alt="Hand-coded logo"></td>
 <td><strong>Hand-coded</strong><br>Direct object mapping written in C# without a mapping library.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=HandCoded">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/ObjectMapping/logos/mapperly.svg" width="48" height="48" alt="Mapperly logo"></td>
 <td><strong><a href="https://mapperly.riok.app/">Mapperly</a></strong> 4.3.1<br>A source generator that creates readable object mapping code at compile time.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=Mapperly">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/ObjectMapping/logos/mapster.svg" width="48" height="48" alt="Mapster logo"></td>
 <td><strong><a href="https://github.com/MapsterMapper/Mapster/wiki">Mapster</a></strong> 10.0.11<br>An object mapper with runtime configuration, expression compilation, and projection support.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=Mapster">Compare →</a></td>
 </tr>
 </table>
 
@@ -865,18 +921,22 @@ Creates the complete mapper configuration and maps one simple object.
 <tr>
 <td width="64"><img src="metadata/Validation/logos/data-annotations.svg" width="48" height="48" alt="DataAnnotations logo"></td>
 <td><strong><a href="https://learn.microsoft.com/dotnet/api/system.componentmodel.dataannotations">DataAnnotations</a></strong><br>The validation attributes and validation APIs included with the .NET framework.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=validation&amp;library=DataAnnotations">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Validation/logos/fluent-validation.svg" width="48" height="48" alt="FluentValidation logo"></td>
 <td><strong><a href="https://docs.fluentvalidation.net/">FluentValidation</a></strong> 12.1.1<br>A strongly typed validation library with fluent rules, nested validators, cascade modes, and asynchronous validation.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=validation&amp;library=FluentValidation">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Validation/logos/microsoft-extensions-validation.svg" width="48" height="48" alt="Microsoft.Extensions.Validation logo"></td>
 <td><strong><a href="https://learn.microsoft.com/aspnet/core/validation/overview">Microsoft.Extensions.Validation</a></strong> 10.0.10<br>The official source-generated validation infrastructure for DataAnnotations-based object graph validation outside ASP.NET Core.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=validation&amp;library=Microsoft.Extensions.Validation">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Validation/logos/mini-validation.svg" width="48" height="48" alt="MiniValidation logo"></td>
 <td><strong><a href="https://github.com/DamianEdwards/MiniValidation">MiniValidation</a></strong> 0.10.0<br>A minimal DataAnnotations-based validator with recursive object graph traversal and cycle detection.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=validation&amp;library=MiniValidation">Compare →</a></td>
 </tr>
 </table>
 

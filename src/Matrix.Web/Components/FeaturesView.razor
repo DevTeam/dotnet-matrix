@@ -48,7 +48,11 @@
                                 <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
                                              Name="@library.Name"
                                              Size="sm"/>
-                                <span class="column-library-name">@library.Name</span>
+                                <button class="library-open column-library-name"
+                                        type="button"
+                                        @onclick="() => OnOpenLibrary.InvokeAsync(library.Id)">
+                                    @library.Name
+                                </button>
                                 <small>@library.Version</small>
                             </span>
                         </th>
@@ -132,6 +136,9 @@
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
 
     private readonly HashSet<string> _expanded = new(StringComparer.OrdinalIgnoreCase);
 

@@ -45,7 +45,14 @@
                                  Name="@item.Row.Name"
                                  Size="sm"/>
                     <div>
-                        <strong>@item.Row.Name</strong>
+                        <strong>
+                            <button class="library-open"
+                                    type="button"
+                                    title="@($"Open the {item.Row.Name} overview")"
+                                    @onclick="() => OnOpenLibrary.InvokeAsync(item.Row.LibraryId)">
+                                @item.Row.Name
+                            </button>
+                        </strong>
                         @if (item.Coverage is not null)
                         {
                             <small>@item.Coverage</small>
@@ -96,6 +103,9 @@
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
 
     protected override void OnParametersSet()
     {

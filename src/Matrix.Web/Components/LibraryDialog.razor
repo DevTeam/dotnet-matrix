@@ -1,0 +1,486 @@
+@* Dimming overlay. Clicking it closes; the panel stops the click from reaching it. *@
+<div class="modal-backdrop" @onclick="CloseAsync">
+    <div class="modal-panel"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="library-dialog-title"
+         tabindex="-1"
+         @ref="_panel"
+         @onclick:stopPropagation="true"
+         @onkeydown="CloseOnEscapeAsync">
+        <header class="modal-head">
+            <LibraryLogo Source="@MatrixView.Logo(Report, Library.Id)" Name="@Library.Name"/>
+            <div class="modal-identity">
+                <h2 id="library-dialog-title">@Library.Name</h2>
+                <p class="modal-package">
+                    @if (Library.Package is { Length: > 0 } package)
+                    {
+                        <span>@package</span>
+                    }
+                    @if (Library.Version is { Length: > 0 } version)
+                    {
+                        <span>@version</span>
+                    }
+                    @if (Library.Baseline)
+                    {
+                        <span>baseline</span>
+                    }
+                </p>
+            </div>
+            <div class="modal-head-end">
+                <span class="category-chip">@Report.Category.Name</span>
+                <RatingBadge Category="@Report.Category.Name"
+                             Rated="@MatrixView.IsRated(Report, Library.Id)"
+                             Medals="@_medals"
+                             AlwaysCount="true"/>
+                <CopyLinkButton Url="@Link" Caption="Copy link"/>
+                <button class="modal-close"
+                        type="button"
+                        title="Close (Esc)"
+                        aria-label="Close"
+                        @onclick="CloseAsync">
+                    <svg viewBox="0 0 16 16"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         aria-hidden="true"
+                         focusable="false">
+                        <path d="M4.4 4.4l7.2 7.2M11.6 4.4l-7.2 7.2"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="modal-body">
+            @if (_metadata is { } metadata)
+            {
+                <p class="modal-description">@metadata.Description</p>
+                <div class="modal-links">
+                    @if (metadata.DocumentationUrl is { Length: > 0 } documentation)
+                    {
+                        <a href="@documentation" target="_blank" rel="noreferrer">Documentation ↗</a>
+                    }
+                    @if (metadata.RepositoryUrl is { Length: > 0 } repository)
+                    {
+                        <a href="@repository" target="_blank" rel="noreferrer">Repository ↗</a>
+                    }
+                    @if (PackageUrl is { } packageUrl)
+                    {
+                        <a href="@packageUrl" target="_blank" rel="noreferrer">NuGet ↗</a>
+                    }
+                </div>
+            }
+
+            <div class="modal-metrics">
+                <div>
+                    <strong>@RatingPlace</strong>
+                    <span>rating</span>
+                </div>
+                <div>
+                    <strong>@(_medals?.Total ?? 0)</strong>
+                    <span>medal@(_medals?.Total == 1 ? "" : "s")</span>
+                </div>
+                <div>
+                    <strong>@_supported<small>/@_featureCount</small></strong>
+                    <span>features</span>
+                </div>
+                <div>
+                    <strong>@_scenarios.Length</strong>
+                    <span>scenario@(_scenarios.Length == 1 ? "" : "s")</span>
+                </div>
+            </div>
+
+            @if (_standings.Length > 0)
+            {
+                <section class="modal-section">
+                    <div class="modal-section-head">
+                        <h3>Overview standing</h3>
+                        <span class="section-meta">@Compared compared · lower is better</span>
+                    </div>
+                    @foreach (var standing in _standings)
+                    {
+                        <div class="modal-standing">
+                            <div class="modal-standing-head">
+                                <strong>@standing.Group.Name</strong>
+                                <span>@standing.Rank</span>
+                            </div>
+                            <div class="modal-standing-row">
+                                <span class="modal-standing-metric">Performance</span>
+                                <OverviewBar Values="@standing.Row.PerformanceValues"
+                                             FeatureNames="@standing.FeatureNames"
+                                             Maximum="@standing.Overview.MaximumTime"/>
+                                <span class="modal-standing-ratio" title="@standing.TimeTitle">
+                                    @standing.TimeRatio
+                                </span>
+                            </div>
+                            <div class="modal-standing-row">
+                                <span class="modal-standing-metric">Memory</span>
+                                <OverviewBar Values="@standing.Row.MemoryValues"
+                                             FeatureNames="@standing.FeatureNames"
+                                             Maximum="@standing.Overview.MaximumMemory"
+                                             Memory="true"/>
+                                <span class="modal-standing-ratio" title="@standing.MemoryTitle">
+                                    @standing.MemoryRatio
+                                </span>
+                            </div>
+                        </div>
+                    }
+                    @if (_legend.Length > 0)
+                    {
+                        <ul class="overview-chart-legend">
+                            @for (var index = 0; index < _legend.Length; index++)
+                            {
+                                <li title="@_legend[index].Title">
+                                    <span class="overview-chart-swatch"
+                                          style="background: @MatrixChartPalette.Feature(index)"></span>
+                                    @_legend[index].Name
+                                </li>
+                            }
+                        </ul>
+                    }
+                </section>
+            }
+
+            @if (_features.Length > 0)
+            {
+                <section class="modal-section">
+                    <div class="modal-section-head">
+                        <h3>Features</h3>
+                        <span class="section-meta">@_supported of @_featureCount supported</span>
+                    </div>
+                    <ul class="modal-feature-list">
+                        @foreach (var feature in _features)
+                        {
+                            <li>
+                                <span class="feature-status @feature.StatusClass" title="@feature.StatusLabel">
+                                    <StatusIcon Kind="@feature.StatusClass"/>
+                                </span>
+                                <span class="modal-feature-name">
+                                    <span class="feature-order">@feature.Order.ToString("00")</span>@feature.Name
+                                    @if (feature.Note is { } note)
+                                    {
+                                        <small>@note</small>
+                                    }
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+
+            @if (_scenarios.Length > 0)
+            {
+                <section class="modal-section">
+                    <div class="modal-section-head">
+                        <h3>Benchmarks</h3>
+                        <span class="section-meta">ratio against the best of @Compared</span>
+                    </div>
+                    <ul class="modal-scenario-list">
+                        @foreach (var scenario in _scenarios)
+                        {
+                            <li>
+                                <span class="modal-scenario-name">
+                                    <span class="feature-order">@scenario.Order.ToString("00")</span>@scenario.Name
+                                </span>
+                                <span class="modal-scenario-metric">
+                                    <span class="meter">
+                                        <span class="is-performance" style="@Width(scenario.TimePercent)"></span>
+                                    </span>
+                                    <strong>@scenario.Time</strong>
+                                    <small class="@Best(scenario.TimeRatio)">@scenario.TimeRatio</small>
+                                </span>
+                                <span class="modal-scenario-metric">
+                                    <span class="meter">
+                                        <span class="is-memory" style="@Width(scenario.MemoryPercent)"></span>
+                                    </span>
+                                    <strong>@scenario.Memory</strong>
+                                    <small class="@Best(scenario.MemoryRatio)">@scenario.MemoryRatio</small>
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private ElementReference _panel;
+    private bool _focused;
+    private MatrixLibraryMetadata? _metadata;
+    private MatrixMedals? _medals;
+    private string _ratingPlace = "—";
+    private int _supported;
+    private int _featureCount;
+    private Standing[] _standings = [];
+    private (string Name, string Title)[] _legend = [];
+    private Feature[] _features = [];
+    private Scenario[] _scenarios = [];
+
+    [Parameter, EditorRequired]
+    public required CategoryReport Report { get; set; }
+
+    [Parameter, EditorRequired]
+    public required MatrixLibrary Library { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    /// <summary>The address that reopens this dialog, offered for copying.</summary>
+    [Parameter, EditorRequired]
+    public required string Link { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private int Compared => MatrixView
+        .Libraries(Report)
+        .Count(library => MatrixView.IsSelected(Report, SelectedLibraries, library.Id));
+
+    private string RatingPlace => _ratingPlace;
+
+    private string? PackageUrl => Library.Package is { Length: > 0 } package
+        ? $"https://www.nuget.org/packages/{package}"
+        : null;
+
+    protected override void OnParametersSet()
+    {
+        _metadata = MatrixView.Metadata(Report, Library.Id);
+        var rating = MatrixView.Rating(Report, SelectedLibraries);
+        _medals = rating.FirstOrDefault(Matches);
+        var place = rating.ToList().FindIndex(Matches);
+        _ratingPlace = place < 0 ? "—" : $"{place + 1}{Suffix(place + 1)}";
+        ReadFeatures();
+        ReadStandings();
+        ReadScenarios();
+    }
+
+    /// <summary>
+    /// Focus moves into the panel once, so Escape reaches the key handler and the
+    /// tab order starts inside the dialog rather than behind it.
+    /// </summary>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_focused)
+        {
+            _focused = true;
+            await _panel.FocusAsync();
+        }
+    }
+
+    private bool Matches(MatrixMedals medals) =>
+        medals.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase);
+
+    private Task CloseAsync() => OnClose.InvokeAsync();
+
+    private async Task CloseOnEscapeAsync(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Key == "Escape")
+        {
+            await CloseAsync();
+        }
+    }
+
+    private void ReadFeatures()
+    {
+        var features = (Report.Features?.Features ?? []).OrderBy(feature => feature.Order);
+        _features = features
+            .Select(feature =>
+            {
+                var result = feature.Results.FirstOrDefault(item =>
+                    item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+                return new Feature(
+                    feature.Order,
+                    feature.Name,
+                    StatusClass(result?.Status),
+                    StatusLabel(result?.Status),
+                    result?.Reason is { Length: > 0 } reason
+                        ? reason
+                        : MatrixView.FeatureDescription(Report, feature.Id));
+            })
+            .ToArray();
+        _featureCount = _features.Length;
+        _supported = _features.Count(feature => feature.StatusClass == "supported");
+    }
+
+    private void ReadStandings()
+    {
+        if (Report.Benchmarks is not { } benchmarks || Report.ChartCatalog is not { } charts)
+        {
+            _standings = [];
+            _legend = [];
+            return;
+        }
+
+        var standings = new List<Standing>();
+        foreach (var group in charts.Groups)
+        {
+            var overview = MatrixOverviews.Create(
+                benchmarks,
+                group,
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+            if (overview is null)
+            {
+                continue;
+            }
+
+            var rank = overview.Ranked.ToList().FindIndex(row =>
+                row.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+            var row = rank >= 0
+                ? overview.Ranked[rank]
+                : overview.Unranked.FirstOrDefault(item =>
+                    item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+            if (row is null)
+            {
+                continue;
+            }
+
+            var leader = overview.Ranked.FirstOrDefault();
+            standings.Add(new Standing(
+                group,
+                overview,
+                row,
+                overview.Features
+                    .Select(feature => MatrixView.FeatureDescription(Report, feature.Id) is { } text
+                        ? $"{feature.Name} — {text}"
+                        : feature.Name)
+                    .ToArray(),
+                rank >= 0
+                    ? $"rank {rank + 1} of {overview.Ranked.Count}"
+                    : $"not ranked · {overview.Features.Count - row.MissingFeatures.Count}"
+                      + $"/{overview.Features.Count} covered",
+                Ratio(row.PerformanceValues, leader?.PerformanceValues),
+                Ratio(row.MemoryValues, leader?.MemoryValues),
+                Title(leader, false),
+                Title(leader, true)));
+        }
+
+        _standings = standings.ToArray();
+        _legend = standings
+            .SelectMany(standing => standing.Overview.Features)
+            .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(feature => (
+                feature.Name,
+                MatrixView.FeatureDescription(Report, feature.Id) ?? feature.Name))
+            .ToArray();
+    }
+
+    private void ReadScenarios()
+    {
+        if (Report.Benchmarks is not { } benchmarks)
+        {
+            _scenarios = [];
+            return;
+        }
+
+        var scenarios = new List<Scenario>();
+        foreach (var feature in benchmarks.Features.OrderBy(feature => feature.Order))
+        {
+            var rows = MatrixScenarios.Create(
+                benchmarks,
+                feature,
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+            var row = rows.FirstOrDefault(item =>
+                item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+            if (row is null)
+            {
+                continue;
+            }
+
+            scenarios.Add(new Scenario(
+                feature.Order,
+                feature.Name,
+                Value(row.Time, false),
+                Value(row.Memory, true),
+                MatrixMetrics.ScalePercent(row.Time ?? 0, MatrixScenarios.Maximum(rows, false)),
+                MatrixMetrics.ScalePercent(row.Memory ?? 0, MatrixScenarios.Maximum(rows, true)),
+                Ratio(row.Time, MatrixScenarios.Minimum(rows, false)),
+                Ratio(row.Memory, MatrixScenarios.Minimum(rows, true))));
+        }
+
+        _scenarios = scenarios.ToArray();
+    }
+
+    private static string Value(double? value, bool memory) =>
+        value is null ? "n/a" : MatrixMetrics.Format(value.Value, memory);
+
+    private static string Ratio(double? current, double minimum) =>
+        current is null ? "" : MatrixMetrics.Ratio(current.Value, minimum);
+
+    /// <summary>How this library compares with the leader of the whole overview.</summary>
+    private static string Ratio(
+        IReadOnlyList<double?> values,
+        IReadOnlyList<double?>? leader) =>
+        leader is null
+            ? ""
+            : MatrixMetrics.Ratio(MatrixMetrics.Total(values), MatrixMetrics.Total(leader));
+
+    private string Title(MatrixOverviewRow? leader, bool memory) =>
+        leader is null
+            ? string.Empty
+            : leader.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase)
+                ? "Best result in this overview"
+                : $"Against {leader.Name}, the fastest of the compared libraries"
+                  + $": {MatrixMetrics.Format(MatrixMetrics.Total(memory ? leader.MemoryValues : leader.PerformanceValues), memory)}";
+
+    private static string Width(double percent) =>
+        $"width: {percent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+
+    private static string? Best(string ratio) => ratio == "1.00x" ? "is-best" : null;
+
+    private static string Suffix(int place) => place switch
+    {
+        1 => "st",
+        2 => "nd",
+        3 => "rd",
+        _ => "th"
+    };
+
+    private static string StatusClass(string? status) => status switch
+    {
+        "Supported" => "supported",
+        "Unsupported" => "unsupported",
+        "NotApplicable" => "not-applicable",
+        "Failed" => "failed",
+        _ => "missing"
+    };
+
+    private static string StatusLabel(string? status) => status switch
+    {
+        "Supported" => "Supported",
+        "Unsupported" => "Unsupported",
+        "NotApplicable" => "Not applicable",
+        "Failed" => "Failed",
+        _ => "No data"
+    };
+
+    private sealed record Standing(
+        MatrixChartGroup Group,
+        MatrixOverview Overview,
+        MatrixOverviewRow Row,
+        string[] FeatureNames,
+        string Rank,
+        string TimeRatio,
+        string MemoryRatio,
+        string TimeTitle,
+        string MemoryTitle);
+
+    private sealed record Feature(
+        int Order,
+        string Name,
+        string StatusClass,
+        string StatusLabel,
+        string? Note);
+
+    private sealed record Scenario(
+        int Order,
+        string Name,
+        string Time,
+        string Memory,
+        double TimePercent,
+        double MemoryPercent,
+        string TimeRatio,
+        string MemoryRatio);
+}

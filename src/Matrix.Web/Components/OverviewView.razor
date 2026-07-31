@@ -22,7 +22,8 @@
         {
             <OverviewChart Report="@report"
                            Group="@group"
-                           SelectedLibraries="@SelectedLibraries"/>
+                           SelectedLibraries="@SelectedLibraries"
+                           OnOpenLibrary="@OnOpenLibrary"/>
         }
     </section>
 }
@@ -57,6 +58,10 @@
                                      Rated="@(metadata?.Rated ?? false)"
                                      Medals="@cardMedals.FirstOrDefault(item =>
                                                  item.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))"/>
+                        @if (LibraryLink is { } link)
+                        {
+                            <CopyLinkButton Url="@link(library.Id)"/>
+                        }
                         <span class="status-dot @(benchmarkResults.All(item => item.Successful) ? "ok" : "bad")"></span>
                     </span>
                 </div>
@@ -64,7 +69,14 @@
                     <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
                                  Name="@library.Name"/>
                     <div>
-                        <h2>@library.Name</h2>
+                        <h2>
+                            <button class="library-open"
+                                    type="button"
+                                    title="@($"Open the {library.Name} overview")"
+                                    @onclick="() => OnOpenLibrary.InvokeAsync(library.Id)">
+                                @library.Name
+                            </button>
+                        </h2>
                         <p class="package">@library.Package · @library.Version</p>
                     </div>
                 </div>
@@ -97,6 +109,13 @@
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
+
+    /// <summary>Builds the shareable address of a library; the page owns the format.</summary>
+    [Parameter]
+    public Func<string, string>? LibraryLink { get; set; }
 
     private static string? LibraryUrl(MatrixLibraryMetadata metadata) =>
         metadata.DocumentationUrl ?? metadata.RepositoryUrl;

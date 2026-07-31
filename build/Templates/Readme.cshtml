@@ -57,6 +57,23 @@
 
 The README is a generated snapshot of the reports committed to this repository.
 
+## Link to a category or a library
+
+The application reads two optional query parameters, so a page about a library can
+link straight to the relevant comparison instead of the front page:
+
+| Link | Opens |
+|---|---|
+| [@(Model.ApplicationUrl)](@Model.ApplicationUrl) | the default category |
+| [@(Model.ApplicationUrl)?category=@Model.SampleCategory](@(Model.ApplicationUrl)?category=@Model.SampleCategory) | that category |
+| [@(Model.ApplicationUrl)?library=@Model.SampleLibrary](@(Model.ApplicationUrl)?library=@Model.SampleLibrary) | the library overview, in its own category |
+
+`category` accepts the category id or its displayed name. `library` accepts the
+library id, its displayed name or its NuGet package id, and finds the category on its
+own. Matching ignores case, spaces and punctuation, so `?library=Sylvan.Data.Csv` and
+`?library=sylvan-data-csv` are the same link. An unknown value falls back to the
+default view rather than to an error.
+
 @foreach (var category in Model.Categories)
 {
     var leader = category.Rating.FirstOrDefault();
@@ -134,6 +151,7 @@ else
 else
 {@library.Name}</strong>@if (!string.IsNullOrWhiteSpace(library.Version))
 {<text> @library.Version</text>}<br>@library.Description</td>
+<td width="100" align="right"><a href="@(Model.ApplicationUrl)?category=@category.Id&amp;library=@library.Id">Compare →</a></td>
 </tr>
 }
 </table>

@@ -62,7 +62,14 @@ else
                                                  Name="@value.Name"
                                                  Size="sm"/>
                                     <div>
-                                        <strong>@value.Name</strong>
+                                        <strong>
+                                            <button class="library-open"
+                                                    type="button"
+                                                    title="@($"Open the {value.Name} overview")"
+                                                    @onclick="() => OnOpenLibrary.InvokeAsync(value.LibraryId)">
+                                                @value.Name
+                                            </button>
+                                        </strong>
                                         <span>@MatrixMetrics.Ratio(current, minimum)</span>
                                     </div>
                                 </div>
@@ -94,6 +101,9 @@ else
 
     [Parameter]
     public bool Memory { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
 
     /// <summary>The scenario chosen in the list above the split.</summary>
     [Parameter]

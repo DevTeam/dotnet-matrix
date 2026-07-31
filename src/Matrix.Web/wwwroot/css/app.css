@@ -334,8 +334,25 @@ select {
     font-size: 10px;
 }
 
-.check-row.library-row {
+/* The checkbox label and the details button are siblings, so a click on one is
+   never a click on the other. */
+.library-row {
+    display: flex;
+    min-height: 36px;
+    align-items: center;
     gap: 8px;
+}
+
+.library-row .check-row {
+    min-width: 0;
+    flex: 1;
+    gap: 8px;
+}
+
+.library-row .check-row > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .library-group {
@@ -1542,6 +1559,376 @@ tbody th {
     }
 }
 
+/* A library name is a button wherever it appears: it opens the library dialog and
+   keeps the typography of whatever element it stands in for. */
+.library-open {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    letter-spacing: inherit;
+    text-align: inherit;
+}
+
+.library-open:hover,
+.library-open:focus-visible {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.library-info {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    place-items: center;
+}
+
+.library-info:hover,
+.library-info:focus-visible {
+    background: var(--surface-2);
+    color: var(--accent);
+}
+
+.library-info svg {
+    width: 15px;
+    height: 15px;
+}
+
+.copy-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.copy-link:hover,
+.copy-link:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.copy-link svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+}
+
+.copy-link.is-icon {
+    padding: 5px;
+    border-color: transparent;
+}
+
+/* The dialog dims the application behind it rather than replacing it: the visitor
+   keeps their place in the matrix while reading about one library. */
+.modal-backdrop {
+    position: fixed;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    background: rgba(6, 7, 10, .72);
+    backdrop-filter: blur(6px);
+    inset: 0;
+}
+
+.modal-panel {
+    display: flex;
+    width: min(920px, 100%);
+    max-height: 100%;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    outline: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(17, 20, 27, .94);
+    backdrop-filter: blur(14px);
+}
+
+.modal-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.modal-identity h2 {
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -.03em;
+    overflow-wrap: anywhere;
+}
+
+.modal-package {
+    display: flex;
+    margin: 3px 0 0;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+}
+
+.modal-head-end {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-close {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    place-items: center;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.modal-close svg {
+    width: 15px;
+    height: 15px;
+}
+
+.modal-body {
+    padding: 22px;
+}
+
+.modal-description {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.modal-links {
+    display: flex;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-size: 12px;
+}
+
+.modal-links a {
+    color: var(--cyan);
+    text-decoration: none;
+}
+
+.modal-links a:hover {
+    text-decoration: underline;
+}
+
+.modal-metrics {
+    display: grid;
+    margin-top: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.modal-metrics div {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--surface-2);
+}
+
+.modal-metrics strong {
+    display: block;
+    font-size: 22px;
+    letter-spacing: -.03em;
+}
+
+.modal-metrics small {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.modal-metrics span {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.modal-section {
+    margin-top: 28px;
+}
+
+.modal-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.modal-section-head h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.modal-standing {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+}
+
+.modal-standing + .modal-standing {
+    margin-top: 10px;
+}
+
+.modal-standing-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+}
+
+.modal-standing-head span {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.modal-standing-row {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 84px minmax(0, 1fr) 56px;
+    gap: 12px;
+}
+
+.modal-standing-row + .modal-standing-row {
+    margin-top: 8px;
+}
+
+.modal-standing-metric {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.modal-standing-ratio {
+    color: var(--muted);
+    cursor: help;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+}
+
+.modal-feature-list,
+.modal-scenario-list {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    list-style: none;
+    overflow: hidden;
+}
+
+.modal-feature-list li,
+.modal-scenario-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 14px;
+    font-size: 13px;
+}
+
+.modal-feature-list li + li,
+.modal-scenario-list li + li {
+    border-top: 1px solid var(--line-soft);
+}
+
+.modal-feature-list li {
+    align-items: flex-start;
+}
+
+.modal-feature-name {
+    min-width: 0;
+    flex: 1;
+}
+
+.modal-feature-name small {
+    display: block;
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.modal-scenario-name {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.modal-scenario-metric {
+    display: grid;
+    width: 190px;
+    flex: 0 0 auto;
+    align-items: center;
+    grid-template-columns: minmax(0, 1fr) 66px 44px;
+    gap: 8px;
+}
+
+.modal-scenario-metric strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+}
+
+.modal-scenario-metric small {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    text-align: right;
+}
+
+.modal-scenario-metric small.is-best {
+    color: var(--accent);
+}
+
 @media (max-width: 980px) {
     .workspace {
         grid-template-columns: 1fr;
@@ -1636,6 +2023,60 @@ tbody th {
     .benchmark-value {
         grid-column: 2;
         grid-row: 1;
+    }
+
+    /* On a phone the dialog is the screen: a floating panel would leave a strip of
+       dimmed application that is too narrow to be worth keeping. */
+    .modal-backdrop {
+        padding: 0;
+    }
+
+    .modal-panel {
+        width: 100%;
+        max-height: 100%;
+        height: 100%;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .modal-head {
+        flex-wrap: wrap;
+        padding: 14px 16px;
+    }
+
+    .modal-head-end {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .modal-body {
+        padding: 16px;
+    }
+
+    /* The scenario name takes a row of its own, so the two metrics stay a pair
+       instead of one of them being pushed under the other. */
+    .modal-scenario-list li {
+        flex-wrap: wrap;
+        gap: 6px 12px;
+    }
+
+    .modal-scenario-name {
+        flex: 1 0 100%;
+    }
+
+    .modal-scenario-metric {
+        width: auto;
+        flex: 1 1 calc(50% - 6px);
+        grid-template-columns: minmax(0, 1fr) 58px 40px;
+    }
+
+    .modal-standing-row {
+        grid-template-columns: 64px minmax(0, 1fr) 48px;
+        gap: 8px;
+    }
+
+    .overview-chart-legend {
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
