@@ -6,4 +6,5 @@ public sealed record BenchmarkReport(
     DateTimeOffset GeneratedAtUtc,
     IReadOnlyList<BenchmarkEnvironment>? Environments,
     IReadOnlyList<BenchmarkLibrary> Libraries,
-    IReadOnlyList<BenchmarkReportEntry> Features);
+    IReadOnlyList<BenchmarkReportEntry> Features,
+    IReadOnlyList<BenchmarkEvidence>? Evidence = null);

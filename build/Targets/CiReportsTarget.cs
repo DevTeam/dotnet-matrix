@@ -80,7 +80,8 @@ internal sealed class CiReportsTarget(
                     MatrixMode.Benchmark,
                     options.Libraries,
                     options.Smoke,
-                    cancellationToken);
+                    cancellationToken,
+                    Path.Combine(output, "evidence", module.Metadata.ReportDirectory));
                 exitCode = Combine(exitCode, result);
                 AppendBenchmarks(summary, module, result);
             }

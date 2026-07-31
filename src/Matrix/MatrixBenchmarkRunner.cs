@@ -2,7 +2,9 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters.Json;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
+using System.Security.Cryptography;
 using System.Reflection;
+using System.Text.Json;
 
 // ReSharper disable UseCollectionExpression
 namespace Matrix;
@@ -13,6 +15,11 @@ public sealed class MatrixBenchmarkRunner(
     IMatrixReportStore reportStore,
     IBenchmarkEnvironmentProvider environmentProvider) : IMatrixRunner
 {
+    private static readonly JsonSerializerOptions EvidenceJsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        WriteIndented = true
+    };
+
     public string DefaultOutputFile =>
         Path.Combine("reports", module.ReportDirectory, "benchmarks.json");
 
@@ -28,6 +35,9 @@ public sealed class MatrixBenchmarkRunner(
         Directory.CreateDirectory(artifactsDirectory);
 
         var jobId = options.Smoke ? "Smoke" : "Quick";
+        var evidenceBaseId = CreateEvidenceId(module.Id);
+        var measuredEvidenceId = $"{evidenceBaseId}-measured";
+        var reportedEvidenceId = $"{evidenceBaseId}-reported";
         var environment = environmentProvider.Capture(
             "BenchmarkDotNet",
             typeof(BenchmarkSwitcher).Assembly,
@@ -105,10 +115,14 @@ public sealed class MatrixBenchmarkRunner(
                             report.ResultStatistics?.StandardError,
                             allocatedBytes,
                             environment.Id,
-                            payloadSize?.Bytes));
+                            payloadSize?.Bytes,
+                            measuredEvidenceId));
                 })
                 .ToArray();
-            var reportedResults = CaptureReportedResults(runLibraries, environment.Id);
+            var reportedResults = CaptureReportedResults(
+                runLibraries,
+                environment.Id,
+                reportedEvidenceId);
             var capturedResults = measuredResults
                 .Concat(reportedResults)
                 .ToArray();
@@ -135,13 +149,36 @@ public sealed class MatrixBenchmarkRunner(
                 .ToArray();
             var successful = capturedResults.Length > 0
                              && capturedResults.All(result => result.Result.Successful);
+            var evidence = new List<BenchmarkEvidence>();
+            if (measuredResults.Length > 0)
+            {
+                evidence.Add(CaptureEvidence(
+                    options.EvidenceDirectory,
+                    artifactsDirectory,
+                    measuredEvidenceId,
+                    "measured",
+                    jobId,
+                    environment));
+            }
+
+            if (reportedResults.Length > 0)
+            {
+                evidence.Add(CreateEvidence(
+                    reportedEvidenceId,
+                    "reported",
+                    jobId,
+                    environment.Id,
+                    null));
+            }
+
             var report = new BenchmarkReport(
-                1,
+                2,
                 module.Id,
                 DateTimeOffset.UtcNow,
                 [environment],
                 benchmarkLibraries,
-                features);
+                features,
+                evidence);
             if (existing is not null)
             {
                 report = Merge(existing, report, runLibraries);
@@ -223,17 +260,30 @@ public sealed class MatrixBenchmarkRunner(
             .DistinctBy(library => library.Id, StringComparer.OrdinalIgnoreCase)
             .OrderBy(library => library.Id, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+        var evidenceIds = features
+            .SelectMany(feature => feature.Results)
+            .Select(result => result.EvidenceId)
+            .Where(id => id is not null)
+            .ToHashSet(StringComparer.Ordinal);
+        var evidence = (existing.Evidence ?? [])
+            .Concat(current.Evidence ?? [])
+            .Where(item => evidenceIds.Contains(item.Id))
+            .DistinctBy(item => item.Id, StringComparer.Ordinal)
+            .OrderBy(item => item.GeneratedAtUtc)
+            .ToArray();
         return current with
         {
             Environments = environments,
             Libraries = libraries,
-            Features = features
+            Features = features,
+            Evidence = evidence
         };
     }
 
     private CapturedBenchmarkResult[] CaptureReportedResults(
         IReadOnlyList<MatrixLibrary> libraries,
-        string environmentId)
+        string environmentId,
+        string evidenceId)
     {
         var libraryIds = libraries
             .Select(library => library.Id)
@@ -271,7 +321,113 @@ public sealed class MatrixBenchmarkRunner(
                     0,
                     item.Reported.AllocatedBytesPerOperation,
                     environmentId,
-                    item.Method.GetCustomAttribute<PayloadSizeAttribute>()?.Bytes)))
+                    item.Method.GetCustomAttribute<PayloadSizeAttribute>()?.Bytes,
+                    evidenceId)))
             .ToArray();
+    }
+
+    private BenchmarkEvidence CaptureEvidence(
+        string? evidenceRoot,
+        string artifactsDirectory,
+        string evidenceId,
+        string kind,
+        string job,
+        BenchmarkEnvironment environment)
+    {
+        if (string.IsNullOrWhiteSpace(evidenceRoot))
+        {
+            return CreateEvidence(evidenceId, kind, job, environment.Id, null);
+        }
+
+        var evidenceDirectory = Path.Combine(Path.GetFullPath(evidenceRoot), evidenceId);
+        var rawDirectory = Path.Combine(evidenceDirectory, "benchmarkdotnet");
+        Directory.CreateDirectory(evidenceDirectory);
+        CopyDirectory(artifactsDirectory, rawDirectory);
+        File.WriteAllText(
+            Path.Combine(evidenceDirectory, "environment.json"),
+            JsonSerializer.Serialize(environment, EvidenceJsonOptions) + Environment.NewLine);
+        File.WriteAllText(
+            Path.Combine(evidenceDirectory, "command.txt"),
+            $"dotnet run --project src/{moduleAssembly.Value.GetName().Name} --configuration Release "
+            + $"-p:MatrixMode=Benchmark -- --output reports/{module.ReportDirectory}/benchmarks.json"
+            + Environment.NewLine);
+
+        var files = Directory
+            .EnumerateFiles(evidenceDirectory, "*", SearchOption.AllDirectories)
+            .Select(path => new
+            {
+                path = Path.GetRelativePath(evidenceDirectory, path).Replace('\\', '/'),
+                sha256 = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path))).ToLowerInvariant(),
+                size = new FileInfo(path).Length
+            })
+            .OrderBy(file => file.path, StringComparer.Ordinal)
+            .ToArray();
+        var evidence = CreateEvidence(
+            evidenceId,
+            kind,
+            job,
+            environment.Id,
+            $"evidence/{module.ReportDirectory}/{evidenceId}/manifest.json");
+        File.WriteAllText(
+            Path.Combine(evidenceDirectory, "manifest.json"),
+            JsonSerializer.Serialize(new
+            {
+                schemaVersion = 1,
+                evidence,
+                files
+            }, EvidenceJsonOptions) + Environment.NewLine);
+        return evidence;
+    }
+
+    private static BenchmarkEvidence CreateEvidence(
+        string id,
+        string kind,
+        string job,
+        string environmentId,
+        string? manifestPath)
+    {
+        var server = Environment.GetEnvironmentVariable("GITHUB_SERVER_URL");
+        var repository = Environment.GetEnvironmentVariable("GITHUB_REPOSITORY");
+        var runId = Environment.GetEnvironmentVariable("GITHUB_RUN_ID");
+        var workflowRunUrl = server is not null && repository is not null && runId is not null
+            ? $"{server}/{repository}/actions/runs/{runId}"
+            : null;
+        return new BenchmarkEvidence(
+            id,
+            kind,
+            DateTimeOffset.UtcNow,
+            Environment.GetEnvironmentVariable("GITHUB_SHA"),
+            workflowRunUrl,
+            job,
+            environmentId,
+            "matrix-reports",
+            manifestPath);
+    }
+
+    private static string CreateEvidenceId(string moduleId)
+    {
+        var runId = Environment.GetEnvironmentVariable("GITHUB_RUN_ID");
+        var attempt = Environment.GetEnvironmentVariable("GITHUB_RUN_ATTEMPT");
+        var run = string.IsNullOrWhiteSpace(runId)
+            ? $"{DateTimeOffset.UtcNow:yyyyMMddTHHmmssZ}-{Guid.NewGuid():N}"[..32]
+            : $"{runId}-{attempt ?? "1"}";
+        return $"{run}-{moduleId}";
+    }
+
+    private static void CopyDirectory(string source, string destination)
+    {
+        Directory.CreateDirectory(destination);
+        foreach (var directory in Directory.EnumerateDirectories(source, "*", SearchOption.AllDirectories))
+        {
+            Directory.CreateDirectory(
+                Path.Combine(destination, Path.GetRelativePath(source, directory)));
+        }
+
+        foreach (var file in Directory.EnumerateFiles(source, "*", SearchOption.AllDirectories))
+        {
+            var target = Path.Combine(destination, Path.GetRelativePath(source, file));
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(file, target, true);
+        }
     }
 }

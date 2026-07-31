@@ -30,6 +30,7 @@ internal partial class Composition
             .Bind<IPrepareCommitTarget>().As(Lifetime.Singleton).To<PrepareCommitTarget>()
             .Bind<ICiMatrixTarget>().As(Lifetime.Singleton).To<CiMatrixTarget>()
             .Bind<ICiReportsTarget>().As(Lifetime.Singleton).To<CiReportsTarget>()
+            .Bind<IImportReportsTarget>().As(Lifetime.Singleton).To<ImportReportsTarget>()
             .Bind<IWebManifestTarget>().As(Lifetime.Singleton).To<WebManifestTarget>()
             .Bind<IWebTarget>().As(Lifetime.Singleton).To<WebTarget>()
             .Bind<ILocalWebTarget>().As(Lifetime.Singleton).To<LocalWebTarget>()

@@ -10,6 +10,7 @@ public static class MatrixNames
     public const string FinalizeCommitCommand = "finalize-commit";
     public const string CiMatrixCommand = "ci-matrix";
     public const string CiReportsCommand = "ci-reports";
+    public const string ImportReportsCommand = "import-reports";
     public const string BuildWebCommand = "build-web";
     public const string ReproduceCommand = "reproduce";
     public const string BuildWebConfiguration = "Build .NET Matrix";

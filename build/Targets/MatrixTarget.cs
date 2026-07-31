@@ -13,7 +13,8 @@ internal sealed class MatrixTarget(
         MatrixMode mode,
         string? libraries,
         bool smoke,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? evidenceDirectory = null)
     {
         var report = Path.Combine(
             buildPaths.SolutionDirectory,
@@ -43,6 +44,12 @@ internal sealed class MatrixTarget(
         if (smoke)
         {
             arguments.Add("--smoke");
+        }
+
+        if (!string.IsNullOrWhiteSpace(evidenceDirectory))
+        {
+            arguments.Add("--evidence");
+            arguments.Add(evidenceDirectory);
         }
 
         var selection = libraries ?? "all libraries";

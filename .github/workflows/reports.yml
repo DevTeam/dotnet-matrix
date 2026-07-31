@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: matrix-reports
@@ -116,10 +117,64 @@ jobs:
             | sort -z \
             | xargs -0 cat >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Merge report artifacts
-        uses: actions/upload-artifact/merge@v4
+      - name: Seal combined artifact
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          cd artifacts/merged
+          mapfile -t categories < <(find reports -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+          generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          jq -n \
+            --arg generatedAtUtc "$generated_at" \
+            --arg repository "$REPOSITORY" \
+            --arg commitSha "$SOURCE_SHA" \
+            --arg workflowRunId "$RUN_ID" \
+            --arg workflowRunAttempt "$RUN_ATTEMPT" \
+            --args \
+            '{
+              schemaVersion: 1,
+              archive: "matrix-reports",
+              generatedAtUtc: $generatedAtUtc,
+              repository: $repository,
+              commitSha: $commitSha,
+              workflowRunId: $workflowRunId,
+              workflowRunAttempt: $workflowRunAttempt,
+              categories: $ARGS.positional
+            }' "${categories[@]}" > manifest.json
+          find . -type f ! -name checksums.sha256 -print0 \
+            | sort -z \
+            | xargs -0 sha256sum > checksums.sha256
+
+      - name: Upload combined reports and evidence
+        uses: actions/upload-artifact@v7
         with:
           name: matrix-reports
-          pattern: matrix-reports-*
-          delete-merged: true
-          retention-days: 30
+          path: artifacts/merged
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Remove temporary category artifacts
+        if: always()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const artifacts = await github.paginate(
+              github.rest.actions.listWorkflowRunArtifacts,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.runId,
+                per_page: 100
+              });
+            for (const artifact of artifacts) {
+              if (artifact.name.startsWith("matrix-reports-")) {
+                await github.rest.actions.deleteArtifact({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  artifact_id: artifact.id
+                });
+              }
+            }

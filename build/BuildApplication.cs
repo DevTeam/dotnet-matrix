@@ -16,6 +16,7 @@ internal sealed class BuildApplication(
     IPrepareCommitTarget prepareCommitTarget,
     ICiMatrixTarget ciMatrixTarget,
     ICiReportsTarget ciReportsTarget,
+    IImportReportsTarget importReportsTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebTarget webTarget,
     IReproduceTarget reproduceTarget)
@@ -38,6 +39,7 @@ internal sealed class BuildApplication(
         RegisterPrepareCommit(root, modules, prepareCommitTarget);
         RegisterCiMatrix(root, modules);
         RegisterCiReports(root, modules);
+        RegisterImportReports(root);
         RegisterWeb(root, modules);
         RegisterReproduce(root, modules);
         return root.Parse(args).InvokeAsync();
@@ -138,6 +140,22 @@ internal sealed class BuildApplication(
                 parseResult.GetValue(skipBenchmarks),
                 parseResult.GetValue(output)),
             cancellationToken));
+        root.Subcommands.Add(command);
+    }
+
+    private void RegisterImportReports(RootCommand root)
+    {
+        var archive = new Option<string>("--archive")
+        {
+            Description = "Path to the matrix-reports ZIP downloaded from GitHub Actions.",
+            Required = true
+        };
+        var command = new Command(
+            MatrixNames.ImportReportsCommand,
+            "Validate and import reports and evidence from one GitHub Actions archive");
+        command.Options.Add(archive);
+        command.SetAction(parseResult =>
+            importReportsTarget.Run(parseResult.GetRequiredValue(archive)));
         root.Subcommands.Add(command);
     }
 

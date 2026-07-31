@@ -9,5 +9,6 @@ internal interface IMatrixTarget
         MatrixMode mode,
         string? libraries,
         bool smoke,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken,
+        string? evidenceDirectory = null);
 }

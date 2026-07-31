@@ -210,6 +210,18 @@ dotnet run --project .\build -- reproduce --skip-benchmarks
 Child-process output is saved under `artifacts/logs`; the console shows concise
 progress and prints the relevant log tail if an operation fails.
 
+ The **Run .NET Matrix Reports** GitHub Actions workflow produces one
+`matrix-reports` archive containing every category report, the raw
+BenchmarkDotNet evidence, summaries, a manifest, and SHA-256 checksums. Download
+that archive and import the complete verified snapshot manually with:
+
+```powershell
+dotnet run --project .\build -- import-reports --archive .\matrix-reports.zip
+```
+
+Repository report JSON files are updated from the archive. Evidence is unpacked
+under `artifacts/evidence`, which remains outside version control.
+
 To regenerate source-controlled artifacts without starting the local application:
 
 ```powershell

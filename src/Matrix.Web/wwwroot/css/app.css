@@ -1258,6 +1258,109 @@ tbody th {
     font-size: 11px;
 }
 
+.evidence-disclosure {
+    border-top: 1px solid var(--line-soft);
+}
+
+.evidence-disclosure summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 13px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.evidence-count,
+.evidence-status {
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+    padding-top: 13px;
+}
+
+.evidence-card {
+    padding: 13px;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: var(--surface-raised);
+}
+
+.evidence-card-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.evidence-status.is-available {
+    color: var(--accent);
+}
+
+.evidence-status.is-reported,
+.evidence-status.is-smoke {
+    color: var(--warning);
+}
+
+.evidence-card dl {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 14px;
+    margin: 13px 0 0;
+}
+
+.evidence-card dl div {
+    min-width: 0;
+}
+
+.evidence-card dt {
+    color: var(--muted);
+    font-size: 9px;
+    text-transform: uppercase;
+}
+
+.evidence-card dd {
+    margin: 2px 0 0;
+    overflow: hidden;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.evidence-path {
+    margin: 12px 0 0;
+    overflow-wrap: anywhere;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+}
+
+.evidence-path span {
+    color: var(--text);
+}
+
+.evidence-actions {
+    margin-top: 12px;
+}
+
+.evidence-actions a {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 800;
+}
+
 .benchmark-split {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

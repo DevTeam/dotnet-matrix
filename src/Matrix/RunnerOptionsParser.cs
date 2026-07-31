@@ -7,6 +7,7 @@ public sealed class RunnerOptionsParser : IRunnerOptionsParser
         var output = defaultOutput;
         var libraries = new List<string>();
         var smoke = false;
+        string? evidenceDirectory = null;
         for (var index = 0; index < args.Length; index++)
         {
             switch (args[index])
@@ -27,11 +28,15 @@ public sealed class RunnerOptionsParser : IRunnerOptionsParser
                     smoke = true;
                     break;
 
+                case "--evidence" when index + 1 < args.Length:
+                    evidenceDirectory = args[++index];
+                    break;
+
                 default:
                     throw new ArgumentException($"Unknown or incomplete argument '{args[index]}'.");
             }
         }
 
-        return new RunnerOptions(output, libraries, smoke);
+        return new RunnerOptions(output, libraries, smoke, evidenceDirectory);
     }
 }
