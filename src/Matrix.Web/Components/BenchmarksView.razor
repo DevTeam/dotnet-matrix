@@ -29,70 +29,6 @@ else
         {
             <p class="scenario-description">@description</p>
         }
-        @if (SelectedEvidence.Length > 0)
-        {
-            <details class="evidence-disclosure">
-                <summary>
-                    <span>Evidence</span>
-                    <span class="evidence-count">@SelectedEvidence.Length source@(SelectedEvidence.Length == 1 ? "" : "s")</span>
-                </summary>
-                <div class="evidence-grid">
-                    @foreach (var item in SelectedEvidence)
-                    {
-                        var evidence = item.Evidence;
-                        <article class="evidence-card">
-                            <div class="evidence-card-heading">
-                                <strong>@item.Category</strong>
-                                <span class="@EvidenceStatusClass(evidence)">
-                                    @EvidenceStatus(evidence)
-                                </span>
-                            </div>
-                            <dl>
-                                <div>
-                                    <dt>Job</dt>
-                                    <dd>@evidence.Job</dd>
-                                </div>
-                                <div>
-                                    <dt>Environment</dt>
-                                    <dd>@evidence.EnvironmentId</dd>
-                                </div>
-                                @if (evidence.CommitSha is { } commit)
-                                {
-                                    <div>
-                                        <dt>Commit</dt>
-                                        <dd>@ShortCommit(commit)</dd>
-                                    </div>
-                                }
-                                <div>
-                                    <dt>Created</dt>
-                                    <dd>@evidence.GeneratedAtUtc.ToString("u")</dd>
-                                </div>
-                            </dl>
-                            @if (evidence.ManifestPath is { } manifestPath)
-                            {
-                                <p class="evidence-path">
-                                    <span>@evidence.ArchiveName</span>/@manifestPath
-                                </p>
-                            }
-                            <div class="evidence-actions">
-                                @if (EvidenceRepositoryUrl(evidence) is { } evidenceUrl)
-                                {
-                                    <a href="@evidenceUrl" target="_blank" rel="noopener">
-                                        Open evidence in repository
-                                    </a>
-                                }
-                                @if (evidence.WorkflowRunUrl is { } workflowRunUrl)
-                                {
-                                    <a href="@workflowRunUrl" target="_blank" rel="noopener">
-                                        Open run and download archive
-                                    </a>
-                                }
-                            </div>
-                        </article>
-                    }
-                </div>
-            </details>
-        }
     </section>
     <section class="benchmark-split">
         <div class="benchmark-split-column">
@@ -127,12 +63,6 @@ else
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
 
-    [Parameter, EditorRequired]
-    public required GitHubRepository Repository { get; set; }
-
-    [Parameter]
-    public string? ReportReference { get; set; }
-
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
 
@@ -143,27 +73,6 @@ else
         : Reports
             .Select(report => MatrixView.FeatureDescription(report, _selectedFeature))
             .FirstOrDefault(description => description is not null);
-
-    private (string Category, BenchmarkEvidence Evidence)[] SelectedEvidence =>
-        _selectedFeature is null
-            ? []
-            : Reports
-                .SelectMany(report =>
-                {
-                    var evidenceIds = report.Benchmarks?.Features
-                        .FirstOrDefault(feature => feature.Id == _selectedFeature)?
-                        .Results
-                        .Select(result => result.EvidenceId)
-                        .Where(id => id is not null)
-                        .ToHashSet(StringComparer.Ordinal) ?? [];
-                    return (report.Benchmarks?.Evidence ?? [])
-                        .Where(evidence => evidenceIds.Contains(evidence.Id))
-                        .Select(evidence => (report.Category.Name, evidence));
-                })
-                .DistinctBy(item => (item.Name, item.evidence.Id))
-                .Select(item => (item.Name, item.evidence))
-                .OrderByDescending(item => item.evidence.GeneratedAtUtc)
-                .ToArray();
 
     private (string Id, string Name, int Order)[] Features =>
         Reports
@@ -182,31 +91,4 @@ else
         }
     }
 
-    private static string EvidenceStatus(BenchmarkEvidence evidence) =>
-        evidence.Kind.Equals("reported", StringComparison.OrdinalIgnoreCase)
-            ? "Reported externally"
-            : evidence.Job.Equals("Smoke", StringComparison.OrdinalIgnoreCase)
-                ? "Smoke · not trustworthy"
-                : evidence.ManifestPath is null
-                    ? "Evidence unavailable"
-                    : "Evidence available";
-
-    private static string EvidenceStatusClass(BenchmarkEvidence evidence) =>
-        "evidence-status "
-        + (evidence.Kind.Equals("reported", StringComparison.OrdinalIgnoreCase)
-            ? "is-reported"
-            : evidence.Job.Equals("Smoke", StringComparison.OrdinalIgnoreCase)
-                ? "is-smoke"
-                : evidence.ManifestPath is null
-                    ? "is-unavailable"
-                    : "is-available");
-
-    private static string ShortCommit(string commit) =>
-        commit[..Math.Min(8, commit.Length)];
-
-    private string? EvidenceRepositoryUrl(BenchmarkEvidence evidence) =>
-        !string.IsNullOrWhiteSpace(ReportReference)
-        && evidence.ManifestPath is { } path
-            ? $"https://github.com/{Repository.Owner}/{Repository.Name}/blob/{ReportReference}/{path}"
-            : null;
 }

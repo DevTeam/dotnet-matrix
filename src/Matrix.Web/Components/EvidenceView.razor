@@ -1,0 +1,158 @@
+@if (Items.Length == 0)
+{
+    <EmptyState Title="No evidence"
+                Text="No saved benchmark evidence is available for this selection."/>
+}
+else
+{
+    <section class="panel report-section evidence-section">
+        <div class="section-heading evidence-heading">
+            <div>
+                <p class="eyebrow">Reproducibility</p>
+                <h2>Benchmark evidence</h2>
+                <p class="section-description">
+                    Files and metadata supporting the benchmark results, stored permanently in this repository.
+                </p>
+            </div>
+        </div>
+        <div class="evidence-summary" aria-label="Evidence summary">
+            <div><strong>@Items.Length</strong><span>evidence set@(Items.Length == 1 ? "" : "s")</span></div>
+            <div><strong>@ScenarioCount</strong><span>scenario@(ScenarioCount == 1 ? "" : "s") covered</span></div>
+            <div><strong>@LatestEvidence.GeneratedAtUtc.ToString("yyyy-MM-dd")</strong><span>last updated</span></div>
+        </div>
+        <div class="evidence-grid">
+            @foreach (var item in Items)
+            {
+                var evidence = item.Evidence;
+                <article class="evidence-card">
+                    <div class="evidence-card-heading">
+                        <div>
+                            <p class="eyebrow">@item.Category</p>
+                            <h3>@EvidenceTitle(evidence)</h3>
+                        </div>
+                        <span class="@EvidenceStatusClass(evidence)">@EvidenceStatus(evidence)</span>
+                    </div>
+                    <dl>
+                        <div><dt>Job</dt><dd>@evidence.Job</dd></div>
+                        <div><dt>Environment</dt><dd>@evidence.EnvironmentId</dd></div>
+                        @if (evidence.CommitSha is { Length: > 0 } commit)
+                        {
+                            <div><dt>Source commit</dt><dd>@ShortCommit(commit)</dd></div>
+                        }
+                        <div><dt>Created</dt><dd>@evidence.GeneratedAtUtc.ToString("u")</dd></div>
+                        <div><dt>Coverage</dt><dd>@item.ScenarioCount scenario(s) · @item.LibraryCount library(s)</dd></div>
+                    </dl>
+                    @if (EvidenceRepositoryUrl(evidence) is { } evidenceUrl)
+                    {
+                        <a class="evidence-primary-action" href="@evidenceUrl" target="_blank" rel="noopener">
+                            Open saved evidence <span aria-hidden="true">↗</span>
+                        </a>
+                    }
+                    else if (evidence.ManifestPath is { Length: > 0 } manifestPath)
+                    {
+                        <div class="evidence-local-path">
+                            <strong>Not committed yet</strong>
+                            <span>@EvidenceDirectory(manifestPath)</span>
+                        </div>
+                    }
+                </article>
+            }
+        </div>
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required GitHubRepository Repository { get; set; }
+
+    [Parameter]
+    public string? ReportReference { get; set; }
+
+    private EvidenceItem[] Items => Reports
+        .Where(report => report.Benchmarks is not null)
+        .SelectMany(CreateItems)
+        .Where(item => !string.IsNullOrWhiteSpace(item.Evidence.ManifestPath))
+        .OrderByDescending(item => item.Evidence.GeneratedAtUtc)
+        .ToArray();
+
+    private int ScenarioCount => Items
+        .SelectMany(item => item.ScenarioIds)
+        .Distinct(StringComparer.Ordinal)
+        .Count();
+
+    private BenchmarkEvidence LatestEvidence => Items[0].Evidence;
+
+    private static IEnumerable<EvidenceItem> CreateItems(CategoryReport report)
+    {
+        var benchmark = report.Benchmarks!;
+        foreach (var evidence in benchmark.Evidence ?? [])
+        {
+            var features = benchmark.Features
+                .Where(feature => feature.Results.Any(result => result.EvidenceId == evidence.Id))
+                .ToArray();
+            var libraries = features
+                .SelectMany(feature => feature.Results)
+                .Where(result => result.EvidenceId == evidence.Id)
+                .Select(result => result.LibraryId)
+                .Distinct(StringComparer.Ordinal)
+                .Count();
+            yield return new EvidenceItem(
+                report.Category.Name,
+                evidence,
+                features.Select(feature => feature.Id).ToArray(),
+                libraries);
+        }
+    }
+
+    private static string EvidenceTitle(BenchmarkEvidence evidence) =>
+        evidence.Kind.Equals("reported", StringComparison.OrdinalIgnoreCase)
+            ? "Reported benchmark results"
+            : "Measured benchmark results";
+
+    private static string EvidenceStatus(BenchmarkEvidence evidence) =>
+        evidence.Kind.Equals("reported", StringComparison.OrdinalIgnoreCase)
+            ? "Reported externally"
+            : evidence.Job.Equals("Smoke", StringComparison.OrdinalIgnoreCase)
+                ? "Smoke · not trustworthy"
+                : evidence.ManifestPath is null
+                    ? "Evidence unavailable"
+                    : "Evidence available";
+
+    private static string EvidenceStatusClass(BenchmarkEvidence evidence) =>
+        "evidence-status "
+        + (evidence.Kind.Equals("reported", StringComparison.OrdinalIgnoreCase)
+            ? "is-reported"
+            : evidence.Job.Equals("Smoke", StringComparison.OrdinalIgnoreCase)
+                ? "is-smoke"
+                : evidence.ManifestPath is null
+                    ? "is-unavailable"
+                    : "is-available");
+
+    private static string ShortCommit(string commit) =>
+        commit[..Math.Min(8, commit.Length)];
+
+    private string? EvidenceRepositoryUrl(BenchmarkEvidence evidence) =>
+        !string.IsNullOrWhiteSpace(ReportReference)
+        && evidence.ManifestPath is { Length: > 0 } path
+            ? $"https://github.com/{Repository.Owner}/{Repository.Name}/tree/{ReportReference}/{EvidenceDirectory(path)}"
+            : null;
+
+    private static string EvidenceDirectory(string manifestPath)
+    {
+        var normalized = manifestPath.Replace('\\', '/');
+        var separator = normalized.LastIndexOf('/');
+        return separator < 0 ? normalized : normalized[..separator];
+    }
+
+    private sealed record EvidenceItem(
+        string Category,
+        BenchmarkEvidence Evidence,
+        IReadOnlyList<string> ScenarioIds,
+        int LibraryCount)
+    {
+        public int ScenarioCount => ScenarioIds.Count;
+    }
+}

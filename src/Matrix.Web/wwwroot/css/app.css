@@ -147,6 +147,11 @@ a {
     gap: 10px;
 }
 
+/* The native select centers the font box, whose visible glyphs sit slightly low. */
+.release-picker select {
+    padding-bottom: 2px;
+}
+
 .release-picker label,
 .scenario-heading {
     color: var(--muted);
@@ -1258,23 +1263,6 @@ tbody th {
     font-size: 11px;
 }
 
-.evidence-disclosure {
-    border-top: 1px solid var(--line-soft);
-}
-
-.evidence-disclosure summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding-top: 13px;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.evidence-count,
 .evidence-status {
     color: var(--muted);
     font-family: 'DM Mono', monospace;
@@ -1287,11 +1275,10 @@ tbody th {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 10px;
-    padding-top: 13px;
 }
 
 .evidence-card {
-    padding: 13px;
+    padding: 18px;
     border: 1px solid var(--line-soft);
     border-radius: 10px;
     background: var(--surface-raised);
@@ -1302,6 +1289,11 @@ tbody th {
     align-items: start;
     justify-content: space-between;
     gap: 12px;
+}
+
+.evidence-card-heading h3 {
+    margin-top: 4px;
+    font-size: 15px;
 }
 
 .evidence-status.is-available {
@@ -1339,29 +1331,76 @@ tbody th {
     white-space: nowrap;
 }
 
-.evidence-path {
-    margin: 12px 0 0;
-    overflow-wrap: anywhere;
-    color: var(--muted);
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-}
-
-.evidence-path span {
-    color: var(--text);
-}
-
-.evidence-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 14px;
-    margin-top: 12px;
-}
-
-.evidence-actions a {
+.evidence-primary-action {
+    display: inline-flex;
+    gap: 7px;
+    margin-top: 16px;
     color: var(--cyan);
     font-size: 11px;
     font-weight: 800;
+}
+
+.evidence-section {
+    display: grid;
+    gap: 18px;
+}
+
+.evidence-heading {
+    margin-bottom: 0;
+}
+
+.section-description {
+    max-width: 650px;
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.evidence-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    background: var(--surface-2);
+}
+
+.evidence-summary div {
+    display: grid;
+    gap: 3px;
+    padding: 14px 16px;
+}
+
+.evidence-summary div + div {
+    border-left: 1px solid var(--line-soft);
+}
+
+.evidence-summary strong {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+}
+
+.evidence-summary span {
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.evidence-local-path {
+    display: grid;
+    gap: 4px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line-soft);
+    color: var(--warning);
+    font-size: 10px;
+}
+
+.evidence-local-path span {
+    overflow-wrap: anywhere;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
 }
 
 .benchmark-split {
@@ -2126,6 +2165,20 @@ tbody th {
 
     .content {
         padding: 32px 16px 60px;
+    }
+
+    .evidence-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .evidence-summary div + div {
+        border-top: 1px solid var(--line-soft);
+        border-left: 0;
+    }
+
+    .evidence-card-heading {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .hero h1 {

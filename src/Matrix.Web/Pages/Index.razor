@@ -275,12 +275,15 @@
                         case "benchmarks":
                             <BenchmarksView Reports="@VisibleReports.ToArray()"
                                             SelectedLibraries="@_selectedLibraries"
-                                            Repository="@_catalog!.Repository"
-                                            ReportReference="@SelectedVersion?.Commit"
                                             OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "environment":
                             <EnvironmentView Reports="@VisibleReports.ToArray()"/>
+                            break;
+                        case "evidence":
+                            <EvidenceView Reports="@VisibleReports.ToArray()"
+                                          Repository="@_catalog!.Repository"
+                                          ReportReference="@SelectedVersion?.Commit"/>
                             break;
                         default:
                             <OverviewView Reports="@VisibleReports.ToArray()"
@@ -310,7 +313,8 @@
         ("overview", "Overview"),
         ("features", "Features"),
         ("benchmarks", "Benchmarks"),
-        ("environment", "Environment")
+        ("environment", "Environment"),
+        ("evidence", "Evidence")
     ];
 
     private const string CategoryParameter = "category";
