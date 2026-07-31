@@ -5,7 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PureDiVersion>2.5.2</PureDiVersion>
+        <!-- Hashes of the published assets; the service worker caches from this list. -->
+        <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ServiceWorker Include="wwwroot\service-worker.js"
+                       PublishedContent="wwwroot\service-worker.published.js"/>
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Matrix\Matrix.csproj"/>

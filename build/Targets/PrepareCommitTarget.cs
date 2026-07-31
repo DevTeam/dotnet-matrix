@@ -5,6 +5,7 @@ namespace Build.Targets;
 internal sealed class PrepareCommitTarget(
     IMatrixTarget matrixTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
+    IWebManifestTarget webManifestTarget,
     IReadmeTarget readmeTarget) : IPrepareCommitTarget
 {
     public async Task<int> RunAsync(
@@ -37,6 +38,12 @@ internal sealed class PrepareCommitTarget(
         }
 
         var result = runConfigurationsTarget.Run(modules);
+        if (result != 0)
+        {
+            return result;
+        }
+
+        result = webManifestTarget.Run(modules);
         if (result != 0)
         {
             return result;

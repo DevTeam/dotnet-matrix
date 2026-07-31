@@ -9,6 +9,8 @@
     <title>.NET Matrix</title>
     <base href="./"/>
     <link rel="icon" href="icon.svg" type="image/svg+xml"/>
+    <link rel="manifest" href="manifest.webmanifest"/>
+    <link rel="apple-touch-icon" href="icon-192.png"/>
     <link href="css/app.css" rel="stylesheet"/>
     <link href="Matrix.Web.styles.css" rel="stylesheet"/>
 </head>
@@ -26,5 +28,8 @@
     <button class="dismiss" type="button">×</button>
 </div>
 <script src="_framework/blazor.webassembly.js"></script>
+<!-- Required for Chrome to offer installation. In development the worker is a stub,
+     so a reload always shows the current build. -->
+<script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
 </body>
 </html>

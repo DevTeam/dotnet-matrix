@@ -11,6 +11,7 @@ internal sealed partial class WebTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
+    IWebManifestTarget webManifestTarget,
     IQuietProcessRunner processRunner) : IWebTarget
 {
     private readonly ICommandLineRunner commandLineRunner =
@@ -35,6 +36,12 @@ internal sealed partial class WebTarget(
         if (chartsResult != 0)
         {
             return chartsResult;
+        }
+
+        var manifestResult = webManifestTarget.Run(modules);
+        if (manifestResult != 0)
+        {
+            return manifestResult;
         }
 
         var repository = await ReadRepositoryAsync(cancellationToken);

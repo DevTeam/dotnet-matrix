@@ -46,7 +46,7 @@
 - **Correctness comes first.** Every implementation is checked against the same feature contract before its benchmark results are compared.
 - **Lower is better.** Overview charts show execution time and allocated memory together.
 - **Medals reward consistency.** Gold, silver and bronze are awarded to the first three places in every benchmark overview.
-- **The Web application is the primary explorer.** Use it to select libraries and switch between overview, features, benchmarks and environment details.
+- **The Web application is the primary explorer.** Use it to select libraries and switch between overview, features, benchmarks and environment details. Chrome and Edge can install it as a desktop application, with a shortcut per category.
 
 The README is a generated snapshot of the reports committed to this repository.
 
