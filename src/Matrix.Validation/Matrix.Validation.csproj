@@ -4,6 +4,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <NoWarn>$(NoWarn);ASP0029</NoWarn>
         <OutputType>Exe</OutputType>
         <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
         <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
@@ -20,6 +21,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Matrix\Matrix.csproj"/>
         <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10"/>
         <PackageReference Include="FluentValidation" Version="12.1.1">
             <MatrixLibraryId>FluentValidation</MatrixLibraryId>
             <MatrixLibraryName>FluentValidation</MatrixLibraryName>
@@ -36,6 +38,15 @@
             <MatrixDescription>A minimal DataAnnotations-based validator with recursive object graph traversal and cycle detection.</MatrixDescription>
             <MatrixRepositoryUrl>https://github.com/DamianEdwards/MiniValidation</MatrixRepositoryUrl>
             <MatrixLogo>logos/mini-validation.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Validation" Version="10.0.10">
+            <MatrixLibraryId>Microsoft.Extensions.Validation</MatrixLibraryId>
+            <MatrixLibraryName>Microsoft.Extensions.Validation</MatrixLibraryName>
+            <MatrixCodeName>MicrosoftExtensionsValidation</MatrixCodeName>
+            <MatrixDescription>The official source-generated validation infrastructure for DataAnnotations-based object graph validation outside ASP.NET Core.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/aspnet/core/validation/overview</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/dotnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/microsoft-extensions-validation.svg</MatrixLogo>
         </PackageReference>
     </ItemGroup>
 

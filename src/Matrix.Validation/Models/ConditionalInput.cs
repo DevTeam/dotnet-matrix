@@ -1,6 +1,6 @@
 namespace Matrix.Validation.Models;
 
-public sealed class ConditionalInput : IValidatableObject
+public sealed partial class ConditionalInput : IValidatableObject
 {
     public bool IsBusiness { get; set; }
 

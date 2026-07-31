@@ -1,6 +1,6 @@
 namespace Matrix.Validation.Models;
 
-public sealed class NestedInput
+public sealed partial class NestedInput
 {
     [Required]
     public AddressInput Address { get; set; } = new();

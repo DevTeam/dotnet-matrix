@@ -1,6 +1,6 @@
 namespace Matrix.Validation.Models;
 
-public sealed class BasicInput
+public sealed partial class BasicInput
 {
     [Required]
     public string Name { get; set; } = string.Empty;

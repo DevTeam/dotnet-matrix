@@ -10,6 +10,10 @@ namespace Matrix.Validation.Benchmarks;
     LibraryCatalog.MiniValidation,
     FeatureStatus.Unsupported,
     "MiniValidation exposes only synchronous validation APIs.")]
+[FeatureUnavailable(
+    LibraryCatalog.MicrosoftExtensionsValidation,
+    FeatureStatus.Unsupported,
+    "Microsoft.Extensions.Validation 10 does not support asynchronous validation rules.")]
 [MatrixFeature(
     "AsyncValidation",
     9,
