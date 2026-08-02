@@ -2,6 +2,7 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters.Json;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
+using Perfolizer.Horology;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.Text.Json;
@@ -69,6 +70,8 @@ public sealed class MatrixBenchmarkRunner(
         var job = Job.Default
             .WithId(jobId)
             .WithArguments([new MsBuildArgument("/p:MatrixMode=Benchmark")]);
+        // Preserve roughly the old 2 + 5 iterations at 500 ms time budget,
+        // but collect more samples and let BenchmarkDotNet adapt to noisy cases.
         job = options.Smoke
             ? job
                 .WithWarmupCount(1)
@@ -76,8 +79,12 @@ public sealed class MatrixBenchmarkRunner(
                 .WithInvocationCount(1)
                 .WithUnrollFactor(1)
             : job
-                .WithWarmupCount(2)
-                .WithIterationCount(5);
+                .WithMinWarmupCount(3)
+                .WithMaxWarmupCount(5)
+                .WithIterationTime(TimeInterval.Millisecond * 250)
+                .WithMinIterationCount(8)
+                .WithMaxIterationCount(12)
+                .WithMaxRelativeError(0.05);
 
         var ids = runLibraries
             .Select(library => library.Id)
