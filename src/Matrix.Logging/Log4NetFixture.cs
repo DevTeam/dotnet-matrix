@@ -21,7 +21,8 @@ internal sealed class Log4NetFixture : IDisposable
         {
             _buffer = new BufferingForwardingAppender
             {
-                BufferSize = 100,
+                BufferSize = LoggingData.BufferedCapacity,
+                Fix = FixFlags.Partial,
                 Lossy = false
             };
             _buffer.AddAppender(Sink);
@@ -49,4 +50,3 @@ internal sealed class Log4NetFixture : IDisposable
         LogManager.ShutdownRepository(Repository.Name);
     }
 }
-

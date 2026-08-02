@@ -16,5 +16,5 @@ internal static class LoggingData
     public const decimal Amount = 12.5m;
     public const string Customer = "Ada";
     public const string BufferedMessage = "Buffered event";
+    public const int BufferedCapacity = 10_000;
 }
-

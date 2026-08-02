@@ -104,7 +104,7 @@ Application category is `Matrix.Logging`.
 - Rating: feature-only because enqueue completion is not equivalent to
   synchronous sink delivery.
 
-## 8. Prepare Logger
+## 8. Create Logger
 
 - Operation: construct a logger configuration with one in-memory sink and
   Information minimum level, obtain the named logger, verify it is enabled,
@@ -125,4 +125,3 @@ Application category is `Matrix.Logging`.
 - `NotApplicable`: reserved for features with no meaningful equivalent; no
   initial feature is expected to use it.
 - `Failed`: an implementation claims support but semantic validation fails.
-

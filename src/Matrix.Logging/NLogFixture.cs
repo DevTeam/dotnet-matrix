@@ -16,7 +16,7 @@ internal sealed class NLogFixture : IDisposable
         {
             target = new AsyncTargetWrapper(
                 Sink,
-                1024,
+                LoggingData.BufferedCapacity,
                 AsyncTargetWrapperOverflowAction.Block);
         }
 
@@ -36,4 +36,3 @@ internal sealed class NLogFixture : IDisposable
 
     public void Dispose() => Factory.Dispose();
 }
-

@@ -15,7 +15,7 @@ internal sealed class SerilogFixture : IDisposable
         Logger = buffered
             ? configuration.WriteTo.Async(
                     sinks => sinks.Sink(Sink),
-                    bufferSize: 1024,
+                    bufferSize: LoggingData.BufferedCapacity,
                     blockWhenFull: true)
                 .CreateLogger()
             : configuration.WriteTo.Sink(Sink).CreateLogger();
@@ -27,4 +27,3 @@ internal sealed class SerilogFixture : IDisposable
 
     public void Dispose() => Logger.Dispose();
 }
-
