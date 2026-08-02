@@ -12,6 +12,12 @@
                 @overview.Features.Count/@overview.Features.Count coverage required for ranking
                 · lower is better
             </p>
+            @* Once per report: the scale and the coverage rule are the same for
+               every chart below. *@
+            @if (OnHelp.HasDelegate)
+            {
+                <HelpButton Topic="overview" Label="How to read this chart" OnHelp="@OnHelp"/>
+            }
         </figcaption>
 
         <div class="overview-chart-row overview-chart-columns">
@@ -106,6 +112,9 @@
 
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnHelp { get; set; }
 
     protected override void OnParametersSet()
     {

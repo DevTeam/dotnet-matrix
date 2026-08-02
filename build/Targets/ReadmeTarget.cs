@@ -123,9 +123,10 @@ internal sealed class ReadmeTarget(
                 index + 1,
                 medals.LibraryId,
                 medals.Name,
-                medals.Gold,
-                medals.Silver,
-                medals.Bronze,
+                medals.Points,
+                medals.Maximum,
+                medals.Covered,
+                medals.Scenarios,
                 string.Join(
                     ", ",
                     medals.Awards.Select(award =>

@@ -4,29 +4,21 @@
         <RatingIcon Place="unrated"/>
     </span>
 }
-else if (Medals is { Total: > 0 } medals)
+else if (Standing is { } standing && Place is >= 1 and <= MatrixRatings.Places)
 {
-    <span class="rating-badge">
-        @for (var place = 1; place <= MatrixRatings.Places; place++)
-        {
-            var count = medals.Count(place);
-            if (count > 0)
-            {
-                <span class="rating-medal" title="@Title(medals, place)">
-                    <RatingIcon Place="@Name(place)"/>
-                    @if (count > 1 || AlwaysCount)
-                    {
-                        <b>@count</b>
-                    }
-                </span>
-            }
-        }
+    @* One medal for the place in the category, not one per overview group: what
+       a library won inside a group is stated by the stars on the chart rows. *@
+    <span class="rating-badge" title="@Title(standing)">
+        <RatingIcon Place="@Name(Place.Value)"/>
     </span>
 }
 
 @code {
     [Parameter]
-    public MatrixMedals? Medals { get; set; }
+    public MatrixMedals? Standing { get; set; }
+
+    [Parameter]
+    public int? Place { get; set; }
 
     [Parameter]
     public bool Rated { get; set; } = true;
@@ -35,9 +27,9 @@ else if (Medals is { Total: > 0 } medals)
     [Parameter, EditorRequired]
     public required string Category { get; set; }
 
-    /// <summary>Show the count even when a library won a place exactly once.</summary>
-    [Parameter]
-    public bool AlwaysCount { get; set; }
+    private string Title(MatrixMedals standing) =>
+        $"{Category} · {Ordinal(Place!.Value)} place"
+        + $" · {standing.Points} of {standing.Maximum} points";
 
     private static string Name(int place) => place switch
     {
@@ -45,14 +37,6 @@ else if (Medals is { Total: > 0 } medals)
         2 => "silver",
         _ => "bronze"
     };
-
-    private string Title(MatrixMedals medals, int place) =>
-        $"{Category} · {Name(place)} ({Ordinal(place)} place) in: "
-        + string.Join(
-            ", ",
-            medals.Awards
-                .Where(award => award.Place == place)
-                .Select(award => award.GroupName));
 
     private static string Ordinal(int place) => place switch
     {

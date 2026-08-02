@@ -58,7 +58,7 @@ else
 
 - **Correctness comes first.** Every implementation is checked against the same feature contract before its benchmark results are compared.
 - **Lower is better.** Overview charts show execution time and allocated memory together.
-- **Medals reward consistency.** Gold, silver and bronze are awarded to the first three places in every benchmark overview.
+- **The rating measures distance, not placings.** In every scenario the fastest library scores 100 points, one twice as slow scores 50, and an unsupported scenario scores nothing. A library's rating is the sum, so breadth and speed both count and a narrow win cannot outweigh them.
 - **The Web application is the primary explorer.** Use it to select libraries and switch between overview, features, benchmarks and environment details. Chrome and Edge can install it as a desktop application, with a shortcut per category.
 
 The README is a generated snapshot of the reports committed to this repository.
@@ -90,11 +90,15 @@ else
 <text>
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**@(category.Rating[0].Maximum)**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
 @foreach (var item in category.Rating)
 {
-<text>| @item.Place | [**@item.Name**](@(Model.ApplicationUrl)?category=@category.Id&library=@item.Id) | @(item.Gold == 0 ? "" : item.Gold.ToString()) | @(item.Silver == 0 ? "" : item.Silver.ToString()) | @(item.Bronze == 0 ? "" : item.Bronze.ToString()) | @item.Awards |
+<text>| @item.Place | [**@item.Name**](@(Model.ApplicationUrl)?category=@category.Id&library=@item.Id) | @item.Points | @item.Covered/@item.Scenarios | @item.Awards |
 </text>
 }
 

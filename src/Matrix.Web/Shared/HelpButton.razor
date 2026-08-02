@@ -1,0 +1,32 @@
+@* One affordance for every explanation in the application, placed only where a
+   non-obvious concept is introduced — never once per row. *@
+<button class="help-button"
+        type="button"
+        title="@Label"
+        aria-label="@Label"
+        @onclick="() => OnHelp.InvokeAsync(Topic)"
+        @onclick:stopPropagation="true">
+    <svg viewBox="0 0 16 16"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.6"
+         stroke-linecap="round"
+         aria-hidden="true"
+         focusable="false">
+        <circle cx="8" cy="8" r="6.3"/>
+        <path d="M6.2 6.2a1.9 1.9 0 1 1 2.2 2.2v1"/>
+        <path d="M8.4 11.4v.1"/>
+    </svg>
+</button>
+
+@code {
+    /// <summary>Which explanation to open; the page owns the dialog.</summary>
+    [Parameter, EditorRequired]
+    public required string Topic { get; set; }
+
+    [Parameter, EditorRequired]
+    public required string Label { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnHelp { get; set; }
+}

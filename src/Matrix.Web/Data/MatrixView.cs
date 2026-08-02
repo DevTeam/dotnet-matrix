@@ -43,6 +43,29 @@ internal static class MatrixView
                 libraryId => IsRated(report, libraryId),
                 libraryId => IsSelected(report, selectedLibraries, libraryId));
 
+    /// <summary>
+    /// Where the library stands in the category rating, counting from one, or
+    /// null when it does not take part.
+    /// </summary>
+    public static int? Place(IReadOnlyList<MatrixMedals> rating, string libraryId)
+    {
+        for (var index = 0; index < rating.Count; index++)
+        {
+            if (rating[index].LibraryId.Equals(libraryId, StringComparison.OrdinalIgnoreCase))
+            {
+                return index + 1;
+            }
+        }
+
+        return null;
+    }
+
+    public static MatrixMedals? Standing(
+        IReadOnlyList<MatrixMedals> rating,
+        string libraryId) =>
+        rating.FirstOrDefault(item =>
+            item.LibraryId.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
+
     public static string? FeatureDescription(CategoryReport report, string featureId) =>
         report.FeatureCatalog?.Features
             .FirstOrDefault(feature =>

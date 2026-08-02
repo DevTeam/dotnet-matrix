@@ -764,16 +764,22 @@ select {
     cursor: help;
 }
 
-.rating-medal {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
+/* The score and, when it is not the maximum, what the library did not run. The
+   pair explains a low number without a legend. */
+.rating-points {
+    min-width: 42px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    text-align: right;
 }
 
-.rating-medal b {
+.rating-coverage {
+    color: var(--muted);
+    cursor: help;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    font-weight: 500;
+    white-space: nowrap;
 }
 
 .rating-board {
@@ -1806,6 +1812,33 @@ tbody th {
     height: 15px;
 }
 
+/* The single explanation affordance. Deliberately quiet: it sits beside a
+   heading and must not compete with it. */
+.help-button {
+    display: grid;
+    width: 22px;
+    height: 22px;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-chip);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    place-items: center;
+}
+
+.help-button:hover,
+.help-button:focus-visible {
+    background: var(--surface-2);
+    color: var(--accent);
+}
+
+.help-button svg {
+    width: 16px;
+    height: 16px;
+}
+
 .copy-link {
     display: inline-flex;
     align-items: center;
@@ -1862,6 +1895,46 @@ tbody th {
     outline: none;
     overflow-y: auto;
     overscroll-behavior: contain;
+}
+
+/* An explanation is prose, and prose past sixty characters a line stops being
+   readable. */
+.modal-panel.is-narrow {
+    width: min(560px, 100%);
+}
+
+.help-body p,
+.help-body li {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.help-rule {
+    margin: 0;
+    padding: 14px 16px;
+    border-left: 2px solid var(--accent);
+    background: var(--surface-2);
+    color: var(--text);
+}
+
+.help-body ul {
+    margin: 16px 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 10px;
+}
+
+.help-source {
+    margin: 20px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+    font-size: 12px;
+}
+
+.help-source code {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
 }
 
 .modal-head {

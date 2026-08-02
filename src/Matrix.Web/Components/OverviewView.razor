@@ -18,13 +18,15 @@
         <RatingBoard Report="@report"
                      Medals="@medals"
                      SelectedLibraries="@SelectedLibraries"
-                     OnOpenLibrary="@OnOpenLibrary"/>
+                     OnOpenLibrary="@OnOpenLibrary"
+                     OnHelp="@OnHelp"/>
         @foreach (var group in chartCatalog.Groups)
         {
             <OverviewChart Report="@report"
                            Group="@group"
                            SelectedLibraries="@SelectedLibraries"
-                           OnOpenLibrary="@OnOpenLibrary"/>
+                           OnOpenLibrary="@OnOpenLibrary"
+                           OnHelp="@(group == chartCatalog.Groups[0] ? OnHelp : default)"/>
         }
     </section>
 }
@@ -57,8 +59,8 @@
                     <span class="card-heading-end">
                         <RatingBadge Category="@report.Category.Name"
                                      Rated="@(metadata?.Rated ?? false)"
-                                     Medals="@cardMedals.FirstOrDefault(item =>
-                                                 item.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))"/>
+                                     Standing="@MatrixView.Standing(cardMedals, library.Id)"
+                                     Place="@MatrixView.Place(cardMedals, library.Id)"/>
                         @if (LibraryLink is { } link)
                         {
                             <CopyLinkButton Url="@link(library.Id)"/>
@@ -113,6 +115,9 @@
 
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnHelp { get; set; }
 
     /// <summary>Builds the shareable address of a library; the page owns the format.</summary>
     [Parameter]

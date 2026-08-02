@@ -39,13 +39,13 @@
 | [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 |
 | [**Logging**](#logging) | [Microsoft.Extensions.Logging](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 5 | 8 |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 |
-| [**Validation**](#validation) | [DataAnnotations](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 4 | 10 |
+| [**Validation**](#validation) | [Microsoft.Extensions.Validation](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 4 | 10 |
 
 ## How to read the results
 
 - **Correctness comes first.** Every implementation is checked against the same feature contract before its benchmark results are compared.
 - **Lower is better.** Overview charts show execution time and allocated memory together.
-- **Medals reward consistency.** Gold, silver and bronze are awarded to the first three places in every benchmark overview.
+- **The rating measures distance, not placings.** In every scenario the fastest library scores 100 points, one twice as slow scores 50, and an unsupported scenario scores nothing. A library's rating is the sum, so breadth and speed both count and a narrow win cannot outweigh them.
 - **The Web application is the primary explorer.** Use it to select libraries and switch between overview, features, benchmarks and environment details. Chrome and Edge can install it as a desktop application, with a shortcut per category.
 
 The README is a generated snapshot of the reports committed to this repository.
@@ -62,12 +62,16 @@ The README is a generated snapshot of the reports committed to this repository.
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 |  |  | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
-| 2 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) |  | 2 | 2 | silver in Throughput, silver in Write, bronze in Correctness, bronze in Read |
-| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) |  | 2 | 1 | silver in Correctness, silver in Read, bronze in Throughput |
-| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) |  |  | 1 | bronze in Write |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**1000**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 999 | 10/10 | gold in Correctness, gold in Read, gold in Write, silver in Throughput |
+| 2 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 453 | 9/10 | gold in Throughput, silver in Write, bronze in Correctness, bronze in Read |
+| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 351 | 9/10 | silver in Correctness, silver in Read, bronze in Throughput |
+| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 94 | 10/10 | bronze in Write |
 
 ### Benchmark overview
 
@@ -197,14 +201,34 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) |  | 2 |  | silver in Advanced, silver in Basic |
-| 3 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) |  | 1 |  | silver in Prepare |
-| 4 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) |  |  | 1 | bronze in Prepare |
-| 5 | [**Singularity**](https://matrix.dev-team.org/?category=dependency-injection&library=Singularity) |  |  | 1 | bronze in Basic |
-| 6 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) |  |  | 1 | bronze in Advanced |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**1500**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 1400 | 14/15 | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) | 647 | 13/15 | silver in Advanced |
+| 3 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) | 632 | 15/15 | bronze in Prepare |
+| 4 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) | 550 | 14/15 | bronze in Advanced |
+| 5 | [**Simple Injector**](https://matrix.dev-team.org/?category=dependency-injection&library=SimpleInjector) | 541 | 12/15 | silver in Basic |
+| 6 | [**Lamar**](https://matrix.dev-team.org/?category=dependency-injection&library=Lamar) | 438 | 12/15 |  |
+| 7 | [**LightInject**](https://matrix.dev-team.org/?category=dependency-injection&library=LightInject) | 409 | 12/15 |  |
+| 8 | [**Singularity**](https://matrix.dev-team.org/?category=dependency-injection&library=Singularity) | 386 | 9/15 |  |
+| 9 | [**Faster.Ioc**](https://matrix.dev-team.org/?category=dependency-injection&library=Faster.Ioc) | 316 | 8/15 |  |
+| 10 | [**Microsoft Extensions Dependency Injection**](https://matrix.dev-team.org/?category=dependency-injection&library=Microsoft.DI) | 262 | 9/15 | bronze in Basic |
+| 11 | [**Managed Extensibility Framework 2**](https://matrix.dev-team.org/?category=dependency-injection&library=MEF2) | 139 | 10/15 |  |
+| 12 | [**Maestro**](https://matrix.dev-team.org/?category=dependency-injection&library=Maestro) | 71 | 11/15 |  |
+| 13 | [**Unity**](https://matrix.dev-team.org/?category=dependency-injection&library=Unity) | 67 | 13/15 |  |
+| 14 | [**StructureMap**](https://matrix.dev-team.org/?category=dependency-injection&library=StructureMap) | 59 | 13/15 |  |
+| 15 | [**ZenIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=ZenIoc) | 44 | 7/15 |  |
+| 16 | [**Spring.NET**](https://matrix.dev-team.org/?category=dependency-injection&library=Spring) | 37 | 10/15 |  |
+| 17 | [**Autofac**](https://matrix.dev-team.org/?category=dependency-injection&library=Autofac) | 25 | 13/15 |  |
+| 18 | [**Castle Windsor**](https://matrix.dev-team.org/?category=dependency-injection&library=Windsor) | 15 | 13/15 |  |
+| 19 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) | 13 | 6/15 | silver in Prepare |
+| 20 | [**Catel**](https://matrix.dev-team.org/?category=dependency-injection&library=Catel) | 4 | 8/15 |  |
+| 21 | [**Ninject**](https://matrix.dev-team.org/?category=dependency-injection&library=Ninject) | 3 | 12/15 |  |
+| 22 | [**Visual Studio MEF**](https://matrix.dev-team.org/?category=dependency-injection&library=VS.MEF) | 2 | 9/15 |  |
 
 ### Benchmark overview
 
@@ -455,11 +479,15 @@ Measures the same setup as Prepare And Register, followed by a single resolve of
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 5 | 1 |  | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
-| 2 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 1 | 4 |  | gold in Prepare, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
-| 3 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) |  | 1 | 5 | silver in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**1400**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 1229 | 14/14 | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
+| 2 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 1042 | 12/14 | gold in Prepare, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
+| 3 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) | 576 | 13/14 | silver in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
 
 ### Benchmark overview
 
@@ -616,12 +644,17 @@ Creates fresh serializer settings and explicit type metadata without serializing
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 2 |  |  | gold in Core, gold in Structured |
-| 2 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 1 |  | 2 | gold in Prepare, bronze in Core, bronze in Structured |
-| 3 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) |  | 3 |  | silver in Core, silver in Prepare, silver in Structured |
-| 4 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) |  |  | 1 | bronze in Prepare |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**800**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 512 | 7/8 | gold in Core, gold in Structured |
+| 2 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) | 471 | 8/8 | silver in Core, silver in Prepare, silver in Structured |
+| 3 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 274 | 8/8 | gold in Prepare, bronze in Core, bronze in Structured |
+| 4 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) | 120 | 8/8 | bronze in Prepare |
+| 5 | [**ZLogger**](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 103 | 3/8 |  |
 
 ### Benchmark overview
 
@@ -720,11 +753,11 @@ Enqueues one event to a library-provided async or buffering wrapper and validate
 
 ![Logging Buffered Logging benchmark](reports/Logging/charts/07-buffered-logging.png)
 
-#### 08 · Prepare Logger
+#### 08 · Create Logger
 
 Creates, verifies, and releases one Information-enabled logger with an in-memory sink.
 
-![Logging Prepare Logger benchmark](reports/Logging/charts/08-prepare-logger.png)
+![Logging Create Logger benchmark](reports/Logging/charts/08-create-logger.png)
 
 </details>
 
@@ -740,11 +773,15 @@ Creates, verifies, and releases one Information-enabled logger with an in-memory
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 3 |  |  | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) |  | 2 | 1 | silver in Advanced, silver in Basic, bronze in Prepare |
-| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) |  | 1 | 2 | silver in Prepare, bronze in Advanced, bronze in Basic |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**1000**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 1000 | 10/10 | gold in Advanced, gold in Basic, gold in Prepare |
+| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 442 | 10/10 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 240 | 10/10 | silver in Prepare, bronze in Advanced, bronze in Basic |
 
 ### Benchmark overview
 
@@ -862,7 +899,7 @@ Creates the complete mapper configuration and maps one simple object.
 ## Validation
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=validation&amp;library=DataAnnotations">DataAnnotations</a></strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=validation&amp;library=Microsoft.Extensions.Validation">Microsoft.Extensions.Validation</a></strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=validation"><strong>Explore interactively →</strong></a></p>
@@ -870,12 +907,16 @@ Creates the complete mapper configuration and maps one simple object.
 
 ### Rating
 
-| # | Library | 🥇 | 🥈 | 🥉 | Won |
-|---:|---|---:|---:|---:|---|
-| 1 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 2 |  | 2 | gold in Prepare, gold in Rules, bronze in Basic, bronze in Object Graph |
-| 2 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 1 | 2 |  | gold in Basic, silver in Object Graph, silver in Prepare |
-| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 1 | 1 | 1 | gold in Object Graph, silver in Basic, bronze in Prepare |
-| 4 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) |  | 1 |  | silver in Rules |
+In every scenario the fastest library scores 100 points, one twice as slow scores
+50, and one that does not support the scenario scores nothing. The maximum here is
+**1000**. See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Points | Scenarios | Group wins |
+|---:|---|---:|---:|---|
+| 1 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 723 | 8/10 | gold in Basic, silver in Object Graph, silver in Prepare |
+| 2 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 684 | 8/10 | gold in Object Graph, silver in Basic, bronze in Prepare |
+| 3 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) | 640 | 10/10 | silver in Rules, bronze in Basic, bronze in Object Graph |
+| 4 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 629 | 9/10 | gold in Prepare, gold in Rules |
 
 ### Benchmark overview
 
@@ -1035,7 +1076,7 @@ dotnet run --project .\build -- reproduce --skip-benchmarks
 Child-process output is saved under `artifacts/logs`; the console shows concise
 progress and prints the relevant log tail if an operation fails.
 
-The **Run .NET Matrix Reports** GitHub Actions workflow produces one
+ The **Run .NET Matrix Reports** GitHub Actions workflow produces one
 `matrix-reports` archive containing every category report, the raw
 BenchmarkDotNet evidence, summaries, a manifest, and SHA-256 checksums. Download
 that archive and import the complete verified snapshot manually with:

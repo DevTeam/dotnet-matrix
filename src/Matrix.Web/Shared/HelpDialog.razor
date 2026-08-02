@@ -1,0 +1,154 @@
+@* Shares the modal shell of the library dialog: one overlay treatment in the
+   application, one set of styles, one way to close. *@
+<div class="modal-backdrop" @onclick="CloseAsync">
+    <div class="modal-panel is-narrow"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="help-dialog-title"
+         tabindex="-1"
+         @ref="_panel"
+         @onclick:stopPropagation="true"
+         @onkeydown="CloseOnEscapeAsync">
+        <header class="modal-head">
+            <div class="modal-identity">
+                <p class="eyebrow">How to read this</p>
+                <h2 id="help-dialog-title">@Title</h2>
+            </div>
+            <div class="modal-head-end">
+                <button class="modal-close"
+                        type="button"
+                        title="Close (Esc)"
+                        aria-label="Close"
+                        @onclick="CloseAsync">
+                    <svg viewBox="0 0 16 16"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         aria-hidden="true"
+                         focusable="false">
+                        <path d="M4.4 4.4l7.2 7.2M11.6 4.4l-7.2 7.2"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="modal-body help-body">
+            @switch (Topic)
+            {
+                case "rating":
+                    <p class="help-rule">
+                        In every scenario the fastest library scores 100 points. One twice
+                        as slow scores 50, one a hundred times slower scores 1, and one
+                        that does not support the scenario scores nothing. The rating is
+                        the sum.
+                    </p>
+                    <ul>
+                        <li>
+                            The maximum is 100 points per scenario, so a library that wins
+                            everything reaches it exactly.
+                        </li>
+                        <li>
+                            An unsupported scenario costs its full 100 points. That is why
+                            the number of completed scenarios is shown beside a score that
+                            is not the maximum.
+                        </li>
+                        <li>
+                            A score depends on the library's own result and on the best
+                            result, never on how many competitors entered.
+                        </li>
+                        <li>
+                            Gold, silver and bronze go to the first three of this table.
+                            A star on a chart row means something else: first, second or
+                            third inside that one overview group.
+                        </li>
+                    </ul>
+                    break;
+                case "overview":
+                    <p class="help-rule">
+                        Each bar is the total across the scenarios of the group, split
+                        into one segment per scenario. Shorter is better.
+                    </p>
+                    <ul>
+                        <li>
+                            The scale is logarithmic. A bar twice as long is far more than
+                            twice as slow; without it a single outlier would flatten
+                            everything else to nothing.
+                        </li>
+                        <li>
+                            Only libraries that completed every scenario of the group are
+                            ranked. The rest are listed below the divider with the
+                            scenarios they are missing.
+                        </li>
+                        <li>
+                            Colours match the legend under the chart, so the same scenario
+                            keeps its colour in every row.
+                        </li>
+                    </ul>
+                    break;
+                case "benchmarks":
+                    <p class="help-rule">
+                        Every number is the mean of many runs of one scenario, measured by
+                        BenchmarkDotNet. Lower is better.
+                    </p>
+                    <ul>
+                        <li>
+                            The value after ± is the standard error of that mean. Two
+                            results whose ranges overlap are not meaningfully different.
+                        </li>
+                        <li>
+                            The ratio compares against the best result in that scenario
+                            among the libraries you have selected, so ×1.00 marks the
+                            fastest and ×2.00 means twice as slow.
+                        </li>
+                        <li>
+                            Allocated memory is bytes per operation, counted by the
+                            runtime rather than sampled.
+                        </li>
+                    </ul>
+                    break;
+            }
+            <p class="help-source">
+                The full rule, and why it replaced counting medals, is in
+                <code>workflows/rating.md</code>.
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private ElementReference _panel;
+    private bool _focused;
+
+    [Parameter, EditorRequired]
+    public required string Topic { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    private string Title => Topic switch
+    {
+        "overview" => "The overview charts",
+        "benchmarks" => "The benchmark numbers",
+        _ => "The rating"
+    };
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_focused)
+        {
+            _focused = true;
+            await _panel.FocusAsync();
+        }
+    }
+
+    private Task CloseAsync() => OnClose.InvokeAsync();
+
+    private async Task CloseOnEscapeAsync(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Key == "Escape")
+        {
+            await CloseAsync();
+        }
+    }
+}

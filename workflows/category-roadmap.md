@@ -35,7 +35,10 @@ external services require additional care and should be implemented later.
 Every implemented category has complete feature validation and benchmark
 reports committed under `reports/<ReportDirectory>`.
 
-| Category | Module ID | Project | Libraries | Features | Rating groups |
+Chart groups organise the overview charts. They no longer decide the rating,
+which is scored across every scenario; see [rating.md](rating.md).
+
+| Category | Module ID | Project | Libraries | Features | Chart groups |
 | --- | --- | --- | ---: | ---: | --- |
 | Dependency Injection | `dependency-injection` | `src/Matrix.DependencyInjection` | 23 | 15 | Basic, Advanced, Prepare |
 | Object Mapping | `object-mapping` | `src/Matrix.ObjectMapping` | 4 | 10 | Basic, Advanced, Prepare |
@@ -57,7 +60,7 @@ follows [add-library.md](add-library.md), not this document.
 ### Open items in implemented categories
 
 - **Dependency Injection**: `Hand-coded` participates as a package-less
-  baseline and is excluded from medals through `MatrixRating`.
+  baseline and is excluded from the rating through `MatrixRating`.
 - **Object Mapping**: `Queryable Projection` was deliberately not implemented.
   A fair scenario requires a common LINQ provider and would otherwise measure
   more than the mapper. Implement it as feature-only or in a separate non-rated

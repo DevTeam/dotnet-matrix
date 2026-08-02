@@ -1,12 +1,16 @@
-﻿@if (Medals.Count > 0)
+@if (Medals.Count > 0)
 {
+    var maximum = Medals[0].Maximum;
     <section class="rating-board">
         <div class="rating-board-head">
             <div>
                 <p class="eyebrow">Rating</p>
-                <h3>Medal table</h3>
+                <h3>Standings</h3>
             </div>
-            <span class="section-meta">@Groups overview@(Groups == 1 ? "" : "s") · @Rated of @Total libraries rated</span>
+            @* The scale is stated in the open: a number nobody can place is
+               worse than no number. *@
+            <span class="section-meta">points out of @maximum</span>
+            <HelpButton Topic="rating" Label="How the rating is computed" OnHelp="@OnHelp"/>
         </div>
         <ol class="rating-board-list">
             @for (var index = 0; index < Medals.Count; index++)
@@ -25,9 +29,18 @@
                             @item.Name
                         </button>
                     </span>
-                    <RatingBadge Medals="@item"
-                                 Category="@Report.Category.Name"
-                                 AlwaysCount="true"/>
+                    @if (item.Covered < item.Scenarios)
+                    {
+                        @* Explains a low score without changing the order. *@
+                        <span class="rating-coverage"
+                              title="@($"Completed {item.Covered} of {item.Scenarios} scenarios; the rest score nothing")">
+                            @item.Covered/@item.Scenarios
+                        </span>
+                    }
+                    <span class="rating-points">@item.Points</span>
+                    <RatingBadge Standing="@item"
+                                 Place="@(index + 1)"
+                                 Category="@Report.Category.Name"/>
                 </li>
             }
         </ol>
@@ -47,14 +60,6 @@
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
 
-    private int Groups => Report.ChartCatalog?.Groups.Count ?? 0;
-
-    private MatrixLibrary[] Selected => MatrixView
-        .Libraries(Report)
-        .Where(library => MatrixView.IsSelected(Report, SelectedLibraries, library.Id))
-        .ToArray();
-
-    private int Total => Selected.Length;
-
-    private int Rated => Selected.Count(library => MatrixView.IsRated(Report, library.Id));
+    [Parameter]
+    public EventCallback<string> OnHelp { get; set; }
 }

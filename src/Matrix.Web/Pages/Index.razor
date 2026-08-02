@@ -8,7 +8,7 @@
     @* aria-modal alone only tells a screen reader the background is gone; inert is
        what actually takes it out of the tab order and out of the accessibility tree.
        Nothing about it is visible. *@
-    <header class="topbar" inert="@IsLibraryOpen">
+    <header class="topbar" inert="@IsDialogOpen">
         <a class="brand" href="./" aria-label=".NET Matrix home">
             <img class="brand-mark" src="icon.svg" alt="" aria-hidden="true"/>
             <span>
@@ -109,7 +109,7 @@
     }
     else
     {
-        <div class="workspace" inert="@IsLibraryOpen">
+        <div class="workspace" inert="@IsDialogOpen">
             @* Below the sidebar breakpoint the panel folds behind this control, so a
                phone opens on the data instead of on a screen and a half of filters.
                A checkbox holds the state because the application ships no script of
@@ -213,8 +213,8 @@
                                     </label>
                                     <RatingBadge Category="@report.Category.Name"
                                                  Rated="@MatrixView.IsRated(report, library.Id)"
-                                                 Medals="@medals.FirstOrDefault(item =>
-                                                             item.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))"/>
+                                                 Standing="@MatrixView.Standing(medals, library.Id)"
+                                                 Place="@MatrixView.Place(medals, library.Id)"/>
                                     <button class="library-info"
                                             type="button"
                                             title="@($"Open the {library.Name} overview")"
@@ -313,7 +313,8 @@
                         case "benchmarks":
                             <BenchmarksView Reports="@VisibleReports.ToArray()"
                                             SelectedLibraries="@_selectedLibraries"
-                                            OnOpenLibrary="@OpenLibrary"/>
+                                            OnOpenLibrary="@OpenLibrary"
+                                            OnHelp="@OpenHelp"/>
                             break;
                         case "environment":
                             <EnvironmentView Reports="@VisibleReports.ToArray()"/>
@@ -327,6 +328,7 @@
                             <OverviewView Reports="@VisibleReports.ToArray()"
                                           SelectedLibraries="@_selectedLibraries"
                                           OnOpenLibrary="@OpenLibrary"
+                                          OnHelp="@OpenHelp"
                                           LibraryLink="@LibraryLink"/>
                             break;
                     }
@@ -343,6 +345,11 @@
                            Link="@LibraryLink(openLibrary.Id)"
                            OnOpenLibrary="@OpenLibrary"
                            OnClose="CloseLibrary"/>
+        }
+
+        @if (_help is { } help)
+        {
+            <HelpDialog Topic="@help" OnClose="CloseHelp"/>
         }
     }
 </div>
@@ -600,7 +607,19 @@
             [LibraryParameter] = libraryId
         });
 
+    /// <summary>
+    /// Which explanation is open, if any. Kept out of the address: it is a
+    /// reading aid, not a state worth sharing.
+    /// </summary>
+    private string? _help;
+
+    private bool IsDialogOpen => IsLibraryOpen || _help is not null;
+
     private bool IsLibraryOpen => OpenLibraryValue is not null;
+
+    private void OpenHelp(string topic) => _help = topic;
+
+    private void CloseHelp() => _help = null;
 
     private CategoryReport? OpenReport => _openLibraryId is null
         ? null

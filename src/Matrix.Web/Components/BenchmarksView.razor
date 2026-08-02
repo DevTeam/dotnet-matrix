@@ -8,6 +8,7 @@ else
         <div class="benchmark-toolbar-row">
             <h3 class="scenario-heading">Scenario</h3>
             <span class="direction-note">↓ Lower is better</span>
+            <HelpButton Topic="benchmarks" Label="How the numbers are measured" OnHelp="@OnHelp"/>
         </div>
         @* Every scenario stays on screen; radios keep exactly one of them chosen. *@
         <div class="scenario-list" role="radiogroup" aria-label="Benchmark scenario">
@@ -65,6 +66,9 @@ else
 
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnHelp { get; set; }
 
     private string? _selectedFeature;
 

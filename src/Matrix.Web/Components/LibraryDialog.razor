@@ -31,8 +31,8 @@
                 <span class="category-chip">@Report.Category.Name</span>
                 <RatingBadge Category="@Report.Category.Name"
                              Rated="@MatrixView.IsRated(Report, Library.Id)"
-                             Medals="@_medals"
-                             AlwaysCount="true"/>
+                             Standing="@_medals"
+                             Place="@_place"/>
                 <CopyLinkButton Url="@Link" Caption="Copy link"/>
                 <button class="modal-close"
                         type="button"
@@ -78,8 +78,8 @@
                     <span>rating</span>
                 </div>
                 <div>
-                    <strong>@(_medals?.Total ?? 0)</strong>
-                    <span>medal@(_medals?.Total == 1 ? "" : "s")</span>
+                    <strong>@(_medals?.Points ?? 0)<small>/@(_medals?.Maximum ?? 0)</small></strong>
+                    <span>points</span>
                 </div>
                 <div>
                     <strong>@_supported<small>/@_rows.Length</small></strong>
@@ -230,6 +230,7 @@
     private bool _focused;
     private MatrixLibraryMetadata? _metadata;
     private MatrixMedals? _medals;
+    private int? _place;
     private string _ratingPlace = "—";
     private int _supported;
     private Standing[] _standings = [];
@@ -269,9 +270,9 @@
     {
         _metadata = MatrixView.Metadata(Report, Library.Id);
         var rating = MatrixView.Rating(Report, SelectedLibraries);
-        _medals = rating.FirstOrDefault(Matches);
-        var place = rating.ToList().FindIndex(Matches);
-        _ratingPlace = place < 0 ? "—" : $"{place + 1}{Suffix(place + 1)}";
+        _medals = MatrixView.Standing(rating, Library.Id);
+        _place = MatrixView.Place(rating, Library.Id);
+        _ratingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
         ReadStandings();
         ReadRows();
     }
@@ -288,9 +289,6 @@
             await _panel.FocusAsync();
         }
     }
-
-    private bool Matches(MatrixMedals medals) =>
-        medals.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase);
 
     private Task CloseAsync() => OnClose.InvokeAsync();
 
