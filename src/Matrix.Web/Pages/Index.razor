@@ -107,6 +107,32 @@
     else
     {
         <div class="workspace">
+            @* Below the sidebar breakpoint the panel folds behind this control, so a
+               phone opens on the data instead of on a screen and a half of filters.
+               A checkbox holds the state because the application ships no script of
+               its own; the wide layout switches the whole mechanism off in CSS. *@
+            <input class="filters-toggle"
+                   type="checkbox"
+                   id="filters-toggle"
+                   aria-label="Show the comparison filters"/>
+            <label class="filters-summary" for="filters-toggle">
+                <span>
+                    <strong>@SelectedCategoryName</strong>
+                    <small>@SelectedShownCount of @ShownLibraryCount libraries</small>
+                </span>
+                <span class="filters-summary-action" aria-hidden="true">
+                    <svg viewBox="0 0 16 16"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.7"
+                         stroke-linecap="round"
+                         focusable="false">
+                        <path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3"/>
+                    </svg>
+                    Filter
+                </span>
+            </label>
+
             <aside class="filters">
                 <div class="filters-heading">
                     <div>
@@ -385,6 +411,12 @@
     private int ShownLibraryCount => ShownLibraryKeys.Count();
 
     private int SelectedShownCount => ShownLibraryKeys.Count(_selectedLibraries.Contains);
+
+    private string SelectedCategoryName => _catalog?.Categories
+        .FirstOrDefault(category => category.Id.Equals(
+            _selectedCategoryId,
+            StringComparison.OrdinalIgnoreCase))
+        ?.Name ?? "No category";
 
     private bool Matches(MatrixLibrary library) =>
         _librarySearch.Length == 0
@@ -742,10 +774,14 @@
     private static string ShortCommit(string commit) =>
         commit[..Math.Min(7, commit.Length)];
 
+    /// <summary>
+    /// Every label reads as name · qualifier and stays about as long as the others,
+    /// so the picker is one steady box rather than one that resizes on each choice.
+    /// </summary>
     private static string VersionLabel(MatrixVersion version) =>
         version switch
         {
-            { Version: "local" } => "Local reports · workspace",
+            { Version: "local" } => "Local · workspace",
             { Released: false } => $"{version.Version} · latest",
             { DateUtc: { } date } => $"{version.Version} · {date:dd MMM yyyy}",
             _ => version.Version

@@ -15,7 +15,20 @@
     --cyan: #68d8ef;
     --danger: #ff6b70;
     --warning: #f4bd50;
+    /* Four steps, one per level of the interface: the block that sits on the page,
+       the card inside it, anything you click, and the small labels. Every rounded
+       corner picks one of these, so a new component has nothing to invent. */
     --radius: 18px;
+    --radius-card: 12px;
+    --radius-control: 9px;
+    --radius-chip: 7px;
+    /* The three nesting levels of the layout: the page, the block on it, and the
+       card inside the block. On a phone the three side paddings together cost a
+       third of the screen, so they are redeclared once at the bottom of this file
+       rather than tuned rule by rule. */
+    --pad-page: clamp(16px, 4vw, 64px);
+    --pad-block: 24px;
+    --pad-inner: 20px;
     font-family: 'Manrope', system-ui, sans-serif;
 }
 
@@ -110,9 +123,13 @@ a {
     gap: 10px 18px;
 }
 
-/* The option text is long; without a cap the picker alone pushes the links out. */
+/* A fixed box rather than a cap. A native select is as wide as the option currently
+   shown in it, so without this the picker — and the links beside it — move on every
+   change of release. 210px covers the longest label the list can produce, a
+   two-digit version with a full date. */
 .topbar-end select {
-    max-width: 260px;
+    width: 210px;
+    max-width: 100%;
 }
 
 .topbar-links {
@@ -126,7 +143,7 @@ a {
     width: 34px;
     height: 34px;
     place-items: center;
-    border-radius: 9px;
+    border-radius: var(--radius-control);
     color: var(--muted);
 }
 
@@ -165,7 +182,7 @@ select {
     min-height: 40px;
     padding: 0 34px 0 13px;
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: var(--radius-control);
     background: var(--surface-2);
     color: var(--text);
 }
@@ -181,7 +198,7 @@ select {
 .release-chip {
     padding: 4px 8px;
     border: 1px solid rgba(244, 189, 80, .3);
-    border-radius: 7px;
+    border-radius: var(--radius-chip);
     background: rgba(244, 189, 80, .1);
     color: var(--warning);
     cursor: help;
@@ -207,6 +224,13 @@ select {
     padding: 28px 22px;
     border-right: 1px solid var(--line);
     background: var(--surface);
+}
+
+/* The panel is always open on a wide screen, so its control is not merely hidden
+   but absent: an invisible tab stop would be worse than no control at all. */
+.filters-toggle,
+.filters-summary {
+    display: none;
 }
 
 .filters-heading,
@@ -302,7 +326,7 @@ select {
     margin-bottom: 12px;
     padding: 0 11px;
     border: 1px solid var(--line);
-    border-radius: 9px;
+    border-radius: var(--radius-control);
     background: var(--surface-2);
     color: var(--text);
     font-size: 13px;
@@ -378,7 +402,7 @@ select {
 
 .content {
     min-width: 0;
-    padding: 42px clamp(24px, 4vw, 64px) 80px;
+    padding: 42px var(--pad-page) 80px;
 }
 
 .hero {
@@ -431,22 +455,34 @@ select {
     line-height: 1.2;
 }
 
+/* Wrapping rather than scrolling sideways: at the widths where the five tabs and
+   the summary do not fit on one line, the summary drops to a line of its own and
+   the tabs keep the strip to themselves, so they stay equal. A scrollbar here would
+   hide the last tabs the way it used to hide them on a phone. */
 .tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
     margin-bottom: 24px;
     padding: 5px;
-    overflow-x: auto;
     border: 1px solid var(--line);
-    border-radius: 13px;
+    border-radius: var(--radius-card);
     background: var(--surface);
 }
 
+/* Equal boxes that share the strip between them. Sized by the label, the five tabs
+   came out five different widths and left a hole between the last one and the
+   summary; flex-basis 0 spreads that space evenly instead. The automatic minimum
+   size still applies, so a label is never squeezed narrower than its text. */
 .tab {
     min-height: 40px;
-    padding: 0 18px;
+    flex: 1;
+    /* Side padding only decides the smallest a tab may become, since the width comes
+       from the share. Keeping it modest widens the range where the shares are all
+       reachable and the boxes come out exactly equal. */
+    padding: 0 14px;
     border: 0;
-    border-radius: 9px;
+    border-radius: var(--radius-control);
     background: transparent;
     color: var(--muted);
     cursor: pointer;
@@ -478,7 +514,7 @@ select {
 
 .overview-report {
     margin-bottom: 36px;
-    padding: 24px;
+    padding: var(--pad-block);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
@@ -488,9 +524,9 @@ select {
    the current library selection and rendered as text rather than a scaled image. */
 .overview-chart {
     margin: 0 0 16px;
-    padding: 22px 24px 24px;
+    padding: var(--pad-inner);
     border: 1px solid var(--line-soft);
-    border-radius: 14px;
+    border-radius: var(--radius-card);
     background: var(--bg);
 }
 
@@ -516,7 +552,7 @@ select {
     align-items: center;
     gap: 24px;
     padding: 7px 10px;
-    border-radius: 8px;
+    border-radius: var(--radius-control);
 }
 
 .overview-chart-row.is-striped {
@@ -616,7 +652,7 @@ select {
     display: flex;
     height: 22px;
     overflow: hidden;
-    border-radius: 7px;
+    border-radius: var(--radius-chip);
     background: var(--surface-2);
 }
 
@@ -636,6 +672,12 @@ select {
 .overview-metric strong {
     font-family: 'DM Mono', monospace;
     font-size: 13px;
+}
+
+/* The column headings name the two metrics wherever the row is laid out in
+   columns, so the per-bar caption only appears once the row stacks. */
+.overview-metric-label {
+    display: none;
 }
 
 .overview-chart-legend {
@@ -671,7 +713,7 @@ select {
 
 .library-card {
     min-height: 220px;
-    padding: 22px;
+    padding: var(--pad-block);
 }
 
 .card-heading {
@@ -736,9 +778,9 @@ select {
 
 .rating-board {
     margin-bottom: 18px;
-    padding: 20px 22px;
+    padding: var(--pad-inner);
     border: 1px solid var(--line-soft);
-    border-radius: 14px;
+    border-radius: var(--radius-card);
     background: var(--bg);
 }
 
@@ -764,12 +806,16 @@ select {
     list-style: none;
 }
 
+/* A grid item is as wide as its content unless told otherwise, and a name like
+   Microsoft.Extensions.DependencyInjection does not wrap, so without this the row
+   pushes the page sideways instead of letting the name ellipsise. */
 .rating-board-list li {
     display: flex;
+    min-width: 0;
     align-items: center;
     gap: 11px;
     padding: 7px 10px;
-    border-radius: 8px;
+    border-radius: var(--radius-control);
 }
 
 .rating-board-list li:nth-child(odd) {
@@ -804,7 +850,7 @@ select {
 .section-meta {
     padding: 5px 8px;
     border: 1px solid var(--line);
-    border-radius: 7px;
+    border-radius: var(--radius-chip);
     color: var(--muted);
     font-size: 10px;
     letter-spacing: .05em;
@@ -925,7 +971,7 @@ select {
 
 .report-section {
     margin-bottom: 18px;
-    padding: 24px;
+    padding: var(--pad-block);
 }
 
 .section-heading {
@@ -1151,7 +1197,7 @@ tbody th {
     width: 28px;
     height: 28px;
     place-items: center;
-    border-radius: 8px;
+    border-radius: var(--radius-control);
 }
 
 /* Drawn rather than typed: Manrope covers only some of the glyphs a status set
@@ -1225,9 +1271,9 @@ tbody th {
     display: grid;
     gap: 13px;
     margin-bottom: 16px;
-    padding: 16px 18px;
+    padding: var(--pad-block);
     border: 1px solid var(--line);
-    border-radius: 14px;
+    border-radius: var(--radius-card);
     background: var(--surface);
 }
 
@@ -1278,10 +1324,10 @@ tbody th {
 }
 
 .evidence-card {
-    padding: 18px;
+    padding: var(--pad-inner);
     border: 1px solid var(--line-soft);
-    border-radius: 10px;
-    background: var(--surface-raised);
+    border-radius: var(--radius-card);
+    background: var(--bg);
 }
 
 .evidence-card-heading {
@@ -1362,7 +1408,7 @@ tbody th {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     overflow: hidden;
     border: 1px solid var(--line-soft);
-    border-radius: 10px;
+    border-radius: var(--radius-card);
     background: var(--surface-2);
 }
 
@@ -1473,7 +1519,7 @@ tbody th {
     align-items: center;
     gap: 18px;
     padding: 14px;
-    border-radius: 11px;
+    border-radius: var(--radius-control);
 }
 
 .benchmark-row:hover {
@@ -1546,7 +1592,7 @@ tbody th {
 .notice {
     margin-bottom: 16px;
     padding: 12px 15px;
-    border-radius: 10px;
+    border-radius: var(--radius-card);
     font-size: 12px;
     line-height: 1.5;
 }
@@ -1564,17 +1610,17 @@ tbody th {
 }
 
 .environment-card {
-    padding: 19px;
+    padding: var(--pad-inner);
     border: 1px solid var(--line-soft);
-    border-radius: 13px;
-    background: var(--surface-2);
+    border-radius: var(--radius-card);
+    background: var(--bg);
 }
 
 .environment-id {
     display: inline-block;
     margin-bottom: 13px;
     padding: 4px 7px;
-    border-radius: 6px;
+    border-radius: var(--radius-chip);
     background: var(--accent-soft);
     color: var(--accent);
     font-family: 'DM Mono', monospace;
@@ -1690,7 +1736,7 @@ tbody th {
     z-index: 100;
     padding: 14px;
     border: 1px solid var(--danger);
-    border-radius: 10px;
+    border-radius: var(--radius-card);
     background: var(--surface);
 }
 
@@ -1717,6 +1763,17 @@ tbody th {
     text-align: inherit;
 }
 
+/* The name used to be plain text that its container ellipsised; as a button it has
+   to truncate itself, or a long name is cut off mid-letter instead. */
+.overview-chart-label .library-open,
+.benchmark-name .library-open {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .library-open:hover,
 .library-open:focus-visible {
     color: var(--accent);
@@ -1731,7 +1788,7 @@ tbody th {
     flex: 0 0 auto;
     padding: 0;
     border: 0;
-    border-radius: 6px;
+    border-radius: var(--radius-chip);
     background: none;
     color: var(--muted);
     cursor: pointer;
@@ -1755,7 +1812,7 @@ tbody th {
     gap: 6px;
     padding: 5px 9px;
     border: 1px solid var(--line);
-    border-radius: 7px;
+    border-radius: var(--radius-chip);
     background: none;
     color: var(--muted);
     cursor: pointer;
@@ -1855,7 +1912,7 @@ tbody th {
     height: 30px;
     padding: 0;
     border: 1px solid var(--line);
-    border-radius: 8px;
+    border-radius: var(--radius-control);
     background: none;
     color: var(--muted);
     cursor: pointer;
@@ -1910,7 +1967,7 @@ tbody th {
 
 .modal-metrics div {
     padding: 12px 14px;
-    border-radius: 12px;
+    border-radius: var(--radius-card);
     background: var(--surface-2);
 }
 
@@ -1950,9 +2007,9 @@ tbody th {
 }
 
 .modal-standing {
-    padding: 14px 16px;
+    padding: var(--pad-inner);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: var(--radius-card);
 }
 
 .modal-standing + .modal-standing {
@@ -2003,7 +2060,7 @@ tbody th {
    support carries the reason where its numbers would have been. */
 .modal-scenarios {
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: var(--radius-card);
     overflow: hidden;
     overflow-x: auto;
 }
@@ -2106,6 +2163,81 @@ tbody th {
         border-bottom: 1px solid var(--line);
     }
 
+    /* The panel is a screen and a half tall here; folded away, the reports are the
+       first thing on the page in both orientations. */
+    .filters {
+        display: none;
+    }
+
+    /* Out of the grid flow but still reachable from the keyboard: the label is its
+       visible face. */
+    .filters-toggle {
+        display: block;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+    .filters-toggle:checked ~ .filters {
+        display: block;
+    }
+
+    .filters-summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px clamp(16px, 4vw, 32px);
+        border-bottom: 1px solid var(--line);
+        background: var(--surface);
+        cursor: pointer;
+    }
+
+    .filters-summary strong {
+        display: block;
+        font-size: 15px;
+        letter-spacing: -.02em;
+    }
+
+    .filters-summary small {
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .filters-summary-action {
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 7px;
+        padding: 7px 12px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-control);
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .filters-summary-action svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .filters-toggle:checked ~ .filters-summary .filters-summary-action {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    .filters-toggle:focus-visible ~ .filters-summary .filters-summary-action {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    /* Five tabs and the summary come to two pixels more than a phone held sideways
+       has; a little less padding removes the scroll instead of hiding it. */
+    .tab {
+        padding: 0 14px;
+    }
+
     .filter-section {
         display: inline-block;
         width: min(49%, 420px);
@@ -2163,8 +2295,10 @@ tbody th {
         width: 100%;
     }
 
+    /* Only the vertical part: the side padding is fluid and needs no step here. */
     .content {
-        padding: 32px 16px 60px;
+        padding-top: 32px;
+        padding-bottom: 60px;
     }
 
     .evidence-summary {
@@ -2185,7 +2319,10 @@ tbody th {
         font-size: clamp(24px, 8vw, 40px);
     }
 
-    .benchmark-row {
+    /* The split-column selector outranks a bare .benchmark-row, so this rule has to
+       match it too or the stacked layout never applies — which is what happened. */
+    .benchmark-row,
+    .benchmark-split-column .benchmark-row {
         grid-template-columns: 1fr 90px;
         gap: 9px;
     }
@@ -2280,5 +2417,196 @@ tbody th {
 @media (max-width: 820px) {
     .benchmark-split {
         grid-template-columns: 1fr;
+    }
+}
+
+/* A phone held upright. The threshold sits well below the 829 px a phone reports in
+   landscape, so nothing here reaches the horizontal orientation, where the columns
+   still have room. */
+@media (max-width: 560px) {
+    :root {
+        --pad-block: 14px;
+        --pad-inner: 12px;
+    }
+
+    /* A block as wide as the screen is not a card: its side border separates it
+       from nothing, and its side padding stacks on top of the page padding. Every
+       one of them is bled out to the edges and given the page padding back as its
+       own, so the surfaces reach the screen while their contents — and the headings
+       that stand outside any block — all begin on the same vertical line. */
+    .overview-report,
+    .report-section,
+    .benchmark-toolbar,
+    .library-card,
+    .notice {
+        margin-right: calc(var(--pad-page) * -1);
+        margin-left: calc(var(--pad-page) * -1);
+        padding-right: var(--pad-page);
+        padding-left: var(--pad-page);
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+
+    /* The narrow-column padding is a two-class selector and outranks the rule above;
+       on one column there is no narrow column to compensate for anyway. */
+    .benchmark-split-column .report-section {
+        padding-right: var(--pad-page);
+        padding-left: var(--pad-page);
+    }
+
+    /* Padding comes from the tokens above; only the desktop-sized floor goes. */
+    .library-card {
+        min-height: 0;
+    }
+
+    /* Three columns leave 59 px for the name and 65 px for a bar that needs 96 px
+       for its value alone, so the row becomes a stack: who, then how long, then
+       how much. */
+    .overview-chart-row {
+        gap: 10px;
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px 10px;
+    }
+
+    .overview-chart-row + .overview-chart-row {
+        border-top: 1px solid var(--line-soft);
+        border-radius: 0;
+    }
+
+    .overview-chart-columns {
+        display: none;
+    }
+
+    .overview-metric {
+        grid-template-columns: 52px minmax(0, 1fr) 78px;
+        gap: 10px;
+    }
+
+    .overview-metric-label {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .overview-metric strong {
+        font-size: 12px;
+        text-align: right;
+    }
+
+    .overview-bar {
+        height: 18px;
+    }
+
+    /* The dialog names the metric in its own column already. */
+    .modal-standing-row .overview-metric-label {
+        display: none;
+    }
+
+    .modal-standing-row .overview-metric {
+        grid-template-columns: minmax(0, 1fr) 78px;
+    }
+
+
+    .tab {
+        min-height: 36px;
+        padding: 0 12px;
+    }
+
+    /* Out of the strip and onto its own line, where it stops stealing 167 px. */
+    .tabs-summary {
+        width: 100%;
+        justify-content: start;
+        margin-left: 0;
+        padding: 8px 6px 2px;
+        border-top: 1px solid var(--line);
+        border-left: 0;
+    }
+
+    .tabs-summary span {
+        text-align: left;
+    }
+
+    /* Two columns halve the run of radios above the numbers, and every scenario
+       still stays on screen. */
+    .scenario-list {
+        grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+        gap: 0 12px;
+    }
+
+    /* A hard width, not a minimum: the longest scenario name would otherwise set
+       the column and eat the room the library columns need. */
+    .feature-table thead th:first-child,
+    .feature-table tbody th {
+        width: 112px;
+        min-width: 112px;
+        max-width: 112px;
+        padding-right: 8px;
+        padding-left: 8px;
+        font-size: 11px;
+        line-height: 1.35;
+    }
+
+    .feature-table thead th,
+    .feature-table tbody td {
+        padding-right: 3px;
+        padding-left: 3px;
+    }
+
+    .feature-table thead th .column-library-name {
+        width: 40px;
+    }
+
+    .feature-table thead th .library-logo-sm {
+        --logo-size: 20px;
+    }
+
+    /* Keeping the picker, the chip and the links on one line is right on a tablet,
+       where the bar wraps around them; on a phone that line is wider than the
+       screen. Letting the picker shrink instead of wrap keeps the header two rows
+       tall — it is sticky, and a third row would cost a fifth of the screen. */
+    .topbar {
+        gap: 10px;
+        padding: 12px 16px;
+    }
+
+    .topbar-end {
+        flex-wrap: wrap;
+        gap: 10px 12px;
+    }
+
+    /* Not allowed to claim the whole row: the repository links share it. The wider
+       breakpoint gives it width:100%, which has to be undone here. */
+    .release-picker {
+        width: auto;
+        min-width: 0;
+        flex: 0 1 auto;
+    }
+
+    /* Hidden from the eye, kept for the accessible name: a select of releases needs
+       no caption beside it, and the caption costs a row. */
+    .release-picker > label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+
+    .topbar-end select {
+        min-width: 0;
+        max-width: 160px;
+        flex: 0 1 160px;
+    }
+
+    /* The pitch is not what a phone screen is for. */
+    .hero {
+        margin-bottom: 22px;
+    }
+
+    .hero-copy {
+        display: none;
     }
 }

@@ -1,6 +1,8 @@
 @using System.Globalization
 
 <div class="overview-metric">
+    @* Only shown where the row is stacked and the column headings are gone. *@
+    <span class="overview-metric-label">@(Memory ? "Memory" : "Time")</span>
     <div class="overview-bar">
         @if (_total > 0)
         {
