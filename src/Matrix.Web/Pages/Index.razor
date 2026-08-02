@@ -5,7 +5,10 @@
 <PageTitle>.NET Matrix — compare .NET libraries</PageTitle>
 
 <div class="app-shell">
-    <header class="topbar">
+    @* aria-modal alone only tells a screen reader the background is gone; inert is
+       what actually takes it out of the tab order and out of the accessibility tree.
+       Nothing about it is visible. *@
+    <header class="topbar" inert="@IsLibraryOpen">
         <a class="brand" href="./" aria-label=".NET Matrix home">
             <img class="brand-mark" src="icon.svg" alt="" aria-hidden="true"/>
             <span>
@@ -106,7 +109,7 @@
     }
     else
     {
-        <div class="workspace">
+        <div class="workspace" inert="@IsLibraryOpen">
             @* Below the sidebar breakpoint the panel folds behind this control, so a
                phone opens on the data instead of on a screen and a half of filters.
                A checkbox holds the state because the application ships no script of
@@ -291,6 +294,15 @@
                         </div>
                     }
 
+                    @* Every view draws from the selection, so an empty one leaves a
+                       blank page. Said once here rather than in each view. *@
+                    @if (SelectedLibraryCount == 0 && _view != "environment" && _view != "evidence")
+                    {
+                        <EmptyState Title="No libraries selected"
+                                    Text="Pick at least one library in the filter panel to compare."/>
+                    }
+                    else
+                    {
                     @switch (_view)
                     {
                         case "features":
@@ -318,6 +330,7 @@
                                           LibraryLink="@LibraryLink"/>
                             break;
                     }
+                    }
                 }
             </main>
         </div>
@@ -328,6 +341,7 @@
                            Library="@openLibrary"
                            SelectedLibraries="@_selectedLibraries"
                            Link="@LibraryLink(openLibrary.Id)"
+                           OnOpenLibrary="@OpenLibrary"
                            OnClose="CloseLibrary"/>
         }
     }
@@ -585,6 +599,8 @@
             [CategoryParameter] = _selectedCategoryId,
             [LibraryParameter] = libraryId
         });
+
+    private bool IsLibraryOpen => OpenLibraryValue is not null;
 
     private CategoryReport? OpenReport => _openLibraryId is null
         ? null

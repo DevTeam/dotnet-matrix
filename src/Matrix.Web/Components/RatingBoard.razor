@@ -17,7 +17,14 @@
                     <LibraryLogo Source="@MatrixView.Logo(Report, item.LibraryId)"
                                  Name="@item.Name"
                                  Size="sm"/>
-                    <span class="rating-name">@item.Name</span>
+                    <span class="rating-name">
+                        <button class="library-open"
+                                type="button"
+                                title="@($"Open the {item.Name} overview")"
+                                @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">
+                            @item.Name
+                        </button>
+                    </span>
                     <RatingBadge Medals="@item"
                                  Category="@Report.Category.Name"
                                  AlwaysCount="true"/>
@@ -36,6 +43,9 @@
 
     [Parameter, EditorRequired]
     public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
 
     private int Groups => Report.ChartCatalog?.Groups.Count ?? 0;
 

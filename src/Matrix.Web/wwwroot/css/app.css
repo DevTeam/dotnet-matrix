@@ -2179,8 +2179,14 @@ tbody th {
         opacity: 0;
     }
 
+    /* Bounded the way the desktop sidebar is bounded, so the panel scrolls inside
+       itself instead of pushing the page down by a screen and a half. The control
+       that closes it therefore stays a flick away, and no second one is needed. */
     .filters-toggle:checked ~ .filters {
         display: block;
+        max-height: 60vh;
+        overflow: auto;
+        overscroll-behavior: contain;
     }
 
     .filters-summary {

@@ -99,7 +99,21 @@
                         <div class="modal-standing">
                             <div class="modal-standing-head">
                                 <strong>@standing.Group.Name</strong>
-                                <span>@standing.Rank</span>
+                                <span>
+                                    @standing.Rank
+                                    @* The library it is measured against was named in
+                                       a tooltip only, and led nowhere. *@
+                                    @if (standing.Leader is { } leader)
+                                    {
+                                        <text> · behind </text>
+                                        <button class="library-open"
+                                                type="button"
+                                                title="@($"Open the {leader.Name} overview")"
+                                                @onclick="() => OnOpenLibrary.InvokeAsync(leader.LibraryId)">
+                                            @leader.Name
+                                        </button>
+                                    }
+                                </span>
                             </div>
                             <div class="modal-standing-row">
                                 <span class="modal-standing-metric">Performance</span>
@@ -237,6 +251,9 @@
 
     [Parameter]
     public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
 
     private int Compared => MatrixView
         .Libraries(Report)
@@ -392,6 +409,9 @@
                     ? $"rank {rank + 1} of {overview.Ranked.Count}"
                     : $"not ranked · {overview.Features.Count - row.MissingFeatures.Count}"
                       + $"/{overview.Features.Count} covered",
+                // Only for a ranked row: "behind X" would misdescribe a row that is
+                // not in the ranking at all.
+                rank > 0 && leader is not null ? leader : null,
                 Ratio(row.PerformanceValues, leader?.PerformanceValues),
                 Ratio(row.MemoryValues, leader?.MemoryValues),
                 Title(leader, false),
@@ -480,6 +500,8 @@
         MatrixOverviewRow Row,
         string[] FeatureNames,
         string Rank,
+        /// <summary>The row this one is measured against; null when it is that row.</summary>
+        MatrixOverviewRow? Leader,
         string TimeRatio,
         string MemoryRatio,
         string TimeTitle,
