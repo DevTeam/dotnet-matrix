@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>zip-archives</MatrixModuleId>
+        <MatrixModuleName>ZIP Archives</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Zip</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>ZipArchives</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.ZipArchives.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="SharpCompress" Version="0.50.2">
+            <MatrixLibraryId>SharpCompress</MatrixLibraryId>
+            <MatrixLibraryName>SharpCompress</MatrixLibraryName>
+            <MatrixCodeName>SharpCompress</MatrixCodeName>
+            <MatrixDescription>A fully managed archive library with random-access, forward-only, non-seekable, encrypted, and asynchronous ZIP APIs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/adamhathcock/sharpcompress/blob/master/docs/USAGE.md</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/adamhathcock/sharpcompress</MatrixRepositoryUrl>
+            <MatrixLogo>logos/sharp-compress.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="SharpZipLib" Version="1.4.2">
+            <MatrixLibraryId>SharpZipLib</MatrixLibraryId>
+            <MatrixLibraryName>SharpZipLib</MatrixLibraryName>
+            <MatrixCodeName>SharpZipLib</MatrixCodeName>
+            <MatrixDescription>A mature managed compression library supporting ZIP, Zip64, stored and deflate entries, streaming, and AES encryption.</MatrixDescription>
+            <MatrixDocumentationUrl>https://icsharpcode.github.io/SharpZipLib/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/icsharpcode/SharpZipLib</MatrixRepositoryUrl>
+            <MatrixLogo>logos/sharp-zip-lib.svg</MatrixLogo>
+        </PackageReference>
+        <MatrixLibrary Include="System.IO.Compression">
+            <MatrixLibraryName>System.IO.Compression</MatrixLibraryName>
+            <MatrixCodeName>SystemIOCompression</MatrixCodeName>
+            <MatrixDescription>The ZIP implementation included with .NET, exposing ZipArchive, ZipArchiveEntry, and ZipFile APIs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.io.compression</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-io-compression.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>true</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

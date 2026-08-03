@@ -46,6 +46,7 @@ which is scored across every scenario; see [rating.md](rating.md).
 | JSON Serialization | `json-serialization` | `src/Matrix.JsonSerialization` | 3 | 14 | Basic, Nested, Collections, Advanced, Stream, Prepare |
 | CSV Processing | `csv-processing` | `src/Matrix.CsvProcessing` | 3 | 10 | Read, Correctness, Throughput, Write |
 | Logging | `logging` | `src/Matrix.Logging` | 5 | 8 | Core, Structured, Prepare |
+| ZIP Archives | `zip-archives` | `src/Matrix.ZipArchives` | 3 | 13 | Metadata, Read, Write, Advanced |
 
 The planned first expansion sequence — Object Mapping, Validation, JSON
 Serialization, CSV Processing, Logging — is complete. The category-neutral
@@ -76,6 +77,10 @@ follows [add-library.md](add-library.md), not this document.
 - **Logging**: every scenario delivers to an equivalent in-memory sink, as
   required by its feature contract. Console, file, database, and network sinks
   remain out of scope because their I/O dominates library overhead.
+- **ZIP Archives**: compressed writing compares the same deterministic corpus
+  at nominal Deflate levels 1 and 6. `System.IO.Compression` exposes these as
+  `Fastest` and `Optimal` rather than numeric ZIP levels. Filesystem extraction
+  and asynchronous I/O remain out of scope.
 
 ## Next categories
 
