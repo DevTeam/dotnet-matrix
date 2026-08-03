@@ -54,6 +54,19 @@ internal static class LoggingChecks
     }
 
     [Conditional("MATRIX_VALIDATION")]
+    public static void FileAppended(string library, int lineCount, string? lastLine)
+    {
+        MatrixValidation.Require(
+            library,
+            lineCount == 3,
+            $"Expected 3 appended lines, found {lineCount}.");
+        MatrixValidation.Require(
+            library,
+            lastLine is not null && lastLine.EndsWith(LoggingData.FileMessage, StringComparison.Ordinal),
+            $"Last appended line does not end with '{LoggingData.FileMessage}': '{lastLine}'.");
+    }
+
+    [Conditional("MATRIX_VALIDATION")]
     public static void Prepared(string library, bool informationEnabled) =>
         MatrixValidation.Require(
             library,

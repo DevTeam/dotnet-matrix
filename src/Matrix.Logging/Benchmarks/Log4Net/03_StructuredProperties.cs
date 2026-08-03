@@ -18,8 +18,13 @@ public partial class StructuredProperties
     [LibraryBenchmark(LibraryCatalog.Log4Net)]
     public void Log4Net()
     {
-        LogicalThreadContext.Properties["OrderId"] = LoggingData.OrderId;
-        LogicalThreadContext.Properties["ElapsedMs"] = LoggingData.ElapsedMs;
+        // ThreadContext rather than LogicalThreadContext: the other arms of this feature pass
+        // structured parameters straight to the logger and use no ambient context at all, so the
+        // async-flow-safe variant would charge log4net for propagation nobody else pays for. The
+        // ScopeOrContext feature is where async-safe context belongs, and it still uses
+        // LogicalThreadContext there, matching Serilog's LogContext.
+        ThreadContext.Properties["OrderId"] = LoggingData.OrderId;
+        ThreadContext.Properties["ElapsedMs"] = LoggingData.ElapsedMs;
         try
         {
             _log4Net.Logger.InfoFormat(
@@ -30,8 +35,8 @@ public partial class StructuredProperties
         }
         finally
         {
-            LogicalThreadContext.Properties.Remove("OrderId");
-            LogicalThreadContext.Properties.Remove("ElapsedMs");
+            ThreadContext.Properties.Remove("OrderId");
+            ThreadContext.Properties.Remove("ElapsedMs");
         }
 
         LoggingChecks.Structured(LibraryCatalog.Log4Net, _log4Net.Sink.Last);

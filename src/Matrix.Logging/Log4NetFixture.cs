@@ -14,15 +14,22 @@ internal sealed class Log4NetFixture : IDisposable
     {
         var repositoryName = $"{LoggingData.Category}.{Guid.NewGuid():N}";
         Repository = (Hierarchy)LogManager.CreateRepository(repositoryName);
-        Sink = new Log4NetCaptureAppender();
+        Sink = new();
         Sink.ActivateOptions();
         IAppender appender = Sink;
         if (buffered)
         {
-            _buffer = new BufferingForwardingAppender
+            _buffer = new()
             {
                 BufferSize = 100,
-                Lossy = false
+                Lossy = false,
+                // log4net defaults to FixFlags.All, which captures caller location (a stack walk)
+                // and the Windows identity (a local security authority lookup) for every buffered
+                // event. NLog's AsyncTargetWrapper and Serilog's WriteTo.Async capture neither, so
+                // the default would charge log4net for work the other arms never do. Partial is the
+                // set log4net's own FixFlags documentation recommends for performance, and it still
+                // fixes everything this feature validates: message, level, exception and properties.
+                Fix = FixFlags.Partial
             };
             _buffer.AddAppender(Sink);
             _buffer.ActivateOptions();
