@@ -508,8 +508,24 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
     {
         using var image = surface.Snapshot();
         using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-        using var stream = File.Create(outputPath);
-        data.SaveTo(stream);
+        var content = data.ToArray();
+
+        if (File.Exists(outputPath)
+            && File.ReadAllBytes(outputPath).AsSpan().SequenceEqual(content))
+        {
+            return;
+        }
+
+        try
+        {
+            File.WriteAllBytes(outputPath, content);
+        }
+        catch (IOException exception)
+        {
+            throw new IOException(
+                $"Cannot update chart '{outputPath}'. Close any image preview or viewer that has the file open and retry.",
+                exception);
+        }
     }
 
     private static void DrawText(

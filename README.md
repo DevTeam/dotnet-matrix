@@ -24,9 +24,9 @@
 
 <table align="center">
 <tr>
-<td width="180" align="center"><strong>6</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>42</strong><br><sub>LIBRARIES</sub></td>
-<td width="180" align="center"><strong>67</strong><br><sub>SCENARIOS</sub></td>
+<td width="180" align="center"><strong>7</strong><br><sub>CATEGORIES</sub></td>
+<td width="180" align="center"><strong>45</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>80</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
 
@@ -40,6 +40,7 @@
 | [**Logging**](#logging) | [Microsoft.Extensions.Logging](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 5 | 8 |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 |
 | [**Validation**](#validation) | [Microsoft.Extensions.Validation](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 4 | 10 |
+| [**ZIP Archives**](#zip-archives) | [SharpZipLib](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 3 | 13 |
 
 ## How to read the results
 
@@ -70,10 +71,10 @@ See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 999 | 1000 | 1999 | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
-| 2 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 558 | 392 | 950 | silver in Correctness, silver in Read, bronze in Throughput |
-| 3 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 612 | 270 | 882 | silver in Throughput, silver in Write, bronze in Correctness, bronze in Read |
-| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 231 | 212 | 443 | bronze in Write |
+| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 1000 | 1000 | 2000 | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
+| 2 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 570 | 392 | 962 | silver in Correctness, silver in Read, bronze in Throughput |
+| 3 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 622 | 270 | 892 | silver in Throughput, silver in Write, bronze in Correctness, bronze in Read |
+| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 236 | 212 | 449 | bronze in Write |
 
 
 <details>
@@ -87,65 +88,65 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=csv-processing).
 
-#### 1. Sep — 1999 of 2000
+#### 1. Sep — 2000 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 743.67 ns | 743.67 ns | 100 | 1.89 KB | 1.89 KB | 100 |
-| Read Typed Records | 869.43 ns | 869.43 ns | 100 | 1.7 KB | 1.7 KB | 100 |
-| Read Large Dataset | 1.07 ms | 1.06 ms | 99.7 | 1016.97 KB | 1016.97 KB | 100 |
-| Quoted Fields | 640.87 ns | 640.87 ns | 100 | 1.34 KB | 1.34 KB | 100 |
-| Escaped Delimiters | 550.25 ns | 550.25 ns | 100 | 1.35 KB | 1.35 KB | 100 |
-| Header Mapping | 899.76 ns | 899.76 ns | 100 | 1.7 KB | 1.7 KB | 100 |
-| Custom Conversion | 448.14 ns | 448.14 ns | 100 | 1.11 KB | 1.11 KB | 100 |
-| Streaming Read | 832.45 μs | 825.19 μs | 99.6 | 1.34 KB | 1.34 KB | 100 |
-| Write Rows | 560.58 ns | 560.58 ns | 100 | 1.89 KB | 1.89 KB | 100 |
-| Async Read | 826.22 μs | 826.22 μs | 100 | 1.44 KB | 1.44 KB | 100 |
+| Read Simple Rows | 772.98 ns | 772.98 ns | 100 | 1.89 KB | 1.89 KB | 100 |
+| Read Typed Records | 896.17 ns | 896.17 ns | 100 | 1.7 KB | 1.7 KB | 100 |
+| Read Large Dataset | 986.3 μs | 986.3 μs | 100 | 1016.97 KB | 1016.97 KB | 100 |
+| Quoted Fields | 603.19 ns | 603.19 ns | 100 | 1.34 KB | 1.34 KB | 100 |
+| Escaped Delimiters | 584.36 ns | 584.36 ns | 100 | 1.35 KB | 1.35 KB | 100 |
+| Header Mapping | 904.75 ns | 904.75 ns | 100 | 1.7 KB | 1.7 KB | 100 |
+| Custom Conversion | 468.55 ns | 468.55 ns | 100 | 1.11 KB | 1.11 KB | 100 |
+| Streaming Read | 824.81 μs | 824.81 μs | 100 | 1.34 KB | 1.34 KB | 100 |
+| Write Rows | 531.82 ns | 531.82 ns | 100 | 1.89 KB | 1.89 KB | 100 |
+| Async Read | 836.01 μs | 836.01 μs | 100 | 1.44 KB | 1.44 KB | 100 |
 
-#### 2. TinyCsvParser — 950 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 1.65 μs | 743.67 ns | 67.2 | 5.56 KB | 1.89 KB | 58.5 |
-| Read Typed Records | 1.89 μs | 869.43 ns | 67.8 | 5.3 KB | 1.7 KB | 56.8 |
-| Read Large Dataset | 3.02 ms | 1.06 ms | 59.3 | 2.91 MB | 1016.97 KB | 58.5 |
-| Quoted Fields | 1.4 μs | 640.87 ns | 67.7 | 4.87 KB | 1.34 KB | 52.9 |
-| Escaped Delimiters | 1.4 μs | 550.25 ns | 62.8 | 4.98 KB | 1.35 KB | 52.4 |
-| Header Mapping | 1.85 μs | 899.76 ns | 69.7 | 5.3 KB | 1.7 KB | 56.8 |
-| Custom Conversion | 993.05 ns | 448.14 ns | 67.2 | 4.32 KB | 1.11 KB | 51.1 |
-| Streaming Read | 3.28 ms | 825.19 μs | 50.2 | 2.75 MB | 1.34 KB | 2.196 |
-| Write Rows | — | 560.58 ns | 0 | — | 1.89 KB | 0 |
-| Async Read | 3.94 ms | 826.22 μs | 45.8 | 1.39 MB | 1.44 KB | 3.209 |
-
-#### 3. Sylvan.Data.Csv — 882 of 2000
+#### 2. TinyCsvParser — 962 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 2.65 μs | 743.67 ns | 53 | 35.38 KB | 1.89 KB | 23.3 |
-| Read Typed Records | 2.71 μs | 869.43 ns | 56.7 | 35.11 KB | 1.7 KB | 22.1 |
-| Read Large Dataset | 1.06 ms | 1.06 ms | 100 | 1.03 MB | 1016.97 KB | 98.4 |
-| Quoted Fields | 2.32 μs | 640.87 ns | 52.6 | 34.34 KB | 1.34 KB | 19.9 |
-| Escaped Delimiters | 2.12 μs | 550.25 ns | 50.9 | 34.3 KB | 1.35 KB | 20 |
-| Header Mapping | 2.64 μs | 899.76 ns | 58.4 | 35.11 KB | 1.7 KB | 22.1 |
-| Custom Conversion | — | 448.14 ns | 0 | — | 1.11 KB | 0 |
-| Streaming Read | 825.19 μs | 825.19 μs | 100 | 34.75 KB | 1.34 KB | 19.8 |
-| Write Rows | 2.1 μs | 560.58 ns | 51.7 | 32.78 KB | 1.89 KB | 24.2 |
-| Async Read | 1.05 ms | 826.22 μs | 88.5 | 36.05 KB | 1.44 KB | 20.1 |
+| Read Simple Rows | 1.58 μs | 772.98 ns | 70 | 5.56 KB | 1.89 KB | 58.5 |
+| Read Typed Records | 1.83 μs | 896.17 ns | 70 | 5.3 KB | 1.7 KB | 56.8 |
+| Read Large Dataset | 2.99 ms | 986.3 μs | 57.5 | 2.91 MB | 1016.97 KB | 58.5 |
+| Quoted Fields | 1.34 μs | 603.19 ns | 67.2 | 4.87 KB | 1.34 KB | 52.9 |
+| Escaped Delimiters | 1.35 μs | 584.36 ns | 65.8 | 4.98 KB | 1.35 KB | 52.4 |
+| Header Mapping | 1.85 μs | 904.75 ns | 69.9 | 5.3 KB | 1.7 KB | 56.8 |
+| Custom Conversion | 891.92 ns | 468.55 ns | 72.5 | 4.32 KB | 1.11 KB | 51.1 |
+| Streaming Read | 3.19 ms | 824.81 μs | 50.9 | 2.75 MB | 1.34 KB | 2.196 |
+| Write Rows | — | 531.82 ns | 0 | — | 1.89 KB | 0 |
+| Async Read | 3.93 ms | 836.01 μs | 46.1 | 1.39 MB | 1.44 KB | 3.209 |
 
-#### 4. CsvHelper — 443 of 2000
+#### 3. Sylvan.Data.Csv — 892 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 3.5 μs | 743.67 ns | 46.1 | 21.95 KB | 1.89 KB | 29.5 |
-| Read Typed Records | 879.74 μs | 869.43 ns | 3.146 | 53.73 KB | 1.7 KB | 17.9 |
-| Read Large Dataset | 4.93 ms | 1.06 ms | 46.4 | 2.65 MB | 1016.97 KB | 61.3 |
-| Quoted Fields | 543.33 μs | 640.87 ns | 3.437 | 40.93 KB | 1.34 KB | 18.3 |
-| Escaped Delimiters | 595.39 μs | 550.25 ns | 3.043 | 40.89 KB | 1.35 KB | 18.3 |
-| Header Mapping | 847.18 μs | 899.76 ns | 3.261 | 53.57 KB | 1.7 KB | 17.9 |
-| Custom Conversion | 3.57 μs | 448.14 ns | 35.4 | 21.95 KB | 1.11 KB | 22.7 |
-| Streaming Read | 4.17 ms | 825.19 μs | 44.5 | 2.39 MB | 1.34 KB | 2.358 |
-| Write Rows | 774.53 μs | 560.58 ns | 2.693 | 40.46 KB | 1.89 KB | 21.7 |
-| Async Read | 4.54 ms | 826.22 μs | 42.7 | 2.39 MB | 1.44 KB | 2.442 |
+| Read Simple Rows | 2.34 μs | 772.98 ns | 57.5 | 35.38 KB | 1.89 KB | 23.3 |
+| Read Typed Records | 2.51 μs | 896.17 ns | 59.8 | 35.11 KB | 1.7 KB | 22.1 |
+| Read Large Dataset | 1.21 ms | 986.3 μs | 90.2 | 1.03 MB | 1016.97 KB | 98.4 |
+| Quoted Fields | 1.93 μs | 603.19 ns | 55.9 | 34.34 KB | 1.34 KB | 19.9 |
+| Escaped Delimiters | 1.9 μs | 584.36 ns | 55.5 | 34.3 KB | 1.35 KB | 20 |
+| Header Mapping | 2.66 μs | 904.75 ns | 58.4 | 35.11 KB | 1.7 KB | 22.1 |
+| Custom Conversion | — | 468.55 ns | 0 | — | 1.11 KB | 0 |
+| Streaming Read | 856.05 μs | 824.81 μs | 98.2 | 34.75 KB | 1.34 KB | 19.8 |
+| Write Rows | 1.57 μs | 531.82 ns | 58.2 | 32.78 KB | 1.89 KB | 24.2 |
+| Async Read | 1.07 ms | 836.01 μs | 88.5 | 36.05 KB | 1.44 KB | 20.1 |
+
+#### 4. CsvHelper — 449 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Read Simple Rows | 3.46 μs | 772.98 ns | 47.3 | 21.95 KB | 1.89 KB | 29.5 |
+| Read Typed Records | 800.71 μs | 896.17 ns | 3.347 | 53.48 KB | 1.7 KB | 17.9 |
+| Read Large Dataset | 4.79 ms | 986.3 μs | 45.4 | 2.65 MB | 1016.97 KB | 61.3 |
+| Quoted Fields | 536.73 μs | 603.19 ns | 3.355 | 40.96 KB | 1.34 KB | 18.3 |
+| Escaped Delimiters | 535.42 μs | 584.36 ns | 3.306 | 40.85 KB | 1.35 KB | 18.3 |
+| Header Mapping | 896.77 μs | 904.75 ns | 3.178 | 53.68 KB | 1.7 KB | 17.9 |
+| Custom Conversion | 3.08 μs | 468.55 ns | 39 | 21.95 KB | 1.11 KB | 22.7 |
+| Streaming Read | 4.03 ms | 824.81 μs | 45.2 | 2.39 MB | 1.34 KB | 2.358 |
+| Write Rows | 774.77 μs | 531.82 ns | 2.622 | 40.7 KB | 1.89 KB | 21.7 |
+| Async Read | 4.39 ms | 836.01 μs | 43.7 | 2.39 MB | 1.44 KB | 2.442 |
 
 </details>
 
@@ -285,28 +286,28 @@ See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 14/15 | 1400 | 1365 | 2765 | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) | 15/15 | 846 | 1150 | 1996 | bronze in Prepare |
-| 3 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) | 14/15 | 750 | 1097 | 1847 | bronze in Advanced |
-| 4 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) | 13/15 | 798 | 1045 | 1843 | silver in Advanced, bronze in Basic |
-| 5 | [**Simple Injector**](https://matrix.dev-team.org/?category=dependency-injection&library=SimpleInjector) | 12/15 | 707 | 965 | 1671 | silver in Basic |
-| 6 | [**LightInject**](https://matrix.dev-team.org/?category=dependency-injection&library=LightInject) | 12/15 | 602 | 932 | 1535 |  |
-| 7 | [**Lamar**](https://matrix.dev-team.org/?category=dependency-injection&library=Lamar) | 12/15 | 622 | 745 | 1367 |  |
-| 8 | [**Singularity**](https://matrix.dev-team.org/?category=dependency-injection&library=Singularity) | 9/15 | 491 | 714 | 1204 |  |
-| 9 | [**Microsoft Extensions Dependency Injection**](https://matrix.dev-team.org/?category=dependency-injection&library=Microsoft.DI) | 9/15 | 416 | 681 | 1098 |  |
-| 10 | [**Faster.Ioc**](https://matrix.dev-team.org/?category=dependency-injection&library=Faster.Ioc) | 8/15 | 413 | 614 | 1027 |  |
-| 11 | [**Managed Extensibility Framework 2**](https://matrix.dev-team.org/?category=dependency-injection&library=MEF2) | 10/15 | 320 | 457 | 777 |  |
-| 12 | [**Unity**](https://matrix.dev-team.org/?category=dependency-injection&library=Unity) | 13/15 | 265 | 447 | 712 |  |
-| 13 | [**Maestro**](https://matrix.dev-team.org/?category=dependency-injection&library=Maestro) | 11/15 | 251 | 350 | 600 |  |
-| 14 | [**StructureMap**](https://matrix.dev-team.org/?category=dependency-injection&library=StructureMap) | 13/15 | 205 | 332 | 538 |  |
-| 15 | [**ZenIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=ZenIoc) | 7/15 | 151 | 291 | 441 |  |
-| 16 | [**Autofac**](https://matrix.dev-team.org/?category=dependency-injection&library=Autofac) | 13/15 | 160 | 245 | 405 |  |
-| 17 | [**Spring.NET**](https://matrix.dev-team.org/?category=dependency-injection&library=Spring) | 10/15 | 117 | 270 | 388 |  |
-| 18 | [**Castle Windsor**](https://matrix.dev-team.org/?category=dependency-injection&library=Windsor) | 13/15 | 124 | 225 | 349 |  |
-| 19 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) | 6/15 | 86 | 254 | 340 | silver in Prepare |
-| 20 | [**Ninject**](https://matrix.dev-team.org/?category=dependency-injection&library=Ninject) | 12/15 | 52 | 137 | 189 |  |
-| 21 | [**Catel**](https://matrix.dev-team.org/?category=dependency-injection&library=Catel) | 8/15 | 48 | 93 | 141 |  |
-| 22 | [**Visual Studio MEF**](https://matrix.dev-team.org/?category=dependency-injection&library=VS.MEF) | 9/15 | 37 | 100 | 137 |  |
+| 1 | [**Pure.DI**](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 14/15 | 1400 | 1365 | 2765 | gold in Basic, gold in Prepare, silver in Advanced |
+| 2 | [**DryIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=DryIoc) | 15/15 | 866 | 1150 | 2016 | gold in Advanced, bronze in Prepare |
+| 3 | [**Grace**](https://matrix.dev-team.org/?category=dependency-injection&library=Grace) | 13/15 | 846 | 1045 | 1891 | silver in Basic |
+| 4 | [**Stashbox**](https://matrix.dev-team.org/?category=dependency-injection&library=Stashbox) | 14/15 | 788 | 1097 | 1885 | bronze in Advanced, bronze in Basic |
+| 5 | [**Simple Injector**](https://matrix.dev-team.org/?category=dependency-injection&library=SimpleInjector) | 12/15 | 720 | 965 | 1685 |  |
+| 6 | [**LightInject**](https://matrix.dev-team.org/?category=dependency-injection&library=LightInject) | 12/15 | 637 | 932 | 1569 |  |
+| 7 | [**Lamar**](https://matrix.dev-team.org/?category=dependency-injection&library=Lamar) | 12/15 | 631 | 745 | 1375 |  |
+| 8 | [**Singularity**](https://matrix.dev-team.org/?category=dependency-injection&library=Singularity) | 9/15 | 529 | 714 | 1243 |  |
+| 9 | [**Microsoft Extensions Dependency Injection**](https://matrix.dev-team.org/?category=dependency-injection&library=Microsoft.DI) | 9/15 | 459 | 681 | 1140 |  |
+| 10 | [**Faster.Ioc**](https://matrix.dev-team.org/?category=dependency-injection&library=Faster.Ioc) | 8/15 | 457 | 614 | 1071 |  |
+| 11 | [**Managed Extensibility Framework 2**](https://matrix.dev-team.org/?category=dependency-injection&library=MEF2) | 10/15 | 355 | 457 | 812 |  |
+| 12 | [**Unity**](https://matrix.dev-team.org/?category=dependency-injection&library=Unity) | 13/15 | 273 | 447 | 720 |  |
+| 13 | [**Maestro**](https://matrix.dev-team.org/?category=dependency-injection&library=Maestro) | 11/15 | 263 | 350 | 613 |  |
+| 14 | [**StructureMap**](https://matrix.dev-team.org/?category=dependency-injection&library=StructureMap) | 13/15 | 218 | 333 | 550 |  |
+| 15 | [**ZenIoc**](https://matrix.dev-team.org/?category=dependency-injection&library=ZenIoc) | 7/15 | 152 | 291 | 443 |  |
+| 16 | [**Autofac**](https://matrix.dev-team.org/?category=dependency-injection&library=Autofac) | 13/15 | 170 | 245 | 415 |  |
+| 17 | [**Spring.NET**](https://matrix.dev-team.org/?category=dependency-injection&library=Spring) | 10/15 | 125 | 270 | 395 |  |
+| 18 | [**Castle Windsor**](https://matrix.dev-team.org/?category=dependency-injection&library=Windsor) | 13/15 | 132 | 225 | 357 |  |
+| 19 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) | 6/15 | 92 | 254 | 346 | silver in Prepare |
+| 20 | [**Ninject**](https://matrix.dev-team.org/?category=dependency-injection&library=Ninject) | 12/15 | 55 | 135 | 191 |  |
+| 21 | [**Catel**](https://matrix.dev-team.org/?category=dependency-injection&library=Catel) | 8/15 | 51 | 93 | 144 |  |
+| 22 | [**Visual Studio MEF**](https://matrix.dev-team.org/?category=dependency-injection&library=VS.MEF) | 9/15 | 40 | 100 | 140 |  |
 
 
 <details>
@@ -324,441 +325,441 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 1.47 ns | 1.47 ns | 100 | 0 B | 0 B | 100 |
-| Transient | 13.61 ns | 13.61 ns | 100 | 72 B | 72 B | 100 |
-| PerResolve | 15.12 ns | 15.12 ns | 100 | 56 B | 56 B | 100 |
-| Scoped | 43.13 ns | 43.13 ns | 100 | 184 B | 160 B | 94.1 |
-| Combined | 39.49 ns | 39.49 ns | 100 | 168 B | 168 B | 100 |
-| Complex | 96.43 ns | 96.43 ns | 100 | 360 B | 360 B | 100 |
-| Property | 73.71 ns | 73.71 ns | 100 | 336 B | 336 B | 100 |
-| Generics | 34.2 ns | 34.2 ns | 100 | 144 B | 144 B | 100 |
-| IEnumerable | 49.05 ns | 49.05 ns | 100 | 168 B | 72 B | 70.7 |
-| Array | 142.72 ns | 142.72 ns | 100 | 624 B | 624 B | 100 |
-| Conditional | 34.34 ns | 34.34 ns | 100 | 144 B | 144 B | 100 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 73.91 ns | 73.91 ns | 100 | 248 B | 248 B | 100 |
-| Prepare And Register | 11.14 ns | 11.14 ns | 100 | 64 B | 64 B | 100 |
-| Prepare And Register And Simple Resolve | 10.13 ns | 10.13 ns | 100 | 24 B | 24 B | 100 |
+| Singleton | 1.49 ns | 1.49 ns | 100 | 0 B | 0 B | 100 |
+| Transient | 18.06 ns | 18.06 ns | 100 | 72 B | 72 B | 100 |
+| PerResolve | 14.26 ns | 14.26 ns | 100 | 56 B | 56 B | 100 |
+| Scoped | 48.01 ns | 48.01 ns | 100 | 184 B | 160 B | 94.1 |
+| Combined | 44.51 ns | 44.51 ns | 100 | 168 B | 168 B | 100 |
+| Complex | 95.94 ns | 95.94 ns | 100 | 360 B | 360 B | 100 |
+| Property | 73.67 ns | 73.67 ns | 100 | 336 B | 336 B | 100 |
+| Generics | 32.13 ns | 32.13 ns | 100 | 144 B | 144 B | 100 |
+| IEnumerable | 48.05 ns | 48.05 ns | 100 | 168 B | 72 B | 70.7 |
+| Array | 137.09 ns | 137.09 ns | 100 | 624 B | 624 B | 100 |
+| Conditional | 35.89 ns | 35.89 ns | 100 | 144 B | 144 B | 100 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 75.07 ns | 75.07 ns | 100 | 248 B | 248 B | 100 |
+| Prepare And Register | 7.31 ns | 7.31 ns | 100 | 64 B | 64 B | 100 |
+| Prepare And Register And Simple Resolve | 6.37 ns | 6.37 ns | 100 | 24 B | 24 B | 100 |
 
-#### 2. DryIoc — 1996 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 35.16 ns | 1.47 ns | 26.2 | 0 B | 0 B | 100 |
-| Transient | 95.17 ns | 13.61 ns | 39 | 72 B | 72 B | 100 |
-| PerResolve | 372.07 μs | 15.12 ns | 0.658 | 1.65 KB | 56 B | 21.6 |
-| Scoped | 163.09 ns | 43.13 ns | 51.9 | 448 B | 160 B | 62.4 |
-| Combined | 73.76 ns | 39.49 ns | 73.6 | 168 B | 168 B | 100 |
-| Complex | 126.53 ns | 96.43 ns | 87.4 | 360 B | 360 B | 100 |
-| Property | 109.63 ns | 73.71 ns | 82.2 | 336 B | 336 B | 100 |
-| Generics | 70.43 ns | 34.2 ns | 70.2 | 144 B | 144 B | 100 |
-| IEnumerable | 217.22 ns | 49.05 ns | 47.9 | 768 B | 72 B | 34.8 |
-| Array | 177.7 ns | 142.72 ns | 89.7 | 624 B | 624 B | 100 |
-| Conditional | 78.02 ns | 34.34 ns | 66.9 | 144 B | 144 B | 100 |
-| Child Container | 781.73 ns | 781.73 ns | 100 | 1.59 KB | 1.59 KB | 100 |
-| Interception With Proxy | 85.52 ns | 73.91 ns | 93.1 | 248 B | 248 B | 100 |
-| Prepare And Register | 1.36 μs | 11.14 ns | 9.429 | 2.42 KB | 64 B | 18.7 |
-| Prepare And Register And Simple Resolve | 1.78 μs | 10.13 ns | 7.908 | 3.04 KB | 24 B | 12.4 |
-
-#### 3. Stashbox — 1847 of 3000
+#### 2. DryIoc — 2016 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 110.32 ns | 1.47 ns | 14.9 | 0 B | 0 B | 100 |
-| Transient | 91.08 ns | 13.61 ns | 39.8 | 72 B | 72 B | 100 |
-| PerResolve | 66.09 ns | 15.12 ns | 49 | 192 B | 56 B | 60.9 |
-| Scoped | 103.83 ns | 43.13 ns | 64.9 | 304 B | 160 B | 74.9 |
-| Combined | 80.25 ns | 39.49 ns | 70.6 | 168 B | 168 B | 100 |
-| Complex | 191.49 ns | 96.43 ns | 71.1 | 360 B | 360 B | 100 |
-| Property | 98.31 ns | 73.71 ns | 86.7 | 336 B | 336 B | 100 |
-| Generics | 57.88 ns | 34.2 ns | 77.3 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 165.34 ns | 142.72 ns | 93 | 624 B | 624 B | 100 |
-| Conditional | 58.86 ns | 34.34 ns | 76.8 | 144 B | 144 B | 100 |
-| Child Container | 109.88 μs | 781.73 ns | 8.44 | 7.59 KB | 1.59 KB | 46 |
-| Interception With Proxy | 87.93 ns | 73.91 ns | 91.8 | 248 B | 248 B | 100 |
-| Prepare And Register | 5.13 μs | 11.14 ns | 4.866 | 8.77 KB | 64 B | 9.888 |
-| Prepare And Register And Simple Resolve | 219.82 μs | 10.13 ns | 0.712 | 14.98 KB | 24 B | 5.59 |
+| Singleton | 37.12 ns | 1.49 ns | 25.6 | 0 B | 0 B | 100 |
+| Transient | 50.47 ns | 18.06 ns | 60.9 | 72 B | 72 B | 100 |
+| PerResolve | 502.92 μs | 14.26 ns | 0.551 | 1.65 KB | 56 B | 21.6 |
+| Scoped | 169.38 ns | 48.01 ns | 53.6 | 448 B | 160 B | 62.4 |
+| Combined | 83.79 ns | 44.51 ns | 73.3 | 168 B | 168 B | 100 |
+| Complex | 126.4 ns | 95.94 ns | 87.2 | 360 B | 360 B | 100 |
+| Property | 116.65 ns | 73.67 ns | 79.7 | 336 B | 336 B | 100 |
+| Generics | 70.28 ns | 32.13 ns | 68.2 | 144 B | 144 B | 100 |
+| IEnumerable | 205.94 ns | 48.05 ns | 48.7 | 768 B | 72 B | 34.8 |
+| Array | 172.88 ns | 137.09 ns | 89.1 | 624 B | 624 B | 100 |
+| Conditional | 72.27 ns | 35.89 ns | 71 | 144 B | 144 B | 100 |
+| Child Container | 717.55 ns | 717.55 ns | 100 | 1.59 KB | 1.59 KB | 100 |
+| Interception With Proxy | 85.29 ns | 75.07 ns | 93.9 | 248 B | 248 B | 100 |
+| Prepare And Register | 1.29 μs | 7.31 ns | 8.013 | 2.42 KB | 64 B | 18.7 |
+| Prepare And Register And Simple Resolve | 1.63 μs | 6.37 ns | 6.711 | 3.04 KB | 24 B | 12.4 |
 
-#### 4. Grace — 1843 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 75.23 ns | 1.47 ns | 18 | 0 B | 0 B | 100 |
-| Transient | 77.25 ns | 13.61 ns | 43.2 | 72 B | 72 B | 100 |
-| PerResolve | 106.96 ns | 15.12 ns | 38.6 | 296 B | 56 B | 50 |
-| Scoped | 111.53 ns | 43.13 ns | 62.6 | 232 B | 160 B | 84.8 |
-| Combined | 53.83 ns | 39.49 ns | 85.9 | 168 B | 168 B | 100 |
-| Complex | 110.64 ns | 96.43 ns | 93.4 | 360 B | 360 B | 100 |
-| Property | 91.11 ns | 73.71 ns | 90.1 | 336 B | 336 B | 100 |
-| Generics | 48.88 ns | 34.2 ns | 84 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 151.48 ns | 142.72 ns | 97.1 | 624 B | 624 B | 100 |
-| Conditional | 49.12 ns | 34.34 ns | 84 | 144 B | 144 B | 100 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 79.08 ns | 73.91 ns | 96.7 | 248 B | 248 B | 100 |
-| Prepare And Register | 11.51 μs | 11.14 ns | 3.248 | 21.66 KB | 64 B | 6.296 |
-| Prepare And Register And Simple Resolve | 210.59 μs | 10.13 ns | 0.727 | 32.77 KB | 24 B | 3.781 |
-
-#### 5. Simple Injector — 1671 of 3000
+#### 3. Grace — 1891 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 33.72 ns | 1.47 ns | 26.7 | 0 B | 0 B | 100 |
-| Transient | 47.17 ns | 13.61 ns | 55.1 | 72 B | 72 B | 100 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 231.86 ns | 43.13 ns | 43.5 | 504 B | 160 B | 59 |
-| Combined | 66 ns | 39.49 ns | 77.7 | 168 B | 168 B | 100 |
-| Complex | 124.64 ns | 96.43 ns | 88.1 | 360 B | 360 B | 100 |
-| Property | 111.49 ns | 73.71 ns | 81.5 | 336 B | 336 B | 100 |
-| Generics | 61.03 ns | 34.2 ns | 75.3 | 144 B | 144 B | 100 |
-| IEnumerable | 57.44 ns | 49.05 ns | 92.5 | 72 B | 72 B | 100 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | 68.95 ns | 34.34 ns | 71.1 | 144 B | 144 B | 100 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 85.17 ns | 73.91 ns | 93.2 | 248 B | 248 B | 100 |
-| Prepare And Register | 91.66 μs | 11.14 ns | 1.151 | 69.29 KB | 64 B | 3.521 |
-| Prepare And Register And Simple Resolve | 295.91 μs | 10.13 ns | 0.613 | 105.43 KB | 24 B | 2.108 |
+| Singleton | 20.02 ns | 1.49 ns | 34.4 | 0 B | 0 B | 100 |
+| Transient | 33.68 ns | 18.06 ns | 74.1 | 72 B | 72 B | 100 |
+| PerResolve | 107.68 ns | 14.26 ns | 37.5 | 296 B | 56 B | 50 |
+| Scoped | 116.11 ns | 48.01 ns | 64.7 | 232 B | 160 B | 84.8 |
+| Combined | 55.42 ns | 44.51 ns | 89.8 | 168 B | 168 B | 100 |
+| Complex | 112.55 ns | 95.94 ns | 92.4 | 360 B | 360 B | 100 |
+| Property | 89.75 ns | 73.67 ns | 90.7 | 336 B | 336 B | 100 |
+| Generics | 50.3 ns | 32.13 ns | 80.4 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 151.65 ns | 137.09 ns | 95.1 | 624 B | 624 B | 100 |
+| Conditional | 49.17 ns | 35.89 ns | 85.7 | 144 B | 144 B | 100 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 79 ns | 75.07 ns | 97.5 | 248 B | 248 B | 100 |
+| Prepare And Register | 10.43 μs | 7.31 ns | 2.823 | 21.66 KB | 64 B | 6.296 |
+| Prepare And Register And Simple Resolve | 198.69 μs | 6.37 ns | 0.609 | 32.77 KB | 24 B | 3.781 |
 
-#### 6. LightInject — 1535 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 54.21 ns | 1.47 ns | 21.2 | 0 B | 0 B | 100 |
-| Transient | 80.78 ns | 13.61 ns | 42.3 | 72 B | 72 B | 100 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 254.72 ns | 43.13 ns | 41.5 | 568 B | 160 B | 55.8 |
-| Combined | 91.05 ns | 39.49 ns | 66.3 | 168 B | 168 B | 100 |
-| Complex | 251.49 ns | 96.43 ns | 62.1 | 360 B | 360 B | 100 |
-| Property | 95.25 ns | 73.71 ns | 88.1 | 336 B | 336 B | 100 |
-| Generics | 54.11 ns | 34.2 ns | 79.9 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 159.91 ns | 142.72 ns | 94.5 | 624 B | 624 B | 100 |
-| Conditional | 218.06 ns | 34.34 ns | 40.2 | 144 B | 144 B | 100 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 189.72 ns | 73.91 ns | 62.7 | 560 B | 248 B | 68.2 |
-| Prepare And Register | 12 μs | 11.14 ns | 3.18 | 33.07 KB | 64 B | 5.096 |
-| Prepare And Register And Simple Resolve | 692.38 μs | 10.13 ns | 0.401 | 43.45 KB | 24 B | 3.284 |
-
-#### 7. Lamar — 1367 of 3000
+#### 4. Stashbox — 1885 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 40.63 ns | 1.47 ns | 24.4 | 120 B | 0 B | 40.8 |
-| Transient | 64.76 ns | 13.61 ns | 47.1 | 192 B | 72 B | 66.7 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 1.19 μs | 43.13 ns | 19.2 | 1.08 KB | 160 B | 40.4 |
-| Combined | 85.61 ns | 39.49 ns | 68.4 | 288 B | 168 B | 78.4 |
-| Complex | 141.56 ns | 96.43 ns | 82.7 | 480 B | 360 B | 87.3 |
-| Property | 127.91 ns | 73.71 ns | 76.1 | 456 B | 336 B | 86.6 |
-| Generics | 85.88 ns | 34.2 ns | 63.7 | 264 B | 144 B | 76.4 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 189.32 ns | 142.72 ns | 86.9 | 744 B | 624 B | 91.9 |
-| Conditional | 83.27 ns | 34.34 ns | 64.8 | 264 B | 144 B | 76.4 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 98.3 ns | 73.91 ns | 86.9 | 288 B | 248 B | 93.4 |
-| Prepare And Register | 77.39 μs | 11.14 ns | 1.252 | 62.89 KB | 64 B | 3.696 |
-| Prepare And Register And Simple Resolve | 181.21 μs | 10.13 ns | 0.784 | 63.65 KB | 24 B | 2.713 |
+| Singleton | 52.85 ns | 1.49 ns | 21.5 | 0 B | 0 B | 100 |
+| Transient | 44.48 ns | 18.06 ns | 64.7 | 72 B | 72 B | 100 |
+| PerResolve | 66.09 ns | 14.26 ns | 47.7 | 192 B | 56 B | 60.9 |
+| Scoped | 117.55 ns | 48.01 ns | 64.3 | 304 B | 160 B | 74.9 |
+| Combined | 76.32 ns | 44.51 ns | 76.7 | 168 B | 168 B | 100 |
+| Complex | 192.92 ns | 95.94 ns | 70.7 | 360 B | 360 B | 100 |
+| Property | 99.38 ns | 73.67 ns | 86.2 | 336 B | 336 B | 100 |
+| Generics | 59.06 ns | 32.13 ns | 74.3 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 161.08 ns | 137.09 ns | 92.3 | 624 B | 624 B | 100 |
+| Conditional | 59.11 ns | 35.89 ns | 78.3 | 144 B | 144 B | 100 |
+| Child Container | 89.22 μs | 717.55 ns | 8.974 | 7.59 KB | 1.59 KB | 46 |
+| Interception With Proxy | 78.95 ns | 75.07 ns | 97.5 | 248 B | 248 B | 100 |
+| Prepare And Register | 4.77 μs | 7.31 ns | 4.175 | 8.77 KB | 64 B | 9.888 |
+| Prepare And Register And Simple Resolve | 202.77 μs | 6.37 ns | 0.603 | 14.93 KB | 24 B | 5.599 |
 
-#### 8. Singularity — 1204 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 72.33 ns | 1.47 ns | 18.4 | 0 B | 0 B | 100 |
-| Transient | 87.13 ns | 13.61 ns | 40.7 | 72 B | 72 B | 100 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 48.35 ns | 43.13 ns | 94.6 | 160 B | 160 B | 100 |
-| Combined | 55.51 ns | 39.49 ns | 84.6 | 168 B | 168 B | 100 |
-| Complex | 112.13 ns | 96.43 ns | 92.8 | 360 B | 360 B | 100 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | 54.27 ns | 34.2 ns | 79.8 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 261.03 ns | 142.72 ns | 74.1 | 624 B | 624 B | 100 |
-| Conditional | — | 34.34 ns | 0 | — | 144 B | 0 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 6.22 μs | 11.14 ns | 4.416 | 12.49 KB | 64 B | 8.286 |
-| Prepare And Register And Simple Resolve | 64.94 μs | 10.13 ns | 1.309 | 15.78 KB | 24 B | 5.446 |
-
-#### 9. Microsoft Extensions Dependency Injection — 1098 of 3000
+#### 5. Simple Injector — 1685 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 25.3 ns | 1.47 ns | 30.7 | 0 B | 0 B | 100 |
-| Transient | 92.8 ns | 13.61 ns | 39.5 | 72 B | 72 B | 100 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 186.56 ns | 43.13 ns | 48.5 | 472 B | 160 B | 60.9 |
-| Combined | 58.41 ns | 39.49 ns | 82.6 | 168 B | 168 B | 100 |
-| Complex | 127.85 ns | 96.43 ns | 87 | 360 B | 360 B | 100 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | 69.68 ns | 34.2 ns | 70.6 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | 192.33 ns | 34.34 ns | 42.8 | 144 B | 144 B | 100 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 1.88 μs | 11.14 ns | 8.043 | 6.05 KB | 64 B | 11.9 |
-| Prepare And Register And Simple Resolve | 2.32 μs | 10.13 ns | 6.93 | 6.8 KB | 24 B | 8.29 |
+| Singleton | 36.05 ns | 1.49 ns | 25.9 | 0 B | 0 B | 100 |
+| Transient | 49.42 ns | 18.06 ns | 61.5 | 72 B | 72 B | 100 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 219.56 ns | 48.01 ns | 47.1 | 504 B | 160 B | 59 |
+| Combined | 68.8 ns | 44.51 ns | 80.7 | 168 B | 168 B | 100 |
+| Complex | 125.91 ns | 95.94 ns | 87.4 | 360 B | 360 B | 100 |
+| Property | 112.37 ns | 73.67 ns | 81.2 | 336 B | 336 B | 100 |
+| Generics | 61.36 ns | 32.13 ns | 72.9 | 144 B | 144 B | 100 |
+| IEnumerable | 58.6 ns | 48.05 ns | 90.7 | 72 B | 72 B | 100 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | 62.65 ns | 35.89 ns | 76.1 | 144 B | 144 B | 100 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 83.66 ns | 75.07 ns | 94.8 | 248 B | 248 B | 100 |
+| Prepare And Register | 65.85 μs | 7.31 ns | 1.124 | 63.48 KB | 64 B | 3.679 |
+| Prepare And Register And Simple Resolve | 261.74 μs | 6.37 ns | 0.531 | 105.42 KB | 24 B | 2.108 |
 
-#### 10. Faster.Ioc — 1027 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 82.68 ns | 1.47 ns | 17.2 | 0 B | 0 B | 100 |
-| Transient | 84.53 ns | 13.61 ns | 41.3 | 72 B | 72 B | 100 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 61.74 ns | 43.13 ns | 83.9 | 192 B | 160 B | 92.3 |
-| Combined | 56.63 ns | 39.49 ns | 83.8 | 168 B | 168 B | 100 |
-| Complex | 111.84 ns | 96.43 ns | 92.9 | 360 B | 360 B | 100 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | 50.53 ns | 34.2 ns | 82.7 | 144 B | 144 B | 100 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | — | 34.34 ns | 0 | — | 144 B | 0 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 1.23 μs | 11.14 ns | 9.921 | 4.36 KB | 64 B | 14 |
-| Prepare And Register And Simple Resolve | 132.92 μs | 10.13 ns | 0.915 | 7.41 KB | 24 B | 7.939 |
-
-#### 11. Managed Extensibility Framework 2 — 777 of 3000
+#### 6. LightInject — 1569 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 135.59 ns | 1.47 ns | 13.5 | 360 B | 0 B | 25 |
-| Transient | 170.8 ns | 13.61 ns | 29.2 | 312 B | 72 B | 53.5 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 198.86 ns | 39.49 ns | 45 | 528 B | 168 B | 59 |
-| Complex | 379.11 ns | 96.43 ns | 50.6 | 1.05 KB | 360 B | 59 |
-| Property | 494.75 ns | 73.71 ns | 38.8 | 1.15 KB | 336 B | 54.8 |
-| Generics | 193.68 ns | 34.2 ns | 42.5 | 384 B | 144 B | 64.2 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 460.48 ns | 142.72 ns | 55.8 | 1.27 KB | 624 B | 70.1 |
-| Conditional | 192.77 ns | 34.34 ns | 42.7 | 384 B | 144 B | 64.2 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 106.82 μs | 11.14 ns | 1.066 | 44.45 KB | 64 B | 4.396 |
-| Prepare And Register And Simple Resolve | 219.28 μs | 10.13 ns | 0.713 | 56.7 KB | 24 B | 2.875 |
+| Singleton | 59.77 ns | 1.49 ns | 20.2 | 0 B | 0 B | 100 |
+| Transient | 38.4 ns | 18.06 ns | 69.6 | 72 B | 72 B | 100 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 244.48 ns | 48.01 ns | 44.7 | 568 B | 160 B | 55.8 |
+| Combined | 95.41 ns | 44.51 ns | 68.7 | 168 B | 168 B | 100 |
+| Complex | 277.09 ns | 95.94 ns | 59 | 360 B | 360 B | 100 |
+| Property | 93.99 ns | 73.67 ns | 88.7 | 336 B | 336 B | 100 |
+| Generics | 55.96 ns | 32.13 ns | 76.3 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 158.75 ns | 137.09 ns | 93 | 624 B | 624 B | 100 |
+| Conditional | 147.27 ns | 35.89 ns | 49.9 | 144 B | 144 B | 100 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 187.91 ns | 75.07 ns | 63.5 | 560 B | 248 B | 68.2 |
+| Prepare And Register | 10.27 μs | 7.31 ns | 2.846 | 33.07 KB | 64 B | 5.096 |
+| Prepare And Register And Simple Resolve | 692.86 μs | 6.37 ns | 0.326 | 43.45 KB | 24 B | 3.284 |
 
-#### 12. Unity — 712 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 162.53 ns | 1.47 ns | 12.3 | 336 B | 0 B | 25.8 |
-| Transient | 212.77 ns | 13.61 ns | 26.1 | 408 B | 72 B | 47.1 |
-| PerResolve | 368.54 ns | 15.12 ns | 20.9 | 808 B | 56 B | 31 |
-| Scoped | 1.94 μs | 43.13 ns | 15.1 | 4.57 KB | 160 B | 19.8 |
-| Combined | 578.49 ns | 39.49 ns | 26.4 | 792 B | 168 B | 48.5 |
-| Complex | 1.39 μs | 96.43 ns | 26.5 | 1.66 KB | 360 B | 47.1 |
-| Property | 697.56 ns | 73.71 ns | 32.7 | 1.08 KB | 336 B | 56.5 |
-| Generics | 2.24 μs | 34.2 ns | 12.5 | 1008 B | 144 B | 40.3 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 2.44 μs | 142.72 ns | 24.3 | 9.59 KB | 624 B | 25.7 |
-| Conditional | 426.53 ns | 34.34 ns | 28.8 | 624 B | 144 B | 50.9 |
-| Child Container | 7.07 μs | 781.73 ns | 33.3 | 8.81 KB | 1.59 KB | 42.7 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 8.69 μs | 11.14 ns | 3.736 | 19.28 KB | 64 B | 6.672 |
-| Prepare And Register And Simple Resolve | 14.32 μs | 10.13 ns | 2.788 | 21.89 KB | 24 B | 4.625 |
-
-#### 13. Maestro — 600 of 3000
+#### 7. Lamar — 1375 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 223.27 ns | 1.47 ns | 10.5 | 720 B | 0 B | 18 |
-| Transient | 253.32 ns | 13.61 ns | 24 | 648 B | 72 B | 37.8 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 814.25 ns | 43.13 ns | 23.3 | 1.63 KB | 160 B | 32.9 |
-| Combined | 396.81 ns | 39.49 ns | 31.9 | 1.24 KB | 168 B | 38.5 |
-| Complex | 1 μs | 96.43 ns | 31.2 | 2.79 KB | 360 B | 36.5 |
-| Property | 801.87 ns | 73.71 ns | 30.5 | 1.8 KB | 336 B | 43.9 |
-| Generics | 295.18 ns | 34.2 ns | 34.5 | 912 B | 144 B | 42.4 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | 455.15 ns | 34.34 ns | 27.8 | 1.01 KB | 144 B | 39.9 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 733.13 ns | 73.91 ns | 31.9 | 1.03 KB | 248 B | 50.2 |
-| Prepare And Register | 18.36 μs | 11.14 ns | 2.571 | 27.62 KB | 64 B | 5.576 |
-| Prepare And Register And Simple Resolve | 19.39 μs | 10.13 ns | 2.396 | 28.62 KB | 24 B | 4.046 |
+| Singleton | 45.01 ns | 1.49 ns | 23.3 | 120 B | 0 B | 40.8 |
+| Transient | 71.38 ns | 18.06 ns | 51.3 | 192 B | 72 B | 66.7 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 1.18 μs | 48.01 ns | 20.4 | 1.08 KB | 160 B | 40.4 |
+| Combined | 87.32 ns | 44.51 ns | 71.8 | 288 B | 168 B | 78.4 |
+| Complex | 141.86 ns | 95.94 ns | 82.4 | 480 B | 360 B | 87.3 |
+| Property | 122.94 ns | 73.67 ns | 77.6 | 456 B | 336 B | 86.6 |
+| Generics | 83 ns | 32.13 ns | 62.8 | 264 B | 144 B | 76.4 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 185.01 ns | 137.09 ns | 86.2 | 744 B | 624 B | 91.9 |
+| Conditional | 80.99 ns | 35.89 ns | 67.1 | 264 B | 144 B | 76.4 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 100.66 ns | 75.07 ns | 86.5 | 288 B | 248 B | 93.4 |
+| Prepare And Register | 136.16 μs | 7.31 ns | 0.781 | 62.91 KB | 64 B | 3.695 |
+| Prepare And Register And Simple Resolve | 144.11 μs | 6.37 ns | 0.715 | 63.64 KB | 24 B | 2.713 |
 
-#### 14. StructureMap — 538 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 727.42 ns | 1.47 ns | 5.827 | 2.58 KB | 0 B | 9.492 |
-| Transient | 441.4 ns | 13.61 ns | 18.2 | 1.17 KB | 72 B | 28 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 5.96 μs | 43.13 ns | 8.603 | 9.67 KB | 160 B | 13.6 |
-| Combined | 1.59 μs | 39.49 ns | 16 | 2.86 KB | 168 B | 25.5 |
-| Complex | 3.53 μs | 96.43 ns | 16.6 | 4.64 KB | 360 B | 28.4 |
-| Property | 1.41 μs | 73.71 ns | 23 | 1.64 KB | 336 B | 46 |
-| Generics | 1.42 μs | 34.2 ns | 15.8 | 2.63 KB | 144 B | 24.9 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 3.87 μs | 142.72 ns | 19.3 | 4.99 KB | 624 B | 35.5 |
-| Conditional | 864.14 ns | 34.34 ns | 20.2 | 1.38 KB | 144 B | 34.2 |
-| Child Container | 1.02 ms | 781.73 ns | 2.774 | 61.37 KB | 1.59 KB | 16.2 |
-| Interception With Proxy | 223.72 ns | 73.91 ns | 57.7 | 624 B | 248 B | 64.8 |
-| Prepare And Register | 82.62 μs | 11.14 ns | 1.212 | 61.88 KB | 64 B | 3.726 |
-| Prepare And Register And Simple Resolve | 1.21 ms | 10.13 ns | 0.303 | 106.9 KB | 24 B | 2.094 |
-
-#### 15. ZenIoc — 441 of 3000
+#### 8. Singularity — 1243 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 117.54 ns | 1.47 ns | 14.4 | 168 B | 0 B | 35.4 |
-| Transient | 178.07 ns | 13.61 ns | 28.6 | 240 B | 72 B | 60.3 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 324.02 ns | 39.49 ns | 35.3 | 504 B | 168 B | 60.3 |
-| Complex | 810.94 ns | 96.43 ns | 34.6 | 1.17 KB | 360 B | 56 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | — | 34.2 ns | 0 | — | 144 B | 0 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | 374.35 ns | 34.34 ns | 30.7 | 480 B | 144 B | 57.7 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 3.69 μs | 11.14 ns | 5.738 | 4.48 KB | 64 B | 13.8 |
-| Prepare And Register And Simple Resolve | 70.39 μs | 10.13 ns | 1.258 | 8.93 KB | 24 B | 7.235 |
+| Singleton | 18.81 ns | 1.49 ns | 35.5 | 0 B | 0 B | 100 |
+| Transient | 37.08 ns | 18.06 ns | 70.8 | 72 B | 72 B | 100 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 54.49 ns | 48.01 ns | 94 | 160 B | 160 B | 100 |
+| Combined | 56.5 ns | 44.51 ns | 89 | 168 B | 168 B | 100 |
+| Complex | 124.16 ns | 95.94 ns | 88 | 360 B | 360 B | 100 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | 55.73 ns | 32.13 ns | 76.4 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 279.38 ns | 137.09 ns | 70.2 | 624 B | 624 B | 100 |
+| Conditional | — | 35.89 ns | 0 | — | 144 B | 0 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 5.48 μs | 7.31 ns | 3.895 | 12.49 KB | 64 B | 8.286 |
+| Prepare And Register And Simple Resolve | 38.41 μs | 6.37 ns | 1.385 | 15.67 KB | 24 B | 5.465 |
 
-#### 16. Autofac — 405 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 402.13 ns | 1.47 ns | 7.833 | 1.92 KB | 0 B | 11 |
-| Transient | 832.99 ns | 13.61 ns | 13.2 | 2.44 KB | 72 B | 19.5 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 1.73 μs | 43.13 ns | 16 | 4.5 KB | 160 B | 19.9 |
-| Combined | 2.13 μs | 39.49 ns | 13.8 | 4.48 KB | 168 B | 20.4 |
-| Complex | 5.42 μs | 96.43 ns | 13.4 | 9.05 KB | 360 B | 20.3 |
-| Property | 14.35 μs | 73.71 ns | 7.215 | 20.91 KB | 336 B | 13 |
-| Generics | 1.9 μs | 34.2 ns | 13.6 | 3.91 KB | 144 B | 20.4 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 6.42 μs | 142.72 ns | 15 | 8.6 KB | 624 B | 27.1 |
-| Conditional | 1.76 μs | 34.34 ns | 14.2 | 3.16 KB | 144 B | 22.7 |
-| Child Container | 11.96 μs | 781.73 ns | 25.6 | 16.03 KB | 1.59 KB | 31.7 |
-| Interception With Proxy | 2.58 μs | 73.91 ns | 17 | 2.58 KB | 248 B | 32 |
-| Prepare And Register | 52.31 μs | 11.14 ns | 1.523 | 48.75 KB | 64 B | 4.197 |
-| Prepare And Register And Simple Resolve | 54.42 μs | 10.13 ns | 1.43 | 50.46 KB | 24 B | 3.047 |
-
-#### 17. Spring.NET — 388 of 3000
+#### 9. Microsoft Extensions Dependency Injection — 1140 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 989.66 ns | 1.47 ns | 4.997 | 336 B | 0 B | 25.8 |
-| Transient | 1.76 μs | 13.61 ns | 9.097 | 480 B | 72 B | 43.6 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 5.53 μs | 39.49 ns | 8.555 | 3.02 KB | 168 B | 24.8 |
-| Complex | 12.89 μs | 96.43 ns | 8.693 | 10.1 KB | 360 B | 19.2 |
-| Property | 70.61 μs | 73.71 ns | 3.253 | 361.37 KB | 336 B | 3.119 |
-| Generics | — | 34.2 ns | 0 | — | 144 B | 0 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 14.74 μs | 142.72 ns | 9.873 | 7.08 KB | 624 B | 29.9 |
-| Conditional | 4.51 μs | 34.34 ns | 8.848 | 2.58 KB | 144 B | 25.1 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 230.99 ns | 73.91 ns | 56.8 | 328 B | 248 B | 87.9 |
-| Prepare And Register | 5.73 μs | 11.14 ns | 4.602 | 16.2 KB | 64 B | 7.277 |
-| Prepare And Register And Simple Resolve | 17.09 μs | 10.13 ns | 2.552 | 39.66 KB | 24 B | 3.437 |
+| Singleton | 30.58 ns | 1.49 ns | 28.1 | 0 B | 0 B | 100 |
+| Transient | 41.22 ns | 18.06 ns | 67.2 | 72 B | 72 B | 100 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 182.77 ns | 48.01 ns | 51.6 | 472 B | 160 B | 60.9 |
+| Combined | 61.45 ns | 44.51 ns | 85.4 | 168 B | 168 B | 100 |
+| Complex | 125.94 ns | 95.94 ns | 87.4 | 360 B | 360 B | 100 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | 67.5 ns | 32.13 ns | 69.5 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | 114.96 ns | 35.89 ns | 56.4 | 144 B | 144 B | 100 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 1.68 μs | 7.31 ns | 7.04 | 6.05 KB | 64 B | 11.9 |
+| Prepare And Register And Simple Resolve | 2.09 μs | 6.37 ns | 5.939 | 6.8 KB | 24 B | 8.29 |
 
-#### 18. Castle Windsor — 349 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 302.95 ns | 1.47 ns | 9.021 | 984 B | 0 B | 15.4 |
-| Transient | 998.46 ns | 13.61 ns | 12.1 | 2.34 KB | 72 B | 19.9 |
-| PerResolve | 1.97 μs | 15.12 ns | 9.037 | 3.03 KB | 56 B | 16 |
-| Scoped | 4.11 μs | 43.13 ns | 10.4 | 3.79 KB | 160 B | 21.7 |
-| Combined | 3.64 μs | 39.49 ns | 10.6 | 5.34 KB | 168 B | 18.7 |
-| Complex | 9.74 μs | 96.43 ns | 10 | 12.42 KB | 360 B | 17.4 |
-| Property | 7.25 μs | 73.71 ns | 10.1 | 9.09 KB | 336 B | 19.6 |
-| Generics | 7.15 μs | 34.2 ns | 7.017 | 5.84 KB | 144 B | 16.7 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 8.8 μs | 142.72 ns | 12.8 | 12.94 KB | 624 B | 22.1 |
-| Conditional | 3.15 μs | 34.34 ns | 10.6 | 4.8 KB | 144 B | 18.4 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 1.76 μs | 73.91 ns | 20.6 | 2.36 KB | 248 B | 33.4 |
-| Prepare And Register | 161.89 μs | 11.14 ns | 0.866 | 75.79 KB | 64 B | 3.367 |
-| Prepare And Register And Simple Resolve | 154.98 μs | 10.13 ns | 0.848 | 77.26 KB | 24 B | 2.463 |
-
-#### 19. MvvmCross — 340 of 3000
+#### 10. Faster.Ioc — 1071 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 167.17 ns | 1.47 ns | 12.1 | 0 B | 0 B | 100 |
-| Transient | 402.61 ns | 13.61 ns | 19 | 360 B | 72 B | 50 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 1.39 μs | 39.49 ns | 17 | 1.24 KB | 168 B | 38.5 |
-| Complex | 3.61 μs | 96.43 ns | 16.4 | 3.47 KB | 360 B | 32.8 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | — | 34.2 ns | 0 | — | 144 B | 0 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | — | 34.34 ns | 0 | — | 144 B | 0 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 875.46 ns | 11.14 ns | 11.8 | 2.35 KB | 64 B | 19 |
-| Prepare And Register And Simple Resolve | 1.16 μs | 10.13 ns | 9.805 | 2.6 KB | 24 B | 13.4 |
+| Singleton | 24.12 ns | 1.49 ns | 31.5 | 0 B | 0 B | 100 |
+| Transient | 35.6 ns | 18.06 ns | 72.2 | 72 B | 72 B | 100 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 65.93 ns | 48.01 ns | 85.6 | 192 B | 160 B | 92.3 |
+| Combined | 59.52 ns | 44.51 ns | 86.7 | 168 B | 168 B | 100 |
+| Complex | 112.85 ns | 95.94 ns | 92.3 | 360 B | 360 B | 100 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | 51.44 ns | 32.13 ns | 79.5 | 144 B | 144 B | 100 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | — | 35.89 ns | 0 | — | 144 B | 0 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 1.19 μs | 7.31 ns | 8.364 | 4.36 KB | 64 B | 14 |
+| Prepare And Register And Simple Resolve | 106.25 μs | 6.37 ns | 0.833 | 7.46 KB | 24 B | 7.915 |
 
-#### 20. Ninject — 189 of 3000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 1.87 μs | 1.47 ns | 3.634 | 2.23 KB | 0 B | 10.2 |
-| Transient | 6.61 μs | 13.61 ns | 4.701 | 4.8 KB | 72 B | 13.9 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | 1.05 ms | 43.13 ns | 0.649 | 2.05 MB | 160 B | 0.925 |
-| Combined | 17.3 μs | 39.49 ns | 4.838 | 12.94 KB | 168 B | 12 |
-| Complex | 41.22 μs | 96.43 ns | 4.862 | 32.25 KB | 360 B | 10.8 |
-| Property | 29.35 μs | 73.71 ns | 5.045 | 20.11 KB | 336 B | 13.2 |
-| Generics | 18.94 μs | 34.2 ns | 4.311 | 10.83 KB | 144 B | 12.3 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 48.04 μs | 142.72 ns | 5.47 | 26.77 KB | 624 B | 15.4 |
-| Conditional | 14.91 μs | 34.34 ns | 4.868 | 10.27 KB | 144 B | 12.6 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | 4.65 μs | 73.91 ns | 12.7 | 3.48 KB | 248 B | 27.5 |
-| Prepare And Register | 290.16 μs | 11.14 ns | 0.647 | 33.74 KB | 64 B | 5.045 |
-| Prepare And Register And Simple Resolve | 510.09 μs | 10.13 ns | 0.467 | 46.89 KB | 24 B | 3.161 |
-
-#### 21. Catel — 141 of 3000
+#### 11. Managed Extensibility Framework 2 — 812 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 212.97 ns | 1.47 ns | 10.8 | 336 B | 0 B | 25.8 |
-| Transient | 3.71 μs | 13.61 ns | 6.275 | 5.62 KB | 72 B | 12.9 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 8.59 μs | 39.49 ns | 6.864 | 12.19 KB | 168 B | 12.4 |
-| Complex | 18.58 μs | 96.43 ns | 7.241 | 25.99 KB | 360 B | 12 |
-| Property | — | 73.71 ns | 0 | — | 336 B | 0 |
-| Generics | — | 34.2 ns | 0 | — | 144 B | 0 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | — | 142.72 ns | 0 | — | 624 B | 0 |
-| Conditional | 5.3 μs | 34.34 ns | 8.162 | 7.01 KB | 144 B | 15.3 |
-| Child Container | 1.89 ms | 781.73 ns | 2.035 | 1.9 MB | 1.59 KB | 2.877 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 3.45 μs | 11.14 ns | 5.927 | 6.8 KB | 64 B | 11.2 |
-| Prepare And Register And Simple Resolve | 762.81 μs | 10.13 ns | 0.382 | 974.36 KB | 24 B | 0.694 |
+| Singleton | 134.25 ns | 1.49 ns | 13.6 | 360 B | 0 B | 25 |
+| Transient | 109.62 ns | 18.06 ns | 41.5 | 312 B | 72 B | 53.5 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 184.94 ns | 44.51 ns | 49.5 | 528 B | 168 B | 59 |
+| Complex | 415.36 ns | 95.94 ns | 48.3 | 1.05 KB | 360 B | 59 |
+| Property | 334.35 ns | 73.67 ns | 47.2 | 1.15 KB | 336 B | 54.8 |
+| Generics | 127.43 ns | 32.13 ns | 50.8 | 384 B | 144 B | 64.2 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 524.37 ns | 137.09 ns | 51.3 | 1.27 KB | 624 B | 70.1 |
+| Conditional | 137.98 ns | 35.89 ns | 51.5 | 384 B | 144 B | 64.2 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 103.5 μs | 7.31 ns | 0.896 | 44.44 KB | 64 B | 4.396 |
+| Prepare And Register And Simple Resolve | 254.74 μs | 6.37 ns | 0.538 | 56.7 KB | 24 B | 2.875 |
 
-#### 22. Visual Studio MEF — 137 of 3000
+#### 12. Unity — 720 of 3000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Singleton | 4.86 μs | 1.47 ns | 2.256 | 5.79 KB | 0 B | 6.35 |
-| Transient | 8.42 μs | 13.61 ns | 4.165 | 7.85 KB | 72 B | 10.9 |
-| PerResolve | — | 15.12 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 43.13 ns | 0 | — | 160 B | 0 |
-| Combined | 13.56 μs | 39.49 ns | 5.464 | 9.84 KB | 168 B | 13.8 |
-| Complex | 23.98 μs | 96.43 ns | 6.373 | 13.92 KB | 360 B | 16.4 |
-| Property | 19.53 μs | 73.71 ns | 6.185 | 12.09 KB | 336 B | 17 |
-| Generics | — | 34.2 ns | 0 | — | 144 B | 0 |
-| IEnumerable | — | 49.05 ns | 0 | — | 72 B | 0 |
-| Array | 30.8 μs | 142.72 ns | 6.831 | 17.48 KB | 624 B | 19 |
-| Conditional | 13.78 μs | 34.34 ns | 5.064 | 9.8 KB | 144 B | 12.9 |
-| Child Container | — | 781.73 ns | 0 | — | 1.59 KB | 0 |
-| Interception With Proxy | — | 73.91 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 633.74 μs | 11.14 ns | 0.438 | 181.94 KB | 64 B | 2.173 |
-| Prepare And Register And Simple Resolve | 579.18 μs | 10.13 ns | 0.438 | 183.1 KB | 24 B | 1.6 |
+| Singleton | 140.84 ns | 1.49 ns | 13.3 | 336 B | 0 B | 25.8 |
+| Transient | 214.73 ns | 18.06 ns | 29.7 | 408 B | 72 B | 47.1 |
+| PerResolve | 301.91 ns | 14.26 ns | 22.4 | 808 B | 56 B | 31 |
+| Scoped | 1.94 μs | 48.01 ns | 15.9 | 4.57 KB | 160 B | 19.8 |
+| Combined | 527.16 ns | 44.51 ns | 29.4 | 792 B | 168 B | 48.5 |
+| Complex | 1.37 μs | 95.94 ns | 26.6 | 1.66 KB | 360 B | 47.1 |
+| Property | 739.16 ns | 73.67 ns | 31.8 | 1.08 KB | 336 B | 56.5 |
+| Generics | 2.06 μs | 32.13 ns | 12.7 | 1008 B | 144 B | 40.3 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 2.21 μs | 137.09 ns | 25 | 9.59 KB | 624 B | 25.7 |
+| Conditional | 402.26 ns | 35.89 ns | 30.2 | 624 B | 144 B | 50.9 |
+| Child Container | 7.68 μs | 717.55 ns | 30.6 | 8.81 KB | 1.59 KB | 42.7 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 7.88 μs | 7.31 ns | 3.249 | 19.28 KB | 64 B | 6.672 |
+| Prepare And Register And Simple Resolve | 12.54 μs | 6.37 ns | 2.424 | 21.89 KB | 24 B | 4.625 |
+
+#### 13. Maestro — 613 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 203.42 ns | 1.49 ns | 11 | 720 B | 0 B | 18 |
+| Transient | 216.7 ns | 18.06 ns | 29.6 | 648 B | 72 B | 37.8 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 793.3 ns | 48.01 ns | 24.8 | 1.63 KB | 160 B | 32.9 |
+| Combined | 433.98 ns | 44.51 ns | 32.3 | 1.24 KB | 168 B | 38.5 |
+| Complex | 972.09 ns | 95.94 ns | 31.6 | 2.79 KB | 360 B | 36.5 |
+| Property | 814.31 ns | 73.67 ns | 30.3 | 1.8 KB | 336 B | 43.9 |
+| Generics | 285.22 ns | 32.13 ns | 34 | 912 B | 144 B | 42.4 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | 382.29 ns | 35.89 ns | 31 | 1.01 KB | 144 B | 39.9 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 642.29 ns | 75.07 ns | 34.4 | 1.03 KB | 248 B | 50.2 |
+| Prepare And Register | 20.19 μs | 7.31 ns | 2.029 | 27.62 KB | 64 B | 5.576 |
+| Prepare And Register And Simple Resolve | 20.6 μs | 6.37 ns | 1.891 | 28.62 KB | 24 B | 4.046 |
+
+#### 14. StructureMap — 550 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 677.86 ns | 1.49 ns | 6.058 | 2.58 KB | 0 B | 9.492 |
+| Transient | 436.51 ns | 18.06 ns | 20.9 | 1.17 KB | 72 B | 28 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 6.42 μs | 48.01 ns | 8.737 | 9.67 KB | 160 B | 13.6 |
+| Combined | 1.31 μs | 44.51 ns | 18.6 | 2.86 KB | 168 B | 25.5 |
+| Complex | 3.44 μs | 95.94 ns | 16.8 | 4.64 KB | 360 B | 28.4 |
+| Property | 1.28 μs | 73.67 ns | 24.1 | 1.64 KB | 336 B | 46 |
+| Generics | 1.28 μs | 32.13 ns | 16.1 | 2.63 KB | 144 B | 24.9 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 3.29 μs | 137.09 ns | 20.5 | 4.99 KB | 624 B | 35.5 |
+| Conditional | 798.43 ns | 35.89 ns | 21.5 | 1.38 KB | 144 B | 34.2 |
+| Child Container | 1.03 ms | 717.55 ns | 2.639 | 60.01 KB | 1.59 KB | 16.4 |
+| Interception With Proxy | 206.47 ns | 75.07 ns | 60.6 | 624 B | 248 B | 64.8 |
+| Prepare And Register | 76.52 μs | 7.31 ns | 1.042 | 60.82 KB | 64 B | 3.758 |
+| Prepare And Register And Simple Resolve | 1.06 ms | 6.37 ns | 0.263 | 100.31 KB | 24 B | 2.161 |
+
+#### 15. ZenIoc — 443 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 124.82 ns | 1.49 ns | 14.1 | 168 B | 0 B | 35.4 |
+| Transient | 197.58 ns | 18.06 ns | 31 | 240 B | 72 B | 60.3 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 347.78 ns | 44.51 ns | 36.1 | 504 B | 168 B | 60.3 |
+| Complex | 742.13 ns | 95.94 ns | 36.1 | 1.17 KB | 360 B | 56 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | — | 32.13 ns | 0 | — | 144 B | 0 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | 435.73 ns | 35.89 ns | 29.1 | 480 B | 144 B | 57.7 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 3.79 μs | 7.31 ns | 4.681 | 4.48 KB | 64 B | 13.8 |
+| Prepare And Register And Simple Resolve | 41.94 μs | 6.37 ns | 1.325 | 8.94 KB | 24 B | 7.233 |
+
+#### 16. Autofac — 415 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 339.78 ns | 1.49 ns | 8.551 | 1.92 KB | 0 B | 11 |
+| Transient | 758.36 ns | 18.06 ns | 15.8 | 2.44 KB | 72 B | 19.5 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 1.56 μs | 48.01 ns | 17.7 | 4.5 KB | 160 B | 19.9 |
+| Combined | 2.02 μs | 44.51 ns | 15 | 4.48 KB | 168 B | 20.4 |
+| Complex | 4.75 μs | 95.94 ns | 14.3 | 9.05 KB | 360 B | 20.3 |
+| Property | 13.44 μs | 73.67 ns | 7.453 | 20.91 KB | 336 B | 13 |
+| Generics | 1.74 μs | 32.13 ns | 13.8 | 3.91 KB | 144 B | 20.4 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 6.49 μs | 137.09 ns | 14.6 | 8.6 KB | 624 B | 27.1 |
+| Conditional | 1.51 μs | 35.89 ns | 15.6 | 3.16 KB | 144 B | 22.7 |
+| Child Container | 10.41 μs | 717.55 ns | 26.3 | 16.03 KB | 1.59 KB | 31.7 |
+| Interception With Proxy | 2.36 μs | 75.07 ns | 17.9 | 2.58 KB | 248 B | 32 |
+| Prepare And Register | 53.38 μs | 7.31 ns | 1.248 | 48.76 KB | 64 B | 4.197 |
+| Prepare And Register And Simple Resolve | 55.48 μs | 6.37 ns | 1.152 | 50.46 KB | 24 B | 3.047 |
+
+#### 17. Spring.NET — 395 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 986.18 ns | 1.49 ns | 5.024 | 336 B | 0 B | 25.8 |
+| Transient | 1.57 μs | 18.06 ns | 11 | 480 B | 72 B | 43.6 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 5.08 μs | 44.51 ns | 9.46 | 3.02 KB | 168 B | 24.8 |
+| Complex | 12.1 μs | 95.94 ns | 8.949 | 10.1 KB | 360 B | 19.2 |
+| Property | 58.11 μs | 73.67 ns | 3.585 | 361.37 KB | 336 B | 3.119 |
+| Generics | — | 32.13 ns | 0 | — | 144 B | 0 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 14.1 μs | 137.09 ns | 9.894 | 7.08 KB | 624 B | 29.9 |
+| Conditional | 4.11 μs | 35.89 ns | 9.471 | 2.58 KB | 144 B | 25.1 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 200.71 ns | 75.07 ns | 61.4 | 328 B | 248 B | 87.9 |
+| Prepare And Register | 5.09 μs | 7.31 ns | 4.043 | 16.2 KB | 64 B | 7.277 |
+| Prepare And Register And Simple Resolve | 14.68 μs | 6.37 ns | 2.24 | 39.66 KB | 24 B | 3.437 |
+
+#### 18. Castle Windsor — 357 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 256.15 ns | 1.49 ns | 9.844 | 984 B | 0 B | 15.4 |
+| Transient | 992.05 ns | 18.06 ns | 13.9 | 2.34 KB | 72 B | 19.9 |
+| PerResolve | 1.73 μs | 14.26 ns | 9.397 | 3.03 KB | 56 B | 16 |
+| Scoped | 4.55 μs | 48.01 ns | 10.4 | 3.79 KB | 160 B | 21.7 |
+| Combined | 3.35 μs | 44.51 ns | 11.7 | 5.34 KB | 168 B | 18.7 |
+| Complex | 8.69 μs | 95.94 ns | 10.6 | 12.42 KB | 360 B | 17.4 |
+| Property | 6.13 μs | 73.67 ns | 11 | 9.09 KB | 336 B | 19.6 |
+| Generics | 6.56 μs | 32.13 ns | 7.106 | 5.84 KB | 144 B | 16.7 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 8.13 μs | 137.09 ns | 13 | 12.94 KB | 624 B | 22.1 |
+| Conditional | 2.67 μs | 35.89 ns | 11.8 | 4.8 KB | 144 B | 18.4 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 1.61 μs | 75.07 ns | 21.8 | 2.36 KB | 248 B | 33.4 |
+| Prepare And Register | 138.91 μs | 7.31 ns | 0.774 | 75.78 KB | 64 B | 3.367 |
+| Prepare And Register And Simple Resolve | 132 μs | 6.37 ns | 0.747 | 77.27 KB | 24 B | 2.463 |
+
+#### 19. MvvmCross — 346 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 152.48 ns | 1.49 ns | 12.7 | 0 B | 0 B | 100 |
+| Transient | 344.05 ns | 18.06 ns | 23.5 | 360 B | 72 B | 50 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 1.19 μs | 44.51 ns | 19.5 | 1.24 KB | 168 B | 38.5 |
+| Complex | 3.19 μs | 95.94 ns | 17.4 | 3.47 KB | 360 B | 32.8 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | — | 32.13 ns | 0 | — | 144 B | 0 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | — | 35.89 ns | 0 | — | 144 B | 0 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 808.98 ns | 7.31 ns | 10.1 | 2.35 KB | 64 B | 19 |
+| Prepare And Register And Simple Resolve | 993.96 ns | 6.37 ns | 8.605 | 2.6 KB | 24 B | 13.4 |
+
+#### 20. Ninject — 191 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 1.76 μs | 1.49 ns | 3.766 | 2.23 KB | 0 B | 10.2 |
+| Transient | 6.43 μs | 18.06 ns | 5.444 | 4.99 KB | 72 B | 13.7 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | 1.04 ms | 48.01 ns | 0.688 | 1.97 MB | 160 B | 0.943 |
+| Combined | 16.32 μs | 44.51 ns | 5.281 | 13.17 KB | 168 B | 11.9 |
+| Complex | 40.87 μs | 95.94 ns | 4.87 | 42.68 KB | 360 B | 9.371 |
+| Property | 26.73 μs | 73.67 ns | 5.285 | 20.11 KB | 336 B | 13.2 |
+| Generics | 18.02 μs | 32.13 ns | 4.287 | 10.83 KB | 144 B | 12.3 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 45.49 μs | 137.09 ns | 5.509 | 27.47 KB | 624 B | 15.2 |
+| Conditional | 12.8 μs | 35.89 ns | 5.368 | 10.27 KB | 144 B | 12.6 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | 3.93 μs | 75.07 ns | 13.9 | 3.44 KB | 248 B | 27.7 |
+| Prepare And Register | 265.35 μs | 7.31 ns | 0.56 | 33.73 KB | 64 B | 5.046 |
+| Prepare And Register And Simple Resolve | 549.28 μs | 6.37 ns | 0.366 | 46.89 KB | 24 B | 3.161 |
+
+#### 21. Catel — 144 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 204.53 ns | 1.49 ns | 11 | 336 B | 0 B | 25.8 |
+| Transient | 3.29 μs | 18.06 ns | 7.615 | 5.62 KB | 72 B | 12.9 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 7.61 μs | 44.51 ns | 7.73 | 12.22 KB | 168 B | 12.4 |
+| Complex | 16.38 μs | 95.94 ns | 7.693 | 26.05 KB | 360 B | 12 |
+| Property | — | 73.67 ns | 0 | — | 336 B | 0 |
+| Generics | — | 32.13 ns | 0 | — | 144 B | 0 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | — | 137.09 ns | 0 | — | 624 B | 0 |
+| Conditional | 4.5 μs | 35.89 ns | 9.056 | 6.98 KB | 144 B | 15.3 |
+| Child Container | 2 ms | 717.55 ns | 1.895 | 2.28 MB | 1.59 KB | 2.628 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 2.82 μs | 7.31 ns | 5.426 | 6.8 KB | 64 B | 11.2 |
+| Prepare And Register And Simple Resolve | 963.41 μs | 6.37 ns | 0.277 | 1.14 MB | 24 B | 0.634 |
+
+#### 22. Visual Studio MEF — 140 of 3000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Singleton | 4.34 μs | 1.49 ns | 2.397 | 5.79 KB | 0 B | 6.35 |
+| Transient | 7.86 μs | 18.06 ns | 4.925 | 7.85 KB | 72 B | 10.9 |
+| PerResolve | — | 14.26 ns | 0 | — | 56 B | 0 |
+| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
+| Combined | 11.82 μs | 44.51 ns | 6.205 | 9.84 KB | 168 B | 13.8 |
+| Complex | 21.48 μs | 95.94 ns | 6.718 | 13.92 KB | 360 B | 16.4 |
+| Property | 18.6 μs | 73.67 ns | 6.336 | 12.09 KB | 336 B | 17 |
+| Generics | — | 32.13 ns | 0 | — | 144 B | 0 |
+| IEnumerable | — | 48.05 ns | 0 | — | 72 B | 0 |
+| Array | 26.71 μs | 137.09 ns | 7.191 | 17.48 KB | 624 B | 19 |
+| Conditional | 11.68 μs | 35.89 ns | 5.618 | 9.8 KB | 144 B | 12.9 |
+| Child Container | — | 717.55 ns | 0 | — | 1.59 KB | 0 |
+| Interception With Proxy | — | 75.07 ns | 0 | — | 248 B | 0 |
+| Prepare And Register | 533.1 μs | 7.31 ns | 0.395 | 181.05 KB | 64 B | 2.179 |
+| Prepare And Register And Simple Resolve | 607.52 μs | 6.37 ns | 0.348 | 181.7 KB | 24 B | 1.606 |
 
 </details>
 
@@ -1019,9 +1020,9 @@ See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 14/14 | 1264 | 1249 | 2513 | gold in Advanced, gold in Basic, gold in Collections, gold in Stream, silver in Nested, silver in Prepare |
-| 2 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 12/14 | 1111 | 887 | 1999 | gold in Nested, gold in Prepare, silver in Advanced, silver in Basic, silver in Collections, silver in Stream |
-| 3 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) | 13/14 | 827 | 398 | 1225 | bronze in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
+| 1 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 14/14 | 1275 | 1249 | 2524 | gold in Advanced, gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Prepare |
+| 2 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 12/14 | 1091 | 887 | 1978 | gold in Prepare, silver in Advanced, silver in Basic, silver in Collections, silver in Nested, silver in Stream |
+| 3 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) | 13/14 | 817 | 398 | 1215 | bronze in Advanced, bronze in Basic, bronze in Collections, bronze in Nested, bronze in Prepare, bronze in Stream |
 
 
 <details>
@@ -1035,62 +1036,62 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=json-serialization).
 
-#### 1. System.Text.Json — 2513 of 2800
+#### 1. System.Text.Json — 2524 of 2800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 197.45 ns | 197.45 ns | 100 | 96 B | 96 B | 100 |
-| Deserialize Simple Object | 235.74 ns | 189.19 ns | 89.6 | 64 B | 64 B | 100 |
-| Serialize Nested Object | 438.64 ns | 438.64 ns | 100 | 504 B | 504 B | 100 |
-| Deserialize Nested Object | 628.62 ns | 537.54 ns | 92.5 | 768 B | 320 B | 65.9 |
-| Serialize Collection | 556.68 ns | 556.68 ns | 100 | 560 B | 560 B | 100 |
-| Deserialize Collection | 869.58 ns | 769.27 ns | 94.1 | 800 B | 472 B | 77.6 |
-| Serialize Dictionary | 193.42 ns | 193.42 ns | 100 | 88 B | 88 B | 100 |
-| Deserialize Dictionary | 350.77 ns | 273.62 ns | 88.4 | 312 B | 312 B | 100 |
-| Enum Round Trip | 339.24 ns | 339.24 ns | 100 | 88 B | 88 B | 100 |
-| Custom Converter Round Trip | 331.28 ns | 320.93 ns | 98.4 | 120 B | 120 B | 100 |
-| Polymorphic Round Trip | 1.77 μs | 1.77 μs | 100 | 1.32 KB | 1.32 KB | 100 |
-| UTF-8 Stream Round Trip | 646.75 ns | 646.75 ns | 100 | 280 B | 280 B | 100 |
-| Source Generation Round Trip | 428.06 ns | 428.06 ns | 100 | 160 B | 160 B | 100 |
-| Prepare Serializer | 21.37 μs | 0 ns | 0.684 | 7.45 KB | 0 B | 5.6 |
+| Serialize Simple Object | 124.45 ns | 124.45 ns | 100 | 96 B | 96 B | 100 |
+| Deserialize Simple Object | 166.1 ns | 130.14 ns | 88.6 | 64 B | 64 B | 100 |
+| Serialize Nested Object | 272.58 ns | 272.58 ns | 100 | 504 B | 504 B | 100 |
+| Deserialize Nested Object | 431.47 ns | 397.68 ns | 96 | 768 B | 320 B | 65.9 |
+| Serialize Collection | 370.54 ns | 370.54 ns | 100 | 560 B | 560 B | 100 |
+| Deserialize Collection | 656.91 ns | 656.91 ns | 100 | 800 B | 472 B | 77.6 |
+| Serialize Dictionary | 123.24 ns | 123.24 ns | 100 | 88 B | 88 B | 100 |
+| Deserialize Dictionary | 212.4 ns | 175.94 ns | 91.1 | 312 B | 312 B | 100 |
+| Enum Round Trip | 235.91 ns | 234.95 ns | 99.8 | 88 B | 88 B | 100 |
+| Custom Converter Round Trip | 234.72 ns | 229.05 ns | 98.8 | 120 B | 120 B | 100 |
+| Polymorphic Round Trip | 1.28 μs | 1.28 μs | 100 | 1.32 KB | 1.32 KB | 100 |
+| UTF-8 Stream Round Trip | 405.83 ns | 405.83 ns | 100 | 280 B | 280 B | 100 |
+| Source Generation Round Trip | 296.87 ns | 296.87 ns | 100 | 160 B | 160 B | 100 |
+| Prepare Serializer | 13.54 μs | 0 ns | 0.86 | 7.45 KB | 0 B | 5.599 |
 
-#### 2. ServiceStack.Text — 1999 of 2800
+#### 2. ServiceStack.Text — 1978 of 2800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 298.19 ns | 197.45 ns | 81.4 | 336 B | 96 B | 57.7 |
-| Deserialize Simple Object | 189.19 ns | 189.19 ns | 100 | 112 B | 64 B | 80.4 |
-| Serialize Nested Object | 599.74 ns | 438.64 ns | 85.5 | 792 B | 504 B | 80.4 |
-| Deserialize Nested Object | 537.54 ns | 537.54 ns | 100 | 320 B | 320 B | 100 |
-| Serialize Collection | 1.04 μs | 556.68 ns | 73.1 | 1000 B | 560 B | 75.5 |
-| Deserialize Collection | 769.27 ns | 769.27 ns | 100 | 472 B | 472 B | 100 |
-| Serialize Dictionary | 206.66 ns | 193.42 ns | 96.8 | 288 B | 88 B | 59.9 |
-| Deserialize Dictionary | 273.62 ns | 273.62 ns | 100 | 424 B | 312 B | 86.6 |
-| Enum Round Trip | 346.13 ns | 339.24 ns | 99 | 336 B | 88 B | 55.8 |
-| Custom Converter Round Trip | 320.93 ns | 320.93 ns | 100 | 400 B | 120 B | 58.3 |
-| Polymorphic Round Trip | — | 1.77 μs | 0 | — | 1.32 KB | 0 |
-| UTF-8 Stream Round Trip | 1.14 μs | 646.75 ns | 75.5 | 2.8 KB | 280 B | 32.4 |
-| Source Generation Round Trip | — | 428.06 ns | 0 | — | 160 B | 0 |
+| Serialize Simple Object | 211.04 ns | 124.45 ns | 76.9 | 336 B | 96 B | 57.7 |
+| Deserialize Simple Object | 130.14 ns | 130.14 ns | 100 | 112 B | 64 B | 80.4 |
+| Serialize Nested Object | 446.18 ns | 272.58 ns | 78.2 | 792 B | 504 B | 80.4 |
+| Deserialize Nested Object | 397.68 ns | 397.68 ns | 100 | 320 B | 320 B | 100 |
+| Serialize Collection | 663.32 ns | 370.54 ns | 74.8 | 1000 B | 560 B | 75.5 |
+| Deserialize Collection | 693.63 ns | 656.91 ns | 97.3 | 472 B | 472 B | 100 |
+| Serialize Dictionary | 154.92 ns | 123.24 ns | 89.3 | 288 B | 88 B | 59.9 |
+| Deserialize Dictionary | 175.94 ns | 175.94 ns | 100 | 424 B | 312 B | 86.6 |
+| Enum Round Trip | 234.95 ns | 234.95 ns | 100 | 336 B | 88 B | 55.8 |
+| Custom Converter Round Trip | 229.05 ns | 229.05 ns | 100 | 400 B | 120 B | 58.3 |
+| Polymorphic Round Trip | — | 1.28 μs | 0 | — | 1.32 KB | 0 |
+| UTF-8 Stream Round Trip | 736.08 ns | 405.83 ns | 74.3 | 2.8 KB | 280 B | 32.4 |
+| Source Generation Round Trip | — | 296.87 ns | 0 | — | 160 B | 0 |
 | Prepare Serializer | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 3. Newtonsoft.Json — 1225 of 2800
+#### 3. Newtonsoft.Json — 1215 of 2800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 362.22 ns | 197.45 ns | 73.9 | 1.41 KB | 96 B | 28.6 |
-| Deserialize Simple Object | 587.37 ns | 189.19 ns | 56.9 | 2.61 KB | 64 B | 18.1 |
-| Serialize Nested Object | 633.41 ns | 438.64 ns | 83.2 | 1.63 KB | 504 B | 55.9 |
-| Deserialize Nested Object | 1.18 μs | 537.54 ns | 67.6 | 2.89 KB | 320 B | 34 |
-| Serialize Collection | 896.85 ns | 556.68 ns | 78.8 | 1.83 KB | 560 B | 55.5 |
-| Deserialize Collection | 1.6 μs | 769.27 ns | 69.4 | 2.99 KB | 472 B | 40.1 |
-| Serialize Dictionary | 372.92 ns | 193.42 ns | 72.1 | 1.48 KB | 88 B | 27 |
-| Deserialize Dictionary | 614.58 ns | 273.62 ns | 66.8 | 2.83 KB | 312 B | 33.9 |
-| Enum Round Trip | 988.16 ns | 339.24 ns | 58.6 | 4.68 KB | 88 B | 15.2 |
-| Custom Converter Round Trip | 978.79 ns | 320.93 ns | 57.3 | 4.68 KB | 120 B | 17.3 |
-| Polymorphic Round Trip | 3.76 μs | 1.77 μs | 68.6 | 7.79 KB | 1.32 KB | 41.5 |
-| UTF-8 Stream Round Trip | 1.22 μs | 646.75 ns | 72.9 | 4.13 KB | 280 B | 26.8 |
-| Source Generation Round Trip | — | 428.06 ns | 0 | — | 160 B | 0 |
-| Prepare Serializer | 56.71 μs | 0 ns | 0.42 | 11.56 KB | 0 B | 4.497 |
+| Serialize Simple Object | 261.98 ns | 124.45 ns | 69.1 | 1.41 KB | 96 B | 28.6 |
+| Deserialize Simple Object | 421.68 ns | 130.14 ns | 55.7 | 2.61 KB | 64 B | 18.1 |
+| Serialize Nested Object | 434.9 ns | 272.58 ns | 79.2 | 1.63 KB | 504 B | 55.9 |
+| Deserialize Nested Object | 746.87 ns | 397.68 ns | 73 | 2.89 KB | 320 B | 34 |
+| Serialize Collection | 626.98 ns | 370.54 ns | 76.9 | 1.83 KB | 560 B | 55.5 |
+| Deserialize Collection | 1.15 μs | 656.91 ns | 75.5 | 2.99 KB | 472 B | 40.1 |
+| Serialize Dictionary | 261.29 ns | 123.24 ns | 68.8 | 1.48 KB | 88 B | 27 |
+| Deserialize Dictionary | 446.62 ns | 175.94 ns | 62.9 | 2.83 KB | 312 B | 33.9 |
+| Enum Round Trip | 713.77 ns | 234.95 ns | 57.5 | 4.68 KB | 88 B | 15.2 |
+| Custom Converter Round Trip | 665.09 ns | 229.05 ns | 58.8 | 4.68 KB | 120 B | 17.3 |
+| Polymorphic Round Trip | 2.58 μs | 1.28 μs | 70.5 | 7.79 KB | 1.32 KB | 41.5 |
+| UTF-8 Stream Round Trip | 869.59 ns | 405.83 ns | 68.4 | 4.13 KB | 280 B | 26.8 |
+| Source Generation Round Trip | — | 296.87 ns | 0 | — | 160 B | 0 |
+| Prepare Serializer | 29.1 μs | 0 ns | 0.586 | 11.63 KB | 0 B | 4.485 |
 
 </details>
 
@@ -1257,11 +1258,11 @@ See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 7/8 | 546 | 638 | 1184 | gold in Core, gold in Structured |
-| 2 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) | 8/8 | 595 | 426 | 1021 | silver in Core, silver in Structured, bronze in Prepare |
-| 3 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 8/8 | 445 | 430 | 875 | gold in Prepare, bronze in Core, bronze in Structured |
-| 4 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) | 8/8 | 303 | 348 | 651 | silver in Prepare |
-| 5 | [**ZLogger**](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 3/8 | 148 | 238 | 386 |  |
+| 1 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 7/8 | 556 | 638 | 1194 | gold in Structured |
+| 2 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) | 8/8 | 582 | 426 | 1008 | gold in Core, silver in Structured, bronze in Prepare |
+| 3 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 8/8 | 460 | 430 | 891 | gold in Prepare, bronze in Core, bronze in Structured |
+| 4 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) | 8/8 | 253 | 348 | 601 | silver in Prepare |
+| 5 | [**ZLogger**](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 3/8 | 166 | 238 | 404 | silver in Core |
 
 
 <details>
@@ -1275,70 +1276,70 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=logging).
 
-#### 1. Microsoft.Extensions.Logging — 1184 of 1600
+#### 1. Microsoft.Extensions.Logging — 1194 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 9.92 ns | 0.01 ns | 30.4 | 0 B | 0 B | 100 |
-| Simple Message | 17.69 ns | 17.69 ns | 100 | 0 B | 0 B | 100 |
-| Structured Properties | 48.25 ns | 48.25 ns | 100 | 88 B | 88 B | 100 |
-| Exception | 17.85 ns | 17.85 ns | 100 | 0 B | 0 B | 100 |
-| Scope Or Context | 77.68 ns | 77.68 ns | 100 | 120 B | 120 B | 100 |
-| Template Rendering | 35.13 ns | 35.13 ns | 100 | 0 B | 0 B | 100 |
-| Buffered Logging | — | 95.17 ns | 0 | — | 0 B | 0 |
-| Create Logger | 51.34 μs | 1.18 μs | 15.2 | 21.19 KB | 3.07 KB | 38.2 |
+| Disabled Log | 6.04 ns | 0.03 ns | 38.3 | 0 B | 0 B | 100 |
+| Simple Message | 15.4 ns | 15.4 ns | 100 | 0 B | 0 B | 100 |
+| Structured Properties | 38.37 ns | 38.37 ns | 100 | 88 B | 88 B | 100 |
+| Exception | 15.19 ns | 15.19 ns | 100 | 0 B | 0 B | 100 |
+| Scope Or Context | 63.9 ns | 63.9 ns | 100 | 120 B | 120 B | 100 |
+| Template Rendering | 30.97 ns | 30.97 ns | 100 | 0 B | 0 B | 100 |
+| Buffered Logging | — | 81.32 ns | 0 | — | 0 B | 0 |
+| Create Logger | 25.84 μs | 799.84 ns | 17.6 | 21.18 KB | 3.07 KB | 38.2 |
 
-#### 2. NLog — 1021 of 1600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 0.01 ns | 0.01 ns | 100 | 0 B | 0 B | 100 |
-| Simple Message | 45.73 ns | 17.69 ns | 63.2 | 120 B | 0 B | 40.8 |
-| Structured Properties | 87.14 ns | 48.25 ns | 74.8 | 248 B | 88 B | 64.2 |
-| Exception | 47.88 ns | 17.85 ns | 62.1 | 120 B | 0 B | 40.8 |
-| Scope Or Context | 100.38 ns | 77.68 ns | 88.1 | 248 B | 120 B | 72.8 |
-| Template Rendering | 93.36 ns | 35.13 ns | 61.9 | 232 B | 0 B | 30.6 |
-| Buffered Logging | 95.17 ns | 95.17 ns | 100 | 120 B | 0 B | 40.8 |
-| Create Logger | 5.76 μs | 1.18 μs | 45.4 | 24.46 KB | 3.07 KB | 35.6 |
-
-#### 3. Serilog — 875 of 1600
+#### 2. NLog — 1008 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 1.48 ns | 0.01 ns | 63.8 | 0 B | 0 B | 100 |
-| Simple Message | 95.48 ns | 17.69 ns | 44 | 160 B | 0 B | 36.1 |
-| Structured Properties | 216.38 ns | 48.25 ns | 47.6 | 448 B | 88 B | 48.7 |
-| Exception | 97.16 ns | 17.85 ns | 43.8 | 160 B | 0 B | 36.1 |
-| Scope Or Context | 239.8 ns | 77.68 ns | 57.2 | 544 B | 120 B | 50.4 |
-| Template Rendering | 233.82 ns | 35.13 ns | 39.2 | 432 B | 0 B | 22.9 |
-| Buffered Logging | 400.34 ns | 95.17 ns | 49 | 160 B | 0 B | 36.1 |
-| Create Logger | 1.18 μs | 1.18 μs | 100 | 3.07 KB | 3.07 KB | 100 |
+| Disabled Log | 0.03 ns | 0.03 ns | 100 | 0 B | 0 B | 100 |
+| Simple Message | 44.25 ns | 15.4 ns | 60.2 | 120 B | 0 B | 40.8 |
+| Structured Properties | 77.49 ns | 38.37 ns | 70.8 | 248 B | 88 B | 64.2 |
+| Exception | 42.95 ns | 15.19 ns | 60.7 | 120 B | 0 B | 40.8 |
+| Scope Or Context | 91.41 ns | 63.9 ns | 83.8 | 248 B | 120 B | 72.8 |
+| Template Rendering | 82.86 ns | 30.97 ns | 61.7 | 232 B | 0 B | 30.6 |
+| Buffered Logging | 81.32 ns | 81.32 ns | 100 | 120 B | 0 B | 40.8 |
+| Create Logger | 4 μs | 799.84 ns | 44.7 | 24.45 KB | 3.07 KB | 35.6 |
 
-#### 4. log4net — 651 of 1600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 8.69 ns | 0.01 ns | 32.2 | 0 B | 0 B | 100 |
-| Simple Message | 114.49 ns | 17.69 ns | 40.2 | 168 B | 0 B | 35.4 |
-| Structured Properties | 769.01 ns | 48.25 ns | 25.3 | 1.77 KB | 88 B | 24.7 |
-| Exception | 116.19 ns | 17.85 ns | 40.1 | 168 B | 0 B | 35.4 |
-| Scope Or Context | 351.77 ns | 77.68 ns | 47.2 | 848 B | 120 B | 40.6 |
-| Template Rendering | 143.29 ns | 35.13 ns | 50 | 280 B | 0 B | 28.1 |
-| Buffered Logging | 608.51 ns | 95.17 ns | 39.7 | 848 B | 0 B | 16.6 |
-| Create Logger | 15.28 μs | 1.18 μs | 27.9 | 6.79 KB | 3.07 KB | 67.4 |
-
-#### 5. ZLogger — 386 of 1600
+#### 3. Serilog — 891 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 4.11 ns | 0.01 ns | 44.4 | 0 B | 0 B | 100 |
-| Simple Message | — | 17.69 ns | 0 | — | 0 B | 0 |
-| Structured Properties | — | 48.25 ns | 0 | — | 88 B | 0 |
-| Exception | — | 17.85 ns | 0 | — | 0 B | 0 |
-| Scope Or Context | — | 77.68 ns | 0 | — | 120 B | 0 |
-| Template Rendering | — | 35.13 ns | 0 | — | 0 B | 0 |
-| Buffered Logging | 116.89 ns | 95.17 ns | 90.3 | 0 B | 0 B | 100 |
-| Create Logger | 64 μs | 1.18 μs | 13.6 | 21.36 KB | 3.07 KB | 38 |
+| Disabled Log | 0.36 ns | 0.03 ns | 86.9 | 0 B | 0 B | 100 |
+| Simple Message | 80.39 ns | 15.4 ns | 44.9 | 160 B | 0 B | 36.1 |
+| Structured Properties | 172.83 ns | 38.37 ns | 47.6 | 448 B | 88 B | 48.7 |
+| Exception | 81.07 ns | 15.19 ns | 44.4 | 160 B | 0 B | 36.1 |
+| Scope Or Context | 181.63 ns | 63.9 ns | 59.6 | 544 B | 120 B | 50.4 |
+| Template Rendering | 181.07 ns | 30.97 ns | 41.9 | 432 B | 0 B | 22.9 |
+| Buffered Logging | 670.15 ns | 81.32 ns | 35 | 160 B | 0 B | 36.1 |
+| Create Logger | 799.84 ns | 799.84 ns | 100 | 3.07 KB | 3.07 KB | 100 |
+
+#### 4. log4net — 601 of 1600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Disabled Log | 6.66 ns | 0.03 ns | 36.7 | 0 B | 0 B | 100 |
+| Simple Message | 226.51 ns | 15.4 ns | 26.8 | 168 B | 0 B | 35.4 |
+| Structured Properties | 728.39 ns | 38.37 ns | 23.2 | 1.77 KB | 88 B | 24.7 |
+| Exception | 232.15 ns | 15.19 ns | 26.3 | 168 B | 0 B | 35.4 |
+| Scope Or Context | 429.04 ns | 63.9 ns | 38.8 | 848 B | 120 B | 40.6 |
+| Template Rendering | 260.54 ns | 30.97 ns | 35 | 280 B | 0 B | 28.1 |
+| Buffered Logging | 505.36 ns | 81.32 ns | 40.3 | 848 B | 0 B | 16.6 |
+| Create Logger | 12.09 μs | 799.84 ns | 25.7 | 6.79 KB | 3.07 KB | 67.4 |
+
+#### 5. ZLogger — 404 of 1600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Disabled Log | 1.58 ns | 0.03 ns | 63.2 | 0 B | 0 B | 100 |
+| Simple Message | — | 15.4 ns | 0 | — | 0 B | 0 |
+| Structured Properties | — | 38.37 ns | 0 | — | 88 B | 0 |
+| Exception | — | 15.19 ns | 0 | — | 0 B | 0 |
+| Scope Or Context | — | 63.9 ns | 0 | — | 120 B | 0 |
+| Template Rendering | — | 30.97 ns | 0 | — | 0 B | 0 |
+| Buffered Logging | 115.59 ns | 81.32 ns | 84 | 0 B | 0 B | 100 |
+| Create Logger | 23.26 μs | 799.84 ns | 18.6 | 21.19 KB | 3.07 KB | 38.2 |
 
 </details>
 
@@ -1468,8 +1469,8 @@ See [workflows/rating.md](workflows/rating.md).
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 10/10 | 1000 | 1000 | 2000 | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 583 | 792 | 1375 | silver in Advanced, silver in Basic, bronze in Prepare |
-| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 402 | 802 | 1204 | silver in Prepare, bronze in Advanced, bronze in Basic |
+| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 587 | 792 | 1379 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 416 | 802 | 1218 | silver in Prepare, bronze in Advanced, bronze in Basic |
 
 
 <details>
@@ -1487,46 +1488,46 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 9.87 ns | 9.87 ns | 100 | 56 B | 56 B | 100 |
-| Nested Object | 46.96 ns | 46.96 ns | 100 | 248 B | 248 B | 100 |
-| Collection | 1.05 μs | 1.05 μs | 100 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 10.52 ns | 10.52 ns | 100 | 56 B | 56 B | 100 |
-| Map To Existing | 3.79 ns | 3.79 ns | 100 | 0 B | 0 B | 100 |
-| Null Handling | 9.15 ns | 9.15 ns | 100 | 40 B | 40 B | 100 |
-| Custom Conversion | 79.08 ns | 79.08 ns | 100 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 36.12 ns | 36.12 ns | 100 | 144 B | 144 B | 100 |
+| Simple Object | 9.34 ns | 9.34 ns | 100 | 56 B | 56 B | 100 |
+| Nested Object | 48.39 ns | 48.39 ns | 100 | 248 B | 248 B | 100 |
+| Collection | 1.1 μs | 1.1 μs | 100 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 11.79 ns | 11.79 ns | 100 | 56 B | 56 B | 100 |
+| Map To Existing | 3.41 ns | 3.41 ns | 100 | 0 B | 0 B | 100 |
+| Null Handling | 10.46 ns | 10.46 ns | 100 | 40 B | 40 B | 100 |
+| Custom Conversion | 76.23 ns | 76.23 ns | 100 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 36.18 ns | 36.18 ns | 100 | 144 B | 144 B | 100 |
 | Prepare Configuration | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
-| Prepare And Simple Map | 9.85 ns | 9.85 ns | 100 | 56 B | 56 B | 100 |
+| Prepare And Simple Map | 9.89 ns | 9.89 ns | 100 | 56 B | 56 B | 100 |
 
-#### 2. Mapster — 1375 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 23.36 ns | 9.87 ns | 66.8 | 56 B | 56 B | 100 |
-| Nested Object | 61.72 ns | 46.96 ns | 87.4 | 248 B | 248 B | 100 |
-| Collection | 1.18 μs | 1.05 μs | 94.2 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 20.38 ns | 10.52 ns | 73.4 | 56 B | 56 B | 100 |
-| Map To Existing | 12.42 ns | 3.79 ns | 59.7 | 0 B | 0 B | 100 |
-| Null Handling | 29.24 ns | 9.15 ns | 57.9 | 40 B | 40 B | 100 |
-| Custom Conversion | 101.4 ns | 79.08 ns | 88.4 | 112 B | 88 B | 90.7 |
-| Polymorphic Mapping | 119.6 ns | 36.12 ns | 55.5 | 144 B | 144 B | 100 |
-| Prepare Configuration | 24.63 ms | 0 ns | 0.02 | 2.6 MB | 0 B | 0.297 |
-| Prepare And Simple Map | 26.16 ms | 9.85 ns | 0.064 | 2.75 MB | 56 B | 0.526 |
-
-#### 3. AutoMapper — 1204 of 2000
+#### 2. Mapster — 1379 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 74.33 ns | 9.87 ns | 38 | 56 B | 56 B | 100 |
-| Nested Object | 115.73 ns | 46.96 ns | 64.1 | 248 B | 248 B | 100 |
-| Collection | 1.25 μs | 1.05 μs | 91.3 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 75.39 ns | 10.52 ns | 38.8 | 56 B | 56 B | 100 |
-| Map To Existing | 67.57 ns | 3.79 ns | 26.4 | 0 B | 0 B | 100 |
-| Null Handling | 75.16 ns | 9.15 ns | 36.5 | 40 B | 40 B | 100 |
-| Custom Conversion | 144.69 ns | 79.08 ns | 74.1 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 351.36 ns | 36.12 ns | 32.5 | 144 B | 144 B | 100 |
-| Prepare Configuration | 13.28 ms | 0 ns | 0.027 | 623.13 KB | 0 B | 0.613 |
-| Prepare And Simple Map | 13.82 ms | 9.85 ns | 0.089 | 656.05 KB | 56 B | 1.091 |
+| Simple Object | 18.71 ns | 9.34 ns | 72.4 | 56 B | 56 B | 100 |
+| Nested Object | 65.33 ns | 48.39 ns | 86.3 | 248 B | 248 B | 100 |
+| Collection | 1.29 μs | 1.1 μs | 92.6 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 19.69 ns | 11.79 ns | 78.6 | 56 B | 56 B | 100 |
+| Map To Existing | 15.26 ns | 3.41 ns | 52.1 | 0 B | 0 B | 100 |
+| Null Handling | 29.22 ns | 10.46 ns | 61.6 | 40 B | 40 B | 100 |
+| Custom Conversion | 92.48 ns | 76.23 ns | 90.9 | 112 B | 88 B | 90.7 |
+| Polymorphic Mapping | 133.4 ns | 36.18 ns | 52.6 | 144 B | 144 B | 100 |
+| Prepare Configuration | 24.28 ms | 0 ns | 0.02 | 2.6 MB | 0 B | 0.297 |
+| Prepare And Simple Map | 25.25 ms | 9.89 ns | 0.066 | 2.75 MB | 56 B | 0.527 |
+
+#### 3. AutoMapper — 1218 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Simple Object | 75.53 ns | 9.34 ns | 36.8 | 56 B | 56 B | 100 |
+| Nested Object | 103.32 ns | 48.39 ns | 68.8 | 248 B | 248 B | 100 |
+| Collection | 1.35 μs | 1.1 μs | 90.2 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 68.55 ns | 11.79 ns | 42.9 | 56 B | 56 B | 100 |
+| Map To Existing | 67.26 ns | 3.41 ns | 25.4 | 0 B | 0 B | 100 |
+| Null Handling | 72.97 ns | 10.46 ns | 39.4 | 40 B | 40 B | 100 |
+| Custom Conversion | 124.54 ns | 76.23 ns | 78.4 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 317.07 ns | 36.18 ns | 34.2 | 144 B | 144 B | 100 |
+| Prepare Configuration | 14.17 ms | 0 ns | 0.027 | 624.41 KB | 0 B | 0.613 |
+| Prepare And Simple Map | 14.52 ms | 9.89 ns | 0.087 | 656.73 KB | 56 B | 1.091 |
 
 </details>
 
@@ -1662,10 +1663,10 @@ See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 8/10 | 753 | 791 | 1545 | gold in Basic, silver in Object Graph, silver in Prepare, bronze in Rules |
-| 2 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 9/10 | 741 | 736 | 1477 | gold in Prepare, gold in Rules, bronze in Object Graph |
-| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 8/10 | 734 | 721 | 1455 | gold in Object Graph, silver in Basic, bronze in Prepare |
-| 4 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) | 10/10 | 750 | 669 | 1419 | silver in Rules, bronze in Basic |
+| 1 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 8/10 | 745 | 783 | 1528 | gold in Basic, silver in Object Graph, silver in Prepare, bronze in Rules |
+| 2 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 9/10 | 732 | 738 | 1470 | gold in Prepare, gold in Rules, bronze in Object Graph |
+| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 8/10 | 741 | 724 | 1465 | gold in Object Graph, silver in Basic, bronze in Prepare |
+| 4 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) | 10/10 | 733 | 672 | 1405 | silver in Rules, bronze in Basic |
 
 
 <details>
@@ -1679,65 +1680,65 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=validation).
 
-#### 1. Microsoft.Extensions.Validation — 1545 of 2000
+#### 1. Microsoft.Extensions.Validation — 1528 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 623.17 ns | 230.16 ns | 60.9 | 592 B | 592 B | 100 |
-| Single Failure | 925.54 ns | 925.54 ns | 100 | 984 B | 984 B | 100 |
-| Multiple Failures | 1.31 μs | 1.31 μs | 100 | 1.37 KB | 1.37 KB | 100 |
-| Nested Object | 1.11 μs | 1.11 μs | 100 | 1.55 KB | 1.55 KB | 100 |
-| Collection | 2.78 μs | 2.45 μs | 93.8 | 3.32 KB | 2.77 KB | 91.5 |
-| Conditional Rule | 351.05 ns | 342.45 ns | 98.8 | 864 B | 864 B | 100 |
-| Custom Rule | 577.47 ns | 577.47 ns | 100 | 936 B | 936 B | 100 |
-| Stop On First Failure | — | 390.28 ns | 0 | — | 576 B | 0 |
-| Async Validation | — | 3.25 μs | 0 | — | 2.68 KB | 0 |
+| Valid Object | 459.25 ns | 165.36 ns | 60.1 | 712 B | 632 B | 94.4 |
+| Single Failure | 573.35 ns | 573.35 ns | 100 | 984 B | 984 B | 100 |
+| Multiple Failures | 843.06 ns | 843.06 ns | 100 | 1.37 KB | 1.37 KB | 100 |
+| Nested Object | 695.63 ns | 695.63 ns | 100 | 1.55 KB | 1.55 KB | 100 |
+| Collection | 1.89 μs | 1.47 μs | 88.3 | 3.55 KB | 2.77 KB | 88.4 |
+| Conditional Rule | 232.04 ns | 218.03 ns | 96.9 | 864 B | 864 B | 100 |
+| Custom Rule | 372.69 ns | 372.69 ns | 100 | 936 B | 936 B | 100 |
+| Stop On First Failure | — | 266.45 ns | 0 | — | 576 B | 0 |
+| Async Validation | — | 2.37 μs | 0 | — | 2.68 KB | 0 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 2. DataAnnotations — 1477 of 2000
+#### 2. DataAnnotations — 1470 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 1.12 μs | 230.16 ns | 45.4 | 1.8 KB | 592 B | 57.4 |
-| Single Failure | 1.36 μs | 925.54 ns | 82.5 | 1.88 KB | 984 B | 71.9 |
-| Multiple Failures | 1.91 μs | 1.31 μs | 83 | 2.41 KB | 1.37 KB | 75.5 |
-| Nested Object | 1.61 μs | 1.11 μs | 82.8 | 2.31 KB | 1.55 KB | 82 |
-| Collection | 3.66 μs | 2.45 μs | 81.8 | 5.27 KB | 2.77 KB | 72.7 |
-| Conditional Rule | 490.87 ns | 342.45 ns | 83.6 | 1.2 KB | 864 B | 84.4 |
-| Custom Rule | 870 ns | 577.47 ns | 81.5 | 1.08 KB | 936 B | 92.3 |
-| Stop On First Failure | 390.28 ns | 390.28 ns | 100 | 576 B | 576 B | 100 |
-| Async Validation | — | 3.25 μs | 0 | — | 2.68 KB | 0 |
+| Valid Object | 814.19 ns | 165.36 ns | 45.2 | 1.8 KB | 632 B | 59.2 |
+| Single Failure | 869.57 ns | 573.35 ns | 81.2 | 1.88 KB | 984 B | 71.9 |
+| Multiple Failures | 1.33 μs | 843.06 ns | 79.5 | 2.41 KB | 1.37 KB | 75.5 |
+| Nested Object | 1.03 μs | 695.63 ns | 82.1 | 2.31 KB | 1.55 KB | 82 |
+| Collection | 2.27 μs | 1.47 μs | 80.5 | 5.27 KB | 2.77 KB | 72.7 |
+| Conditional Rule | 356.57 ns | 218.03 ns | 78.3 | 1.2 KB | 864 B | 84.4 |
+| Custom Rule | 511.98 ns | 372.69 ns | 85.4 | 1.08 KB | 936 B | 92.3 |
+| Stop On First Failure | 266.45 ns | 266.45 ns | 100 | 576 B | 576 B | 100 |
+| Async Validation | — | 2.37 μs | 0 | — | 2.68 KB | 0 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 3. MiniValidation — 1455 of 2000
+#### 3. MiniValidation — 1465 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 560.13 ns | 230.16 ns | 64.2 | 760 B | 592 B | 88.6 |
-| Single Failure | 1.05 μs | 925.54 ns | 93.8 | 1.34 KB | 984 B | 85.1 |
-| Multiple Failures | 1.55 μs | 1.31 μs | 91.9 | 2.16 KB | 1.37 KB | 79.7 |
-| Nested Object | 1.2 μs | 1.11 μs | 96.1 | 1.86 KB | 1.55 KB | 91.3 |
-| Collection | 2.45 μs | 2.45 μs | 100 | 2.77 KB | 2.77 KB | 100 |
-| Conditional Rule | 342.45 ns | 342.45 ns | 100 | 1008 B | 864 B | 92.8 |
-| Custom Rule | 744.94 ns | 577.47 ns | 88.1 | 1.31 KB | 936 B | 83.8 |
-| Stop On First Failure | — | 390.28 ns | 0 | — | 576 B | 0 |
-| Async Validation | — | 3.25 μs | 0 | — | 2.68 KB | 0 |
+| Valid Object | 342.17 ns | 165.36 ns | 69.6 | 760 B | 632 B | 91.5 |
+| Single Failure | 615.01 ns | 573.35 ns | 96.6 | 1.34 KB | 984 B | 85.1 |
+| Multiple Failures | 999.07 ns | 843.06 ns | 91.9 | 2.16 KB | 1.37 KB | 79.7 |
+| Nested Object | 813.72 ns | 695.63 ns | 92.5 | 1.86 KB | 1.55 KB | 91.3 |
+| Collection | 1.47 μs | 1.47 μs | 100 | 2.77 KB | 2.77 KB | 100 |
+| Conditional Rule | 218.03 ns | 218.03 ns | 100 | 1008 B | 864 B | 92.8 |
+| Custom Rule | 458.44 ns | 372.69 ns | 90.2 | 1.31 KB | 936 B | 83.8 |
+| Stop On First Failure | — | 266.45 ns | 0 | — | 576 B | 0 |
+| Async Validation | — | 2.37 μs | 0 | — | 2.68 KB | 0 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 4. FluentValidation — 1419 of 2000
+#### 4. FluentValidation — 1405 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 230.16 ns | 230.16 ns | 100 | 632 B | 592 B | 96.9 |
-| Single Failure | 1 μs | 925.54 ns | 96.1 | 1.76 KB | 984 B | 74.3 |
-| Multiple Failures | 3.16 μs | 1.31 μs | 64.5 | 6.02 KB | 1.37 KB | 48 |
-| Nested Object | 1.32 μs | 1.11 μs | 91.7 | 2.38 KB | 1.55 KB | 80.8 |
-| Collection | 3.71 μs | 2.45 μs | 81.3 | 6.57 KB | 2.77 KB | 65.1 |
-| Conditional Rule | 842.77 ns | 342.45 ns | 63.8 | 1.77 KB | 864 B | 69.6 |
-| Custom Rule | 847.28 ns | 577.47 ns | 82.6 | 1.85 KB | 936 B | 70.7 |
-| Stop On First Failure | 832.39 ns | 390.28 ns | 68.5 | 1.76 KB | 576 B | 57.4 |
-| Async Validation | 3.25 μs | 3.25 μs | 100 | 2.68 KB | 2.68 KB | 100 |
-| Prepare Validator | 3 μs | 0 ns | 1.826 | 6.33 KB | 0 B | 6.075 |
+| Valid Object | 165.36 ns | 165.36 ns | 100 | 632 B | 632 B | 100 |
+| Single Failure | 646.35 ns | 573.35 ns | 94.2 | 1.76 KB | 984 B | 74.3 |
+| Multiple Failures | 2.22 μs | 843.06 ns | 61.7 | 6.02 KB | 1.37 KB | 48 |
+| Nested Object | 862.67 ns | 695.63 ns | 89.8 | 2.38 KB | 1.55 KB | 80.8 |
+| Collection | 2.6 μs | 1.47 μs | 75.3 | 6.57 KB | 2.77 KB | 65.1 |
+| Conditional Rule | 580.89 ns | 218.03 ns | 61.4 | 1.77 KB | 864 B | 69.6 |
+| Custom Rule | 579.85 ns | 372.69 ns | 80.2 | 1.85 KB | 936 B | 70.7 |
+| Stop On First Failure | 569.07 ns | 266.45 ns | 68.5 | 1.76 KB | 576 B | 57.4 |
+| Async Validation | 2.37 μs | 2.37 μs | 100 | 2.68 KB | 2.68 KB | 100 |
+| Prepare Validator | 2.18 μs | 0 ns | 2.143 | 6.33 KB | 0 B | 6.075 |
 
 </details>
 
@@ -1854,6 +1855,227 @@ Runs a deterministic asynchronous availability rule through the library async AP
 Creates the complete scalar validator or rule graph without validating an input.
 
 ![Validation Prepare Validator benchmark](reports/Validation/charts/10-prepare-validator.png)
+
+</details>
+
+
+## ZIP Archives
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpZipLib">SharpZipLib</a></strong> leads the current rating · 3 libraries · 13 scenarios
+</blockquote>
+
+<p><a href="https://matrix.dev-team.org/?category=zip-archives"><strong>Explore interactively →</strong></a></p>
+
+
+### Rating
+
+In every scenario the fastest library scores 100 points and the one allocating
+least scores 100 more; four times slower is half the points, and an unsupported
+scenario is worth nothing. Time and memory reach **1300**
+each here, so the maximum is **2600**.
+See [workflows/rating.md](workflows/rating.md).
+
+| # | Library | Scenarios | Time | Memory | Points | Group wins |
+|---:|---|---:|---:|---:|---:|---|
+| 1 | [**SharpZipLib**](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 13/13 | 1147 | 1058 | 2205 | gold in Advanced, gold in Metadata, silver in Read, silver in Write |
+| 2 | [**System.IO.Compression**](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 12/13 | 1166 | 968 | 2134 | gold in Read, gold in Write, silver in Metadata, bronze in Advanced |
+| 3 | [**SharpCompress**](https://matrix.dev-team.org/?category=zip-archives&library=SharpCompress) | 13/13 | 881 | 886 | 1767 | silver in Advanced, bronze in Metadata, bronze in Read, bronze in Write |
+
+
+<details>
+<summary><strong>How the points were earned</strong> — every scenario, with the measurements behind it</summary>
+
+Each row is one scenario. `Best` is the lowest result among the rated libraries
+that completed it, and the points follow from the two figures beside them:
+`100 × √((best + step) / (result + step))`, with a step of 1 ns for time and 24 B
+for memory. A dash means the library did not complete the scenario, and it scores
+nothing for it. Add the two Points columns over every scenario and you get the
+rating above. The same breakdown appears as a hint on any points value in the
+[application](https://matrix.dev-team.org/?category=zip-archives).
+
+#### 1. SharpZipLib — 2205 of 2600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| List Entries | 228.67 μs | 228.67 μs | 100 | 305.15 KB | 305.15 KB | 100 |
+| Find Entry By Name | 230.4 μs | 198 μs | 92.7 | 305.23 KB | 305.23 KB | 100 |
+| Read Stored Entry | 13.83 ms | 13.83 ms | 100 | 1.02 KB | 1.02 KB | 100 |
+| Decompress Entry | 14.37 ms | 14.06 ms | 98.9 | 41.05 KB | 5.38 KB | 36.3 |
+| Extract Many Small Entries | 17.28 ms | 15.19 ms | 93.7 | 35.98 MB | 987.53 KB | 16.4 |
+| Create Stored Archive | 342.29 μs | 216.72 μs | 79.6 | 957.7 KB | 645.86 KB | 82.1 |
+| Create Deflate Fast Archive | 2.12 ms | 680.25 μs | 56.6 | 622.91 KB | 329.69 KB | 72.8 |
+| Create Deflate Optimal Archive | 2.57 ms | 1.18 ms | 67.9 | 621.27 KB | 193.67 KB | 55.8 |
+| Create Many Small Entries | 6.4 ms | 4.69 ms | 85.7 | 13.99 MB | 12.66 MB | 95.1 |
+| Append Entry | 212.37 μs | 203.54 μs | 97.9 | 398.18 KB | 394.87 KB | 99.6 |
+| Sequential Non-Seekable Read | 16.03 ms | 16.03 ms | 100 | 458.67 KB | 458.67 KB | 100 |
+| Read Zip64 Archive | 31.28 ms | 31.28 ms | 100 | 19.5 MB | 19.5 MB | 100 |
+| Read AES Encrypted Entry | 2.91 ms | 1.59 ms | 73.8 | 43.93 KB | 43.93 KB | 100 |
+
+#### 2. System.IO.Compression — 2134 of 2600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| List Entries | 233.73 μs | 228.67 μs | 98.9 | 659.41 KB | 305.15 KB | 68 |
+| Find Entry By Name | 198 μs | 198 μs | 100 | 659.37 KB | 305.23 KB | 68 |
+| Read Stored Entry | 13.92 ms | 13.83 ms | 99.7 | 5.12 KB | 1.02 KB | 45 |
+| Decompress Entry | 14.06 ms | 14.06 ms | 100 | 5.38 KB | 5.38 KB | 100 |
+| Extract Many Small Entries | 15.19 ms | 15.19 ms | 100 | 987.53 KB | 987.53 KB | 100 |
+| Create Stored Archive | 216.72 μs | 216.72 μs | 100 | 645.86 KB | 645.86 KB | 100 |
+| Create Deflate Fast Archive | 680.25 μs | 680.25 μs | 100 | 329.69 KB | 329.69 KB | 100 |
+| Create Deflate Optimal Archive | 1.18 ms | 1.18 ms | 100 | 193.67 KB | 193.67 KB | 100 |
+| Create Many Small Entries | 4.69 ms | 4.69 ms | 100 | 12.66 MB | 12.66 MB | 100 |
+| Append Entry | 203.54 μs | 203.54 μs | 100 | 394.87 KB | 394.87 KB | 100 |
+| Sequential Non-Seekable Read | 18.03 ms | 16.03 ms | 94.3 | 16.84 MB | 458.67 KB | 16.3 |
+| Read Zip64 Archive | 58.72 ms | 31.28 ms | 73 | 39.39 MB | 19.5 MB | 70.4 |
+| Read AES Encrypted Entry | — | 1.59 ms | 0 | — | 43.93 KB | 0 |
+
+#### 3. SharpCompress — 1767 of 2600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| List Entries | 984.86 μs | 228.67 μs | 48.2 | 660.69 KB | 305.15 KB | 68 |
+| Find Entry By Name | 901.14 μs | 198 μs | 46.9 | 660.55 KB | 305.23 KB | 68 |
+| Read Stored Entry | 13.94 ms | 13.83 ms | 99.6 | 67.85 KB | 1.02 KB | 12.4 |
+| Decompress Entry | 14.66 ms | 14.06 ms | 97.9 | 33.56 KB | 5.38 KB | 40.1 |
+| Extract Many Small Entries | 17.29 ms | 15.19 ms | 93.7 | 2.27 MB | 987.53 KB | 65.2 |
+| Create Stored Archive | 1.04 ms | 216.72 μs | 45.6 | 646.26 KB | 645.86 KB | 100 |
+| Create Deflate Fast Archive | 2.9 ms | 680.25 μs | 48.4 | 345.04 KB | 329.69 KB | 97.8 |
+| Create Deflate Optimal Archive | 3.4 ms | 1.18 ms | 59 | 344.59 KB | 193.67 KB | 75 |
+| Create Many Small Entries | 21.27 ms | 4.69 ms | 47 | 12.69 MB | 12.66 MB | 99.9 |
+| Append Entry | 1.07 ms | 203.54 μs | 43.7 | 721.34 KB | 394.87 KB | 74 |
+| Sequential Non-Seekable Read | 17.88 ms | 16.03 ms | 94.7 | 2.28 MB | 458.67 KB | 44.3 |
+| Read Zip64 Archive | 99.09 ms | 31.28 ms | 56.2 | 38.07 MB | 19.5 MB | 71.6 |
+| Read AES Encrypted Entry | 1.59 ms | 1.59 ms | 100 | 89.79 KB | 43.93 KB | 70 |
+
+</details>
+
+### Benchmark overview
+
+**Metadata**
+
+![ZIP Archives Metadata benchmark overview](reports/ZipArchives/charts/overview-metadata.png)
+
+<details>
+<summary><strong>More overview charts (3)</strong></summary>
+
+#### Read
+
+![ZIP Archives Read benchmark overview](reports/ZipArchives/charts/overview-read.png)
+
+#### Write
+
+![ZIP Archives Write benchmark overview](reports/ZipArchives/charts/overview-write.png)
+
+#### Advanced
+
+![ZIP Archives Advanced benchmark overview](reports/ZipArchives/charts/overview-advanced.png)
+
+</details>
+
+<details>
+<summary><strong>Compared libraries (3)</strong></summary>
+
+<table>
+<tr>
+<td width="64"><img src="metadata/ZipArchives/logos/sharp-compress.svg" width="48" height="48" alt="SharpCompress logo"></td>
+<td><strong><a href="https://github.com/adamhathcock/sharpcompress/blob/master/docs/USAGE.md">SharpCompress</a></strong> 0.50.2<br>A fully managed archive library with random-access, forward-only, non-seekable, encrypted, and asynchronous ZIP APIs.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpCompress">Compare →</a></td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/ZipArchives/logos/sharp-zip-lib.svg" width="48" height="48" alt="SharpZipLib logo"></td>
+<td><strong><a href="https://icsharpcode.github.io/SharpZipLib/">SharpZipLib</a></strong> 1.4.2<br>A mature managed compression library supporting ZIP, Zip64, stored and deflate entries, streaming, and AES encryption.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpZipLib">Compare →</a></td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/ZipArchives/logos/system-io-compression.svg" width="48" height="48" alt="System.IO.Compression logo"></td>
+<td><strong><a href="https://learn.microsoft.com/dotnet/api/system.io.compression">System.IO.Compression</a></strong><br>The ZIP implementation included with .NET, exposing ZipArchive, ZipArchiveEntry, and ZipFile APIs.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=System.IO.Compression">Compare →</a></td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary><strong>Benchmark scenarios (13)</strong></summary>
+
+#### 01 · List Entries
+
+Opens a ZIP archive and enumerates 1,000 entry names and sizes.
+
+![ZIP Archives List Entries benchmark](reports/ZipArchives/charts/01-list-entries.png)
+
+#### 02 · Find Entry By Name
+
+Opens a 1,000-entry ZIP archive and locates its final entry by exact name.
+
+![ZIP Archives Find Entry By Name benchmark](reports/ZipArchives/charts/02-find-entry-by-name.png)
+
+#### 03 · Read Stored Entry
+
+Opens and reads one uncompressed 4 MiB ZIP entry.
+
+![ZIP Archives Read Stored Entry benchmark](reports/ZipArchives/charts/03-read-stored-entry.png)
+
+#### 04 · Decompress Entry
+
+Opens and inflates one 4 MiB deflated ZIP entry.
+
+![ZIP Archives Decompress Entry benchmark](reports/ZipArchives/charts/04-decompress-entry.png)
+
+#### 05 · Extract Many Small Entries
+
+Opens and reads all 1,000 small entries from a ZIP archive.
+
+![ZIP Archives Extract Many Small Entries benchmark](reports/ZipArchives/charts/05-extract-many-small-entries.png)
+
+#### 06 · Create Stored Archive
+
+Creates a stored ZIP archive containing a deterministic mixed corpus.
+
+![ZIP Archives Create Stored Archive benchmark](reports/ZipArchives/charts/06-create-stored-archive.png)
+
+#### 07 · Create Deflate Fast Archive
+
+Creates a Deflate level 1 ZIP archive containing the deterministic mixed corpus.
+
+![ZIP Archives Create Deflate Fast Archive benchmark](reports/ZipArchives/charts/07-create-deflate-fast-archive.png)
+
+#### 08 · Create Deflate Optimal Archive
+
+Creates a Deflate level 6 ZIP archive containing the deterministic mixed corpus.
+
+![ZIP Archives Create Deflate Optimal Archive benchmark](reports/ZipArchives/charts/08-create-deflate-optimal-archive.png)
+
+#### 09 · Create Many Small Entries
+
+Creates a stored ZIP archive containing 1,000 small files.
+
+![ZIP Archives Create Many Small Entries benchmark](reports/ZipArchives/charts/09-create-many-small-entries.png)
+
+#### 10 · Append Entry
+
+Opens an existing ZIP archive for update and appends one stored entry.
+
+![ZIP Archives Append Entry benchmark](reports/ZipArchives/charts/10-append-entry.png)
+
+#### 11 · Sequential Non-Seekable Read
+
+Reads all entries through a forward-only ZIP API from a non-seekable stream.
+
+![ZIP Archives Sequential Non-Seekable Read benchmark](reports/ZipArchives/charts/11-sequential-non-seekable-read.png)
+
+#### 12 · Read Zip64 Archive
+
+Opens and enumerates a Zip64 archive containing 65,536 entries.
+
+![ZIP Archives Read Zip64 Archive benchmark](reports/ZipArchives/charts/12-read-zip64-archive.png)
+
+#### 13 · Read AES Encrypted Entry
+
+Opens and decrypts one AES-256 encrypted ZIP entry.
+
+![ZIP Archives Read AES Encrypted Entry benchmark](reports/ZipArchives/charts/13-read-aes-encrypted-entry.png)
 
 </details>
 
