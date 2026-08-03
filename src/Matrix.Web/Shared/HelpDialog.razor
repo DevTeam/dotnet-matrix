@@ -38,24 +38,32 @@
             {
                 case "rating":
                     <p class="help-rule">
-                        In every scenario the fastest library scores 100 points. One twice
-                        as slow scores 50, one a hundred times slower scores 1, and one
-                        that does not support the scenario scores nothing. The rating is
-                        the sum.
+                        In every scenario the fastest library scores 100 points and the one
+                        allocating least scores 100 more. Four times slower is half the
+                        points, and a scenario the library does not support is worth
+                        nothing. The rating is the sum.
                     </p>
                     <ul>
                         <li>
-                            The maximum is 100 points per scenario, so a library that wins
-                            everything reaches it exactly.
+                            Speed and economy carry the same weight, so the maximum is 200
+                            points per scenario. The Time and Memory columns show where a
+                            library earned its total.
                         </li>
                         <li>
-                            An unsupported scenario costs its full 100 points. That is why
+                            An unsupported scenario costs its full 200 points. That is why
                             the number of completed scenarios is shown beside a score that
                             is not the maximum.
                         </li>
                         <li>
                             A score depends on the library's own result and on the best
                             result, never on how many competitors entered.
+                        </li>
+                        @* Without this the zero-allocation scenarios look like a bug. *@
+                        <li>
+                            Results are compared at the resolution of the metric: one
+                            nanosecond, and 24 bytes — the smallest object the runtime can
+                            allocate. So a library that allocates nothing beats one that
+                            allocates a single object, but only by that much.
                         </li>
                         <li>
                             Gold, silver and bronze go to the first three of this table.
@@ -66,19 +74,27 @@
                     break;
                 case "overview":
                     <p class="help-rule">
-                        Each bar is the total across the scenarios of the group, split
-                        into one segment per scenario. Shorter is better.
+                        Rows are ordered by the points scored inside the group — the same
+                        rule as the standings, applied to the scenarios of this group
+                        alone. Each bar is the measured total across those scenarios,
+                        split into one segment per scenario. Shorter bars are better.
                     </p>
                     <ul>
                         <li>
-                            The scale is logarithmic. A bar twice as long is far more than
-                            twice as slow; without it a single outlier would flatten
+                            Because the order comes from points and the bars show measured
+                            totals, a shorter bar can sit below a longer one: memory counts
+                            as much as time, and every scenario counts the same regardless
+                            of how expensive it is.
+                        </li>
+                        <li>
+                            The bar scale is logarithmic. A bar twice as long is far more
+                            than twice as slow; without it a single outlier would flatten
                             everything else to nothing.
                         </li>
                         <li>
-                            Only libraries that completed every scenario of the group are
-                            ranked. The rest are listed below the divider with the
-                            scenarios they are missing.
+                            A library that does not complete every scenario of the group is
+                            listed with the others and scores nothing for what it misses;
+                            the count under its name says how many it ran.
                         </li>
                         <li>
                             Colours match the legend under the chart, so the same scenario

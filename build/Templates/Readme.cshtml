@@ -58,7 +58,7 @@ else
 
 - **Correctness comes first.** Every implementation is checked against the same feature contract before its benchmark results are compared.
 - **Lower is better.** Overview charts show execution time and allocated memory together.
-- **The rating measures distance, not placings.** In every scenario the fastest library scores 100 points, one twice as slow scores 50, and an unsupported scenario scores nothing. A library's rating is the sum, so breadth and speed both count and a narrow win cannot outweigh them.
+- **The rating measures distance, not placings.** In every scenario the fastest library scores 100 points and the one allocating least scores 100 more; four times slower is half the points, and an unsupported scenario scores nothing. A library's rating is the sum, so speed, economy and breadth all count and a narrow win cannot outweigh them.
 - **The Web application is the primary explorer.** Use it to select libraries and switch between overview, features, benchmarks and environment details. Chrome and Edge can install it as a desktop application, with a shortcut per category.
 
 The README is a generated snapshot of the reports committed to this repository.
@@ -90,18 +90,50 @@ else
 <text>
 ### Rating
 
-In every scenario the fastest library scores 100 points, one twice as slow scores
-50, and one that does not support the scenario scores nothing. The maximum here is
-**@(category.Rating[0].Maximum)**. See [workflows/rating.md](workflows/rating.md).
+In every scenario the fastest library scores 100 points and the one allocating
+least scores 100 more; four times slower is half the points, and an unsupported
+scenario is worth nothing. Time and memory reach **@(category.Rating[0].MetricMaximum)**
+each here, so the maximum is **@(category.Rating[0].Maximum)**.
+See [workflows/rating.md](workflows/rating.md).
 
-| # | Library | Points | Scenarios | Group wins |
-|---:|---|---:|---:|---|
+| # | Library | Scenarios | Time | Memory | Points | Group wins |
+|---:|---|---:|---:|---:|---:|---|
 @foreach (var item in category.Rating)
 {
-<text>| @item.Place | [**@item.Name**](@(Model.ApplicationUrl)?category=@category.Id&library=@item.Id) | @item.Points | @item.Covered/@item.Scenarios | @item.Awards |
+<text>| @item.Place | [**@item.Name**](@(Model.ApplicationUrl)?category=@category.Id&library=@item.Id) | @item.Covered/@item.Scenarios | @item.TimePoints | @item.MemoryPoints | @item.Points | @item.Awards |
 </text>
 }
 
+</text>
+<details>
+<summary><strong>How the points were earned</strong> — every scenario, with the measurements behind it</summary>
+
+Each row is one scenario. `Best` is the lowest result among the rated libraries
+that completed it, and the points follow from the two figures beside them:
+`100 × √((best + step) / (result + step))`, with a step of 1 ns for time and 24 B
+for memory. A dash means the library did not complete the scenario, and it scores
+nothing for it. Add the two Points columns over every scenario and you get the
+rating above. The same breakdown appears as a hint on any points value in the
+[application](@(Model.ApplicationUrl)?category=@category.Id).
+
+@foreach (var item in category.Rating)
+{
+<text>#### @item.Place. @item.Name — @item.Points of @item.Maximum
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+</text>
+    foreach (var score in item.Breakdown)
+    {
+<text>| @score.Scenario | @score.Time | @score.TimeBest | @score.TimePoints | @score.Memory | @score.MemoryBest | @score.MemoryPoints |
+</text>
+    }
+<text>
+</text>
+}
+</details>
+
+<text>
 </text>
 }
 ### Benchmark overview

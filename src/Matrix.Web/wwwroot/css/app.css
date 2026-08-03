@@ -534,25 +534,65 @@ select {
     margin-bottom: 0;
 }
 
+/* Every block heading has the same shape: the title on the left, its note and the
+   explanation control as one group at the right edge. Built differently, the note
+   drifted to the middle of one block and the control fell onto its own line in
+   the other. */
+.overview-chart-head,
+.rating-board-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 18px;
+}
+
+.section-head-end {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    margin-left: auto;
+    gap: 12px;
+}
+
+.section-note {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: right;
+}
+
 .overview-chart-head h3 {
     margin: 0;
     font-size: 22px;
     letter-spacing: -.03em;
 }
 
-.overview-chart-head p {
-    margin: 5px 0 20px;
-    color: var(--muted);
-    font-size: 12px;
-}
-
+/* The last track is the score, the same column the standings end with. */
 .overview-chart-row {
     display: grid;
-    grid-template-columns: minmax(0, 29fr) minmax(0, 32fr) minmax(0, 32fr);
+    grid-template-columns: minmax(0, 29fr) minmax(0, 32fr) minmax(0, 32fr) 58px;
     align-items: center;
     gap: 24px;
     padding: 7px 10px;
     border-radius: var(--radius-control);
+}
+
+.overview-chart-points {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    text-align: right;
+    cursor: help;
+}
+
+.overview-panel-head.is-points {
+    text-align: right;
+}
+
+.overview-chart-label small.is-partial {
+    color: var(--warning);
+    cursor: help;
 }
 
 .overview-chart-row.is-striped {
@@ -619,26 +659,6 @@ select {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     text-align: right;
-}
-
-.overview-chart-divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 18px 0 10px;
-    padding: 0 10px;
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-}
-
-.overview-chart-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--line);
 }
 
 .overview-metric {
@@ -753,11 +773,14 @@ select {
     color: #59616f;
 }
 
+/* A fixed box whether or not it holds an icon, so a medal never moves the
+   controls beside it in a list of rows. */
 .rating-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    white-space: nowrap;
+    display: grid;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    place-items: center;
 }
 
 .rating-badge.is-unrated {
@@ -790,13 +813,6 @@ select {
     background: var(--bg);
 }
 
-.rating-board-head {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 18px;
-    margin-bottom: 16px;
-}
 
 .rating-board-head h3 {
     margin: 0;
@@ -804,45 +820,118 @@ select {
     letter-spacing: -.03em;
 }
 
-.rating-board-list {
-    display: grid;
-    margin: 0;
-    padding: 0;
-    gap: 2px;
-    list-style: none;
+.rating-table {
+    overflow: hidden;
+    overflow-x: auto;
 }
 
-/* A grid item is as wide as its content unless told otherwise, and a name like
-   Microsoft.Extensions.DependencyInjection does not wrap, so without this the row
-   pushes the page sideways instead of letting the name ellipsise. */
-.rating-board-list li {
-    display: flex;
-    min-width: 0;
-    align-items: center;
-    gap: 11px;
-    padding: 7px 10px;
-    border-radius: var(--radius-control);
+/* Fixed layout: the numeric columns keep their width on every row, so a medal
+   appearing on the podium or a partial-coverage note cannot move them. */
+.rating-table table {
+    width: 100%;
+    min-width: 460px;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
 }
 
-.rating-board-list li:nth-child(odd) {
-    background: var(--surface);
-}
-
-.rating-place {
-    min-width: 18px;
+.rating-table th {
+    padding: 0 10px 8px;
+    border-bottom: 1px solid var(--line-soft);
     color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-align: right;
+    text-transform: uppercase;
+}
+
+.rating-table td {
+    padding: 6px 10px;
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.rating-table tbody tr:nth-child(odd) {
+    background-color: var(--surface);
+}
+
+/* How much of the maximum the row actually holds. Below the leaders the points
+   fall to a few percent and the place number implies a difference the numbers do
+   not carry; the fill is what shows that two adjacent ranks are both nowhere.
+   Background only, so no cell moves and the stacked phone layout is unaffected. */
+.rating-table tbody tr {
+    background-image: linear-gradient(
+        to right,
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
+}
+
+.rating-table th:first-child,
+.rating-table td:first-child {
+    padding-left: 12px;
+}
+
+.rating-table th:last-child,
+.rating-table td:last-child {
+    padding-right: 12px;
+}
+
+.rating-column-place {
+    width: 34px;
     text-align: right;
 }
 
+.rating-table th.rating-column-name,
+.rating-table td.rating-column-name {
+    width: auto;
+    font-family: 'Manrope', system-ui, sans-serif;
+    text-align: left;
+}
+
+.rating-table th:not(.rating-column-place):not(.rating-column-name) {
+    width: 74px;
+}
+
+.rating-table td.is-partial {
+    color: var(--warning);
+    cursor: help;
+}
+
+/* Every points cell carries its own arithmetic; the cursor is what says so. */
+.rating-table td.rating-column-score,
+.rating-table td.rating-column-total {
+    cursor: help;
+}
+
+.rating-column-total {
+    color: var(--text);
+    font-weight: 500;
+}
+
 .rating-name {
-    flex: 1;
-    overflow: hidden;
-    font-size: 13px;
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 9px;
     font-weight: 600;
+}
+
+.rating-name .library-open {
+    min-width: 0;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.rating-name .rating-badge {
+    margin-left: auto;
+}
+
+.rating-label {
+    display: none;
 }
 
 .overview-chart-medal {
@@ -2044,6 +2133,12 @@ tbody th {
     background: var(--surface-2);
 }
 
+/* The tile and every row of the breakdown carry their own arithmetic. */
+.modal-metrics div.is-explained,
+.modal-rating li[title] {
+    cursor: help;
+}
+
 .modal-metrics strong {
     display: block;
     font-size: 22px;
@@ -2076,6 +2171,54 @@ tbody th {
 
 .modal-section-head h3 {
     margin: 0;
+    font-size: 15px;
+}
+
+/* An itemised bill: what each metric earned, what an unsupported scenario
+   forfeited, and the sum. */
+.modal-rating {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    list-style: none;
+    overflow: hidden;
+}
+
+.modal-rating li {
+    display: grid;
+    align-items: baseline;
+    grid-template-columns: minmax(0, 1fr) 64px 76px;
+    gap: 12px;
+    padding: 9px 16px;
+    font-size: 13px;
+}
+
+.modal-rating li + li {
+    border-top: 1px solid var(--line-soft);
+}
+
+.modal-rating strong,
+.modal-rating small {
+    font-family: 'DM Mono', monospace;
+    text-align: right;
+}
+
+.modal-rating small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.modal-rating .is-missing span,
+.modal-rating .is-missing strong {
+    color: var(--warning);
+}
+
+.modal-rating .is-total {
+    background: var(--surface-2);
+}
+
+.modal-rating .is-total strong {
     font-size: 15px;
 }
 
@@ -2119,6 +2262,10 @@ tbody th {
     font-size: 11px;
     letter-spacing: .04em;
     text-transform: uppercase;
+}
+
+.modal-standing-score {
+    cursor: help;
 }
 
 .modal-standing-ratio {
@@ -2444,6 +2591,52 @@ tbody th {
         padding: 16px;
     }
 
+    /* The standings stack too: the library on one line, its four numbers on the
+       next, each carrying the heading it lost. */
+    .rating-table table {
+        min-width: 0;
+    }
+
+    .rating-table thead {
+        display: none;
+    }
+
+    .rating-table tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 10px;
+        padding: 8px 12px;
+    }
+
+    .rating-table td {
+        padding: 0;
+        flex: 1 1 auto;
+        text-align: left;
+    }
+
+    .rating-table td.rating-column-place {
+        width: auto;
+        flex: 0 0 auto;
+    }
+
+    /* Wide enough to keep the numbers off this line, narrow enough to leave room
+       for the place cell and the gap beside it. */
+    .rating-table td.rating-column-name {
+        min-width: 0;
+        flex: 1 1 calc(100% - 60px);
+    }
+
+    .rating-label {
+        display: inline;
+        margin-right: 5px;
+        color: var(--muted);
+        font-family: 'Manrope', system-ui, sans-serif;
+        font-size: 10px;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+    }
+
     /* The table becomes a stack: the scenario takes a row of its own and the two
        metrics stay a pair below it, rather than scrolling sideways on a phone. */
     .modal-scenarios table {
@@ -2555,6 +2748,10 @@ tbody th {
 
     .overview-chart-columns {
         display: none;
+    }
+
+    .overview-chart-points {
+        text-align: left;
     }
 
     .overview-metric {

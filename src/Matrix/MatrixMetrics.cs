@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Matrix;
 
 /// <summary>
@@ -48,9 +50,17 @@ public static class MatrixMetrics
     public static double ScalePercent(double current, double maximum) =>
         Scale(current, maximum, BarWidth) / BarWidth * 100;
 
+    /// <summary>
+    /// Invariant throughout, for the same reason the scores are: the readme and the
+    /// charts are rendered on whatever machine runs the build, and a decimal comma
+    /// there would make `1,07 ms` read as a thousand and would disagree with the
+    /// application, which formats the same result for a reader anywhere.
+    /// </summary>
+    private static readonly CultureInfo Culture = CultureInfo.InvariantCulture;
+
     public static string Ratio(double current, double minimum) =>
         minimum > 0
-            ? $"{current / minimum:0.00}x"
+            ? string.Format(Culture, "{0:0.00}x", current / minimum)
             : current > 0
                 ? "∞x"
                 : "1.00x";
@@ -58,17 +68,17 @@ public static class MatrixMetrics
     public static string FormatTime(double nanoseconds) => nanoseconds switch
     {
         0 => "0 ns",
-        < 1_000 => $"{nanoseconds:0.##} ns",
-        < 1_000_000 => $"{nanoseconds / 1_000:0.##} μs",
-        _ => $"{nanoseconds / 1_000_000:0.##} ms"
+        < 1_000 => string.Format(Culture, "{0:0.##} ns", nanoseconds),
+        < 1_000_000 => string.Format(Culture, "{0:0.##} μs", nanoseconds / 1_000),
+        _ => string.Format(Culture, "{0:0.##} ms", nanoseconds / 1_000_000)
     };
 
     public static string FormatBytes(double bytes) => bytes switch
     {
         0 => "0 B",
-        < 1_024 => $"{bytes:0.##} B",
-        < 1_048_576 => $"{bytes / 1_024:0.##} KB",
-        _ => $"{bytes / 1_048_576:0.##} MB"
+        < 1_024 => string.Format(Culture, "{0:0.##} B", bytes),
+        < 1_048_576 => string.Format(Culture, "{0:0.##} KB", bytes / 1_024),
+        _ => string.Format(Culture, "{0:0.##} MB", bytes / 1_048_576)
     };
 
     public static string Format(double value, bool memory) =>

@@ -11,36 +11,104 @@ close does a library come to the best result available?**
 
 ## The rule
 
-> In every scenario the fastest library scores 100 points. A library twice as
-> slow scores 50, one a hundred times slower scores 1, and a library that does
-> not support the scenario scores 0. A library's rating is the sum of its
-> points.
+> In every scenario the fastest library scores 100 points and the one allocating
+> least scores 100 more. Four times slower is half the points, and a scenario the
+> library does not support is worth nothing. A library's rating is the sum.
 
-Formally, for library `L` and scenario `s`:
+Formally, for library `L`, scenario `s` and metric `m` in {execution time,
+allocated bytes}:
 
 ```
-points(L, s) = 0                                    if L has no successful result for s
-points(L, s) = 100 * (best(s) + 1) / (mean(L, s) + 1)   otherwise
+points(L, s, m) = 0                                        if L reported no value of m for s
+points(L, s, m) = 100 * sqrt(ratio(L, s, m))               otherwise
 
-best(s) = the smallest mean of the rated libraries that completed s
-rating(L) = sum of points(L, s) over every scenario of the category
+ratio(L, s, m) = (best(s, m) + step(m)) / (value(L, s, m) + step(m))
+best(s, m)     = the smallest value of m among the rated libraries that completed s
+step(m)        = 1 nanosecond for execution time, 24 bytes for allocated memory
+rating(L)      = sum of points(L, s, m) over every scenario and both metrics
 ```
 
-Means are in nanoseconds. The maximum is `100 x scenario count`, so a library
-that wins every scenario scores the maximum and the reader always knows the
-scale.
+The maximum is `200 x scenario count`, so a library that is both fastest and
+leanest everywhere scores exactly the maximum and the reader always knows the
+scale. Time and memory carry the same weight; the two halves are shown
+separately so it is visible which one a library earned its total from.
 
-### Why the plus one
+### Why the step
 
 A source generator can complete a preparation scenario in a time that rounds to
-zero nanoseconds. Both `best(s)` and `mean(L, s)` are then zero and the ratio is
-undefined. Adding one nanosecond to both sides states that results are compared
-at nanosecond resolution: two libraries that both measure zero score the same
-100 points, and a library that takes two microseconds against a zero-nanosecond
-best scores 0.05 rather than an error.
+zero nanoseconds, and an allocation-free scenario measures zero bytes for many
+libraries at once. Both `best` and `value` are then zero and the ratio is
+undefined. Adding the same step to both sides states that results are compared at
+the smallest difference that means anything: two libraries that both measure zero
+are equally best and both score 100, while two microseconds against a
+zero-nanosecond best scores 0.05 rather than an error.
 
-This is a unit, not a tuning knob. There is no threshold, weight, or cut-off
-anywhere in the rule.
+The step is the resolution of the metric, and the two metrics do not have the
+same one:
+
+- **Time — one nanosecond.** That is where the measurement itself stops; a
+  smaller difference is not something the benchmark can see.
+- **Memory — twenty-four bytes.** Allocation is counted exactly, so a byte is
+  never a rounding artefact, but it is also not the smallest step a library can
+  take: the smallest object the 64-bit runtime can allocate is 24 bytes (object
+  header, method table pointer, one field). Allocating nothing therefore beats
+  allocating something by one object, not by an unbounded factor.
+
+The memory step matters more than it looks. With a one-byte step, a scenario
+where the leader allocates zero scored everyone else at almost nothing however
+little they allocated — in `Logging / Exception`, NLog's 120 bytes against
+Microsoft.Extensions.Logging's 0 earned 9.1 points out of 100, barely more than a
+library allocating a megabyte. At 24 bytes the same cell earns 40.8 and the
+ordering below the leader stays readable.
+
+Both steps are units of measurement: they say what counts as the same result, and
+neither is fitted to produce a particular ranking.
+
+### Why the square root
+
+The exponent is the exchange rate between winning once and being decent often,
+and there is no neutral value for it. A rating sums one score per scenario per
+metric, so the shape of the curve decides how many honest mid-table results one
+outright win is worth.
+
+At an exponent of 1 — a plain ratio, which reads like the natural choice — the
+scale spends nine tenths of its range on the first two-fold of the field. Losing
+by a factor of two costs 50 points; losing by a factor of ten costs 90; and every
+result past five-fold collapses into the same sliver above zero. One scenario won
+outright was therefore worth about thirty scenarios completed thirty times
+behind. In `DependencyInjection` that produced a result nobody could defend:
+
+- **MvvmCross** enters 6 scenarios of 15. Resolving a singleton allocates
+  nothing, exactly like the leaders, so that one cell scored the full 100 — 59% of
+  its entire category total of 169. Everything else it did scored between 1 and 25.
+- **Autofac** enters 13 scenarios of 15 and is 54x behind at the median, which is
+  where MvvmCross sits too (52x). Its best cell of twenty-six was worth 10.2.
+  Total: 81.
+
+Same typical performance, twice the breadth, half the score. At an exponent of
+one half the same perfect cell is worth about five mid-table cells rather than
+thirty, Autofac finishes ahead of MvvmCross, and the bottom of the table gets
+enough resolution to be read at all.
+
+The exponent also repairs the coverage inversions listed further down without a
+separate term for coverage: once each attempted scenario is worth meaningful
+points instead of two, breadth pays for itself. Lamar (12 scenarios) moves above
+Singularity (9), Microsoft.Extensions.DependencyInjection (9) above Faster.Ioc
+(8), DataAnnotations (9) above MiniValidation (8). Nothing was added to the rule
+to make that happen.
+
+What it costs: `half as good is half the points` was a stronger sentence than
+`four times slower is half the points`. Both are one line and both can be checked
+against the published reports with a calculator; the first was simply describing
+a scale that did not work below the top of the field.
+
+### Why both metrics count the same
+
+The project measures execution time and allocated memory and presents them side
+by side everywhere else. Weighting one above the other would be a judgement the
+data cannot support, and would need a constant. Counting them equally needs
+none, and the split is published, so a reader who cares only about allocation can
+read the Memory column on its own.
 
 ### Properties this buys
 
@@ -51,21 +119,34 @@ anywhere in the rule.
   different numbers, not the same medal.
 - **Every scenario counts once.** Groups of different sizes no longer weigh
   differently, because groups no longer enter the rating at all.
-- **Breadth is paid for.** An unsupported scenario costs its full 100 points, so
+- **Breadth is paid for.** An unsupported scenario costs its full 200 points, so
   a narrow library cannot outrank a complete one by winning where it happens to
   compete.
 - **It is actionable.** An author can compute the number from the published
-  reports, see which scenario costs the most, and know that halving a time
-  doubles the points for it.
+  reports, see which scenario costs the most, and know that making a result four
+  times better doubles the points for it.
 
 ### Scope
 
 - Only libraries with `rated: true` in `metadata/<Category>/libraries.json`
-  take part. A package-less baseline such as `Hand-coded` is excluded, as
-  before, and does not define `best(s)`.
+  take part. A library outside the rating **does not define `best`** either: it is
+  drawn on the charts as a reference, with a dash instead of a score, but the
+  competitors are measured against the best of the competitors. Otherwise a
+  hand-written baseline that does no work at all would set the reference and
+  annihilate everyone's score — in `DependencyInjection / Prepare` it did exactly
+  that, because `PrepareAndRegister` costs a hand-written wiring 0 ns and 0 bytes.
+- Scores below ten points are shown with their fraction. A library three orders of
+  magnitude behind earns 0.004, and rounding that to zero would make the whole
+  bottom of a table look identical. Formatting is invariant, so a chart does not
+  depend on the locale of the machine that rendered it.
 - The rating is per category. There is no cross-category rating.
-- The rating uses execution time only. Allocation is an open question, see
-  below.
+- Every overview group carries its own standing, computed by the same
+  `MatrixScores` call over the scenarios of that group. A group maximum is
+  therefore `200 x group scenario count`. The two standings differ only in what
+  they cover.
+- A metric nobody reported for a scenario is skipped rather than scored as zero:
+  it is not a competition. A scenario counts as covered when the library
+  reported either metric.
 - The library filter in the Web application applies: the rating describes the
   libraries currently being compared.
 
@@ -144,38 +225,72 @@ such as SPEC do when they normalise against a reference and aggregate.
 
 Computed from the reports committed at the time of writing.
 
-| Category | Maximum | Current leaderboard | Rating |
+| Category | Maximum | Previous leaderboard | Rating, as `total (time + memory)` |
 | --- | ---: | --- | --- |
-| CSV Processing | 1000 | Sep, Sylvan.Data.Csv, TinyCsvParser, CsvHelper | Sep 999, Sylvan.Data.Csv 453, TinyCsvParser 351, CsvHelper 94 |
-| Dependency Injection | 1500 | Pure.DI, Grace, **MvvmCross**, Simple Injector | Pure.DI 1400, Grace 647, DryIoc 632, Stashbox 550 |
-| JSON Serialization | 1400 | System.Text.Json, ServiceStack.Text, Newtonsoft.Json | System.Text.Json 1229, ServiceStack.Text 1042, Newtonsoft.Json 576 |
-| Logging | 800 | Microsoft.Extensions.Logging, Serilog, NLog | Microsoft.Extensions.Logging 512, NLog 471, Serilog 274 |
-| Object Mapping | 1000 | Mapperly, Mapster, AutoMapper | Mapperly 1000, Mapster 442, AutoMapper 240 |
-| Validation | 1000 | DataAnnotations, Microsoft.Extensions.Validation, MiniValidation | Microsoft.Extensions.Validation 723, MiniValidation 684, FluentValidation 640, DataAnnotations 629 |
+| CSV Processing | 2000 | Sep, Sylvan.Data.Csv, TinyCsvParser, CsvHelper | Sep 1999 (999+1000), TinyCsvParser 950 (558+392), Sylvan.Data.Csv 882 (612+270), CsvHelper 443 (231+212) |
+| Dependency Injection | 3000 | Pure.DI, Grace, **MvvmCross**, Simple Injector | Pure.DI 2765 (1400+1365), DryIoc 1996 (846+1150), Stashbox 1847 (750+1097), Grace 1843 (798+1045) |
+| JSON Serialization | 2800 | System.Text.Json, ServiceStack.Text, Newtonsoft.Json | System.Text.Json 2513 (1264+1249), ServiceStack.Text 1999 (1111+887), Newtonsoft.Json 1225 (827+398) |
+| Logging | 1600 | Microsoft.Extensions.Logging, Serilog, NLog | Microsoft.Extensions.Logging 1184 (546+638), NLog 1021 (595+426), Serilog 875 (445+430), log4net 651 (303+348) |
+| Object Mapping | 2000 | Mapperly, Mapster, AutoMapper | Mapperly 2000 (1000+1000), Mapster 1375 (583+792), AutoMapper 1204 (402+802) |
+| Validation | 2000 | DataAnnotations, Microsoft.Extensions.Validation, MiniValidation | Microsoft.Extensions.Validation 1545 (753+791), DataAnnotations 1477 (741+736), MiniValidation 1455 (734+721), FluentValidation 1419 (750+669) |
 
 Notable changes:
 
-- **MvvmCross leaves the top of Dependency Injection.** It scores far below the
-  leaders because nine scenarios are worth zero to it and it is 95x behind where
-  it does compete.
-- **Mapperly reaches a perfect 1000** in Object Mapping by winning all ten
-  scenarios, and the 2 750 106x silver disappears.
-- **Validation tightens.** Microsoft.Extensions.Validation leads on 8 of 10
-  scenarios covered, ahead of FluentValidation which covers all ten but is
-  slower where both compete. Coverage is visible beside the score, so a reader
-  can weigh that trade themselves.
+- **MvvmCross leaves the top of Dependency Injection**, from third to nineteenth
+  of twenty-two on 340 points. Nine scenarios are worth zero to it, and where it
+  does compete it is 52x behind on time at the median.
+- **Mapperly reaches a perfect 2000** in Object Mapping by being both fastest and
+  leanest in all ten scenarios, and the 2 750 106x silver disappears.
+- **Memory changes the order, which is the point of counting it.** DryIoc rises
+  above Grace in Dependency Injection on the strength of 1150 memory points and
+  full coverage, and AutoMapper closes most of the gap to Mapster on 802 memory
+  points despite scoring 402 on time.
+- **Coverage stays visible.** ZLogger is fifth in Logging on 386 points from
+  three of eight scenarios; the reader sees `3/8` beside the score and can weigh
+  that trade themselves.
+
+## The overview groups
+
+A group is scored by the same rule over its own scenarios, and its chart is
+ordered by that score. Before, a group was ordered by the raw sum of execution
+times, which had two faults of its own:
+
+- **Memory did not count**, although the chart drew it beside the time.
+- **A sum is dominated by its largest term.** In the Dependency Injection
+  `Basic` group the four scenarios contribute 9%, 12%, 22% and 56% of the median
+  total, so the group was in effect ordered by `Complex` alone. Points weigh
+  every scenario the same by construction.
+
+Measured against the previous order, six of the twenty-three groups change, and
+two change leader: `CsvProcessing / Throughput` from Sylvan.Data.Csv to Sep, and
+`JsonSerialization / Nested` from System.Text.Json to ServiceStack.Text. In
+`DependencyInjection / Basic` sixteen of twenty-two rows move — seven of those
+from the sum-to-average change alone, the rest from memory entering.
+
+### What this costs
+
+The bars still show measured totals, so **the chart is no longer sorted by its
+bars**: a shorter bar can sit below a longer one. That is stated in the caption
+and explained in the chart's help dialog. The alternative — drawing the score as
+the bar — would make the picture consistent at the price of no longer showing
+real times beside it, which is the opposite of what this project is for.
+
+The `Not ranked · partial coverage` divider is gone. A library that misses
+scenarios scores nothing for them and takes its place in the same list, with the
+count of completed scenarios under its name, exactly as in the category
+standings.
 
 ## Medals after the change
 
-Medals are kept, with each of the two statements they used to conflate given its
-own place.
+Medals are kept, and both now mean the same kind of thing.
 
-- **A star on a chart row remains a local fact**: first, second or third in that
-  overview group. It is true, it is useful, and the dialog already shows how far
-  behind the leader the row is. Nothing changes here.
-- **Gold, silver and bronze in the category table are awarded on the rating**,
-  to the first three libraries by points. A medal then means "one of the three
-  best libraries in this category", which is what a reader assumes it means.
+- **A star on a chart row** is the first, second or third place of that group's
+  standing.
+- **Gold, silver and bronze in the category table** are the first three of the
+  category standing.
+
+Both are places in a standing computed by the same rule; they differ only in
+scope. That is what makes the two readable together.
 
 ## Explaining it in the interface
 
@@ -185,10 +300,40 @@ presentation rules are part of this document.
 
 **Always visible, no interaction required:**
 
-- The column is called **Points**, and the section meta states the maximum:
-  `points out of 1500`. Points need no glossary and the scale is stated.
-- Coverage sits beside it as `12/15 scenarios`, because it explains a low score
-  without changing the order.
+- The standings are a table with named columns — `Scenarios`, `Time`, `Memory`,
+  `Points` — and the section meta states the maximum: `points out of 3000`.
+  Points need no glossary, the scale is stated, and every number is labelled.
+- The table layout is fixed and every cell is always rendered, including the
+  medal. A star appearing on the podium, or a coverage figure appearing on one
+  row and not the next, must never move the column beside it.
+- `RatingBadge` is a box of constant size for the same reason: it is empty below
+  the podium rather than absent, so the controls beside it in the sidebar and on
+  the cards do not shift from row to row.
+- Every standings row is filled from the left to the share of the maximum it
+  holds. A place number states an order; the fill states the size of the gap, so
+  a reader can see at a glance that two adjacent places near the bottom of a
+  table are two ways of being nowhere. It is a background gradient on the row, so
+  it costs no column and survives the stacked phone layout untouched.
+- **Every printed points value carries its own arithmetic as a hint**: one line
+  per scenario giving the library's measurement, the best measurement, the step
+  applied to both, and the points that came out. Restating the formula does not
+  let anyone check a total; the two figures behind each term do. The lines come
+  from `MatrixScores.Explain`, which runs the same per-cell function the rating
+  sums, so a hint cannot disagree with the number it explains. Present on the
+  standings `Time`, `Memory` and `Points` cells, on the chart's points cell
+  scoped to that group's scenarios, and on the library card — its points tile,
+  each row of the rating breakdown, and each group standing. Every one of them
+  carries `cursor: help`, which is the only thing that says a hint is there.
+- **Points in a hint print to one decimal** (`MatrixScores.FormatExact`), while a
+  table cell keeps whole points. A breakdown exists to be added up: at whole
+  points a scenario lost by half a percent shows as a perfect 100, four of them
+  show as 400, and the total beside them says 399.
+- **`README.md` carries the same breakdown as text**, in a collapsed
+  `How the points were earned` block under each rating table: one section per
+  library, one row per scenario, with the library's result, the best result and
+  the points for both metrics. A generated report is where the full numbers
+  belong, and a reader with no browser can still check a total. The charts get
+  none of this — a PNG has no hover and the numbers would only crowd it.
 
 **Behind one control:** a single `?` button opens a dialog with the full rule,
 the worked example and the reason a preparation scenario cannot be won by a
@@ -197,36 +342,113 @@ non-obvious concept is introduced:
 
 | Placed next to | Explains |
 | --- | --- |
-| `Rating / Medal table` heading | how points are computed, what the maximum is, why an unsupported scenario is zero |
-| Overview chart heading | that the bars are logarithmic, that the length is a total over the group, and what partial coverage means |
+| `Rating / Standings` heading | how points are computed, that time and memory count the same, why an unsupported scenario is zero |
+| Overview chart heading | that rows are ordered by the group score, why a shorter bar can therefore sit below a longer one, that the bar scale is logarithmic, and what partial coverage costs |
 | Benchmarks `Scenario` heading | mean and standard error, what `x1.00` compares against, why lower is better |
 
 Not one button per row, not a tooltip per glyph. The feature matrix keeps its
 existing visible legend and gets no button.
 
+## Where the rule can still read as unfair
+
+Audited against the committed reports. Each entry says what the data shows, so a
+library author who feels wronged finds the case here instead of guessing.
+
+### The preparation scenarios (the open one)
+
+A source generator does its preparation at compile time, so at run time it
+measures zero on both metrics — and every library that prepares at run time then
+scores next to nothing for that scenario on both metrics at once. This is the
+memory-step problem again, but no step fixes it: the difference is real, and it
+is the whole point of a compile-time approach.
+
+What it costs, measured as the share of the maximum a library reaches with and
+without the preparation scenarios:
+
+| Category | Prepare scenarios | Effect |
+| --- | --- | --- |
+| Object Mapping | 2 of 10 — 20% of the maximum | Mapster 69% → 86%, AutoMapper 60% → 75% |
+| Dependency Injection | 2 of 15 — 13% | DryIoc 67% → 75%; Stashbox and Grace swap places |
+| Validation | 1 of 10 — 10% | FluentValidation is 4th with it and 1st without |
+| JSON Serialization | 1 of 14 — 7% | System.Text.Json 90% → 96% |
+
+Two things are wrong here and they are not the same thing. The first is that
+preparation cost is a genuine cost a user pays, so removing it would hide
+something true. The second is that the same handicap is worth 20% of one category
+and 7% of another, purely because of how many scenarios each category happens to
+define — and that is not a property of the rule, it is a property of the scenario
+set. Balancing the scenario sets is the fix; changing the rule is not.
+
+### Scenarios with one entrant
+
+Four scenarios are contested by fewer than three rated libraries, so the winner
+takes 200 points nobody could have taken from it:
+
+| Scenario | Entrants |
+| --- | --- |
+| `JsonSerialization / Source Generation Round Trip` | 1 of 3 — 7% of the category |
+| `Validation / Async Validation` | 1 of 4 — 10% of the category |
+| `JsonSerialization / Polymorphic Round Trip` | 2 of 3 |
+| `Validation / Stop On First Failure` | 2 of 4 |
+
+This is coverage working as intended: it says only one library can do this. But
+the points are stated as though a race was won, and the reader is not told the
+race had one runner. The Scenarios column shows who did not enter; nothing shows
+that the winner ran alone.
+
+### A narrow library above a broad one (fixed by the curve)
+
+This was the case that produced the square root. With a plain ratio, MvvmCross
+finished 16th on 6 scenarios of 15 while Autofac finished 18th on 13, at the same
+median distance from the leaders — because a single tied-for-best cell was worth
+more than an entire library's work. See *Why the square root* above. Under the
+current curve MvvmCross is 19th and Autofac 16th.
+
+Inversions between coverage and rank still exist and most of them are correct:
+Simple Injector enters 12 scenarios and finishes above Unity, which enters 13,
+because it is an order of magnitude faster in every scenario both of them enter.
+What no longer happens is an inversion at equal performance. The Scenarios column
+remains the thing that makes such a row readable, which is why it is not optional.
+
+### Checked and clean
+
+- **No silent forfeit.** Every successful result reports both metrics; there is
+  no case of a library earning time points and quietly scoring zero for memory
+  while still counting as having covered the scenario.
+- **No medal decided by noise.** In no category are the first and second placed
+  libraries within two combined standard errors of each other in any scenario.
+  Across all 352 adjacent pairs in all reports, 18 fall inside measurement noise;
+  9 of those are inside the two Dependency Injection preparation scenarios, which
+  are the noisiest measurements in the project, and none is at the top of a table.
+- **No winning by doing less.** A result counts only when it is `Successful`, and
+  success means the validation layer of the category confirmed the library
+  actually did the work.
+
 ## Open questions
 
-- **Allocation is not in the rating.** The project measures execution time and
-  allocated memory, and the rating currently uses time only, as the medals did.
-  The same rule extends naturally — every scenario would contribute two scores,
-  one for time and one for bytes, doubling the maximum — but that is a separate
-  decision and is not implemented.
 - **Environment mixing.** Results from different benchmark environments are
   already flagged in the Benchmarks view. The rating does not check this and
   will average across environments if a report contains several.
+- **Preparation weighting.** Whether the preparation scenarios belong in the
+  category total, and whether the scenario sets should be balanced so the same
+  handicap costs the same everywhere. See above; this is a scenario-set decision,
+  not a rule change.
 
 ## Implementation
 
 | Step | Where | Notes |
 | --- | --- | --- |
-| 1 | `src/Matrix/MatrixRating.cs` | Replace the group-and-place algorithm with the scoring formula. `MatrixMedals` gains `Points` and `Covered`; `Awards` stays for the per-group stars. |
+| 0 | `src/Matrix/MatrixScores.cs` | The rule itself, applied to whatever set of scenarios it is given. Both standings call it, so they cannot drift apart in method. |
+| 1 | `src/Matrix/MatrixRating.cs` | Replace the group-and-place algorithm with a call to `MatrixScores` over every scenario. `MatrixMedals` gains `TimePoints`, `MemoryPoints` and `Covered`; `Awards` stays for the per-group stars, now taken from the group standing. |
+| 1a | `src/Matrix/MatrixOverviews.cs` | One list of rows ordered by the group score; `Ranked`/`Unranked` and the divider are gone. `MatrixOverviewRow` gains `TimePoints` and `MemoryPoints`. |
+| 1b | `build/Targets/ReportChartsTarget.cs` | One row loop, a `POINTS` column, coverage under every name, no divider. Rewrites all overview PNGs. |
 | 2 | `src/Matrix/MatrixMedals.cs` | `Gold`, `Silver`, `Bronze` and `Total` keep counting per-group awards for the chart stars. Category medals are derived from the points order, not from these. |
-| 3 | `src/Matrix.Web/Components/RatingBoard.razor` | Points and coverage columns; ordering by points. |
-| 4 | `src/Matrix.Web/Components/LibraryDialog.razor` | Points in the metric strip beside the rating place. |
+| 3 | `src/Matrix.Web/Components/RatingBoard.razor` | A fixed-layout table: place, library, scenarios, time, memory, points; ordering by points. |
+| 4 | `src/Matrix.Web/Components/LibraryDialog.razor` | Points in the metric strip beside the rating place, with the split in its tooltip. |
 | 5 | `src/Matrix.Web/Shared/HelpDialog.razor` (new) | Generic explanation dialog reusing the `.modal-*` styles and the `inert` handling of the library dialog. |
 | 6 | `src/Matrix.Web/Shared/HelpButton.razor` (new) | The `?` control; raises a topic to the page, which owns the dialog state, exactly as `OnOpenLibrary` works today. |
 | 7 | `src/Matrix.Web/Pages/Index.razor` | Holds the open help topic; passes `OnHelp` to the three views that need it. |
-| 8 | `build/Templates/Readme.cshtml` | Rating table gains the points column; the bullet `Medals reward consistency` is replaced by the rule sentence. |
+| 8 | `build/Templates/Readme.cshtml` | Rating table gains the scenarios, time, memory and points columns; the bullet `Medals reward consistency` is replaced by the rule sentence. |
 | 9 | `build/Targets/ReadmeRating.cs`, `ReadmeTarget.cs` | Carry points and coverage into the template. |
 | 10 | `workflows/category-roadmap.md` | The `Rating groups` column describes chart groups, which no longer drive the rating; reword. |
 
@@ -240,11 +462,14 @@ Regenerate `README.md` with `dotnet run --project .\build -- readme` after step 
 The rule is checked against the committed reports rather than against a unit
 test alone, because the failure mode being fixed was a plausible-looking number:
 
-1. No category may produce a `NaN` or an infinite score. The nanosecond
-   resolution exists for this; the preparation scenarios of Object Mapping and
-   JSON Serialization are the cases that break a naive ratio.
-2. A library that wins every scenario must score exactly the maximum. Mapperly
-   in Object Mapping is the reference case at 1000 of 1000.
+1. No category may produce a `NaN` or an infinite score. The step exists for
+   this; the preparation scenarios of Object Mapping and JSON Serialization are
+   the cases that break a naive ratio.
+2. A library that wins every scenario on both metrics must score exactly the
+   maximum. Mapperly in Object Mapping is the reference case at 2000 of 2000.
 3. Coverage must be visible for every library that scores below the maximum,
    so that a low score is explainable without opening anything.
 4. The medal table order in the application and in `README.md` must match.
+5. A group standing in the application and in the rendered PNG must list the same
+   libraries in the same order with the same points. They share
+   `MatrixOverviews`, so a difference means one of the two renderers is stale.

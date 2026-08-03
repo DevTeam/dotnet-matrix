@@ -1,4 +1,4 @@
-@if (_overview is { } overview && _rows.Length > 0)
+@if (_overview is { } overview && overview.Rows.Count > 0)
 {
     var featureNames = overview.Features
         .Select(feature => MatrixView.FeatureDescription(Report, feature.Id) is { } text
@@ -8,61 +8,63 @@
     <figure class="overview-chart">
         <figcaption class="overview-chart-head">
             <h3>@overview.Group.Name overview</h3>
-            <p>
-                @overview.Features.Count/@overview.Features.Count coverage required for ranking
-                · lower is better
-            </p>
-            @* Once per report: the scale and the coverage rule are the same for
-               every chart below. *@
-            @if (OnHelp.HasDelegate)
-            {
-                <HelpButton Topic="overview" Label="How to read this chart" OnHelp="@OnHelp"/>
-            }
+            <div class="section-head-end">
+                <p class="section-note">
+                    @overview.Features.Count scenario@(overview.Features.Count == 1 ? "" : "s")
+                    · points out of @overview.Maximum · lower is better for the bars
+                </p>
+                @* Once per report: the scale and the scoring rule are the same for
+                   every chart below. *@
+                @if (OnHelp.HasDelegate)
+                {
+                    <HelpButton Topic="overview" Label="How to read this chart" OnHelp="@OnHelp"/>
+                }
+            </div>
         </figcaption>
 
         <div class="overview-chart-row overview-chart-columns">
             <div></div>
             <div class="overview-panel-head">
-                <strong>Performance</strong>
+                <strong>Time</strong>
                 <small>total mean time</small>
             </div>
             <div class="overview-panel-head">
                 <strong>Memory</strong>
                 <small>total allocated</small>
             </div>
+            <div class="overview-panel-head is-points">
+                <strong>Points</strong>
+                <small>time + memory</small>
+            </div>
         </div>
 
-        @for (var index = 0; index < _rows.Length; index++)
+        @for (var index = 0; index < overview.Rows.Count; index++)
         {
-            var item = _rows[index];
-            @if (index == overview.Ranked.Count && overview.Unranked.Count > 0)
-            {
-                <p class="overview-chart-divider">
-                    <span>Not ranked · partial coverage</span>
-                </p>
-            }
+            var row = overview.Rows[index];
+            var place = index + 1;
+            var mark = Mark(row);
             <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)">
-                @{
-                    var mark = Mark(item);
-                }
                 <div class="overview-chart-label">
-                    <span class="overview-chart-rank">@item.Rank</span>
-                    <LibraryLogo Source="@MatrixView.Logo(Report, item.Row.LibraryId)"
-                                 Name="@item.Row.Name"
+                    @* A library outside the rating holds no place in it. *@
+                    <span class="overview-chart-rank">@(row.Rated ? place.ToString() : "")</span>
+                    <LibraryLogo Source="@MatrixView.Logo(Report, row.LibraryId)"
+                                 Name="@row.Name"
                                  Size="sm"/>
                     <div>
                         <strong>
                             <button class="library-open"
                                     type="button"
-                                    title="@($"Open the {item.Row.Name} overview")"
-                                    @onclick="() => OnOpenLibrary.InvokeAsync(item.Row.LibraryId)">
-                                @item.Row.Name
+                                    title="@($"Open the {row.Name} overview")"
+                                    @onclick="() => OnOpenLibrary.InvokeAsync(row.LibraryId)">
+                                @row.Name
                             </button>
                         </strong>
-                        @if (item.Coverage is not null)
-                        {
-                            <small>@item.Coverage</small>
-                        }
+                        @* Shown on every row, as in the standings: it is what
+                           explains a low score. *@
+                        <small class="@(row.MissingFeatures.Count > 0 ? "is-partial" : null)"
+                               title="@CoverageTitle(overview, row)">
+                            @Coverage(overview, row)
+                        </small>
                     </div>
                     @* Always rendered, so medals and the out-of-rating mark keep to
                        one column at the right edge of the label. *@
@@ -73,13 +75,20 @@
                         }
                     </span>
                 </div>
-                <OverviewBar Values="@item.Row.PerformanceValues"
+                <OverviewBar Values="@row.PerformanceValues"
                              FeatureNames="@featureNames"
                              Maximum="@overview.MaximumTime"/>
-                <OverviewBar Values="@item.Row.MemoryValues"
+                <OverviewBar Values="@row.MemoryValues"
                              FeatureNames="@featureNames"
                              Maximum="@overview.MaximumMemory"
                              Memory="true"/>
+                <span class="overview-chart-points @(row.Rated ? null : "is-reference")"
+                      title="@PointsTitle(overview, row)">
+                    @* The heading is gone once the row stacks on a phone. *@
+                    <span class="rating-label">Points</span>@(row.Rated
+                                                              ? MatrixScores.Format(row.Points)
+                                                              : "—")
+                </span>
             </div>
         }
 
@@ -99,7 +108,8 @@
 
 @code {
     private MatrixOverview? _overview;
-    private OverviewChartRowView[] _rows = [];
+    private HashSet<string> _medalled = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, string> _places = new(StringComparer.OrdinalIgnoreCase);
 
     [Parameter, EditorRequired]
     public required CategoryReport Report { get; set; }
@@ -123,44 +133,25 @@
             : MatrixOverviews.Create(
                 Report.Benchmarks,
                 Group,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId),
+                libraryId => MatrixView.IsRated(Report, libraryId));
 
-        // The medal ranking drops libraries that are out of the rating, so a place
-        // here does not have to match the row number of the chart.
-        var places = _overview is null || Report.Benchmarks is null
+        // Medals ignore libraries that are out of the rating, so a place here does
+        // not have to match the row number of the chart.
+        _places = _overview is null || Report.Benchmarks is null
             ? []
             : MatrixOverviews.Create(
                     Report.Benchmarks,
                     Group,
                     libraryId => MatrixView.IsRated(Report, libraryId)
                                  && MatrixView.IsSelected(Report, SelectedLibraries, libraryId))
-                ?.Ranked
+                ?.Rows
                 .Take(MatrixRatings.Places)
                 .Select((row, index) => (row.LibraryId, Place: PlaceName(index)))
                 .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
             ?? [];
-
-        _rows = _overview is null
-            ? []
-            : _overview.Ranked
-                .Select((row, index) => new OverviewChartRowView(
-                    row,
-                    $"{index + 1}.",
-                    null,
-                    Place(places, row)))
-                .Concat(_overview.Unranked.Select(row =>
-                    new OverviewChartRowView(
-                        row,
-                        null,
-                        Coverage(_overview, row),
-                        Place(places, row))))
-                .ToArray();
+        _medalled = [.._places.Keys];
     }
-
-    private static string? Place(
-        IReadOnlyDictionary<string, string> places,
-        MatrixOverviewRow row) =>
-        places.GetValueOrDefault(row.LibraryId);
 
     private static string PlaceName(int index) => index switch
     {
@@ -170,27 +161,31 @@
     };
 
     /// <summary>
-    /// A crossed star means the row could not win a medal here at all: either the
-    /// library is out of the rating, or it does not cover the whole group.
+    /// A crossed star means the row cannot win a medal here: the library is out of
+    /// the rating. Everything else either medalled or simply placed lower.
     /// </summary>
-    private (string? Icon, string? Title) Mark(OverviewChartRowView item)
+    private (string? Icon, string? Title) Mark(MatrixOverviewRow row)
     {
-        if (!MatrixView.IsRated(Report, item.Row.LibraryId))
+        if (!row.Rated)
         {
-            return ("unrated", $"{Report.Category.Name}: not part of the rating");
+            return ("unrated",
+                $"{Report.Category.Name}: a reference, not part of the rating."
+                + " It scores nothing and does not set the best result");
         }
 
-        if (item.Place is { } place)
-        {
-            return (place, PlaceTitle(place));
-        }
-
-        return item.Coverage is null
-            ? (null, null)
-            : ("unrated",
-                $"{Report.Category.Name}: not ranked in the {Group.Name} overview"
-                + " — partial coverage");
+        return _places.GetValueOrDefault(row.LibraryId) is { } medal
+            ? (medal, PlaceTitle(medal))
+            : (null, null);
     }
+
+    /// <summary>
+    /// The measurements this row was summed from, over the scenarios of this group
+    /// only — the same breakdown the standings give for the whole category.
+    /// </summary>
+    private string PointsTitle(MatrixOverview overview, MatrixOverviewRow row) =>
+        row.Rated
+            ? MatrixView.ScoreHint(Report, overview.Features, SelectedLibraries, row.LibraryId, null)
+            : "Outside the rating: shown as a reference only";
 
     private string PlaceTitle(string place) =>
         $"{Report.Category.Name} · {place} ({place switch
@@ -201,6 +196,11 @@
         }} place) in the {Group.Name} overview";
 
     private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
-        $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}"
-        + $" · Missing: {string.Join(", ", row.MissingFeatures)}";
+        $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}";
+
+    private static string CoverageTitle(MatrixOverview overview, MatrixOverviewRow row) =>
+        row.MissingFeatures.Count == 0
+            ? "Completed every scenario of this group"
+            : $"Missing: {string.Join(", ", row.MissingFeatures)}."
+              + " Each of them scores nothing";
 }

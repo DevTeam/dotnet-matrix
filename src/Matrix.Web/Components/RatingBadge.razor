@@ -1,17 +1,17 @@
-@if (!Rated)
-{
-    <span class="rating-badge is-unrated" title="@($"{Category}: not part of the rating")">
+@* Always rendered, and always the same size. An icon that appears only on the
+   podium would otherwise move whatever sits beside it from row to row. One medal
+   stands for the place in the category; what a library won inside a single group
+   is stated by the stars on the chart rows. *@
+<span class="rating-badge @Modifier" title="@Title">
+    @if (!Rated)
+    {
         <RatingIcon Place="unrated"/>
-    </span>
-}
-else if (Standing is { } standing && Place is >= 1 and <= MatrixRatings.Places)
-{
-    @* One medal for the place in the category, not one per overview group: what
-       a library won inside a group is stated by the stars on the chart rows. *@
-    <span class="rating-badge" title="@Title(standing)">
+    }
+    else if (Place is >= 1 and <= MatrixRatings.Places)
+    {
         <RatingIcon Place="@Name(Place.Value)"/>
-    </span>
-}
+    }
+</span>
 
 @code {
     [Parameter]
@@ -27,9 +27,16 @@ else if (Standing is { } standing && Place is >= 1 and <= MatrixRatings.Places)
     [Parameter, EditorRequired]
     public required string Category { get; set; }
 
-    private string Title(MatrixMedals standing) =>
-        $"{Category} · {Ordinal(Place!.Value)} place"
-        + $" · {standing.Points} of {standing.Maximum} points";
+    private string? Modifier => !Rated ? "is-unrated" : null;
+
+    private string? Title => (Rated, Place, Standing) switch
+    {
+        (false, _, _) => $"{Category}: not part of the rating",
+        (_, >= 1 and <= MatrixRatings.Places, { } standing) =>
+            $"{Category} · {Ordinal(Place!.Value)} place"
+            + $" · {MatrixScores.Format(standing.Points)} of {standing.Maximum} points",
+        _ => null
+    };
 
     private static string Name(int place) => place switch
     {

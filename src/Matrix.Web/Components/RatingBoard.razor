@@ -1,49 +1,79 @@
+@using System.Globalization
 @if (Medals.Count > 0)
 {
-    var maximum = Medals[0].Maximum;
+    var scale = Medals[0];
     <section class="rating-board">
         <div class="rating-board-head">
             <div>
                 <p class="eyebrow">Rating</p>
                 <h3>Standings</h3>
             </div>
-            @* The scale is stated in the open: a number nobody can place is
-               worse than no number. *@
-            <span class="section-meta">points out of @maximum</span>
-            <HelpButton Topic="rating" Label="How the rating is computed" OnHelp="@OnHelp"/>
+            <div class="section-head-end">
+                @* The scale is stated in the open: a number nobody can place is
+                   worse than no number. *@
+                <p class="section-note">points out of @scale.Maximum</p>
+                <HelpButton Topic="rating" Label="How the rating is computed" OnHelp="@OnHelp"/>
+            </div>
         </div>
-        <ol class="rating-board-list">
-            @for (var index = 0; index < Medals.Count; index++)
-            {
-                var item = Medals[index];
-                <li>
-                    <span class="rating-place">@(index + 1)</span>
-                    <LibraryLogo Source="@MatrixView.Logo(Report, item.LibraryId)"
-                                 Name="@item.Name"
-                                 Size="sm"/>
-                    <span class="rating-name">
-                        <button class="library-open"
-                                type="button"
-                                title="@($"Open the {item.Name} overview")"
-                                @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">
-                            @item.Name
-                        </button>
-                    </span>
-                    @if (item.Covered < item.Scenarios)
-                    {
-                        @* Explains a low score without changing the order. *@
-                        <span class="rating-coverage"
-                              title="@($"Completed {item.Covered} of {item.Scenarios} scenarios; the rest score nothing")">
-                            @item.Covered/@item.Scenarios
-                        </span>
-                    }
-                    <span class="rating-points">@item.Points</span>
-                    <RatingBadge Standing="@item"
-                                 Place="@(index + 1)"
-                                 Category="@Report.Category.Name"/>
-                </li>
-            }
-        </ol>
+        @* A table, and a fixed one: every cell is always present, so a medal or a
+           coverage note can never shift the column it sits in. *@
+        <div class="rating-table">
+            <table>
+                <thead>
+                <tr>
+                    <th class="rating-column-place">#</th>
+                    <th class="rating-column-name">Library</th>
+                    <th>Scenarios</th>
+                    <th>Time</th>
+                    <th>Memory</th>
+                    <th>Points</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var index = 0; index < Medals.Count; index++)
+                {
+                    var item = Medals[index];
+                    var place = index + 1;
+                    <tr style="--points: @Share(item)">
+                        <td class="rating-column-place">@place</td>
+                        <td class="rating-column-name">
+                            <span class="rating-name">
+                                <LibraryLogo Source="@MatrixView.Logo(Report, item.LibraryId)"
+                                             Name="@item.Name"
+                                             Size="sm"/>
+                                <button class="library-open"
+                                        type="button"
+                                        title="@($"Open the {item.Name} overview")"
+                                        @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">
+                                    @item.Name
+                                </button>
+                                <RatingBadge Standing="@item"
+                                             Place="@place"
+                                             Category="@Report.Category.Name"/>
+                            </span>
+                        </td>
+                        @* The labels repeat the column headings and show only where
+                           the table stacks and the headings are gone. *@
+                        <td class="@(item.Covered < item.Scenarios ? "is-partial" : null)"
+                            title="@Coverage(item)">
+                            <span class="rating-label">Scenarios</span>@item.Covered/@item.Scenarios
+                        </td>
+                        @* Every points cell carries the measurements it was summed
+                           from, so the number can be checked without leaving the row. *@
+                        <td class="rating-column-score" title="@Hint(item, false)">
+                            <span class="rating-label">Time</span>@MatrixScores.Format(item.TimePoints)
+                        </td>
+                        <td class="rating-column-score" title="@Hint(item, true)">
+                            <span class="rating-label">Memory</span>@MatrixScores.Format(item.MemoryPoints)
+                        </td>
+                        <td class="rating-column-total" title="@Hint(item, null)">
+                            <span class="rating-label">Points</span>@MatrixScores.Format(item.Points)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </section>
 }
 
@@ -62,4 +92,29 @@
 
     [Parameter]
     public EventCallback<string> OnHelp { get; set; }
+
+    private string Hint(MatrixMedals item, bool? metric) =>
+        Report.Benchmarks is { } benchmarks
+            ? MatrixView.ScoreHint(
+                Report,
+                benchmarks.Features,
+                SelectedLibraries,
+                item.LibraryId,
+                metric)
+            : string.Empty;
+
+    /// <summary>
+    /// The share of the maximum this row holds, as the width of its fill.
+    /// Invariant, because a decimal comma is not a CSS length.
+    /// </summary>
+    private static string Share(MatrixMedals item) =>
+        item.Maximum > 0
+            ? (100d * item.Points / item.Maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
+            : "0%";
+
+    private static string Coverage(MatrixMedals item) =>
+        item.Covered < item.Scenarios
+            ? $"Completed {item.Covered} of {item.Scenarios} scenarios;"
+              + " the rest score nothing"
+            : "Completed every scenario";
 }

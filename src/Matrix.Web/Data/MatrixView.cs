@@ -77,6 +77,86 @@ internal static class MatrixView
     public static string? Logo(CategoryReport report, string libraryId) =>
         Metadata(report, libraryId)?.Logo is { Length: > 0 } logo ? logo : null;
 
+    /// <summary>
+    /// The measurements behind a score, one line per scenario, for the tooltip of
+    /// the number itself. A point total is only trustworthy if the reader can take
+    /// it apart, and restating the formula does not let them: what they need is the
+    /// two figures that produced each term. Used everywhere points are printed, so
+    /// the same number always explains itself the same way.
+    /// </summary>
+    /// <param name="metric">False for time, true for memory, null for both.</param>
+    public static string ScoreHint(
+        CategoryReport report,
+        IReadOnlyList<BenchmarkReportEntry> features,
+        IReadOnlySet<string> selectedLibraries,
+        string libraryId,
+        bool? metric)
+    {
+        var details = MatrixScores.Explain(
+            features,
+            libraryId,
+            candidate => IsRated(report, candidate)
+                         && IsSelected(report, selectedLibraries, candidate));
+        var lines = new List<string>();
+        if (metric != true)
+        {
+            Append(lines, details, false, "Execution time");
+        }
+
+        if (metric != false)
+        {
+            Append(lines, details, true, "Allocated memory");
+        }
+
+        return string.Join('\n', lines);
+    }
+
+    private static void Append(
+        List<string> lines,
+        IReadOnlyList<MatrixScoreDetail> details,
+        bool memory,
+        string caption)
+    {
+        if (lines.Count > 0)
+        {
+            lines.Add(string.Empty);
+        }
+
+        var cells = details
+            .Select(detail => (detail.Name, Cell: memory ? detail.Memory : detail.Time))
+            .ToArray();
+        lines.Add($"{caption} — {MatrixScores.FormatExact(cells.Sum(entry => entry.Cell.Points))}"
+                  + $" of {cells.Length * MatrixScores.MaximumPoints}");
+        foreach (var (name, cell) in cells)
+        {
+            lines.Add($"  {name}: {Explain(cell, memory)}");
+        }
+    }
+
+    /// <summary>
+    /// One line of arithmetic. The step is named rather than folded into the
+    /// numbers, because a scenario whose best result is zero is exactly where a
+    /// reader stops believing the score.
+    /// </summary>
+    private static string Explain(MatrixScoreCell cell, bool memory)
+    {
+        if (!cell.Contested)
+        {
+            return "nobody measured this — not scored";
+        }
+
+        if (!cell.Measured)
+        {
+            return "not supported → 0";
+        }
+
+        var step = memory ? $"{cell.Step:0} B" : $"{cell.Step:0} ns";
+        return MatrixMetrics.Format(cell.Value!.Value, memory)
+               + $" against {MatrixMetrics.Format(cell.Best!.Value, memory)} best"
+               + (cell.Best.Value.Equals(cell.Value.Value) ? " (equal)" : $", {step} step")
+               + $" → {MatrixScores.FormatExact(cell.Points)}";
+    }
+
     private static string LibraryKey(string categoryId, string libraryId) =>
         $"{categoryId}\u001f{libraryId}";
 }

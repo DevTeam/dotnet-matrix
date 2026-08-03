@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.Hosting;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace Build.Targets;
 
@@ -12,6 +13,14 @@ internal sealed class RazorTemplateEngine : ITemplateEngine
 {
     private static readonly IReadOnlyList<RazorCompiledItem> CompiledItems =
         new RazorCompiledItemLoader().LoadItems(typeof(RazorTemplateEngine).Assembly);
+
+    /// <summary>
+    /// The output is Markdown, not a web page. The default encoder escapes every
+    /// non-ASCII character, which turns a microsecond into `&amp;#x3BC;s` in the
+    /// readme; only the characters Markdown and HTML actually reserve need escaping.
+    /// </summary>
+    private static readonly HtmlEncoder Encoder =
+        HtmlEncoder.Create(UnicodeRanges.All);
 
     public async Task RenderAsync<TModel>(
         string templateName,
@@ -34,7 +43,7 @@ internal sealed class RazorTemplateEngine : ITemplateEngine
             Model = model
         };
         page.ViewContext = new ViewContext { Writer = writer };
-        page.HtmlEncoder = HtmlEncoder.Default;
+        page.HtmlEncoder = Encoder;
         await page.ExecuteAsync();
         await writer.FlushAsync(cancellationToken);
     }

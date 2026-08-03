@@ -4,8 +4,12 @@ public sealed record ReadmeRating(
     int Place,
     string Id,
     string Name,
-    int Points,
+    string Points,
+    string TimePoints,
+    string MemoryPoints,
     int Maximum,
+    int MetricMaximum,
     int Covered,
     int Scenarios,
-    string Awards);
+    string Awards,
+    IReadOnlyList<ReadmeScore> Breakdown);

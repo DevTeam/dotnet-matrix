@@ -77,8 +77,8 @@
                     <strong>@RatingPlace</strong>
                     <span>rating</span>
                 </div>
-                <div>
-                    <strong>@(_medals?.Points ?? 0)<small>/@(_medals?.Maximum ?? 0)</small></strong>
+                <div class="is-explained" title="@PointsTitle">
+                    <strong>@(_medals is null ? "0" : MatrixScores.Format(_medals.Points))<small>/@(_medals?.Maximum ?? 0)</small></strong>
                     <span>points</span>
                 </div>
                 <div>
@@ -86,6 +86,48 @@
                     <span>scenarios supported</span>
                 </div>
             </div>
+
+            @* Where the number came from, itemised: the dialog is an entry point
+               of its own, reachable by link without ever seeing the standings. *@
+            @if (_medals is { } rating)
+            {
+                <section class="modal-section">
+                    <div class="modal-section-head">
+                        <h3>Rating</h3>
+                        <span class="section-meta">
+                            @RatingPlace of @_rated · compared with @Compared selected
+                        </span>
+                    </div>
+                    @* Each number carries the measurements it was summed from, so
+                       the breakdown can be checked without leaving the card. *@
+                    <ul class="modal-rating">
+                        <li title="@Hint(false)">
+                            <span>Execution time</span>
+                            <strong>@MatrixScores.Format(rating.TimePoints)</strong>
+                            <small>of @rating.MetricMaximum</small>
+                        </li>
+                        <li title="@Hint(true)">
+                            <span>Allocated memory</span>
+                            <strong>@MatrixScores.Format(rating.MemoryPoints)</strong>
+                            <small>of @rating.MetricMaximum</small>
+                        </li>
+                        @if (rating.Covered < rating.Scenarios)
+                        {
+                            var missing = rating.Scenarios - rating.Covered;
+                            <li class="is-missing" title="@MissingTitle">
+                                <span>@missing scenario@(missing == 1 ? "" : "s") not supported</span>
+                                <strong>0</strong>
+                                <small>of @(missing * MatrixRatings.MaximumPoints * MatrixRatings.Metrics)</small>
+                            </li>
+                        }
+                        <li class="is-total" title="@Hint(null)">
+                            <span>Rating</span>
+                            <strong>@MatrixScores.Format(rating.Points)</strong>
+                            <small>of @rating.Maximum</small>
+                        </li>
+                    </ul>
+                </section>
+            }
 
             @if (_standings.Length > 0)
             {
@@ -100,7 +142,8 @@
                             <div class="modal-standing-head">
                                 <strong>@standing.Group.Name</strong>
                                 <span>
-                                    @standing.Rank
+                                    <span class="modal-standing-score"
+                                          title="@standing.Hint">@standing.Rank</span>
                                     @* The library it is measured against was named in
                                        a tooltip only, and led nowhere. *@
                                     @if (standing.Leader is { } leader)
@@ -231,6 +274,7 @@
     private MatrixLibraryMetadata? _metadata;
     private MatrixMedals? _medals;
     private int? _place;
+    private int _rated;
     private string _ratingPlace = "—";
     private int _supported;
     private Standing[] _standings = [];
@@ -262,6 +306,34 @@
 
     private string RatingPlace => _ratingPlace;
 
+    private string? PointsTitle => _medals is null ? null : Hint(null);
+
+    /// <summary>Which scenarios the zero is made of; the row states only how many.</summary>
+    private string MissingTitle =>
+        Report.Benchmarks is { } benchmarks
+            ? "Scored nothing here:\n"
+              + string.Join(
+                  '\n',
+                  MatrixScores
+                      .Explain(benchmarks.Features, Library.Id, _ => true)
+                      .Where(detail => !detail.Covered)
+                      .Select(detail => $"  {detail.Name}"))
+            : string.Empty;
+
+    /// <summary>
+    /// The measurements behind one of the numbers on this card, as shown wherever
+    /// else the same number appears.
+    /// </summary>
+    private string Hint(bool? metric) =>
+        Report.Benchmarks is { } benchmarks
+            ? MatrixView.ScoreHint(
+                Report,
+                benchmarks.Features,
+                SelectedLibraries,
+                Library.Id,
+                metric)
+            : string.Empty;
+
     private string? PackageUrl => Library.Package is { Length: > 0 } package
         ? $"https://www.nuget.org/packages/{package}"
         : null;
@@ -272,6 +344,7 @@
         var rating = MatrixView.Rating(Report, SelectedLibraries);
         _medals = MatrixView.Standing(rating, Library.Id);
         _place = MatrixView.Place(rating, Library.Id);
+        _rated = rating.Count;
         _ratingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
         ReadStandings();
         ReadRows();
@@ -376,24 +449,23 @@
             var overview = MatrixOverviews.Create(
                 benchmarks,
                 group,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId),
+                libraryId => MatrixView.IsRated(Report, libraryId));
             if (overview is null)
             {
                 continue;
             }
 
-            var rank = overview.Ranked.ToList().FindIndex(row =>
-                row.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
-            var row = rank >= 0
-                ? overview.Ranked[rank]
-                : overview.Unranked.FirstOrDefault(item =>
-                    item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
-            if (row is null)
+            var rank = overview.Rows.ToList().FindIndex(item =>
+                item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+            if (rank < 0)
             {
                 continue;
             }
 
-            var leader = overview.Ranked.FirstOrDefault();
+            var row = overview.Rows[rank];
+            var rated = overview.Rows.Count(item => item.Rated);
+            var leader = overview.Rows.FirstOrDefault(item => item.Rated);
             standings.Add(new Standing(
                 group,
                 overview,
@@ -403,13 +475,19 @@
                         ? $"{feature.Name} — {text}"
                         : feature.Name)
                     .ToArray(),
-                rank >= 0
-                    ? $"rank {rank + 1} of {overview.Ranked.Count}"
-                    : $"not ranked · {overview.Features.Count - row.MissingFeatures.Count}"
-                      + $"/{overview.Features.Count} covered",
-                // Only for a ranked row: "behind X" would misdescribe a row that is
-                // not in the ranking at all.
-                rank > 0 && leader is not null ? leader : null,
+                row.Rated
+                    ? $"{MatrixScores.Format(row.Points)} of {overview.Maximum} points"
+                      + $" · rank {rank + 1} of {rated}"
+                    : "reference · not part of the rating",
+                row.Rated
+                    ? MatrixView.ScoreHint(
+                        Report,
+                        overview.Features,
+                        SelectedLibraries,
+                        Library.Id,
+                        null)
+                    : "Outside the rating: shown as a reference only",
+                row.Rated && rank > 0 ? leader : null,
                 Ratio(row.PerformanceValues, leader?.PerformanceValues),
                 Ratio(row.MemoryValues, leader?.MemoryValues),
                 Title(leader, false),
@@ -498,6 +576,8 @@
         MatrixOverviewRow Row,
         string[] FeatureNames,
         string Rank,
+        /// <summary>The measurements the group score was summed from.</summary>
+        string Hint,
         /// <summary>The row this one is measured against; null when it is that row.</summary>
         MatrixOverviewRow? Leader,
         string TimeRatio,

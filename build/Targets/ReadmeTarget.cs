@@ -123,14 +123,18 @@ internal sealed class ReadmeTarget(
                 index + 1,
                 medals.LibraryId,
                 medals.Name,
-                medals.Points,
+                MatrixScores.Format(medals.Points),
+                MatrixScores.Format(medals.TimePoints),
+                MatrixScores.Format(medals.MemoryPoints),
                 medals.Maximum,
+                medals.MetricMaximum,
                 medals.Covered,
                 medals.Scenarios,
                 string.Join(
                     ", ",
                     medals.Awards.Select(award =>
-                        $"{Place(award.Place)} in {award.GroupName}"))))
+                        $"{Place(award.Place)} in {award.GroupName}")),
+                Breakdown(report, medals.LibraryId, rated.Contains)))
             .ToArray();
         return new ReadmeCategory(
             module.Metadata.Id,
@@ -141,6 +145,42 @@ internal sealed class ReadmeTarget(
             features,
             rating);
     }
+
+    /// <summary>
+    /// The arithmetic behind one library's rating, one row per scenario. It comes
+    /// from <see cref="MatrixScores.Explain"/>, the same per-cell function the
+    /// rating sums, so the breakdown printed here cannot disagree with the total
+    /// printed above it.
+    /// </summary>
+    private static IReadOnlyList<ReadmeScore> Breakdown(
+        BenchmarkReport report,
+        string libraryId,
+        Func<string, bool> rated) =>
+        MatrixScores
+            .Explain(report.Features, libraryId, rated)
+            .Select(detail => new ReadmeScore(
+                detail.Name,
+                Measurement(detail.Time, false),
+                Measurement(detail.Time.Best, false),
+                Points(detail.Time),
+                Measurement(detail.Memory, true),
+                Measurement(detail.Memory.Best, true),
+                Points(detail.Memory)))
+            .ToArray();
+
+    /// <summary>An em dash where there is nothing to print keeps the columns aligned.</summary>
+    private static string Measurement(MatrixScoreCell cell, bool memory) =>
+        Measurement(cell.Value, memory);
+
+    private static string Measurement(double? value, bool memory) =>
+        value is null ? "—" : MatrixMetrics.Format(value.Value, memory);
+
+    /// <summary>
+    /// A metric nobody measured was never scored, and saying `0` there would
+    /// invite the reader to look for points the library never had a chance at.
+    /// </summary>
+    private static string Points(MatrixScoreCell cell) =>
+        cell.Contested ? MatrixScores.FormatExact(cell.Points) : "—";
 
     private static string Anchor(string value) =>
         Regex.Replace(value.ToLowerInvariant(), "[^a-z0-9]+", "-").Trim('-');

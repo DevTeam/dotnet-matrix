@@ -16,6 +16,12 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
     private const float LogoGap = 10;
     private const float LabelTextX = OuterPadding + LogoSize + LogoGap;
     private const float LabelTextWidth = LabelWidth - 24 - LogoSize - LogoGap;
+
+    /// <summary>The score column of an overview, mirroring the web standings.</summary>
+    private const float PointsWidth = 96;
+
+    /// <summary>Two lines of label, so every overview row is the same height.</summary>
+    private const float RowHeight = 72;
     private static readonly SKColor Background = SKColor.Parse("#0B0D12");
     private static readonly SKColor Surface = SKColor.Parse("#11141B");
     private static readonly SKColor Surface2 = SKColor.Parse("#171B24");
@@ -69,6 +75,13 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         var chartsDirectory = Path.Combine(reportDirectory, MatrixChartPaths.DirectoryName);
         Directory.CreateDirectory(chartsDirectory);
         using var logos = LibraryLogos.Load(metadataDirectory, module.Metadata.LibraryMetadata);
+        // A library kept out of the rating is drawn but does not score, exactly as
+        // in the application; otherwise the two would measure against a different
+        // best result and their points could not be compared.
+        var rated = module.Metadata.LibraryMetadata.Libraries
+            .Where(library => library.Rated)
+            .Select(library => library.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var chartCount = 0;
 
         foreach (var feature in report.Features.OrderBy(feature => feature.Order))
@@ -92,7 +105,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
             }
 
             var path = Path.Combine(chartsDirectory, MatrixChartPaths.Overview(group));
-            RenderOverview(report, group, features, logos, path);
+            RenderOverview(report, group, features, logos, rated, path);
             chartCount++;
         }
 
@@ -182,25 +195,25 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         MatrixChartGroup group,
         IReadOnlyList<BenchmarkReportEntry> features,
         LibraryLogos logos,
+        IReadOnlySet<string> rated,
         string outputPath)
     {
-        var overview = MatrixOverviews.Create(report, group);
+        var overview = MatrixOverviews.Create(
+            report,
+            group,
+            null,
+            libraryId => rated.Contains(libraryId));
         if (overview is null)
         {
             return;
         }
 
-        var rankedRows = overview.Ranked;
-        var unrankedRows = overview.Unranked;
+        var rows = overview.Rows;
         var legendRows = (int)Math.Ceiling(features.Count / 3d);
-        var unrankedHeight = unrankedRows.Count == 0
-            ? 0
-            : 38 + unrankedRows.Count * 72;
         var height = Math.Max(
             420,
             176
-            + rankedRows.Count * 62
-            + unrankedHeight
+            + (int)(rows.Count * RowHeight)
             + legendRows * 30);
         using var surface = CreateSurface(height);
         var canvas = surface.Canvas;
@@ -211,42 +224,53 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         using var label = TextStyle.Create(Text, 15, true);
         using var value = TextStyle.Create(Text, 14, true);
         using var hint = TextStyle.Create(Muted, 13);
-        using var partial = TextStyle.Create(Muted, 12, true);
+        using var points = TextStyle.Create(Text, 16, true);
         using var track = Fill(Surface2);
 
         DrawText(canvas, $"{group.Name} overview", OuterPadding, 47, title);
         DrawText(
             canvas,
-            $"{features.Count}/{features.Count} coverage required for ranking · lower is better",
+            $"{features.Count} scenario{(features.Count == 1 ? "" : "s")}"
+            + $" · points out of {overview.Maximum} · lower is better for the bars",
             OuterPadding,
             74,
             subtitle);
 
-        const float contentWidth = ImageWidth - OuterPadding * 2 - LabelWidth - PanelGap;
+        const float contentWidth =
+            ImageWidth - OuterPadding * 2 - LabelWidth - PanelGap * 2 - PointsWidth;
         const float panelWidth = contentWidth / 2;
         const float performanceX = OuterPadding + LabelWidth;
         const float memoryX = performanceX + panelWidth + PanelGap;
-        DrawPanelHeading(canvas, "PERFORMANCE", "total mean time", performanceX, panelWidth, subtitle, hint);
+        const float pointsX = memoryX + panelWidth + PanelGap;
+        DrawPanelHeading(canvas, "TIME", "total mean time", performanceX, panelWidth, subtitle, hint);
         DrawPanelHeading(canvas, "MEMORY", "total allocated", memoryX, panelWidth, subtitle, hint);
+        DrawPanelHeading(canvas, "POINTS", "time + memory", pointsX, PointsWidth, subtitle, hint);
 
         var maximumTime = overview.MaximumTime;
         var maximumMemory = overview.MaximumMemory;
         var y = 132f;
-        var stripeIndex = 0;
-        for (var index = 0; index < rankedRows.Count; index++)
+        for (var index = 0; index < rows.Count; index++)
         {
-            // ReSharper disable once UseDeconstruction
-            var row = rankedRows[index];
-            var rankedName = row.Name;
-            DrawStripe(canvas, stripeIndex++, y, 50);
-            DrawLogo(canvas, logos.Find(row.LibraryId), rankedName, y);
+            var row = rows[index];
+            DrawStripe(canvas, index, y, RowHeight - 10);
+            DrawLogo(canvas, logos.Find(row.LibraryId), row.Name, y + 6);
             DrawFittedText(
                 canvas,
-                $"{index + 1}. {rankedName}",
+                row.Rated ? $"{index + 1}. {row.Name}" : row.Name,
                 LabelTextX,
-                y + 5,
+                y - 3,
                 LabelTextWidth,
                 label);
+            var covered = features.Count - row.MissingFeatures.Count;
+            DrawFittedText(
+                canvas,
+                row.MissingFeatures.Count == 0
+                    ? $"{covered}/{features.Count} scenarios"
+                    : $"{covered}/{features.Count} · Missing: {string.Join(", ", row.MissingFeatures)}",
+                LabelTextX,
+                y + 18,
+                LabelTextWidth,
+                hint);
             DrawStackedMetric(
                 canvas,
                 performanceX,
@@ -267,63 +291,13 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
                 FormatBytes,
                 track,
                 value);
-            y += 62;
-        }
-
-        if (unrankedRows.Count > 0)
-        {
-            DrawText(canvas, "NOT RANKED · PARTIAL COVERAGE", OuterPadding, y + 4, partial);
-            using var separator = Fill(Line);
-            canvas.DrawRect(
-                OuterPadding + 224,
-                y - 4,
-                ImageWidth - OuterPadding * 2 - 224,
-                1,
-                separator);
-            y += 38;
-
-            foreach (var row in unrankedRows)
-            {
-                var unrankedName = row.Name;
-                DrawStripe(canvas, stripeIndex++, y, 62);
-                DrawLogo(canvas, logos.Find(row.LibraryId), unrankedName, y + 6);
-                DrawFittedText(
-                    canvas,
-                    unrankedName,
-                    LabelTextX,
-                    y - 3,
-                    LabelTextWidth,
-                    label);
-                var coverage = features.Count - row.MissingFeatures.Count;
-                DrawFittedText(
-                    canvas,
-                    $"{coverage}/{features.Count} · Missing: {string.Join(", ", row.MissingFeatures)}",
-                    LabelTextX,
-                    y + 18,
-                    LabelTextWidth,
-                    hint);
-                DrawStackedMetric(
-                    canvas,
-                    performanceX,
-                    y,
-                    panelWidth,
-                    row.PerformanceValues,
-                    maximumTime,
-                    FormatTime,
-                    track,
-                    value);
-                DrawStackedMetric(
-                    canvas,
-                    memoryX,
-                    y,
-                    panelWidth,
-                    row.MemoryValues,
-                    maximumMemory,
-                    FormatBytes,
-                    track,
-                    value);
-                y += 72;
-            }
+            DrawText(
+                canvas,
+                row.Rated ? MatrixScores.Format(row.Points) : "—",
+                pointsX,
+                y + 5,
+                row.Rated ? points : hint);
+            y += RowHeight;
         }
 
         DrawLegend(canvas, features, y + 20, hint);

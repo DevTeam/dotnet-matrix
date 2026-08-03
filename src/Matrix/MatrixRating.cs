@@ -3,28 +3,22 @@
 namespace Matrix;
 
 /// <summary>
-/// The category rating. In every scenario the fastest library scores
-/// <see cref="MaximumPoints"/>, one twice as slow scores half of that, and one
-/// that does not support the scenario scores nothing; a library's rating is the
-/// sum. Places in the individual overview groups are still recorded, because a
-/// chart row states a local fact, but they no longer decide the order.
-/// The rule and the reasoning behind it are owned by workflows/rating.md.
+/// The category rating: <see cref="MatrixScores"/> applied to every scenario of
+/// the report. An overview group applies the same rule to its own scenarios, so
+/// a group standing and the category standing differ only in what they cover.
+/// Group places are still recorded here for the stars on the chart rows.
+/// The rule and the reasoning are owned by workflows/rating.md.
 /// </summary>
 public static class MatrixRatings
 {
-    /// <summary>Medalled places of a single overview group.</summary>
+    /// <summary>Medalled places of a standing.</summary>
     public const int Places = 3;
 
-    /// <summary>What the best result in one scenario is worth.</summary>
-    public const int MaximumPoints = 100;
+    /// <inheritdoc cref="MatrixScores.MaximumPoints"/>
+    public const int MaximumPoints = MatrixScores.MaximumPoints;
 
-    /// <summary>
-    /// A source generator can complete a preparation scenario in a time that
-    /// rounds to zero, and the ratio of two zeroes is undefined. Comparing at
-    /// nanosecond resolution removes the singularity without introducing a
-    /// constant anyone could argue about.
-    /// </summary>
-    private const double Resolution = 1;
+    /// <inheritdoc cref="MatrixScores.Metrics"/>
+    public const int Metrics = MatrixScores.Metrics;
 
     public static IReadOnlyList<MatrixMedals> Create(
         BenchmarkReport report,
@@ -44,63 +38,31 @@ public static class MatrixRatings
         }
 
         var awards = ReadAwards(report, charts, Competes);
-        var score = Score(report.Features, libraries, Competes);
+        var score = MatrixScores.Create(
+            report.Features,
+            libraries.Select(library => library.Id),
+            Competes);
         return libraries
-            .Select(library => new MatrixMedals(
-                library.Id,
-                library.Name,
-                awards.GetValueOrDefault(library.Id) ?? [],
-                (int)Math.Round(score[library.Id].Points),
-                score[library.Id].Covered,
-                report.Features.Count))
+            .Select(library =>
+            {
+                var earned = score.GetValueOrDefault(library.Id) ?? new MatrixScore(0, 0, 0);
+                return new MatrixMedals(
+                    library.Id,
+                    library.Name,
+                    awards.GetValueOrDefault(library.Id) ?? [],
+                    earned.Time,
+                    earned.Memory,
+                    earned.Covered,
+                    report.Features.Count);
+            })
             .OrderByDescending(medals => medals.Points)
             .ThenBy(medals => medals.Name, StringComparer.OrdinalIgnoreCase)
             .ToArray();
     }
 
-    private static Dictionary<string, (double Points, int Covered)> Score(
-        IEnumerable<BenchmarkReportEntry> features,
-        IReadOnlyList<BenchmarkLibrary> libraries,
-        Func<string, bool> competes)
-    {
-        var score = libraries.ToDictionary(
-            library => library.Id,
-            _ => (Points: 0d, Covered: 0),
-            StringComparer.OrdinalIgnoreCase);
-        foreach (var feature in features)
-        {
-            var results = feature.Results
-                .Where(result =>
-                    result.Successful
-                    && result.MeanNanoseconds is not null
-                    && competes(result.LibraryId))
-                .ToArray();
-            if (results.Length == 0)
-            {
-                continue;
-            }
-
-            var best = results.Min(result => result.MeanNanoseconds!.Value) + Resolution;
-            foreach (var result in results)
-            {
-                if (!score.TryGetValue(result.LibraryId, out var current))
-                {
-                    continue;
-                }
-
-                score[result.LibraryId] = (
-                    current.Points
-                    + MaximumPoints * best / (result.MeanNanoseconds!.Value + Resolution),
-                    current.Covered + 1);
-            }
-        }
-
-        return score;
-    }
-
     /// <summary>
-    /// First three places of every overview group. These drive the stars on the
-    /// chart rows; the rating itself is scored, not placed.
+    /// First three places of every overview group, by the points scored in that
+    /// group. The rows of a group are already in that order.
     /// </summary>
     private static Dictionary<string, List<MatrixMedal>> ReadAwards(
         BenchmarkReport report,
@@ -116,9 +78,9 @@ public static class MatrixRatings
                 continue;
             }
 
-            for (var place = 0; place < Places && place < overview.Ranked.Count; place++)
+            for (var place = 0; place < Places && place < overview.Rows.Count; place++)
             {
-                var row = overview.Ranked[place];
+                var row = overview.Rows[place];
                 if (!awards.TryGetValue(row.LibraryId, out var won))
                 {
                     won = [];
