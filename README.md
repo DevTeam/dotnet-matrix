@@ -2151,7 +2151,7 @@ dotnet run --project .\build -- finalize-commit
 
 ## Link to a category or a library
 
-The application reads four optional query parameters, so a page about a library can
+The application reads five optional query parameters, so a page about a library can
 link straight to the relevant comparison instead of the front page:
 
 | Link | Opens |
@@ -2161,8 +2161,9 @@ link straight to the relevant comparison instead of the front page:
 | [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
 | [https://matrix.dev-team.org/?version=latest&library=CsvHelper](https://matrix.dev-team.org/?version=latest&library=CsvHelper) | the same overview, newest release named explicitly |
 | [https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper](https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper) | that category, narrowed to one library |
+| [https://matrix.dev-team.org/?category=csv-processing&features=ReadSimpleRows](https://matrix.dev-team.org/?category=csv-processing&features=ReadSimpleRows) | that category, narrowed to one scenario |
 
-The four are independent and combine freely; the links in the tables above are the
+The five are independent and combine freely; the links in the tables above are the
 same thing with the values filled in.
 
 ### `category`
@@ -2192,6 +2193,21 @@ out for the whole category — that is the default view, and the reason it carri
 parameter. Ticking boxes in the application writes it for you, taking whichever list
 is shorter.
 
+### `features`
+
+Narrows the comparison to the scenarios you name, for example
+`?features=ReadSimpleRows`. Scenario ids and displayed names both work,
+separated by commas and matched the same forgiving way as `category`. Start the list
+with `-` to name what to leave out instead, and use `none` for an empty comparison —
+the same spelling as `libraries`.
+
+It changes the numbers for the same reason `libraries` does: a score is the sum over
+the scenarios compared, so dropping the ones a project does not need reranks the
+libraries around the ones it does. The feature matrix, the benchmark charts, the
+overview groups and the rating all read the one selection, and a group left without
+scenarios disappears rather than being drawn empty. Leave the parameter out for every
+scenario of the category — that is the default view.
+
 ### `version`
 
 Pins the reports to one release. It takes a release name exactly as the picker shows
@@ -2208,5 +2224,5 @@ The release picker in the application writes the parameter into the address, and
 copy buttons follow the same rule: the release appears in the copied link only while
 an older one is being viewed.
 
-An unknown value of any of the three falls back to the default view rather than to an
+An unknown value of any of them falls back to the default view rather than to an
 error, so a typo in a link published elsewhere still lands the reader in the matrix.

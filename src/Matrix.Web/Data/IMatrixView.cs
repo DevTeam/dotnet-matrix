@@ -19,6 +19,23 @@ internal interface IMatrixView
     /// </summary>
     IEnumerable<MatrixLibrary> Libraries(CategoryReport report);
 
+    /// <summary>
+    /// Every scenario the report knows, from either half of it, in the order the
+    /// category declares. The feature report wins the name: it is the one the
+    /// matrix shows.
+    /// </summary>
+    IReadOnlyList<(int Order, string Id, string Name)> Features(CategoryReport report);
+
+    /// <summary>
+    /// The same report with everything outside the chosen scenarios removed: the
+    /// matrix rows, the benchmark entries and the scenarios of every overview
+    /// group. A group left without scenarios is dropped, because it no longer
+    /// describes anything. Every number the interface shows is derived from these
+    /// lists, so restricting them here is what makes the rating agree with the
+    /// matrix instead of each view deciding for itself what to leave out.
+    /// </summary>
+    CategoryReport Restrict(CategoryReport report, IReadOnlySet<string> selectedFeatures);
+
     MatrixLibraryMetadata? Metadata(CategoryReport report, string libraryId);
 
     /// <summary>

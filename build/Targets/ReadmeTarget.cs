@@ -103,6 +103,7 @@ internal sealed partial class ReadmeTarget(
         var features = report.Features
             .OrderBy(feature => feature.Order)
             .Select(feature => new ReadmeFeature(
+                feature.Id,
                 feature.Order,
                 feature.Name,
                 module.Metadata.FeatureMetadata.Features

@@ -17,4 +17,16 @@ public sealed record ReadmeModel(
             .FirstOrDefault()
             ?.Id
         ?? "sep";
+
+    /// <summary>
+    /// A scenario of <see cref="SampleCategory"/>, so the documented link narrows the
+    /// category it also names instead of contradicting it.
+    /// </summary>
+    public string SampleFeature =>
+        Categories
+            .FirstOrDefault()
+            ?.Features
+            .FirstOrDefault()
+            ?.Id
+        ?? "ReadSimpleRows";
 }

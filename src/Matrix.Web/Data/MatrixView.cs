@@ -8,7 +8,7 @@ internal sealed class MatrixView : IMatrixView
         CategoryReport report,
         IReadOnlySet<string> selectedLibraries,
         string libraryId) =>
-        selectedLibraries.Contains(LibraryKey(report.Category.Id, libraryId));
+        selectedLibraries.Contains(Key(report.Category.Id, libraryId));
 
     public IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
         (report.Features?.Libraries ?? [])
@@ -21,6 +21,60 @@ internal sealed class MatrixView : IMatrixView
                 library.Baseline)))
         .DistinctBy(library => library.Id, StringComparer.OrdinalIgnoreCase)
         .OrderBy(library => library.Name, StringComparer.OrdinalIgnoreCase);
+
+    public IReadOnlyList<(int Order, string Id, string Name)> Features(CategoryReport report) =>
+        (report.Features?.Features ?? [])
+        .Select(feature => (feature.Order, feature.Id, feature.Name))
+        .Concat((report.Benchmarks?.Features ?? [])
+            .Select(feature => (feature.Order, feature.Id, feature.Name)))
+        .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
+        .OrderBy(feature => feature.Order)
+        .ToArray();
+
+    public CategoryReport Restrict(
+        CategoryReport report,
+        IReadOnlySet<string> selectedFeatures)
+    {
+        // Nothing is left out, so nothing is rebuilt: the default view compares the
+        // whole category and pays nothing for the ability to narrow it.
+        if (Features(report).All(feature => Chosen(feature.Id)))
+        {
+            return report;
+        }
+
+        return report with
+        {
+            Features = report.Features is { } features
+                ? features with
+                {
+                    Features = [.. features.Features.Where(feature => Chosen(feature.Id))]
+                }
+                : null,
+            Benchmarks = report.Benchmarks is { } benchmarks
+                ? benchmarks with
+                {
+                    Features = [.. benchmarks.Features.Where(feature => Chosen(feature.Id))]
+                }
+                : null,
+            ChartCatalog = report.ChartCatalog is { } charts
+                ? charts with
+                {
+                    Groups =
+                    [
+                        .. charts.Groups
+                            .Select(group => group with
+                            {
+                                Features = [.. group.Features.Where(Chosen)]
+                            })
+                            .Where(group => group.Features.Count > 0)
+                    ]
+                }
+                : null
+        };
+
+        bool Chosen(string featureId) =>
+            selectedFeatures.Contains(Key(report.Category.Id, featureId));
+    }
 
     public MatrixLibraryMetadata? Metadata(CategoryReport report, string libraryId) =>
         report.LibraryCatalog?.Libraries.FirstOrDefault(metadata =>
@@ -91,11 +145,12 @@ internal sealed class MatrixView : IMatrixView
 
     /// <summary>
     /// A unit separator joins the two halves. It cannot occur in an id, so no
-    /// pair of category and library can collide with another, and the escape is
-    /// spelled out rather than typed as an invisible character.
+    /// pair of category and library — or category and scenario — can collide with
+    /// another, and the escape is spelled out rather than typed as an invisible
+    /// character.
     /// </summary>
     private const char Separator = '';
 
-    private static string LibraryKey(string categoryId, string libraryId) =>
-        $"{categoryId}{Separator}{libraryId}";
+    private static string Key(string categoryId, string itemId) =>
+        $"{categoryId}{Separator}{itemId}";
 }

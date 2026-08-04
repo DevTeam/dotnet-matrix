@@ -215,7 +215,9 @@ select {
     min-height: calc(100vh - 76px);
 }
 
-.filters {
+/* The left column as one piece: the category picker, which is never folded away,
+   and the filters that narrow the comparison inside it. */
+.sidebar {
     position: sticky;
     top: 76px;
     align-self: start;
@@ -241,7 +243,7 @@ select {
     gap: 18px;
 }
 
-.filters h2,
+.filters-heading h2,
 .section-heading h2,
 .library-card h2,
 .environment-card h3 {
@@ -382,6 +384,34 @@ select {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.scenario-group {
+    margin-bottom: 22px;
+}
+
+/* A scenario name is short and there are never many, so the rows stay a single
+   column on the wide sidebar and gain columns only where the panel gets wide. */
+.scenario-filter {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0 18px;
+}
+
+.scenario-filter .check-row {
+    min-height: 32px;
+}
+
+.scenario-filter .check-row > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scenario-filter .feature-order {
+    margin-right: 8px;
+    font-size: 11px;
 }
 
 .library-group {
@@ -2425,17 +2455,55 @@ tbody th {
         grid-template-columns: 1fr;
     }
 
-    .filters {
+    /* The column stops being a column: it is a band across the top of the page, and
+       the padding moves to the blocks inside it so the Filter row and the panel can
+       each carry their own and still reach both edges. */
+    .sidebar {
         position: static;
         height: auto;
+        overflow: visible;
+        padding: 0;
         border-right: 0;
+    }
+
+    /* "Scope · Compare" heads a column that no longer exists here, and the space it
+       would take is space above the reports. */
+    .sidebar > .filters-heading {
+        display: none;
+    }
+
+    /* The category picker stays out of the fold. Its rows flow into as many columns
+       as fit — two on a phone held upright, more sideways — so the block stays a few
+       lines tall whatever the catalog holds. */
+    .categories {
+        padding: 12px clamp(16px, 4vw, 32px);
         border-bottom: 1px solid var(--line);
+    }
+
+    .categories .filter-section {
+        display: grid;
+        width: auto;
+        margin-top: 0;
+        padding-right: 0;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 0 14px;
+    }
+
+    .categories .filter-section h3 {
+        margin-bottom: 4px;
+        grid-column: 1 / -1;
+    }
+
+    .categories .check-row {
+        min-height: 32px;
     }
 
     /* The panel is a screen and a half tall here; folded away, the reports are the
        first thing on the page in both orientations. */
     .filters {
         display: none;
+        padding: 28px 22px;
+        border-bottom: 1px solid var(--line);
     }
 
     /* Out of the grid flow but still reachable from the keyboard: the label is its
@@ -2518,6 +2586,31 @@ tbody th {
         width: min(49%, 420px);
         padding-right: 24px;
         vertical-align: top;
+    }
+
+    /* Categories and scenarios pair up on the first row and leave the libraries —
+       the one list that runs to twenty rows — the full width of the folded panel,
+       instead of a half-width column with a phone screen of nothing beside it. */
+    .filter-section-wide {
+        width: 100%;
+        padding-right: 0;
+    }
+
+    /* And the width it gains goes into columns rather than into longer rows: the
+       panel is bounded at 60vh, so twenty-three libraries in a single column is
+       most of its scroll on a phone held sideways. */
+    /* A name long enough to wrap makes its grid row taller than the rows beside
+       it; aligned to the top, the short ones keep their own height instead of
+       floating in the middle of it. */
+    .library-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 0 18px;
+        align-items: start;
+    }
+
+    .library-group .group-label {
+        grid-column: 1 / -1;
     }
 
     .hero {

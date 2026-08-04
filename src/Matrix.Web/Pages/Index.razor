@@ -114,6 +114,7 @@
     else
     {
         <div class="workspace" inert="@IsDialogOpen">
+            <div class="sidebar">
             @* Below the sidebar breakpoint the panel folds behind this control, so a
                phone opens on the data instead of on a screen and a half of filters.
                A checkbox holds the state because the application ships no script of
@@ -122,32 +123,20 @@
                    type="checkbox"
                    id="filters-toggle"
                    aria-label="Show the comparison filters"/>
-            <label class="filters-summary" for="filters-toggle">
-                <span>
-                    <strong>@SelectedCategoryName</strong>
-                    <small>@SelectedShownCount of @ShownLibraryCount libraries</small>
-                </span>
-                <span class="filters-summary-action" aria-hidden="true">
-                    <svg viewBox="0 0 16 16"
-                         fill="none"
-                         stroke="currentColor"
-                         stroke-width="1.7"
-                         stroke-linecap="round"
-                         focusable="false">
-                        <path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3"/>
-                    </svg>
-                    Filter
-                </span>
-            </label>
 
-            <aside class="filters">
-                <div class="filters-heading">
-                    <div>
-                        <p class="eyebrow">Scope</p>
-                        <h2>Compare</h2>
-                    </div>
+            <div class="filters-heading">
+                <div>
+                    <p class="eyebrow">Scope</p>
+                    <h2>Compare</h2>
                 </div>
+            </div>
 
+            @* Outside the folded panel: the category is the first thing chosen and
+               the last thing worth hiding, so on a phone it stays above the Filter
+               control rather than behind it. The rows flow into as many columns as
+               the width allows, so a category added or removed needs no layout
+               change here. *@
+            <nav class="categories" aria-label="Library categories">
                 <section class="filter-section">
                     <h3>Categories</h3>
                     @foreach (var category in _catalog!.Categories)
@@ -164,8 +153,89 @@
                         </label>
                     }
                 </section>
+            </nav>
 
+            <label class="filters-summary" for="filters-toggle">
+                <span>
+                    <strong>@SelectedCategoryName</strong>
+                    <small>
+                        @SelectedShownFeatureCount of @ShownFeatureCount scenarios ·
+                        @SelectedShownCount of @ShownLibraryCount libraries
+                    </small>
+                </span>
+                <span class="filters-summary-action" aria-hidden="true">
+                    <svg viewBox="0 0 16 16"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.7"
+                         stroke-linecap="round"
+                         focusable="false">
+                        <path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3"/>
+                    </svg>
+                    Filter
+                </span>
+            </label>
+
+            <aside class="filters">
+                @* Before the libraries, because it narrows what they are compared
+                   on: points are measured over the chosen scenarios, so the two
+                   selections are read in the order they apply. *@
                 <section class="filter-section">
+                    <div class="filter-section-head">
+                        <SelectAllToggle Selected="@SelectedShownFeatureCount"
+                                         Total="@ShownFeatureCount"
+                                         OnToggle="ToggleShownFeatures"/>
+                        <h3>Scenarios</h3>
+                        <span class="filter-count">
+                            @SelectedShownFeatureCount / @ShownFeatureCount
+                        </span>
+                    </div>
+                    <input class="filter-search"
+                           type="search"
+                           placeholder="Filter by name"
+                           aria-label="Filter scenarios by name"
+                           @bind="_featureSearch"
+                           @bind:event="oninput"
+                           @onkeydown="ClearFeatureSearchOnEscape"/>
+                    @if (ShownFeatureCount == 0)
+                    {
+                        <p class="muted">Nothing matches “@_featureSearch”.</p>
+                    }
+                    @foreach (var report in VisibleReports)
+                    {
+                        var features = View.Features(report).Where(MatchesFeature).ToArray();
+                        if (features.Length == 0)
+                        {
+                            continue;
+                        }
+
+                        @* Named here as it is above the libraries: both lists belong to
+                           the category, and the radio that says which one scrolls out
+                           of a panel this long. *@
+                        <div class="scenario-group">
+                            <div class="group-label">@report.Category.Name</div>
+                            <div class="scenario-filter">
+                                @foreach (var feature in features)
+                                {
+                                    var key = FeatureKey(report.Category.Id, feature.Id);
+                                    <label class="check-row"
+                                           title="@View.FeatureDescription(report, feature.Id)">
+                                        <input type="checkbox"
+                                               checked="@_selectedFeatures.Contains(key)"
+                                               @onchange="eventArgs => ToggleFeature(key, eventArgs)"/>
+                                        <span>
+                                            <span class="feature-order">
+                                                @feature.Order.ToString("00")
+                                            </span>@feature.Name
+                                        </span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    }
+                </section>
+
+                <section class="filter-section filter-section-wide">
                     <div class="filter-section-head">
                         <SelectAllToggle Selected="@SelectedShownCount"
                                          Total="@ShownLibraryCount"
@@ -243,6 +313,7 @@
                 </section>
 
             </aside>
+            </div>
 
             <main class="content">
                 <section class="hero">
@@ -300,23 +371,30 @@
 
                     @* Every view draws from the selection, so an empty one leaves a
                        blank page. Said once here rather than in each view. *@
-                    @if (SelectedLibraryCount == 0 && _view != "environment" && _view != "evidence")
+                    @* A razor comment between the attributes of a component is passed
+                       on as a parameter name and throws at render time, so neither
+                       state below carries one. *@
+                    @if (SelectedLibraryCount == 0 && ComparesSelection)
                     {
                         <EmptyState Title="No libraries selected"
-                                    @* ReSharper disable once UseCollectionExpression *@
                                     Text="Pick at least one library in the filter panel to compare."/>
+                    }
+                    else if (SelectedFeatureCount == 0 && ComparesSelection)
+                    {
+                        <EmptyState Title="No scenarios selected"
+                                    Text="Pick at least one scenario in the filter panel to compare."/>
                     }
                     else
                     {
                     @switch (_view)
                     {
                         case "features":
-                            <FeaturesView Reports="@VisibleReports.ToArray()"
+                            <FeaturesView Reports="@ComparedReports"
                                           SelectedLibraries="@_selectedLibraries"
                                           OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "benchmarks":
-                            <BenchmarksView Reports="@VisibleReports.ToArray()"
+                            <BenchmarksView Reports="@ComparedReports"
                                             SelectedLibraries="@_selectedLibraries"
                                             OnOpenLibrary="@OpenLibrary"
                                             OnHelp="@OpenHelp"/>
@@ -330,7 +408,7 @@
                                           ReportReference="@SelectedVersion?.Commit"/>
                             break;
                         default:
-                            <OverviewView Reports="@VisibleReports.ToArray()"
+                            <OverviewView Reports="@ComparedReports"
                                           SelectedLibraries="@_selectedLibraries"
                                           OnOpenLibrary="@OpenLibrary"
                                           OnHelp="@OpenHelp"
@@ -372,6 +450,7 @@
     private const string CategoryParameter = "category";
     private const string LibraryParameter = "library";
     private const string LibrariesParameter = "libraries";
+    private const string FeaturesParameter = "features";
     private const string VersionParameter = "version";
     private const string LatestVersion = "latest";
 
@@ -379,11 +458,11 @@
     /// Written when the comparison is empty, because an absent parameter already
     /// means the whole category and the two states have to stay distinguishable.
     /// </summary>
-    private const string NoLibraries = "none";
+    private const string Nothing = "none";
 
     /// <summary>
-    /// Marks <c>?libraries=</c> as a list of what to leave out rather than what to
-    /// keep, as in <c>?libraries=-MvvmCross,Catel</c>.
+    /// Marks <c>?libraries=</c> or <c>?features=</c> as a list of what to leave out
+    /// rather than what to keep, as in <c>?libraries=-MvvmCross,Catel</c>.
     /// </summary>
     private const string Without = "-";
 
@@ -417,6 +496,18 @@
     public string? ComparedLibraries { get; set; }
 
     /// <summary>
+    /// Narrows the comparison to some of the scenarios, as in
+    /// <c>?features=QuotedFields,WriteRows</c>, or names what to leave out, as in
+    /// <c>?features=-AsyncRead</c>. It belongs in the address for the same reason
+    /// <c>?libraries=</c> does: a score is the sum over the scenarios compared, so
+    /// a link that dropped the selection would show a different rating under the
+    /// same names. Absent means every scenario of the category.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = FeaturesParameter)]
+    public string? ComparedFeatures { get; set; }
+
+    /// <summary>
     /// Pins the reports to one release, as in <c>?version=1.4.0</c>. Absent, or
     /// <c>latest</c>, means the newest entry of the catalog.
     /// </summary>
@@ -429,6 +520,7 @@
     private IReadOnlyList<CategoryReport> _reports = [];
     private string? _selectedCategoryId;
     private readonly HashSet<string> _selectedLibraries = new(StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _selectedFeatures = new(StringComparer.OrdinalIgnoreCase);
     private string? _selectedVersion;
     private string _view = "overview";
     private bool _loadingCatalog = true;
@@ -436,6 +528,7 @@
     private string? _fatalError;
     private string? _catalogWarning;
     private string _librarySearch = string.Empty;
+    private string _featureSearch = string.Empty;
 
     private MatrixVersion? SelectedVersion =>
         _catalog?.Versions.FirstOrDefault(version => version.Version == _selectedVersion);
@@ -444,6 +537,55 @@
         _reports.Where(report => report.Category.Id.Equals(
             _selectedCategoryId,
             StringComparison.OrdinalIgnoreCase));
+
+    /// <summary>
+    /// What the comparing views are given: the same reports with the scenarios the
+    /// visitor left out removed, so the matrix, the charts and the rating are read
+    /// off one set of scenarios. Taking everything returns the reports unchanged,
+    /// so the default view costs nothing.
+    /// </summary>
+    private CategoryReport[] ComparedReports =>
+        [.. VisibleReports.Select(report => View.Restrict(report, _selectedFeatures))];
+
+    /// <summary>
+    /// The environment and the evidence describe how the reports were produced, not
+    /// what is being compared, so neither selection applies to them.
+    /// </summary>
+    private bool ComparesSelection => _view != "environment" && _view != "evidence";
+
+    private IEnumerable<(CategoryReport Report, (int Order, string Id, string Name) Feature)>
+        CategoryFeatures => VisibleReports
+        .SelectMany(report => View.Features(report).Select(feature => (report, feature)));
+
+    /// <summary>
+    /// Every scenario of the category that is selected, whatever the name filter
+    /// currently lists. This is what decides whether there is anything to compare.
+    /// </summary>
+    private int SelectedFeatureCount => CategoryFeatures
+        .Count(entry => _selectedFeatures.Contains(
+            FeatureKey(entry.Report.Category.Id, entry.Feature.Id)));
+
+    /// <summary>
+    /// The rows the name filter currently leaves visible, as with the libraries:
+    /// narrowing the list and taking everything shown is one move.
+    /// </summary>
+    private IEnumerable<string> ShownFeatureKeys => VisibleReports
+        .SelectMany(report => View.Features(report)
+            .Where(MatchesFeature)
+            .Select(feature => FeatureKey(report.Category.Id, feature.Id)));
+
+    private int ShownFeatureCount => ShownFeatureKeys.Count();
+
+    private int SelectedShownFeatureCount => ShownFeatureKeys.Count(_selectedFeatures.Contains);
+
+    /// <summary>
+    /// The displayed name and the id both match: a scenario is written as
+    /// "Read Simple Rows" in the list and as ReadSimpleRows in a link.
+    /// </summary>
+    private bool MatchesFeature((int Order, string Id, string Name) feature) =>
+        _featureSearch.Length == 0
+        || feature.Name.Contains(_featureSearch, StringComparison.OrdinalIgnoreCase)
+        || feature.Id.Contains(_featureSearch, StringComparison.OrdinalIgnoreCase);
 
     private int SelectedLibraryCount => VisibleReports
         .SelectMany(Libraries)
@@ -487,7 +629,36 @@
             _selectedLibraries.UnionWith(keys);
         }
 
-        RememberComparedLibraries();
+        RememberSelection();
+    }
+
+    private void ToggleShownFeatures()
+    {
+        var keys = ShownFeatureKeys.ToArray();
+        if (keys.Length > 0 && keys.All(_selectedFeatures.Contains))
+        {
+            _selectedFeatures.ExceptWith(keys);
+        }
+        else
+        {
+            _selectedFeatures.UnionWith(keys);
+        }
+
+        RememberSelection();
+    }
+
+    private void ToggleFeature(string key, ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value is true)
+        {
+            _selectedFeatures.Add(key);
+        }
+        else
+        {
+            _selectedFeatures.Remove(key);
+        }
+
+        RememberSelection();
     }
 
     private void ClearSearchOnEscape(KeyboardEventArgs eventArgs)
@@ -498,7 +669,19 @@
         }
     }
 
-    private int FeatureCount => VisibleReports
+    private void ClearFeatureSearchOnEscape(KeyboardEventArgs eventArgs)
+    {
+        if (eventArgs.Key == "Escape")
+        {
+            _featureSearch = string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// The scenarios the summary beside the tabs counts: the compared ones, because
+    /// that is the number every score on the page is out of.
+    /// </summary>
+    private int FeatureCount => ComparedReports
         .SelectMany(report => report.Features?.Features ?? [])
         .Select(feature => $"{feature.Order}:{feature.Id}")
         .Distinct(StringComparer.Ordinal)
@@ -579,7 +762,8 @@
         Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
         {
             [VersionParameter] = IsLatest(version) ? null : version,
-            [LibrariesParameter] = null
+            [LibrariesParameter] = null,
+            [FeaturesParameter] = null
         });
 
     private void SelectCategory(string categoryId)
@@ -594,8 +778,10 @@
                 [CategoryParameter] = categoryId,
                 // The library and the comparison of the previous category have no
                 // meaning here, and a stale set would silently narrow the new one.
+                // Scenario ids belong to a category just as library ids do.
                 [LibraryParameter] = null,
-                [LibrariesParameter] = null
+                [LibrariesParameter] = null,
+                [FeaturesParameter] = null
             }),
             replace: true);
     }
@@ -634,6 +820,7 @@
             Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
             {
                 [LibrariesParameter] = ComparedLibrariesValue,
+                [FeaturesParameter] = ComparedFeaturesValue,
                 [LibraryParameter] = libraryId
             }));
 
@@ -647,6 +834,7 @@
             {
                 [CategoryParameter] = _selectedCategoryId,
                 [LibrariesParameter] = ComparedLibrariesValue,
+                [FeaturesParameter] = ComparedFeaturesValue,
                 [LibraryParameter] = null
             }),
             replace: true);
@@ -657,6 +845,7 @@
             [VersionParameter] = IsLatest(_selectedVersion) ? null : _selectedVersion,
             [CategoryParameter] = _selectedCategoryId,
             [LibrariesParameter] = ComparedLibrariesValue,
+            [FeaturesParameter] = ComparedFeaturesValue,
             [LibraryParameter] = libraryId
         });
 
@@ -674,9 +863,13 @@
 
     private void CloseHelp() => _help = null;
 
+    /// <summary>
+    /// The dialog reads the restricted report, so the breakdown it prints adds up to
+    /// the score the rating behind it shows.
+    /// </summary>
     private CategoryReport? OpenReport => _openLibraryId is null
         ? null
-        : VisibleReports.FirstOrDefault();
+        : ComparedReports.FirstOrDefault();
 
     private MatrixLibrary? OpenLibraryValue => OpenReport is { } report
         ? Libraries(report).FirstOrDefault(library =>
@@ -725,6 +918,7 @@
         {
             _selectedVersion = version;
             _selectedLibraries.Clear();
+            _selectedFeatures.Clear();
             await LoadReportsAsync();
         }
 
@@ -733,6 +927,7 @@
             _selectedCategoryId = categoryId;
         }
 
+        ApplyComparedFeatures();
         ApplyComparedLibraries();
 
         if (string.IsNullOrWhiteSpace(Library) || FindLibrary(Library) is not { } found)
@@ -763,7 +958,59 @@
             _selectedLibraries.Remove(key);
         }
 
-        RememberComparedLibraries();
+        RememberSelection();
+    }
+
+    /// <summary>
+    /// Reads <c>?features=</c> into the selection of the category on screen. Ids and
+    /// displayed names both match, matched the same forgiving way as a category, and
+    /// an unknown name is simply not selected.
+    /// </summary>
+    private void ApplyComparedFeatures()
+    {
+        if (string.Equals(ComparedFeatures, ComparedFeaturesValue, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        if (_selectedCategoryId is not { } categoryId
+            || _reports.FirstOrDefault(rep => rep.Category.Id.Equals(
+                categoryId,
+                StringComparison.OrdinalIgnoreCase)) is not { } report)
+        {
+            return;
+        }
+
+        var features = View.Features(report);
+        if (string.IsNullOrWhiteSpace(ComparedFeatures))
+        {
+            foreach (var feature in features)
+            {
+                _selectedFeatures.Add(FeatureKey(categoryId, feature.Id));
+            }
+
+            return;
+        }
+
+        var excluding = ComparedFeatures.StartsWith(Without, StringComparison.Ordinal);
+        var named = ComparedFeatures[(excluding ? Without.Length : 0)..]
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(Simplify)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var feature in features)
+        {
+            var key = FeatureKey(categoryId, feature.Id);
+            var matched = named.Contains(Simplify(feature.Id))
+                          || named.Contains(Simplify(feature.Name));
+            if (matched != excluding)
+            {
+                _selectedFeatures.Add(key);
+            }
+            else
+            {
+                _selectedFeatures.Remove(key);
+            }
+        }
     }
 
     /// <summary>
@@ -843,14 +1090,26 @@
     /// no entry is added, so the back button still points at wherever the visitor
     /// came from rather than at every checkbox they touched.
     /// </summary>
-    private async Task RememberComparedLibrariesAsync()
+    /// <remarks>
+    /// Both parameters are written on every change, even the one that did not move.
+    /// The router is bypassed, so what Blazor believes the current address to be
+    /// never learns about the previous write; asking it for one parameter at a time
+    /// would build the second address from an address that still lacks the first.
+    /// </remarks>
+    private async Task RememberSelectionAsync()
     {
-        var value = ComparedLibrariesValue;
-        var address = Navigation.GetUriWithQueryParameter(LibrariesParameter, value);
-        // The router is bypassed, so nothing else will refresh the parameter; kept
+        var libraries = ComparedLibrariesValue;
+        var features = ComparedFeaturesValue;
+        var address = Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+        {
+            [LibrariesParameter] = libraries,
+            [FeaturesParameter] = features
+        });
+        // The router is bypassed, so nothing else will refresh the parameters; kept
         // in step here, the next real navigation sees no change and leaves the
         // selection alone.
-        ComparedLibraries = value;
+        ComparedLibraries = libraries;
+        ComparedFeatures = features;
         try
         {
             await JsRuntime.InvokeVoidAsync("history.replaceState", null, string.Empty, address);
@@ -867,7 +1126,51 @@
     /// Fire and forget: the selection is already applied, and the address is a
     /// side effect the visitor should never wait for.
     /// </summary>
-    private void RememberComparedLibraries() => _ = RememberComparedLibrariesAsync();
+    private void RememberSelection() => _ = RememberSelectionAsync();
+
+    /// <summary>
+    /// Only the category on screen, and only when the set is not everything: the
+    /// default view keeps a clean address. Written the same way as
+    /// <see cref="ComparedLibrariesValue"/>, so one rule explains both parameters.
+    /// </summary>
+    private string? ComparedFeaturesValue
+    {
+        get
+        {
+            if (_selectedCategoryId is not { } categoryId
+                || _reports.FirstOrDefault(rep => rep.Category.Id.Equals(
+                    categoryId,
+                    StringComparison.OrdinalIgnoreCase)) is not { } report)
+            {
+                return null;
+            }
+
+            var features = View.Features(report);
+            var chosen = features
+                .Where(feature => _selectedFeatures.Contains(FeatureKey(categoryId, feature.Id)))
+                .Select(feature => feature.Id)
+                .ToArray();
+            if (chosen.Length == features.Count)
+            {
+                return null;
+            }
+
+            if (chosen.Length == 0)
+            {
+                return Nothing;
+            }
+
+            var dropped = features.Count - chosen.Length;
+            return dropped < chosen.Length
+                ? Without + string.Join(
+                    ',',
+                    features
+                        .Where(feature =>
+                            !_selectedFeatures.Contains(FeatureKey(categoryId, feature.Id)))
+                        .Select(feature => feature.Id))
+                : string.Join(',', chosen);
+        }
+    }
 
     /// <summary>
     /// Only the category on screen, and only when the set is not everything: the
@@ -897,7 +1200,7 @@
 
             if (chosen.Length == 0)
             {
-                return NoLibraries;
+                return Nothing;
             }
 
             // Dropping two of twenty-two is the common gesture, and naming the twenty
@@ -929,7 +1232,7 @@
                 _catalog,
                 SelectedVersion,
                 _catalog.Categories);
-            SelectAllLibrariesInEveryCategory();
+            SelectEverythingInEveryCategory();
         }
         finally
         {
@@ -966,7 +1269,7 @@
     private IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
         View.Libraries(report);
 
-    private void SelectAllLibrariesInEveryCategory()
+    private void SelectEverythingInEveryCategory()
     {
         foreach (var report in _reports)
         {
@@ -974,11 +1277,19 @@
             {
                 _selectedLibraries.Add(LibraryKey(report.Category.Id, library.Id));
             }
+
+            foreach (var feature in View.Features(report))
+            {
+                _selectedFeatures.Add(FeatureKey(report.Category.Id, feature.Id));
+            }
         }
     }
     
     private static string LibraryKey(string categoryId, string libraryId) =>
         $"{categoryId}\u001f{libraryId}";
+
+    private static string FeatureKey(string categoryId, string featureId) =>
+        $"{categoryId}\u001f{featureId}";
 
     private string TabClass(string view) => view == _view ? "tab active" : "tab";
 
