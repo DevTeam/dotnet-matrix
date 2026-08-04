@@ -9,7 +9,8 @@ internal sealed partial class ReadmeTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
-    ITemplateEngine templateEngine) : IReadmeTarget
+    ITemplateEngine templateEngine,
+    IJsonSerializer jsonSerializer) : IReadmeTarget
 {
     private const string Template = "/Templates/Readme.cshtml";
     private static readonly JsonSerializerOptions JsonOptions =
@@ -197,8 +198,8 @@ internal sealed partial class ReadmeTarget(
     private string RelativePath(string path) =>
         Path.GetRelativePath(buildPaths.SolutionDirectory, path).Replace('\\', '/');
 
-    private static T Read<T>(string path) =>
-        JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
+    private T Read<T>(string path) =>
+        jsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
     [GeneratedRegex("[^a-z0-9]+")]
     private static partial Regex AnchorRegex();

@@ -1,8 +1,12 @@
 using System.Text.Json;
+using Matrix;
+// ReSharper disable InconsistentNaming
 
 namespace Build.Targets;
 
-internal sealed class CiMatrixTarget(IBuildPaths buildPaths) : ICiMatrixTarget
+internal sealed class CiMatrixTarget(
+    IBuildPaths buildPaths,
+    IJsonSerializer jsonSerializer) : ICiMatrixTarget
 {
     public int Run(
         IReadOnlyList<DiscoveredMatrixModule> modules,
@@ -18,7 +22,7 @@ internal sealed class CiMatrixTarget(IBuildPaths buildPaths) : ICiMatrixTarget
         }
 
         var categories = modules.Select(module => module.Metadata.Id).ToArray();
-        File.WriteAllText(path, JsonSerializer.Serialize(categories));
+        File.WriteAllText(path, jsonSerializer.Serialize(categories, new JsonSerializerOptions(JsonSerializerDefaults.Web)));
         Console.WriteLine($"CI category matrix: {path}");
         return 0;
     }

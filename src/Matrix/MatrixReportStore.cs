@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Matrix;
 
-public sealed class MatrixReportStore : IMatrixReportStore
+public sealed class MatrixReportStore(IJsonSerializer jsonSerializer) : IMatrixReportStore
 {
     private static readonly JsonSerializerOptions Options = new()
     {
@@ -15,7 +15,7 @@ public sealed class MatrixReportStore : IMatrixReportStore
     {
         var path = Path.GetFullPath(fileName);
         return File.Exists(path)
-            ? JsonSerializer.Deserialize<T>(File.ReadAllText(path), Options)
+            ? jsonSerializer.Deserialize<T>(File.ReadAllText(path), Options)
             : default;
     }
 
@@ -28,7 +28,7 @@ public sealed class MatrixReportStore : IMatrixReportStore
         var temporaryFile = Path.Combine(directory, $".{Path.GetFileName(path)}.{Guid.NewGuid():N}.tmp");
         try
         {
-            File.WriteAllText(temporaryFile, JsonSerializer.Serialize(value, Options));
+            File.WriteAllText(temporaryFile, jsonSerializer.Serialize(value, Options));
             ReplaceWithRetry(temporaryFile, path);
         }
         finally

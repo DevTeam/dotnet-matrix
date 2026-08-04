@@ -1,3 +1,4 @@
+using Matrix;
 using SkiaSharp;
 using Svg.Skia;
 using System.Text.Json;
@@ -12,7 +13,9 @@ namespace Build.Targets;
 /// <c>icon.svg</c>, so the local application is installable too and the published
 /// artifact needs no extra step.
 /// </summary>
-internal sealed class WebManifestTarget(IBuildPaths buildPaths) : IWebManifestTarget
+internal sealed class WebManifestTarget(
+    IBuildPaths buildPaths,
+    IJsonSerializer jsonSerializer) : IWebManifestTarget
 {
     private const string ManifestFileName = "manifest.webmanifest";
     private const string SourceIconFileName = "icon.svg";
@@ -55,7 +58,7 @@ internal sealed class WebManifestTarget(IBuildPaths buildPaths) : IWebManifestTa
         var manifestPath = Path.Combine(root, ManifestFileName);
         File.WriteAllText(
             manifestPath,
-            JsonSerializer.Serialize(Create(modules), SerializerOptions) + Environment.NewLine);
+            jsonSerializer.Serialize(Create(modules), SerializerOptions) + Environment.NewLine);
         Info($"Web manifest: {manifestPath}");
         return 0;
     }

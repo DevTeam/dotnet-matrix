@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 // ReSharper disable CheckNamespace
 // ReSharper disable UseCollectionExpression
 
@@ -7,7 +7,8 @@ namespace Matrix.Web;
 internal sealed partial class GitHubMatrixDataSource(
     HttpClient httpClient,
     IWebAssemblyHostEnvironment hostEnvironment,
-    NavigationManager navigationManager) : IMatrixDataSource
+    NavigationManager navigationManager,
+    IJsonSerializer jsonSerializer) : IMatrixDataSource
 {
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
     private static readonly Regex VersionPattern = VersionRegex();
@@ -15,8 +16,10 @@ internal sealed partial class GitHubMatrixDataSource(
     public async Task<MatrixCatalogResult> LoadCatalogAsync(
         CancellationToken cancellationToken = default)
     {
-        var catalog = await httpClient.GetFromJsonAsync<MatrixWebCatalog>(
+        var catalog = await jsonSerializer.GetFromJsonAsync<MatrixWebCatalog>(
+                          httpClient,
                           "data/catalog.json",
+                          SerializerOptions,
                           cancellationToken)
                       ?? throw new InvalidOperationException("The matrix catalog is empty.");
 
@@ -156,7 +159,7 @@ internal sealed partial class GitHubMatrixDataSource(
         }
 
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<T>(cancellationToken);
+        return await jsonSerializer.ReadFromJsonAsync<T>(response.Content, SerializerOptions, cancellationToken);
     }
 
     private async Task<IReadOnlyList<MatrixVersion>> LoadVersionsAsync(
@@ -224,7 +227,7 @@ internal sealed partial class GitHubMatrixDataSource(
             throw new InvalidOperationException(Describe(response));
         }
 
-        return await response.Content.ReadFromJsonAsync<T>(cancellationToken)
+        return await jsonSerializer.ReadFromJsonAsync<T>(response.Content, SerializerOptions, cancellationToken)
                ?? throw new InvalidOperationException($"GitHub returned an empty response for '{uri}'.");
     }
 
@@ -254,7 +257,7 @@ internal sealed partial class GitHubMatrixDataSource(
                + " Released reports stay available once the limit resets.";
     }
 
-    private static async Task<T?> TryGetLocalAsync<T>(
+    private async Task<T?> TryGetLocalAsync<T>(
         string resourceGroup,
         MatrixCategory category,
         string fileName,
@@ -264,7 +267,7 @@ internal sealed partial class GitHubMatrixDataSource(
             $"Matrix.Web.{resourceGroup}/{category.ReportDirectory}/{fileName}");
         return stream is null
             ? default
-            : await JsonSerializer.DeserializeAsync<T>(stream, SerializerOptions, cancellationToken);
+            : await jsonSerializer.DeserializeAsync<T>(stream, SerializerOptions, cancellationToken);
     }
 
     private static async Task<MatrixLibraryMetadataCatalog?> ResolveLogosAsync(

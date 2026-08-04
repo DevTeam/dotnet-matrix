@@ -5,7 +5,9 @@ using System.Text.Json;
 
 namespace Build.Targets;
 
-internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportChartsTarget
+internal sealed class ReportChartsTarget(
+    IBuildPaths buildPaths,
+    IJsonSerializer jsonSerializer) : IReportChartsTarget
 {
     private const int ImageWidth = 1400;
     private const float LabelWidth = 404;
@@ -107,8 +109,8 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         return chartCount;
     }
 
-    private static T Read<T>(string path) =>
-        JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
+    private T Read<T>(string path) =>
+        jsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
 
     private static void RenderFeature(
@@ -538,5 +540,5 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
     private static string FormatBytes(double bytes) =>
         MatrixMetrics.FormatBytes(bytes);
-
 }
+

@@ -14,7 +14,8 @@ public sealed class MatrixBenchmarkRunner(
     MatrixModule module,
     MatrixModuleAssembly moduleAssembly,
     IMatrixReportStore reportStore,
-    IBenchmarkEnvironmentProvider environmentProvider) : IMatrixRunner
+    IBenchmarkEnvironmentProvider environmentProvider,
+    IJsonSerializer jsonSerializer) : IMatrixRunner
 {
     private static readonly JsonSerializerOptions EvidenceJsonOptions = new(JsonSerializerDefaults.Web)
     {
@@ -357,7 +358,7 @@ public sealed class MatrixBenchmarkRunner(
         CopyEvidenceFiles(artifactsDirectory, rawDirectory);
         File.WriteAllText(
             Path.Combine(evidenceDirectory, "environment.json"),
-            JsonSerializer.Serialize(environment, EvidenceJsonOptions) + Environment.NewLine);
+            jsonSerializer.Serialize(environment, EvidenceJsonOptions) + Environment.NewLine);
         File.WriteAllText(
             Path.Combine(evidenceDirectory, "command.txt"),
             $"dotnet run --project src/{moduleAssembly.Value.GetName().Name} --configuration Release "
@@ -384,7 +385,7 @@ public sealed class MatrixBenchmarkRunner(
             $"reports/{module.ReportDirectory}/evidence/{evidenceId}/manifest.json");
         File.WriteAllText(
             Path.Combine(evidenceDirectory, "manifest.json"),
-            JsonSerializer.Serialize(new
+            jsonSerializer.Serialize(new
             {
                 schemaVersion = 1,
                 evidence,

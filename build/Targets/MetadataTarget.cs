@@ -1,9 +1,12 @@
 using System.Text.Json;
+using Matrix;
 // ReSharper disable InvertIf
 
 namespace Build.Targets;
 
-internal sealed class MetadataTarget(IBuildPaths buildPaths) : IMetadataTarget
+internal sealed class MetadataTarget(
+    IBuildPaths buildPaths,
+    IJsonSerializer jsonSerializer) : IMetadataTarget
 {
     private static readonly JsonSerializerOptions JsonOptions =
         new(JsonSerializerDefaults.Web)
@@ -34,12 +37,12 @@ internal sealed class MetadataTarget(IBuildPaths buildPaths) : IMetadataTarget
             var path = Path.Combine(directory, "libraries.json");
             File.WriteAllText(
                 path,
-                JsonSerializer.Serialize(module.Metadata.LibraryMetadata, JsonOptions)
+                jsonSerializer.Serialize(module.Metadata.LibraryMetadata, JsonOptions)
                 + Environment.NewLine);
             var featurePath = Path.Combine(directory, "features.json");
             File.WriteAllText(
                 featurePath,
-                JsonSerializer.Serialize(module.Metadata.FeatureMetadata, JsonOptions)
+                jsonSerializer.Serialize(module.Metadata.FeatureMetadata, JsonOptions)
                 + Environment.NewLine);
         }
 

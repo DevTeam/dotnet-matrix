@@ -13,7 +13,8 @@ internal sealed partial class WebTarget(
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
     IWebManifestTarget webManifestTarget,
-    IQuietProcessRunner processRunner) : IWebTarget
+    IQuietProcessRunner processRunner,
+    IJsonSerializer jsonSerializer) : IWebTarget
 {
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web)
     {
@@ -64,7 +65,7 @@ internal sealed partial class WebTarget(
         var catalogPath = Path.Combine(generatedDirectory, "catalog.json");
         await File.WriteAllTextAsync(
             catalogPath,
-            JsonSerializer.Serialize(catalog, SerializerOptions),
+            jsonSerializer.Serialize(catalog, SerializerOptions),
             cancellationToken);
 
         var projectPath = Path.Combine(
