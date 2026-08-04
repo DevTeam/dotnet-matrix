@@ -54,6 +54,10 @@ internal static class LoggingChecks
     }
 
     [Conditional("MATRIX_VALIDATION")]
+    public static void Flush(string library, bool flushed) =>
+        MatrixValidation.Require(library, flushed, "Buffered events did not flush in time.");
+
+    [Conditional("MATRIX_VALIDATION")]
     public static void Prepared(string library, bool informationEnabled) =>
         MatrixValidation.Require(
             library,
@@ -93,4 +97,3 @@ internal static class LoggingChecks
             $"Property '{name}' expected '{expected}', found '{value}'.");
     }
 }
-
