@@ -1,7 +1,9 @@
-﻿@page "/"
+@page "/"
 @inject IMatrixDataSource DataSource
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
+@inject IMatrixView View
+@inject IMatrixScoring Scoring
 
 <PageTitle>.NET Matrix — compare .NET libraries</PageTitle>
 
@@ -191,7 +193,7 @@
                             continue;
                         }
 
-                        var medals = MatrixView.Rating(report, _selectedLibraries);
+                        var medals = Scoring.Rating(report, _selectedLibraries);
                         <div class="library-group">
                             <div class="group-label">@report.Category.Name</div>
                             @foreach (var library in libraries)
@@ -204,7 +206,7 @@
                                         <input type="checkbox"
                                                checked="@_selectedLibraries.Contains(key)"
                                                @onchange="eventArgs => ToggleLibrary(key, eventArgs)"/>
-                                        <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                        <LibraryLogo Source="@View.Logo(report, library.Id)"
                                                      Name="@library.Name"
                                                      Size="xs"/>
                                         <span>
@@ -213,9 +215,9 @@
                                         </span>
                                     </label>
                                     <RatingBadge Category="@report.Category.Name"
-                                                 Rated="@MatrixView.IsRated(report, library.Id)"
-                                                 Standing="@MatrixView.Standing(medals, library.Id)"
-                                                 Place="@MatrixView.Place(medals, library.Id)"/>
+                                                 Rated="@View.IsRated(report, library.Id)"
+                                                 Standing="@Scoring.Standing(medals, library.Id)"
+                                                 Place="@Scoring.Place(medals, library.Id)"/>
                                     <button class="library-info"
                                             type="button"
                                             title="@($"Open the {library.Name} overview")"
@@ -978,8 +980,8 @@
         StateHasChanged();
     }
 
-    private static IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
-        MatrixView.Libraries(report);
+    private IEnumerable<MatrixLibrary> Libraries(CategoryReport report) =>
+        View.Libraries(report);
 
     private void SelectAllLibrariesInEveryCategory()
     {

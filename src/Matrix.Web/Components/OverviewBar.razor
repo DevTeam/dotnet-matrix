@@ -1,4 +1,6 @@
 @using System.Globalization
+@inject IMatrixMeasures Measures
+@inject IMatrixPalette Palette
 
 <div class="overview-metric">
     @* Only shown where the row is stacked and the column headings are gone. *@
@@ -11,14 +13,14 @@
                 var share = (Values[index] ?? 0) / _total;
                 if (share > 0)
                 {
-                    <span style="width: @Percent(_filled * share); background: @MatrixChartPalette.Feature(index)"
+                    <span style="width: @Percent(_filled * share); background: @Palette.Feature(index)"
                           title="@SegmentTitle(index)"></span>
                 }
             }
         }
         else if (_hasValues)
         {
-            <span class="overview-bar-zero" style="background: @MatrixChartPalette.Feature(0)"></span>
+            <span class="overview-bar-zero" style="background: @Palette.Feature(0)"></span>
         }
     </div>
     <strong>@Label</strong>
@@ -42,20 +44,20 @@
     public bool Memory { get; set; }
 
     private string Label => _hasValues
-        ? MatrixMetrics.Format(_total, Memory)
+        ? Measures.Format(_total, Memory)
         : "n/a";
 
     protected override void OnParametersSet()
     {
-        _hasValues = MatrixMetrics.HasValues(Values);
-        _total = MatrixMetrics.Total(Values);
-        _filled = MatrixMetrics.ScalePercent(_total, Maximum);
+        _hasValues = Measures.HasValues(Values);
+        _total = Measures.Total(Values);
+        _filled = Measures.ScalePercent(_total, Maximum);
     }
 
     private string SegmentTitle(int index)
     {
         var name = index < FeatureNames.Count ? FeatureNames[index] : string.Empty;
-        return $"{name}: {MatrixMetrics.Format(Values[index] ?? 0, Memory)}";
+        return $"{name}: {Measures.Format(Values[index] ?? 0, Memory)}";
     }
 
     private static string Percent(double value) =>

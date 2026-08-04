@@ -1,3 +1,5 @@
+@inject IMatrixScoring Scoring
+
 @* Always rendered, and always the same size. An icon that appears only on the
    podium would otherwise move whatever sits beside it from row to row. One medal
    stands for the place in the category; what a library won inside a single group
@@ -7,9 +9,9 @@
     {
         <RatingIcon Place="unrated"/>
     }
-    else if (Place is >= 1 and <= MatrixRatings.Places)
+    else if (OnPodium)
     {
-        <RatingIcon Place="@Name(Place.Value)"/>
+        <RatingIcon Place="@Name(Place!.Value)"/>
     }
 </span>
 
@@ -29,14 +31,20 @@
 
     private string? Modifier => !Rated ? "is-unrated" : null;
 
-    private string? Title => (Rated, Place, Standing) switch
-    {
-        (false, _, _) => $"{Category}: not part of the rating",
-        (_, >= 1 and <= MatrixRatings.Places, { } standing) =>
-            $"{Category} · {Ordinal(Place!.Value)} place"
-            + $" · {MatrixScores.Format(standing.Points)} of {standing.Maximum} points",
-        _ => null
-    };
+    /// <summary>
+    /// How many places carry a medal is a decision of the rating, not of this
+    /// badge, so it is asked for rather than written here — which is also why this
+    /// is a comparison and not a relational pattern.
+    /// </summary>
+    private bool OnPodium => Place is { } place && place >= 1 && place <= Scoring.Places;
+
+    private string? Title =>
+        !Rated
+            ? $"{Category}: not part of the rating"
+            : OnPodium && Standing is { } standing
+                ? $"{Category} · {Ordinal(Place!.Value)} place"
+                  + $" · {Scoring.Format(standing.Points)} of {standing.Maximum} points"
+                : null;
 
     private static string Name(int place) => place switch
     {

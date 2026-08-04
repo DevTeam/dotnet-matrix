@@ -1,4 +1,6 @@
 @using System.Globalization
+@inject IMatrixView View
+@inject IMatrixScoring Scoring
 @if (Medals.Count > 0)
 {
     var scale = Medals[0];
@@ -38,7 +40,7 @@
                         <td class="rating-column-place">@place</td>
                         <td class="rating-column-name">
                             <span class="rating-name">
-                                <LibraryLogo Source="@MatrixView.Logo(Report, item.LibraryId)"
+                                <LibraryLogo Source="@View.Logo(Report, item.LibraryId)"
                                              Name="@item.Name"
                                              Size="sm"/>
                                 <button class="library-open"
@@ -61,13 +63,13 @@
                         @* Every points cell carries the measurements it was summed
                            from, so the number can be checked without leaving the row. *@
                         <td class="rating-column-score" title="@Hint(item, false)">
-                            <span class="rating-label">Time</span>@MatrixScores.Format(item.TimePoints)
+                            <span class="rating-label">Time</span>@Scoring.Format(item.TimePoints)
                         </td>
                         <td class="rating-column-score" title="@Hint(item, true)">
-                            <span class="rating-label">Memory</span>@MatrixScores.Format(item.MemoryPoints)
+                            <span class="rating-label">Memory</span>@Scoring.Format(item.MemoryPoints)
                         </td>
                         <td class="rating-column-total" title="@Hint(item, null)">
-                            <span class="rating-label">Points</span>@MatrixScores.Format(item.Points)
+                            <span class="rating-label">Points</span>@Scoring.Format(item.Points)
                         </td>
                     </tr>
                 }
@@ -95,7 +97,7 @@
 
     private string Hint(MatrixMedals item, bool? metric) =>
         Report.Benchmarks is { } benchmarks
-            ? MatrixView.ScoreHint(
+            ? Scoring.Hint(
                 Report,
                 benchmarks.Features,
                 SelectedLibraries,

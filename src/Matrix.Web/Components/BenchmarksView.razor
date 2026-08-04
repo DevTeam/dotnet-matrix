@@ -1,4 +1,6 @@
-﻿@if (Features.Length == 0)
+@inject IMatrixView View
+
+@if (Features.Length == 0)
 {
     <EmptyState Title="No benchmark data" Text="No benchmark report is available for this selection."/>
 }
@@ -75,7 +77,7 @@ else
     private string? Description => _selectedFeature is null
         ? null
         : Reports
-            .Select(report => MatrixView.FeatureDescription(report, _selectedFeature))
+            .Select(report => View.FeatureDescription(report, _selectedFeature))
             .FirstOrDefault(description => description is not null);
 
     private (string Id, string Name, int Order)[] Features =>

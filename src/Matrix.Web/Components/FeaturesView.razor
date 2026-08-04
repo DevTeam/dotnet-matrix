@@ -1,7 +1,9 @@
+@inject IMatrixView View
+
 @foreach (var report in Reports)
 {
     var libraries = report.Features?.Libraries
-        .Where(library => MatrixView.IsSelected(report, SelectedLibraries, library.Id))
+        .Where(library => View.IsSelected(report, SelectedLibraries, library.Id))
         .ToArray() ?? [];
     if (libraries.Length == 0)
     {
@@ -45,7 +47,7 @@
                     {
                         <th title="@($"{library.Name} {library.Version}")">
                             <span class="column-library">
-                                <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                                <LibraryLogo Source="@View.Logo(report, library.Id)"
                                              Name="@library.Name"
                                              Size="sm"/>
                                 <button class="library-open column-library-name"
@@ -62,7 +64,7 @@
                 <tbody>
                 @foreach (var feature in features)
                 {
-                    var description = MatrixView.FeatureDescription(report, feature.Id);
+                    var description = View.FeatureDescription(report, feature.Id);
                     var expanded = _expanded.Contains(feature.Id);
                     <tr>
                         <th>

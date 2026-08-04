@@ -1,3 +1,6 @@
+@inject IMatrixView View
+@inject IMatrixMeasures Measures
+
 @if (Features.Length == 0)
 {
     <EmptyState Title="No benchmark data" Text="No benchmark report is available for this selection."/>
@@ -17,8 +20,8 @@ else
             .Create(
                 report.Benchmarks,
                 scenario,
-                libraryId => MatrixView.IsSelected(report, SelectedLibraries, libraryId))
-            .Where(row => MatrixScenarios.Value(row, Memory) is not null)
+                libraryId => View.IsSelected(report, SelectedLibraries, libraryId))
+            .Where(row => View.Value(row, Memory) is not null)
             .ToArray();
         if (values.Length == 0)
         {
@@ -46,19 +49,19 @@ else
                 <div class="benchmark-list">
                     @foreach (var environmentGroup in environmentGroups)
                     {
-                        var ordered = MatrixScenarios.Order(environmentGroup, Memory);
-                        var minimum = MatrixScenarios.Minimum(ordered, Memory);
-                        var maximum = MatrixScenarios.Maximum(ordered, Memory);
+                        var ordered = View.Order(environmentGroup, Memory);
+                        var minimum = View.Best(ordered, Memory);
+                        var maximum = View.Worst(ordered, Memory);
                         @if (environmentGroups.Length > 1)
                         {
                             <div class="benchmark-environment">Environment @environmentGroup.Key</div>
                         }
                         @foreach (var value in ordered)
                         {
-                            var current = MatrixScenarios.Value(value, Memory)!.Value;
+                            var current = View.Value(value, Memory)!.Value;
                             <div class="benchmark-row">
                                 <div class="benchmark-name">
-                                    <LibraryLogo Source="@MatrixView.Logo(report, value.LibraryId)"
+                                    <LibraryLogo Source="@View.Logo(report, value.LibraryId)"
                                                  Name="@value.Name"
                                                  Size="sm"/>
                                     <div>
@@ -70,18 +73,18 @@ else
                                                 @value.Name
                                             </button>
                                         </strong>
-                                        <span>@MatrixMetrics.Ratio(current, minimum)</span>
+                                        <span>@Measures.Ratio(current, minimum)</span>
                                     </div>
                                 </div>
                                 <div class="meter">
                                     <span class="@(Memory ? "is-memory" : "is-performance")"
-                                          style="@MeterStyle(MatrixMetrics.ScalePercent(current, maximum))"></span>
+                                          style="@MeterStyle(Measures.ScalePercent(current, maximum))"></span>
                                 </div>
                                 <div class="benchmark-value">
-                                    <strong>@MatrixMetrics.Format(current, Memory)</strong>
+                                    <strong>@Measures.Format(current, Memory)</strong>
                                     @if (!Memory && value.TimeStandardError is not null)
                                     {
-                                        <span>± @MatrixMetrics.FormatTime(value.TimeStandardError.Value)</span>
+                                        <span>± @Measures.FormatTime(value.TimeStandardError.Value)</span>
                                     }
                                 </div>
                             </div>

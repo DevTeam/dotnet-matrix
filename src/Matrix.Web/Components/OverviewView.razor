@@ -1,4 +1,7 @@
-﻿@foreach (var report in Reports)
+@inject IMatrixView View
+@inject IMatrixScoring Scoring
+
+@foreach (var report in Reports)
 {
     if (report.ChartCatalog is not { Groups.Count: > 0 } chartCatalog
         || report.Benchmarks is null)
@@ -6,7 +9,7 @@
         continue;
     }
 
-    var medals = MatrixView.Rating(report, SelectedLibraries);
+    var medals = Scoring.Rating(report, SelectedLibraries);
     <section class="overview-report">
         <div class="section-heading">
             <div>
@@ -34,14 +37,14 @@
 <section class="overview-grid">
     @foreach (var report in Reports)
     {
-        var libraries = MatrixView.Libraries(report)
-            .Where(library => MatrixView.IsSelected(report, SelectedLibraries, library.Id))
-            .Where(library => MatrixView.Metadata(report, library.Id) is not null)
+        var libraries = View.Libraries(report)
+            .Where(library => View.IsSelected(report, SelectedLibraries, library.Id))
+            .Where(library => View.Metadata(report, library.Id) is not null)
             .ToArray();
-        var cardMedals = MatrixView.Rating(report, SelectedLibraries);
+        var cardMedals = Scoring.Rating(report, SelectedLibraries);
         @foreach (var library in libraries)
         {
-            var metadata = MatrixView.Metadata(report, library.Id);
+            var metadata = View.Metadata(report, library.Id);
             var featureResults = (report.Features?.Features ?? [])
                 .SelectMany(feature => feature.Results)
                 .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
@@ -59,8 +62,8 @@
                     <span class="card-heading-end">
                         <RatingBadge Category="@report.Category.Name"
                                      Rated="@(metadata?.Rated ?? false)"
-                                     Standing="@MatrixView.Standing(cardMedals, library.Id)"
-                                     Place="@MatrixView.Place(cardMedals, library.Id)"/>
+                                     Standing="@Scoring.Standing(cardMedals, library.Id)"
+                                     Place="@Scoring.Place(cardMedals, library.Id)"/>
                         @if (LibraryLink is { } link)
                         {
                             <CopyLinkButton Url="@link(library.Id)"/>
@@ -69,7 +72,7 @@
                     </span>
                 </div>
                 <div class="library-identity">
-                    <LibraryLogo Source="@MatrixView.Logo(report, library.Id)"
+                    <LibraryLogo Source="@View.Logo(report, library.Id)"
                                  Name="@library.Name"/>
                     <div>
                         <h2>

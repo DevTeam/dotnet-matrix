@@ -1,7 +1,11 @@
+@inject IMatrixView View
+@inject IMatrixScoring Scoring
+@inject IMatrixPalette Palette
+
 @if (_overview is { } overview && overview.Rows.Count > 0)
 {
     var featureNames = overview.Features
-        .Select(feature => MatrixView.FeatureDescription(Report, feature.Id) is { } text
+        .Select(feature => View.FeatureDescription(Report, feature.Id) is { } text
             ? $"{feature.Name} — {text}"
             : feature.Name)
         .ToArray();
@@ -47,7 +51,7 @@
                 <div class="overview-chart-label">
                     @* A library outside the rating holds no place in it. *@
                     <span class="overview-chart-rank">@(row.Rated ? place.ToString() : "")</span>
-                    <LibraryLogo Source="@MatrixView.Logo(Report, row.LibraryId)"
+                    <LibraryLogo Source="@View.Logo(Report, row.LibraryId)"
                                  Name="@row.Name"
                                  Size="sm"/>
                     <div>
@@ -86,7 +90,7 @@
                       title="@PointsTitle(overview, row)">
                     @* The heading is gone once the row stacks on a phone. *@
                     <span class="rating-label">Points</span>@(row.Rated
-                                                              ? MatrixScores.Format(row.Points)
+                                                              ? Scoring.Format(row.Points)
                                                               : "—")
                 </span>
             </div>
@@ -96,9 +100,9 @@
             @for (var index = 0; index < overview.Features.Count; index++)
             {
                 var feature = overview.Features[index];
-                <li title="@(MatrixView.FeatureDescription(Report, feature.Id) ?? feature.Name)">
+                <li title="@(View.FeatureDescription(Report, feature.Id) ?? feature.Name)">
                     <span class="overview-chart-swatch"
-                          style="background: @MatrixChartPalette.Feature(index)"></span>
+                          style="background: @Palette.Feature(index)"></span>
                     @feature.Name
                 </li>
             }
@@ -128,25 +132,15 @@
 
     protected override void OnParametersSet()
     {
-        _overview = Report.Benchmarks is null
-            ? null
-            : MatrixOverviews.Create(
-                Report.Benchmarks,
-                Group,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId),
-                libraryId => MatrixView.IsRated(Report, libraryId));
+        _overview = View.Overview(Report, Group, SelectedLibraries);
 
         // Medals ignore libraries that are out of the rating, so a place here does
         // not have to match the row number of the chart.
-        _places = _overview is null || Report.Benchmarks is null
+        _places = _overview is null
             ? []
-            : MatrixOverviews.Create(
-                    Report.Benchmarks,
-                    Group,
-                    libraryId => MatrixView.IsRated(Report, libraryId)
-                                 && MatrixView.IsSelected(Report, SelectedLibraries, libraryId))
+            : View.RatedOverview(Report, Group, SelectedLibraries)
                 ?.Rows
-                .Take(MatrixRatings.Places)
+                .Take(Scoring.Places)
                 .Select((row, index) => (row.LibraryId, Place: PlaceName(index)))
                 .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
             ?? [];
@@ -184,7 +178,7 @@
     /// </summary>
     private string PointsTitle(MatrixOverview overview, MatrixOverviewRow row) =>
         row.Rated
-            ? MatrixView.ScoreHint(Report, overview.Features, SelectedLibraries, row.LibraryId, null)
+            ? Scoring.Hint(Report, overview.Features, SelectedLibraries, row.LibraryId, null)
             : "Outside the rating: shown as a reference only";
 
     private string PlaceTitle(string place) =>

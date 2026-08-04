@@ -1,3 +1,8 @@
+@inject IMatrixView View
+@inject IMatrixScoring Scoring
+@inject IMatrixMeasures Measures
+@inject IMatrixPalette Palette
+
 @* Dimming overlay. Clicking it closes; the panel stops the click from reaching it. *@
 <div class="modal-backdrop" @onclick="CloseAsync">
     <div class="modal-panel"
@@ -9,7 +14,7 @@
          @onclick:stopPropagation="true"
          @onkeydown="CloseOnEscapeAsync">
         <header class="modal-head">
-            <LibraryLogo Source="@MatrixView.Logo(Report, Library.Id)" Name="@Library.Name"/>
+            <LibraryLogo Source="@View.Logo(Report, Library.Id)" Name="@Library.Name"/>
             <div class="modal-identity">
                 <h2 id="library-dialog-title">@Library.Name</h2>
                 <p class="modal-package">
@@ -30,7 +35,7 @@
             <div class="modal-head-end">
                 <span class="category-chip">@Report.Category.Name</span>
                 <RatingBadge Category="@Report.Category.Name"
-                             Rated="@MatrixView.IsRated(Report, Library.Id)"
+                             Rated="@View.IsRated(Report, Library.Id)"
                              Standing="@_medals"
                              Place="@_place"/>
                 <CopyLinkButton Url="@Link" Caption="Copy link"/>
@@ -78,7 +83,7 @@
                     <span>rating</span>
                 </div>
                 <div class="is-explained" title="@PointsTitle">
-                    <strong>@(_medals is null ? "0" : MatrixScores.Format(_medals.Points))<small>/@(_medals?.Maximum ?? 0)</small></strong>
+                    <strong>@(_medals is null ? "0" : Scoring.Format(_medals.Points))<small>/@(_medals?.Maximum ?? 0)</small></strong>
                     <span>points</span>
                 </div>
                 <div>
@@ -103,12 +108,12 @@
                     <ul class="modal-rating">
                         <li title="@Hint(false)">
                             <span>Execution time</span>
-                            <strong>@MatrixScores.Format(rating.TimePoints)</strong>
+                            <strong>@Scoring.Format(rating.TimePoints)</strong>
                             <small>of @rating.MetricMaximum</small>
                         </li>
                         <li title="@Hint(true)">
                             <span>Allocated memory</span>
-                            <strong>@MatrixScores.Format(rating.MemoryPoints)</strong>
+                            <strong>@Scoring.Format(rating.MemoryPoints)</strong>
                             <small>of @rating.MetricMaximum</small>
                         </li>
                         @if (rating.Covered < rating.Scenarios)
@@ -117,12 +122,12 @@
                             <li class="is-missing" title="@MissingTitle">
                                 <span>@missing scenario@(missing == 1 ? "" : "s") not supported</span>
                                 <strong>0</strong>
-                                <small>of @(missing * MatrixRatings.MaximumPoints * MatrixRatings.Metrics)</small>
+                                <small>of @(missing * Scoring.MaximumPoints * Scoring.Metrics)</small>
                             </li>
                         }
                         <li class="is-total" title="@Hint(null)">
                             <span>Rating</span>
-                            <strong>@MatrixScores.Format(rating.Points)</strong>
+                            <strong>@Scoring.Format(rating.Points)</strong>
                             <small>of @rating.Maximum</small>
                         </li>
                     </ul>
@@ -186,7 +191,7 @@
                             {
                                 <li title="@_legend[index].Title">
                                     <span class="overview-chart-swatch"
-                                          style="background: @MatrixChartPalette.Feature(index)"></span>
+                                          style="background: @Palette.Feature(index)"></span>
                                     @_legend[index].Name
                                 </li>
                             }
@@ -206,7 +211,7 @@
                             @_supported of @_rows.Length supported · ratio against the best of @Compared
                             @if (_scored)
                             {
-                                <text> · points out of @(MatrixRatings.MaximumPoints * MatrixRatings.Metrics) each</text>
+                                <text> · points out of @(Scoring.MaximumPoints * Scoring.Metrics) each</text>
                             }
                         </span>
                     </div>
@@ -271,12 +276,12 @@
                                     @if (_scored)
                                     {
                                         <td class="modal-scenario-points">
-                                            <strong>@MatrixScores.FormatExact(row.Points)</strong>
+                                            <strong>@Scoring.FormatExact(row.Points)</strong>
                                             @* The split, because time and memory are
                                                separate columns in the standings. *@
                                             <small>
-                                                @MatrixScores.FormatExact(row.TimePoints)
-                                                + @MatrixScores.FormatExact(row.MemoryPoints)
+                                                @Scoring.FormatExact(row.TimePoints)
+                                                + @Scoring.FormatExact(row.MemoryPoints)
                                             </small>
                                         </td>
                                     }
@@ -289,7 +294,7 @@
                                 <tr>
                                     <td colspan="3">Rating</td>
                                     <td class="modal-scenario-points">
-                                        <strong>@MatrixScores.Format(total.Points)</strong>
+                                        <strong>@Scoring.Format(total.Points)</strong>
                                         <small>of @total.Maximum</small>
                                     </td>
                                 </tr>
@@ -340,9 +345,9 @@
     [Parameter]
     public EventCallback<string> OnOpenLibrary { get; set; }
 
-    private int Compared => MatrixView
+    private int Compared => View
         .Libraries(Report)
-        .Count(library => MatrixView.IsSelected(Report, SelectedLibraries, library.Id));
+        .Count(library => View.IsSelected(Report, SelectedLibraries, library.Id));
 
     private string RatingPlace => _ratingPlace;
 
@@ -366,7 +371,7 @@
     /// </summary>
     private string Hint(bool? metric) =>
         Report.Benchmarks is { } benchmarks
-            ? MatrixView.ScoreHint(
+            ? Scoring.Hint(
                 Report,
                 benchmarks.Features,
                 SelectedLibraries,
@@ -380,13 +385,13 @@
 
     protected override void OnParametersSet()
     {
-        _metadata = MatrixView.Metadata(Report, Library.Id);
-        var rating = MatrixView.Rating(Report, SelectedLibraries);
-        _medals = MatrixView.Standing(rating, Library.Id);
-        _place = MatrixView.Place(rating, Library.Id);
+        _metadata = View.Metadata(Report, Library.Id);
+        var rating = Scoring.Rating(Report, SelectedLibraries);
+        _medals = Scoring.Standing(rating, Library.Id);
+        _place = Scoring.Place(rating, Library.Id);
         _rated = rating.Count;
         _ratingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
-        _scored = MatrixView.IsRated(Report, Library.Id) && _medals is not null;
+        _scored = View.IsRated(Report, Library.Id) && _medals is not null;
         ReadStandings();
         ReadRows();
     }
@@ -439,8 +444,8 @@
                 .Explain(
                     benchmarks.Features,
                     Library.Id,
-                    libraryId => MatrixView.IsRated(Report, libraryId)
-                                 && MatrixView.IsSelected(Report, SelectedLibraries, libraryId))
+                    libraryId => View.IsRated(Report, libraryId)
+                                 && View.IsSelected(Report, SelectedLibraries, libraryId))
                 .ToDictionary(detail => detail.FeatureId, StringComparer.OrdinalIgnoreCase)
             : [];
         _rows = order
@@ -462,35 +467,32 @@
             ? benchmarks.Features.FirstOrDefault(feature =>
                 feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
             : null;
-        var rows = scenario is null || Report.Benchmarks is null
+        var rows = scenario is null
             ? []
-            : MatrixScenarios.Create(
-                Report.Benchmarks,
-                scenario,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId));
+            : View.Scenarios(Report, scenario, SelectedLibraries);
         var row = rows.FirstOrDefault(item =>
             item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
         return new Row(
             order,
             name,
-            MatrixView.FeatureDescription(Report, featureId),
+            View.FeatureDescription(Report, featureId),
             StatusClass(status?.Status),
             StatusLabel(status?.Status),
             Note(status),
             row is not null,
             Value(row?.Time, false),
             Value(row?.Memory, true),
-            MatrixMetrics.ScalePercent(row?.Time ?? 0, MatrixScenarios.Maximum(rows, false)),
-            MatrixMetrics.ScalePercent(row?.Memory ?? 0, MatrixScenarios.Maximum(rows, true)),
-            Ratio(row?.Time, MatrixScenarios.Minimum(rows, false)),
-            Ratio(row?.Memory, MatrixScenarios.Minimum(rows, true)),
+            Measures.ScalePercent(row?.Time ?? 0, View.Worst(rows, false)),
+            Measures.ScalePercent(row?.Memory ?? 0, View.Worst(rows, true)),
+            Ratio(row?.Time, View.Best(rows, false)),
+            Ratio(row?.Memory, View.Best(rows, true)),
             score?.Time.Points ?? 0,
             score?.Memory.Points ?? 0);
     }
 
     private void ReadStandings()
     {
-        if (Report.Benchmarks is not { } benchmarks || Report.ChartCatalog is not { } charts)
+        if (Report.Benchmarks is null || Report.ChartCatalog is not { } charts)
         {
             _standings = [];
             _legend = [];
@@ -500,11 +502,7 @@
         var standings = new List<Standing>();
         foreach (var group in charts.Groups)
         {
-            var overview = MatrixOverviews.Create(
-                benchmarks,
-                group,
-                libraryId => MatrixView.IsSelected(Report, SelectedLibraries, libraryId),
-                libraryId => MatrixView.IsRated(Report, libraryId));
+            var overview = View.Overview(Report, group, SelectedLibraries);
             if (overview is null)
             {
                 continue;
@@ -525,16 +523,16 @@
                 overview,
                 row,
                 overview.Features
-                    .Select(feature => MatrixView.FeatureDescription(Report, feature.Id) is { } text
+                    .Select(feature => View.FeatureDescription(Report, feature.Id) is { } text
                         ? $"{feature.Name} — {text}"
                         : feature.Name)
                     .ToArray(),
                 row.Rated
-                    ? $"{MatrixScores.Format(row.Points)} of {overview.Maximum} points"
+                    ? $"{Scoring.Format(row.Points)} of {overview.Maximum} points"
                       + $" · rank {rank + 1} of {rated}"
                     : "reference · not part of the rating",
                 row.Rated
-                    ? MatrixView.ScoreHint(
+                    ? Scoring.Hint(
                         Report,
                         overview.Features,
                         SelectedLibraries,
@@ -554,7 +552,7 @@
             .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
             .Select(feature => (
                 feature.Name,
-                MatrixView.FeatureDescription(Report, feature.Id) ?? feature.Name))
+                View.FeatureDescription(Report, feature.Id) ?? feature.Name))
             .ToArray();
     }
 
@@ -571,19 +569,19 @@
         _ => StatusLabel(status.Status)
     };
 
-    private static string Value(double? value, bool memory) =>
-        value is null ? "n/a" : MatrixMetrics.Format(value.Value, memory);
+    private string Value(double? value, bool memory) =>
+        value is null ? "n/a" : Measures.Format(value.Value, memory);
 
-    private static string Ratio(double? current, double minimum) =>
-        current is null ? "" : MatrixMetrics.Ratio(current.Value, minimum);
+    private string Ratio(double? current, double minimum) =>
+        current is null ? "" : Measures.Ratio(current.Value, minimum);
 
     /// <summary>How this library compares with the leader of the whole overview.</summary>
-    private static string Ratio(
+    private string Ratio(
         IReadOnlyList<double?> values,
         IReadOnlyList<double?>? leader) =>
         leader is null
             ? ""
-            : MatrixMetrics.Ratio(MatrixMetrics.Total(values), MatrixMetrics.Total(leader));
+            : Measures.Ratio(Measures.Total(values), Measures.Total(leader));
 
     private string Title(MatrixOverviewRow? leader, bool memory) =>
         leader is null
@@ -591,7 +589,7 @@
             : leader.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase)
                 ? "Best result in this overview"
                 : $"Against {leader.Name}, the fastest of the compared libraries"
-                  + $": {MatrixMetrics.Format(MatrixMetrics.Total(memory ? leader.MemoryValues : leader.PerformanceValues), memory)}";
+                  + $": {Measures.Format(Measures.Total(memory ? leader.MemoryValues : leader.PerformanceValues), memory)}";
 
     private static string Width(double percent) =>
         $"width: {percent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";

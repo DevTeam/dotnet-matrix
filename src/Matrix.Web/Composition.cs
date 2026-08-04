@@ -6,12 +6,19 @@ namespace Matrix.Web;
 
 internal partial class Composition : ServiceProviderFactory<Composition>
 {
+    // Only composition roots can be resolved through IServiceProvider, and every
+    // one of these is injected into a component with @inject, so each needs a root.
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
             .Hint(Hint.ThreadSafe, "Off")
-            .Root<IMatrixDataSource>()
             .Arg<HttpClient>("httpClient")
-            .Bind<IMatrixDataSource>().As(Lifetime.Singleton)
-                .To<GitHubMatrixDataSource>();
+
+            .Root<IMatrixDataSource>()
+            .Root<IMatrixView>()
+            .Root<IMatrixScoring>()
+            .Root<IMatrixMeasures>()
+            .Root<IMatrixPalette>()
+
+            .Singleton<GitHubMatrixDataSource, MatrixView, MatrixScoring, MatrixMeasures, MatrixPalette>();
 }
