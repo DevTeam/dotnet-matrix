@@ -21,7 +21,8 @@ internal sealed class BuildApplication(
     IImportReportsTarget importReportsTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebTarget webTarget,
-    IReproduceTarget reproduceTarget)
+    IReproduceTarget reproduceTarget,
+    IBuildSolutionTarget buildSolutionTarget)
 {
     public Task<int> RunAsync()
     {
@@ -42,9 +43,19 @@ internal sealed class BuildApplication(
         RegisterCiMatrix(root, modules);
         RegisterCiReports(root, modules);
         RegisterImportReports(root);
+        RegisterBuildSolution(root);
         RegisterWeb(root, modules);
         RegisterReproduce(root, modules);
         return root.Parse(args).InvokeAsync();
+    }
+
+    private void RegisterBuildSolution(RootCommand root)
+    {
+        var command = new Command(
+            MatrixNames.BuildSolutionCommand,
+            "Build the dotnet-matrix.slnx solution");
+        command.SetAction(_ => buildSolutionTarget.RunAsync(cancellationToken));
+        root.Subcommands.Add(command);
     }
 
     private void RegisterMetadata(

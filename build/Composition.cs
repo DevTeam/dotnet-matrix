@@ -22,5 +22,5 @@ internal partial class Composition
             .Bind().To(_ => GetService<ICommandLineRunner>())
             .Singleton<JsonSerializerWrapper, BuildPaths, MatrixModuleDiscovery, RazorTemplateEngine, MatrixReportStore, QuietProcessRunner, MatrixTarget, MetadataTarget,
                 LibraryTarget, ReportChartsTarget, ReadmeTarget, PrepareCommitTarget, CiMatrixTarget, CiReportsTarget, ImportReportsTarget, WebManifestTarget,
-                WebTarget, LocalWebTarget, ReproduceTarget, RunConfigurationsTarget>();
+                WebTarget, LocalWebTarget, ReproduceTarget, RunConfigurationsTarget, BuildSolutionTarget>();
 }

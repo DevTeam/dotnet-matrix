@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build solution
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build solution
+        run: dotnet run --project ./build -- build-solution
+
+  discover:
+    name: Discover categories
+    runs-on: ubuntu-latest
+    outputs:
+      categories: ${{ steps.matrix.outputs.categories }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Build category matrix
+        id: matrix
+        run: |
+          dotnet run --project ./build -- ci-matrix --output artifacts/ci-matrix.json
+          echo "categories=$(jq -c . artifacts/ci-matrix.json)" >> "$GITHUB_OUTPUT"
+
+  validate:
+    name: Validate features (${{ matrix.category }})
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        category: ${{ fromJSON(needs.discover.outputs.categories) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Validate library features
+        run: dotnet run --project ./build -- ci-reports --category "${{ matrix.category }}" --skip-benchmarks
+
+      - name: Upload feature reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ci-features-${{ matrix.category }}
+          path: artifacts/ci-reports
+          if-no-files-found: error
+          retention-days: 7
