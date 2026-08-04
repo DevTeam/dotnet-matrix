@@ -1,24 +1,25 @@
 using Serilog;
 using Serilog.Events;
+using Serilog.Formatting.Display;
 
 namespace Matrix.Logging.Benchmarks;
 
-public partial class FileAppend
+public partial class FormattedOutput
 {
-    private string _serilogPath = null!;
+    private FormattedOutputSink _serilogOutput = null!;
     private Serilog.Core.Logger _serilogRoot = null!;
     private Serilog.ILogger _serilogLogger = null!;
 
     [GlobalSetup(Target = nameof(Serilog))]
     public void SetupSerilog()
     {
-        _serilogPath = CreateFilePath(LibraryCatalog.Serilog);
+        _serilogOutput = new();
+        var sink = new SerilogFormattedOutputSink(
+            _serilogOutput,
+            new MessageTemplateTextFormatter(LoggingData.SerilogOutputTemplate));
         _serilogRoot = new LoggerConfiguration()
             .MinimumLevel.Is(LogEventLevel.Information)
-            .WriteTo.File(
-                _serilogPath,
-                buffered: true,
-                outputTemplate: LoggingData.SerilogFileTemplate)
+            .WriteTo.Sink(sink)
             .CreateLogger();
         _serilogLogger = _serilogRoot.ForContext("SourceContext", LoggingData.Category);
     }
@@ -27,10 +28,10 @@ public partial class FileAppend
     public void CleanupSerilog()
     {
         _serilogRoot.Dispose();
-        Verify(LibraryCatalog.Serilog, _serilogPath);
+        Verify(LibraryCatalog.Serilog, _serilogOutput);
     }
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.Serilog)]
-    public void Serilog() => _serilogLogger.Information(LoggingData.FileMessage);
+    public void Serilog() => _serilogLogger.Information(LoggingData.OutputMessage);
 }

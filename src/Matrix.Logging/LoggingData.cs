@@ -17,12 +17,11 @@ internal static class LoggingData
     public const string Customer = "Ada";
     public const string BufferedMessage = "Buffered event";
     public const int BufferedCapacity = 10_000;
-    public const string FileMessage = "Persisted event";
+    public const string OutputMessage = "Formatted event";
 
-    // Equivalent plain text layouts for the FileAppend feature: timestamp, padded level, logger
-    // name and message. Keeping the rendered width comparable keeps the measured write comparable.
-    public const string Log4NetFileLayout = "%date %-5level %logger - %message%newline";
-    public const string NLogFileLayout = "${longdate} ${level:uppercase=true:padding=-5} ${logger} - ${message}";
-    public const string SerilogFileTemplate =
-        "{Timestamp:yyyy-MM-dd HH:mm:ss,fff} {Level:u5} {SourceContext} - {Message}{NewLine}";
+    // Equivalent plain-text layouts for FormattedOutput: timestamp, padded level, logger and message.
+    public const string Log4NetOutputLayout = "%date %-5level %logger - %message";
+    public const string NLogOutputLayout = "${longdate} ${level:uppercase=true:padding=-5} ${logger} - ${message}";
+    public const string SerilogOutputTemplate =
+        "{Timestamp:yyyy-MM-dd HH:mm:ss,fff} {Level:u5} {SourceContext} - {Message}";
 }

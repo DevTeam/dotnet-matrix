@@ -1,25 +1,21 @@
 using NLog;
 using NLog.Config;
-using NLog.Targets;
 
 namespace Matrix.Logging.Benchmarks;
 
-public partial class FileAppend
+public partial class FormattedOutput
 {
-    private string _nlogPath = null!;
+    private FormattedOutputSink _nlogSink = null!;
     private LogFactory _nlogFactory = null!;
     private Logger _nlogLogger = null!;
 
     [GlobalSetup(Target = nameof(NLog))]
     public void SetupNLog()
     {
-        _nlogPath = CreateFilePath(LibraryCatalog.NLog);
-        var target = new FileTarget
+        _nlogSink = new();
+        var target = new NLogFormattedOutputTarget(_nlogSink)
         {
-            FileName = _nlogPath,
-            KeepFileOpen = true,
-            AutoFlush = false,
-            Layout = LoggingData.NLogFileLayout
+            Layout = LoggingData.NLogOutputLayout
         };
         var configuration = new LoggingConfiguration();
         configuration.AddRule(LogLevel.Info, LogLevel.Fatal, target, LoggingData.Category);
@@ -30,13 +26,12 @@ public partial class FileAppend
     [GlobalCleanup(Target = nameof(NLog))]
     public void CleanupNLog()
     {
-        _nlogFactory.Flush(TimeSpan.FromSeconds(5));
         _nlogFactory.Shutdown();
         _nlogFactory.Dispose();
-        Verify(LibraryCatalog.NLog, _nlogPath);
+        Verify(LibraryCatalog.NLog, _nlogSink);
     }
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.NLog)]
-    public void NLog() => _nlogLogger.Info(LoggingData.FileMessage);
+    public void NLog() => _nlogLogger.Info(LoggingData.OutputMessage);
 }

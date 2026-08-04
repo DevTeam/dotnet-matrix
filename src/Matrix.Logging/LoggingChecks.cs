@@ -58,16 +58,16 @@ internal static class LoggingChecks
         MatrixValidation.Require(library, flushed, "Buffered events did not flush in time.");
 
     [Conditional("MATRIX_VALIDATION")]
-    public static void FileAppended(string library, int lineCount, string? lastLine)
+    public static void FormattedOutput(string library, long count, string? last)
     {
         MatrixValidation.Require(
             library,
-            lineCount == 3,
-            $"Expected 3 appended lines, found {lineCount}.");
+            count == 3,
+            $"Expected 3 formatted events, found {count}.");
         MatrixValidation.Require(
             library,
-            lastLine is not null && lastLine.EndsWith(LoggingData.FileMessage, StringComparison.Ordinal),
-            $"Last appended line does not end with '{LoggingData.FileMessage}': '{lastLine}'.");
+            last is not null && last.EndsWith(LoggingData.OutputMessage, StringComparison.Ordinal),
+            $"Last output does not end with '{LoggingData.OutputMessage}': '{last}'.");
     }
 
     [Conditional("MATRIX_VALIDATION")]

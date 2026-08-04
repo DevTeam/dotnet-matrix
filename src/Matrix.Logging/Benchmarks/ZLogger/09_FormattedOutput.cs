@@ -3,25 +3,30 @@ using ZLogger;
 
 namespace Matrix.Logging.Benchmarks;
 
-public partial class FileAppend
+public partial class FormattedOutput
 {
-    private string _zloggerPath = null!;
+    private FormattedOutputSink _zloggerOutput = null!;
     private ILoggerFactory _zloggerFactory = null!;
     private ILogger _zloggerLogger = null!;
 
     [GlobalSetup(Target = nameof(ZLogger))]
     public void SetupZLogger()
     {
-        _zloggerPath = CreateFilePath(LibraryCatalog.ZLogger);
+        _zloggerOutput = new();
         _zloggerFactory = LoggerFactory.Create(builder =>
         {
             builder.ClearProviders();
             builder.SetMinimumLevel(LogLevel.Information);
-            builder.AddZLoggerFile(_zloggerPath, options => options.UsePlainTextFormatter(formatter =>
-                formatter.SetPrefixFormatter(
+            builder.AddZLoggerLogProcessor(options =>
+            {
+                options.UsePlainTextFormatter(formatter => formatter.SetPrefixFormatter(
                     $"{0:yyyy-MM-dd HH:mm:ss,fff} {1:short} {2} - ",
                     (in MessageTemplate template, in LogInfo info) =>
-                        template.Format(info.Timestamp.Local.DateTime, info.LogLevel, info.Category))));
+                        template.Format(info.Timestamp.Local.DateTime, info.LogLevel, info.Category)));
+                return new ZLoggerFormattedOutputProcessor(
+                    _zloggerOutput,
+                    options.CreateFormatter());
+            });
         });
         _zloggerLogger = _zloggerFactory.CreateLogger(LoggingData.Category);
     }
@@ -29,12 +34,11 @@ public partial class FileAppend
     [GlobalCleanup(Target = nameof(ZLogger))]
     public void CleanupZLogger()
     {
-        // Disposing the factory drains the background queue and closes the file.
         _zloggerFactory.Dispose();
-        Verify(LibraryCatalog.ZLogger, _zloggerPath);
+        Verify(LibraryCatalog.ZLogger, _zloggerOutput);
     }
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.ZLogger)]
-    public void ZLogger() => _zloggerLogger.LogInformation(LoggingData.FileMessage);
+    public void ZLogger() => _zloggerLogger.ZLogInformation($"Formatted event");
 }
