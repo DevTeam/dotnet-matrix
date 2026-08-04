@@ -93,9 +93,22 @@
                 <span class="overview-chart-points @(row.Rated ? null : "is-reference")"
                       title="@PointsTitle(overview, row)">
                     @* The heading is gone once the row stacks on a phone. *@
-                    <span class="rating-label">Points</span>@(row.Rated
-                                                              ? Scoring.Format(row.Points)
-                                                              : "—")
+                    <span class="rating-label">Points</span>
+                    @if (row.Rated)
+                    {
+                        @* As in the standings: the tooltip serves a pointer, the button
+                           serves everyone else. *@
+                        <button class="library-open"
+                                type="button"
+                                aria-label="@BreakdownLabel(overview, row)"
+                                @onclick="() => OnOpenLibrary.InvokeAsync(row.LibraryId)">
+                            @Scoring.Format(row.Points)
+                        </button>
+                    }
+                    else
+                    {
+                        <text>—</text>
+                    }
                 </span>
             </div>
         }
@@ -182,6 +195,15 @@
     private string? _revealed;
 
     private void Reveal(string libraryId) => _revealed = libraryId;
+
+    /// <summary>
+    /// Says the number and where the arithmetic behind it is, because the cell around
+    /// it can only say the number.
+    /// </summary>
+    private string BreakdownLabel(MatrixOverview overview, MatrixOverviewRow row) =>
+        $"{row.Name}: {Scoring.Format(row.Points)} of {overview.Maximum} points"
+        + $" in the {Group.Name} overview."
+        + " Open the overview for the points of every scenario";
 
     /// <summary>
     /// The measurements this row was summed from, over the scenarios of this group

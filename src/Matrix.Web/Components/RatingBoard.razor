@@ -73,8 +73,18 @@
                         <td class="rating-column-score" title="@Hint(item, true)">
                             <span class="rating-label">Memory</span>@Scoring.Format(item.MemoryPoints)
                         </td>
+                        @* The tooltip is a shortcut for a pointer, not the only way to
+                           the arithmetic: the total opens the library overview, where
+                           the same breakdown is a table — reachable from the keyboard
+                           and readable by a screen reader. *@
                         <td class="rating-column-total" title="@Hint(item, null)">
-                            <span class="rating-label">Points</span>@Scoring.Format(item.Points)
+                            @* Adjacent, because the label spaces itself: a newline here
+                               would put a second space between the two on a phone. *@
+                            <span class="rating-label">Points</span><button
+                                class="library-open"
+                                type="button"
+                                aria-label="@BreakdownLabel(item)"
+                                @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">@Scoring.Format(item.Points)</button>
                         </td>
                     </tr>
                 }
@@ -117,6 +127,14 @@
     /// before the browser asks for the attribute.
     /// </summary>
     private void Reveal(string libraryId) => _revealed = libraryId;
+
+    /// <summary>
+    /// Says the number and where the arithmetic behind it is, because the cell around
+    /// it can only say the number.
+    /// </summary>
+    private string BreakdownLabel(MatrixMedals item) =>
+        $"{item.Name}: {Scoring.Format(item.Points)} of {item.Maximum} points."
+        + " Open the overview for the points of every scenario";
 
     private string? Hint(MatrixMedals item, bool? metric) =>
         Report.Benchmarks is { } benchmarks
