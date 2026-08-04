@@ -47,7 +47,11 @@
             var row = overview.Rows[index];
             var place = index + 1;
             var mark = Mark(row);
-            <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)">
+            @* The breakdown of the points is built when the pointer reaches the row
+               rather than for every row in advance: see Reveal below. Bound to the
+               row, so moving along one costs nothing. *@
+            <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)"
+                 @onmouseenter="() => Reveal(row.LibraryId)">
                 <div class="overview-chart-label">
                     @* A library outside the rating holds no place in it. *@
                     <span class="overview-chart-rank">@(row.Rated ? place.ToString() : "")</span>
@@ -171,13 +175,31 @@
     }
 
     /// <summary>
-    /// The measurements this row was summed from, over the scenarios of this group
-    /// only — the same breakdown the standings give for the whole category.
+    /// Which row's breakdown has been asked for, if any. A chart draws one per row
+    /// and a report draws a chart per group, so building them all in advance cost
+    /// more than everything else on the page put together.
     /// </summary>
-    private string PointsTitle(MatrixOverview overview, MatrixOverviewRow row) =>
-        row.Rated
+    private string? _revealed;
+
+    private void Reveal(string libraryId) => _revealed = libraryId;
+
+    /// <summary>
+    /// The measurements this row was summed from, over the scenarios of this group
+    /// only — the same breakdown the standings give for the whole category. Built
+    /// only for the row the pointer is on; the note for a reference row is a
+    /// constant and is always there.
+    /// </summary>
+    private string? PointsTitle(MatrixOverview overview, MatrixOverviewRow row)
+    {
+        if (!row.Rated)
+        {
+            return "Outside the rating: shown as a reference only";
+        }
+
+        return row.LibraryId.Equals(_revealed, StringComparison.OrdinalIgnoreCase)
             ? Scoring.Hint(Report, overview.Features, SelectedLibraries, row.LibraryId, null)
-            : "Outside the rating: shown as a reference only";
+            : null;
+    }
 
     private string PlaceTitle(string place) =>
         $"{Report.Category.Name} · {place} ({place switch

@@ -36,7 +36,10 @@
                 {
                     var item = Medals[index];
                     var place = index + 1;
-                    <tr style="--points: @Share(item)">
+                    @* Bound to the row rather than to the three cells that carry a
+                       breakdown, so moving along a row costs no render. *@
+                    <tr style="--points: @Share(item)"
+                        @onmouseenter="() => Reveal(item.LibraryId)">
                         <td class="rating-column-place">@place</td>
                         <td class="rating-column-name">
                             <span class="rating-name">
@@ -61,7 +64,9 @@
                             <span class="rating-label">Scenarios</span>@item.Covered/@item.Scenarios
                         </td>
                         @* Every points cell carries the measurements it was summed
-                           from, so the number can be checked without leaving the row. *@
+                           from, so the number can be checked without leaving the row.
+                           The text is built when the pointer reaches the row rather
+                           than for every row in advance: see Reveal below. *@
                         <td class="rating-column-score" title="@Hint(item, false)">
                             <span class="rating-label">Time</span>@Scoring.Format(item.TimePoints)
                         </td>
@@ -95,15 +100,34 @@
     [Parameter]
     public EventCallback<string> OnHelp { get; set; }
 
-    private string Hint(MatrixMedals item, bool? metric) =>
+    /// <summary>
+    /// Which row's breakdown has been asked for, if any. Not part of the comparison
+    /// and not worth a parameter: it lives and dies with the pointer.
+    /// </summary>
+    private string? _revealed;
+
+    /// <summary>
+    /// A breakdown is one line of arithmetic per scenario per metric, and the
+    /// standings hold three of them for every library — twenty-three rows of the
+    /// Dependency Injection category came to a hundred and thirty-eight breakdowns
+    /// built on every render, of which a visitor reads at most one. Building the
+    /// text when the pointer arrives instead took a filter change on that category
+    /// from some 900 ms to 250 ms. The native tooltip appears about half a second
+    /// after the pointer settles, so the row it belongs to is re-rendered long
+    /// before the browser asks for the attribute.
+    /// </summary>
+    private void Reveal(string libraryId) => _revealed = libraryId;
+
+    private string? Hint(MatrixMedals item, bool? metric) =>
         Report.Benchmarks is { } benchmarks
+        && item.LibraryId.Equals(_revealed, StringComparison.OrdinalIgnoreCase)
             ? Scoring.Hint(
                 Report,
                 benchmarks.Features,
                 SelectedLibraries,
                 item.LibraryId,
                 metric)
-            : string.Empty;
+            : null;
 
     /// <summary>
     /// The share of the maximum this row holds, as the width of its fill.
