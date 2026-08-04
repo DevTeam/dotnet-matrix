@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -11,6 +12,4 @@ namespace Matrix.Logging.Benchmarks;
     5,
     "Scope Or Context",
     "Creates a temporary RequestId context and captures it on one event.")]
-public partial class ScopeOrContext
-{
-}
+public partial class ScopeOrContext;

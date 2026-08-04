@@ -17,9 +17,6 @@ internal interface IMatrixScoring
     /// <summary>What the best result of one scenario on one metric is worth.</summary>
     int MaximumPoints { get; }
 
-    /// <summary>The most a library can earn over that many scenarios.</summary>
-    int Maximum(int scenarios);
-
     /// <summary>Whole points above ten, because a table reads a score against its maximum.</summary>
     string Format(double points);
 
@@ -41,20 +38,6 @@ internal interface IMatrixScoring
 
     MatrixMedals? Standing(IReadOnlyList<MatrixMedals> rating, string libraryId);
 
-    /// <summary>The rating of one library scenario by scenario, both metrics.</summary>
-    IReadOnlyList<MatrixScoreDetail> Explain(
-        CategoryReport report,
-        IReadOnlyList<BenchmarkReportEntry> features,
-        IReadOnlySet<string> selectedLibraries,
-        string libraryId);
-
-    /// <summary>
-    /// The same breakdown as lines of text, for the tooltip of the number itself.
-    /// A total is only trustworthy if the reader can take it apart, and restating
-    /// the formula does not let them: what they need is the two figures behind each
-    /// term.
-    /// </summary>
-    /// <param name="metric">False for time, true for memory, null for both.</param>
     string Hint(
         CategoryReport report,
         IReadOnlyList<BenchmarkReportEntry> features,

@@ -12,7 +12,7 @@ internal sealed class LibraryTarget(
         MatrixLibrary library,
         CancellationToken cancellationToken)
     {
-        Host.Info($"Updating {module.Metadata.Name}: {library.Name} {library.Version}");
+        Info($"Updating {module.Metadata.Name}: {library.Name} {library.Version}");
         foreach (var mode in new[] { MatrixMode.Validation, MatrixMode.Benchmark })
         {
             var result = await matrixTarget.RunAsync(

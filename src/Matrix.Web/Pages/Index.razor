@@ -33,22 +33,23 @@
                         </option>
                     }
                 </select>
-                @if (SelectedVersion is { Released: true, Commit.Length: > 0 })
+                @switch (SelectedVersion)
                 {
-                    <a class="commit-link"
-                       href="@CommitUrl(SelectedVersion)"
-                       target="_blank"
-                       rel="noreferrer"
-                       title="Open commit on GitHub">
-                        @ShortCommit(SelectedVersion.Commit) ↗
-                    </a>
-                }
-                else if (SelectedVersion is { Released: false, Commit.Length: > 0 })
-                {
-                    <span class="release-chip"
-                          title="Reports are read from the branch and change with every merge">
-                        unreleased
-                    </span>
+                    case { Released: true, Commit.Length: > 0 }:
+                        <a class="commit-link"
+                           href="@CommitUrl(SelectedVersion)"
+                           target="_blank"
+                           rel="noreferrer"
+                           title="Open commit on GitHub">
+                            @ShortCommit(SelectedVersion.Commit) ↗
+                        </a>
+                        break;
+                    case { Released: false, Commit.Length: > 0 }:
+                        <span class="release-chip"
+                              title="Reports are read from the branch and change with every merge">
+                            unreleased
+                        </span>
+                        break;
                 }
             </div>
         }
@@ -302,6 +303,7 @@
                     @if (SelectedLibraryCount == 0 && _view != "environment" && _view != "evidence")
                     {
                         <EmptyState Title="No libraries selected"
+                                    @* ReSharper disable once UseCollectionExpression *@
                                     Text="Pick at least one library in the filter panel to compare."/>
                     }
                     else
@@ -733,13 +735,7 @@
 
         ApplyComparedLibraries();
 
-        if (string.IsNullOrWhiteSpace(Library))
-        {
-            _openLibraryId = null;
-            return;
-        }
-
-        if (FindLibrary(Library) is not { } found)
+        if (string.IsNullOrWhiteSpace(Library) || FindLibrary(Library) is not { } found)
         {
             _openLibraryId = null;
             return;
@@ -770,19 +766,6 @@
         RememberComparedLibraries();
     }
 
-    private void SelectAllLibraries()
-    {
-        foreach (var report in VisibleReports)
-        {
-            foreach (var library in Libraries(report))
-            {
-                _selectedLibraries.Add(LibraryKey(report.Category.Id, library.Id));
-            }
-        }
-
-        RememberComparedLibraries();
-    }
-
     /// <summary>
     /// Reads <c>?libraries=</c> into the selection of the category on screen. Names,
     /// ids and package names all match, and an unknown name is simply not selected:
@@ -799,7 +782,7 @@
         }
 
         if (_selectedCategoryId is not { } categoryId
-            || _reports.FirstOrDefault(report => report.Category.Id.Equals(
+            || _reports.FirstOrDefault(rep => rep.Category.Id.Equals(
                 categoryId,
                 StringComparison.OrdinalIgnoreCase)) is not { } report)
         {
@@ -895,7 +878,7 @@
         get
         {
             if (_selectedCategoryId is not { } categoryId
-                || _reports.FirstOrDefault(report => report.Category.Id.Equals(
+                || _reports.FirstOrDefault(rep => rep.Category.Id.Equals(
                     categoryId,
                     StringComparison.OrdinalIgnoreCase)) is not { } report)
             {

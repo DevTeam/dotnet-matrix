@@ -1,6 +1,6 @@
 // ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
-
+// ReSharper disable UnusedMember.Global
 namespace Matrix.DependencyInjection.Benchmarks;
 
 public partial class PrepareAndRegister

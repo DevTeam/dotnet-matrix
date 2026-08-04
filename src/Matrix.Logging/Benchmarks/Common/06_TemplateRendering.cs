@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -11,6 +12,4 @@ namespace Matrix.Logging.Benchmarks;
     6,
     "Template Rendering",
     "Formats amount 12.5 and customer Ada through the logger template API.")]
-public partial class TemplateRendering
-{
-}
+public partial class TemplateRendering;

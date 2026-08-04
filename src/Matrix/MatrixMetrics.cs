@@ -14,7 +14,7 @@ public static class MatrixMetrics
     /// bars through the same value so that the lower bound of <see cref="Scale"/>
     /// lands on the same fraction of the track.
     /// </summary>
-    public const double BarWidth = 330;
+    private const double BarWidth = 330;
 
     public static double Total(IReadOnlyList<double?> values) =>
         values.Sum(value => value ?? 0);

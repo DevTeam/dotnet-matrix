@@ -34,7 +34,7 @@ internal sealed class PrepareCommitTarget(
         }
         else
         {
-            Host.Info("Using the reports already present in 'reports'.");
+            Info("Using the reports already present in 'reports'.");
         }
 
         var result = runConfigurationsTarget.Run(modules);
@@ -52,7 +52,7 @@ internal sealed class PrepareCommitTarget(
         result = await readmeTarget.RunAsync(modules, cancellationToken);
         if (result == 0)
         {
-            Host.Info("Source-controlled report artifacts are ready.");
+            Info("Source-controlled report artifacts are ready.");
         }
 
         return result;

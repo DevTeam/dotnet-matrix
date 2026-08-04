@@ -1,4 +1,5 @@
 // ReSharper disable NotAccessedPositionalProperty.Global
+// ReSharper disable UseCollectionExpression
 namespace Matrix;
 
 /// <summary>

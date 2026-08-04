@@ -1,3 +1,4 @@
+// ReSharper disable NotAccessedPositionalProperty.Global
 namespace Matrix;
 
 public sealed record MatrixFeatureMetadata(

@@ -31,7 +31,7 @@ internal sealed class Log4NetCaptureAppender : AppenderSkeleton
 #if MATRIX_VALIDATION
     private static void AddProperty(
         LoggingEvent loggingEvent,
-        IDictionary<string, object?> properties,
+        Dictionary<string, object?> properties,
         string name)
     {
         var value = loggingEvent.LookupProperty(name);

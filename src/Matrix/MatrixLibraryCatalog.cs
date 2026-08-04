@@ -3,7 +3,7 @@ namespace Matrix;
 
 public sealed class MatrixLibraryCatalog(MatrixModule module) : IMatrixLibraryCatalog
 {
-    public IReadOnlyList<MatrixLibrary> All => module.Libraries;
+    private IReadOnlyList<MatrixLibrary> All => module.Libraries;
 
     public IReadOnlyList<MatrixLibrary> Filter(IEnumerable<string> filters)
     {

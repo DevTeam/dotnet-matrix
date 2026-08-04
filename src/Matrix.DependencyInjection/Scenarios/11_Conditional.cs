@@ -1,5 +1,6 @@
 ﻿using System.Composition;
 using Export = System.Composition.ExportAttribute;
+// ReSharper disable UnusedMemberInSuper.Global
 
 namespace Matrix.DependencyInjection.Scenarios;
 

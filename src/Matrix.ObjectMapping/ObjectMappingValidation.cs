@@ -57,24 +57,27 @@ internal static class ObjectMappingValidation
             library,
             destination.Customer.Address.PostalCode == source.Customer.Address.PostalCode,
             "Nested address PostalCode differs.");
-        if (previous is not null)
+
+        if (previous is null)
         {
-            MatrixValidation.Different(
-                library,
-                destination,
-                previous,
-                "Nested mapping reused the order destination.");
-            MatrixValidation.Different(
-                library,
-                destination.Customer,
-                previous.Customer,
-                "Nested mapping reused the customer destination.");
-            MatrixValidation.Different(
-                library,
-                destination.Customer.Address,
-                previous.Customer.Address,
-                "Nested mapping reused the address destination.");
+            return;
         }
+
+        MatrixValidation.Different(
+            library,
+            destination,
+            previous,
+            "Nested mapping reused the order destination.");
+        MatrixValidation.Different(
+            library,
+            destination.Customer,
+            previous.Customer,
+            "Nested mapping reused the customer destination.");
+        MatrixValidation.Different(
+            library,
+            destination.Customer.Address,
+            previous.Customer.Address,
+            "Nested mapping reused the address destination.");
     }
 
     public static void Collection(
@@ -222,21 +225,24 @@ internal static class ObjectMappingValidation
             library,
             destination[2] is CatDestination { Name: "Mochi", Lives: 7 },
             "Third polymorphic result is invalid.");
-        if (previous is not null)
+
+        if (previous is null)
+        {
+            return;
+        }
+
+        MatrixValidation.Different(
+            library,
+            destination,
+            previous,
+            "Polymorphic mapping reused the destination array.");
+        for (var index = 0; index < destination.Length; index++)
         {
             MatrixValidation.Different(
                 library,
-                destination,
-                previous,
-                "Polymorphic mapping reused the destination array.");
-            for (var index = 0; index < destination.Length; index++)
-            {
-                MatrixValidation.Different(
-                    library,
-                    destination[index],
-                    previous[index],
-                    $"Polymorphic element {index} was reused.");
-            }
+                destination[index],
+                previous[index],
+                $"Polymorphic element {index} was reused.");
         }
     }
 }

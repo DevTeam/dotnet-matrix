@@ -3,7 +3,7 @@
 // ReSharper disable ArrangeTypeMemberModifiers
 namespace Matrix.DependencyInjection;
 
-class DefaultComposition
+internal class DefaultComposition
 {
     static void Setup() =>
         DI.Setup("Default", CompositionKind.Global)

@@ -1,5 +1,4 @@
-using TinyCsvParser.Models;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class CustomConversion
@@ -9,8 +8,8 @@ public partial class CustomConversion
     public ProductCode[] TinyCsvParser()
     {
         var codes = new List<ProductCode>(2);
-        foreach (CsvMappingResult<ProductCodeRow> row in
-                 TinyCsvParserConfiguration.ProductCodes.ReadFromString(_csv))
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        foreach (var row in TinyCsvParserConfiguration.ProductCodes.ReadFromString(_csv))
         {
             codes.Add(row.Result.Code);
         }

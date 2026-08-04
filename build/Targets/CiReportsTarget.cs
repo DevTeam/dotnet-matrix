@@ -1,5 +1,6 @@
 using Matrix;
 using System.Text;
+// ReSharper disable UseCollectionExpression
 
 namespace Build.Targets;
 

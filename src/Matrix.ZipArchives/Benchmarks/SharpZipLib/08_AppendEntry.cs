@@ -1,5 +1,6 @@
 using ICSharpCode.SharpZipLib.Zip;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.ZipArchives.Benchmarks;
 
 public partial class AppendEntry
@@ -11,8 +12,9 @@ public partial class AppendEntry
         using var destination = new MemoryStream(_archive.Length + ZipData.AppendedContent.Length + 512);
         destination.Write(_archive);
         destination.Position = 0;
-        using (var archive = new ZipFile(destination) { IsStreamOwner = false })
+        using (var archive = new ZipFile(destination))
         {
+            archive.IsStreamOwner = false;
             archive.BeginUpdate(new MemoryArchiveStorage(FileUpdateMode.Direct));
             archive.Add(
                 new ByteArrayDataSource(ZipData.AppendedContent),

@@ -60,9 +60,10 @@ internal sealed class MicrosoftCaptureLoggerProvider :
 #if MATRIX_VALIDATION
     private static void AddProperties<TState>(
         TState state,
-        IDictionary<string, object?> properties,
+        Dictionary<string, object?> properties,
         ref string? template)
     {
+        // ReSharper disable once HeapView.PossibleBoxingAllocation
         if (state is not IEnumerable<KeyValuePair<string, object?>> values)
         {
             return;

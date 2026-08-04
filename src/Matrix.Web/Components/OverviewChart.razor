@@ -2,7 +2,7 @@
 @inject IMatrixScoring Scoring
 @inject IMatrixPalette Palette
 
-@if (_overview is { } overview && overview.Rows.Count > 0)
+@if (_overview is { Rows.Count: > 0 } overview)
 {
     var featureNames = overview.Features
         .Select(feature => View.FeatureDescription(Report, feature.Id) is { } text
@@ -66,7 +66,7 @@
                         @* Shown on every row, as in the standings: it is what
                            explains a low score. *@
                         <small class="@(row.MissingFeatures.Count > 0 ? "is-partial" : null)"
-                               title="@CoverageTitle(overview, row)">
+                               title="@CoverageTitle(row)">
                             @Coverage(overview, row)
                         </small>
                     </div>
@@ -112,7 +112,6 @@
 
 @code {
     private MatrixOverview? _overview;
-    private HashSet<string> _medalled = new(StringComparer.OrdinalIgnoreCase);
     private Dictionary<string, string> _places = new(StringComparer.OrdinalIgnoreCase);
 
     [Parameter, EditorRequired]
@@ -144,7 +143,6 @@
                 .Select((row, index) => (row.LibraryId, Place: PlaceName(index)))
                 .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
             ?? [];
-        _medalled = [.._places.Keys];
     }
 
     private static string PlaceName(int index) => index switch
@@ -192,7 +190,7 @@
     private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
         $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}";
 
-    private static string CoverageTitle(MatrixOverview overview, MatrixOverviewRow row) =>
+    private static string CoverageTitle(MatrixOverviewRow row) =>
         row.MissingFeatures.Count == 0
             ? "Completed every scenario of this group"
             : $"Missing: {string.Join(", ", row.MissingFeatures)}."

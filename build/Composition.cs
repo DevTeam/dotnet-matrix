@@ -2,6 +2,8 @@ using Build.Targets;
 using Matrix;
 using Pure.DI;
 using System.Diagnostics;
+using HostApi;
+
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
@@ -17,24 +19,8 @@ internal partial class Composition
             .Root<BuildApplication>(nameof(Root))
             .Arg<string[]>("args")
             .Arg<CancellationToken>("cancellationToken")
-            .Bind<IBuildPaths>().As(Lifetime.Singleton).To<BuildPaths>()
-            .Bind<IMatrixModuleDiscovery>().As(Lifetime.Singleton).To<MatrixModuleDiscovery>()
-            .Bind<ITemplateEngine>().As(Lifetime.Singleton).To<RazorTemplateEngine>()
-            .Bind<IMatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
-            .Bind<IQuietProcessRunner>().As(Lifetime.Singleton).To<QuietProcessRunner>()
-            .Bind<IMatrixTarget>().As(Lifetime.Singleton).To<MatrixTarget>()
-            .Bind<IMetadataTarget>().As(Lifetime.Singleton).To<MetadataTarget>()
-            .Bind<ILibraryTarget>().As(Lifetime.Singleton).To<LibraryTarget>()
-            .Bind<IReportChartsTarget>().As(Lifetime.Singleton).To<ReportChartsTarget>()
-            .Bind<IReadmeTarget>().As(Lifetime.Singleton).To<ReadmeTarget>()
-            .Bind<IPrepareCommitTarget>().As(Lifetime.Singleton).To<PrepareCommitTarget>()
-            .Bind<ICiMatrixTarget>().As(Lifetime.Singleton).To<CiMatrixTarget>()
-            .Bind<ICiReportsTarget>().As(Lifetime.Singleton).To<CiReportsTarget>()
-            .Bind<IImportReportsTarget>().As(Lifetime.Singleton).To<ImportReportsTarget>()
-            .Bind<IWebManifestTarget>().As(Lifetime.Singleton).To<WebManifestTarget>()
-            .Bind<IWebTarget>().As(Lifetime.Singleton).To<WebTarget>()
-            .Bind<ILocalWebTarget>().As(Lifetime.Singleton).To<LocalWebTarget>()
-            .Bind<IReproduceTarget>().As(Lifetime.Singleton).To<ReproduceTarget>()
-            .Bind<IRunConfigurationsTarget>().As(Lifetime.Singleton)
-                .To<RunConfigurationsTarget>();
+            .Bind().To(_ => GetService<ICommandLineRunner>())
+            .Singleton<BuildPaths, MatrixModuleDiscovery, RazorTemplateEngine, MatrixReportStore, QuietProcessRunner, MatrixTarget, MetadataTarget,
+                LibraryTarget, ReportChartsTarget, ReadmeTarget, PrepareCommitTarget, CiMatrixTarget, CiReportsTarget, ImportReportsTarget, WebManifestTarget,
+                WebTarget, LocalWebTarget, ReproduceTarget, RunConfigurationsTarget>();
 }

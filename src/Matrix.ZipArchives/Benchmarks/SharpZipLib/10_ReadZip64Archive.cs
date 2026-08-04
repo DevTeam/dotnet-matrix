@@ -1,5 +1,6 @@
 using ICSharpCode.SharpZipLib.Zip;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.ZipArchives.Benchmarks;
 
 public partial class ReadZip64Archive

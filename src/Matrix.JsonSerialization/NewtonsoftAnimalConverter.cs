@@ -5,7 +5,7 @@ namespace Matrix.JsonSerialization;
 
 internal sealed class NewtonsoftAnimalConverter : JsonConverter<AnimalModel>
 {
-    public override AnimalModel? ReadJson(
+    public override AnimalModel ReadJson(
         JsonReader reader,
         Type objectType,
         AnimalModel? existingValue,

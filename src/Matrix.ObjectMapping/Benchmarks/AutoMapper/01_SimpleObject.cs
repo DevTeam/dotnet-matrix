@@ -1,5 +1,5 @@
 using AutoMapper;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.ObjectMapping.Benchmarks;
 
 public partial class SimpleObject

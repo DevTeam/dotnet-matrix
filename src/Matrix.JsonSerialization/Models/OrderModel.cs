@@ -2,7 +2,7 @@ namespace Matrix.JsonSerialization.Models;
 
 public sealed class OrderModel
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public CustomerModel Customer { get; set; } = new();
+    public CustomerModel Customer { get; init; } = new();
 }

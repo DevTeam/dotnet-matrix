@@ -5,7 +5,7 @@ namespace Matrix.Logging;
 internal sealed class MicrosoftCaptureLogger(MicrosoftCaptureLoggerProvider provider) :
     ILogger
 {
-    public IDisposable? BeginScope<TState>(TState state)
+    public IDisposable BeginScope<TState>(TState state)
         where TState : notnull =>
         provider.ScopeProvider.Push(state);
 

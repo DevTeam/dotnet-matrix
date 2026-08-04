@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Validation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 public partial class NestedObject
@@ -16,7 +16,7 @@ public partial class NestedObject
             ValidationContext = new ValidationContext(_input),
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
-        _microsoftNestedObject.ValidateAsync(_input, context, default)
+        _microsoftNestedObject.ValidateAsync(_input, context, CancellationToken.None)
             .GetAwaiter()
             .GetResult();
         var errors = context.ValidationErrors;

@@ -176,23 +176,22 @@ public sealed class MatrixFeatureValidationRunner(
     private static void Invoke(MethodInfo method, object instance)
     {
         var result = method.Invoke(instance, null);
-        if (result is Task task)
+        switch (result)
         {
-            task.GetAwaiter().GetResult();
-            return;
-        }
-
-        if (result is ValueTask valueTask)
-        {
-            valueTask.GetAwaiter().GetResult();
-            return;
+            case Task task:
+                task.GetAwaiter().GetResult();
+                return;
+            case ValueTask valueTask:
+                valueTask.GetAwaiter().GetResult();
+                return;
         }
 
         var returnType = method.ReturnType;
+        // ReSharper disable once InvertIf
         if (returnType.IsGenericType
             && returnType.GetGenericTypeDefinition() == typeof(ValueTask<>))
         {
-            var asTask = returnType.GetMethod(nameof(ValueTask<int>.AsTask))
+            var asTask = returnType.GetMethod(nameof(ValueTask<>.AsTask))
                          ?? throw new InvalidOperationException(
                              $"Cannot await {returnType.FullName} returned by {method.Name}.");
             ((Task)asTask.Invoke(result, null)!).GetAwaiter().GetResult();

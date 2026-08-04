@@ -1,12 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Matrix.JsonSerialization.Models;
 
+[SuppressMessage("Usage", "CA2231:Overload operator equals on overriding value type Equals")]
 public readonly struct Identifier(string value) : IEquatable<Identifier>
 {
     public string Value { get; } = value;
-
-    public static Identifier Parse(string value) => new(value);
-
-    public static Identifier ParseJson(string value) => new(value);
 
     public bool Equals(Identifier other) =>
         string.Equals(Value, other.Value, StringComparison.Ordinal);

@@ -8,15 +8,13 @@ using HostCommandLine = HostApi.CommandLine;
 namespace Build.Targets;
 
 internal sealed partial class WebTarget(
+    ICommandLineRunner commandLineRunner,
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
     IWebManifestTarget webManifestTarget,
     IQuietProcessRunner processRunner) : IWebTarget
 {
-    private readonly ICommandLineRunner commandLineRunner =
-        Host.GetService<ICommandLineRunner>();
-
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web)
     {
         WriteIndented = true
@@ -46,7 +44,7 @@ internal sealed partial class WebTarget(
 
         var repository = await ReadRepositoryAsync(cancellationToken);
         var versions = await ReadVersionsAsync(cancellationToken);
-        Host.Info($"Releases baked into the catalog: {versions.Count}");
+        Info($"Releases baked into the catalog: {versions.Count}");
         var catalog = new MatrixWebCatalog(
             1,
             repository,
@@ -90,7 +88,7 @@ internal sealed partial class WebTarget(
             [],
             "production Web application");
 
-        Host.Info($"Building .NET Matrix for {repository.Owner}/{repository.Name}");
+        Info($"Building .NET Matrix for {repository.Owner}/{repository.Name}");
         var result = await processRunner.RunAsync(
             commandLine,
             "production Web application",
@@ -104,7 +102,7 @@ internal sealed partial class WebTarget(
         await File.WriteAllTextAsync(Path.Combine(wwwRoot, ".nojekyll"), string.Empty, cancellationToken);
         await WriteNotFoundAsync(wwwRoot, cancellationToken);
         CopyCustomDomain(wwwRoot);
-        Host.Info($"Web application: {wwwRoot}");
+        Info($"Web application: {wwwRoot}");
         return 0;
     }
 
@@ -154,7 +152,7 @@ internal sealed partial class WebTarget(
         }
 
         File.Copy(source, Path.Combine(wwwRoot, "CNAME"), true);
-        Host.Info($"Custom domain: {File.ReadAllText(source).Trim()}");
+        Info($"Custom domain: {File.ReadAllText(source).Trim()}");
     }
 
     /// <summary>
@@ -208,9 +206,10 @@ internal sealed partial class WebTarget(
         var head = await ReadCommitAsync(branch, cancellationToken);
         var tagged = head is not null && releases.Any(release =>
             release.Commit.Equals(head, StringComparison.OrdinalIgnoreCase));
+        // ReSharper disable once InvertIf
         if (tagged)
         {
-            Host.Info($"Branch {branch} is at a released commit, omitting it from the list");
+            Info($"Branch {branch} is at a released commit, omitting it from the list");
             return releases;
         }
 

@@ -6,7 +6,4 @@ namespace Matrix;
 /// group. Both go through <see cref="MatrixScores"/>, so the two ratings cannot
 /// drift apart in method.
 /// </summary>
-public sealed record MatrixScore(double Time, double Memory, int Covered)
-{
-    public double Points => Time + Memory;
-}
+public sealed record MatrixScore(double Time, double Memory, int Covered);

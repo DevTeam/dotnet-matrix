@@ -1,5 +1,5 @@
 using ServiceStack.Text;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.JsonSerialization.Benchmarks;
 
 public partial class EnumRoundTrip

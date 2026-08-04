@@ -1,12 +1,13 @@
 using System.IO.Compression;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
+// ReSharper disable UseCollectionExpression
 
 namespace Matrix.ZipArchives;
 
 internal static class ZipData
 {
-    public const int ManySmallCount = 1_000;
+    private const int ManySmallCount = 1_000;
     public const int Zip64Count = 65_536;
     public const string TargetEntryName = "files/0999.bin";
     public const string LargeEntryName = "large.bin";
@@ -21,7 +22,7 @@ internal static class ZipData
     private static readonly Lazy<byte[]> LargeDeflatedContentValue = new(() =>
         CreateText(4 * 1024 * 1024));
     private static readonly Lazy<byte[]> AppendedContentValue = new(() =>
-        Encoding.UTF8.GetBytes("Added by .NET Matrix\n"));
+        "Added by .NET Matrix\n"u8.ToArray());
     private static readonly Lazy<byte[]> EncryptedContentValue = new(() => CreateText(64 * 1024));
     private static readonly Lazy<byte[]> ManySmallArchiveValue = new(() =>
         CreateArchive(ManySmallEntries, CompressionLevel.Optimal));
@@ -54,13 +55,13 @@ internal static class ZipData
 
     public static ZipEntryData[] MixedEntries => MixedEntriesValue.Value;
 
-    public static byte[] LargeStoredContent => LargeStoredContentValue.Value;
+    private static byte[] LargeStoredContent => LargeStoredContentValue.Value;
 
-    public static byte[] LargeDeflatedContent => LargeDeflatedContentValue.Value;
+    private static byte[] LargeDeflatedContent => LargeDeflatedContentValue.Value;
 
     public static byte[] AppendedContent => AppendedContentValue.Value;
 
-    public static byte[] EncryptedContent => EncryptedContentValue.Value;
+    private static byte[] EncryptedContent => EncryptedContentValue.Value;
 
     public static byte[] ManySmallArchive => ManySmallArchiveValue.Value;
 
@@ -94,8 +95,8 @@ internal static class ZipData
     private static ZipEntryData[] CreateMixedEntries() =>
     [
         new("empty.txt", []),
-        new("docs/readme.txt", Encoding.UTF8.GetBytes("ZIP Archives Matrix\n")),
-        new("nested/данные.json", Encoding.UTF8.GetBytes("{\"name\":\"Матрица\",\"ok\":true}\n")),
+        new("docs/readme.txt", "ZIP Archives Matrix\n"u8.ToArray()),
+        new("nested/данные.json", "{\"name\":\"Матрица\",\"ok\":true}\n"u8.ToArray()),
         new("binary/random.bin", CreateBinary(64 * 1024, 73)),
         new("text/lorem.txt", CreateText(128 * 1024))
     ];
@@ -109,8 +110,7 @@ internal static class ZipData
 
     private static byte[] CreateText(int length)
     {
-        var pattern = Encoding.UTF8.GetBytes(
-            "The quick brown fox jumps over the lazy dog. 0123456789\n");
+        var pattern = "The quick brown fox jumps over the lazy dog. 0123456789\n"u8.ToArray();
         var result = new byte[length];
         for (var offset = 0; offset < result.Length; offset += pattern.Length)
         {
@@ -126,7 +126,7 @@ internal static class ZipData
         CompressionLevel compressionLevel)
     {
         using var destination = new MemoryStream();
-        using (var archive = new System.IO.Compression.ZipArchive(
+        using (var archive = new ZipArchive(
                    destination,
                    ZipArchiveMode.Create,
                    true,
@@ -146,7 +146,7 @@ internal static class ZipData
     private static byte[] CreateZip64Archive()
     {
         using var destination = new MemoryStream();
-        using (var archive = new System.IO.Compression.ZipArchive(
+        using (var archive = new ZipArchive(
                    destination,
                    ZipArchiveMode.Create,
                    true,
@@ -164,8 +164,10 @@ internal static class ZipData
     private static byte[] CreateAesArchive()
     {
         using var destination = new MemoryStream();
-        using (var zip = new ZipOutputStream(destination) { IsStreamOwner = false, Password = Password })
+        using (var zip = new ZipOutputStream(destination))
         {
+            zip.IsStreamOwner = false;
+            zip.Password = Password;
             zip.SetLevel(6);
             var entry = new ZipEntry(EncryptedEntryName)
             {

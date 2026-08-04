@@ -1,3 +1,4 @@
+// ReSharper disable UseCollectionExpression
 namespace Matrix;
 
 public static class BenchmarkEnvironmentComparer

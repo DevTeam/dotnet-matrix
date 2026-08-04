@@ -1,3 +1,4 @@
+// ReSharper disable FunctionRecursiveOnAllPaths
 namespace Matrix.ZipArchives.Infrastructure;
 
 internal sealed class DigestWriteStream : Stream
@@ -5,7 +6,6 @@ internal sealed class DigestWriteStream : Stream
     private const uint Offset = 2_166_136_261;
     private const uint Prime = 16_777_619;
 
-    private uint _hash = Offset;
     private long _length;
 
     public override bool CanRead => false;
@@ -14,6 +14,7 @@ internal sealed class DigestWriteStream : Stream
 
     public override bool CanWrite => true;
 
+    // ReSharper disable once ConvertToAutoPropertyWithPrivateSetter
     public override long Length => _length;
 
     public override long Position
@@ -22,12 +23,12 @@ internal sealed class DigestWriteStream : Stream
         set => throw new NotSupportedException();
     }
 
-    public uint Hash => _hash;
+    public uint Hash { get; private set; } = Offset;
 
     public void Reset()
     {
         _length = 0;
-        _hash = Offset;
+        Hash = Offset;
     }
 
     public override void Write(byte[] buffer, int offset, int count) =>
@@ -37,7 +38,7 @@ internal sealed class DigestWriteStream : Stream
     {
         foreach (var value in buffer)
         {
-            _hash = (_hash ^ value) * Prime;
+            Hash = (Hash ^ value) * Prime;
         }
 
         _length += buffer.Length;
@@ -45,7 +46,7 @@ internal sealed class DigestWriteStream : Stream
 
     public override void WriteByte(byte value)
     {
-        _hash = (_hash ^ value) * Prime;
+        Hash = (Hash ^ value) * Prime;
         _length++;
     }
 

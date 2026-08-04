@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Text;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 
 namespace Matrix.ZipArchives.Benchmarks;
 
@@ -7,6 +10,7 @@ public partial class CreateDeflateOptimalArchive
 {
     [Benchmark(Baseline = true)]
     [LibraryBenchmark(LibraryCatalog.SystemIOCompression)]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public byte[] SystemIOCompression()
     {
         using var destination = new MemoryStream();

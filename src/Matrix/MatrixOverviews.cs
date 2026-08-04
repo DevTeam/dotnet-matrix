@@ -36,8 +36,6 @@ public static class MatrixOverviews
             return null;
         }
 
-        bool Rated(string libraryId) => isRated?.Invoke(libraryId) ?? true;
-
         var libraries = report.Libraries
             .Where(library => includeLibrary?.Invoke(library.Id) ?? true)
             .ToArray();
@@ -62,6 +60,8 @@ public static class MatrixOverviews
             rows,
             rows.Select(row => MatrixMetrics.Total(row.PerformanceValues)).DefaultIfEmpty().Max(),
             rows.Select(row => MatrixMetrics.Total(row.MemoryValues)).DefaultIfEmpty().Max());
+
+        bool Rated(string libraryId) => isRated?.Invoke(libraryId) ?? true;
     }
 
     private static MatrixOverviewRow CreateRow(
@@ -79,12 +79,9 @@ public static class MatrixOverviews
         return new MatrixOverviewRow(
             library.Id,
             library.Name,
-            results.Select(result => result?.MeanNanoseconds).ToArray(),
-            results.Select(result => result?.AllocatedBytesPerOperation).ToArray(),
-            features
-                .Where((_, index) => results[index] is null)
-                .Select(feature => feature.Name)
-                .ToArray(),
+            [.. results.Select(result => result?.MeanNanoseconds)],
+            [.. results.Select(result => result?.AllocatedBytesPerOperation)],
+            [.. features.Where((_, index) => results[index] is null).Select(feature => feature.Name)],
             earned.Time,
             earned.Memory,
             rated);

@@ -1,6 +1,6 @@
 // ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
-
+// ReSharper disable UnusedMember.Global
 namespace Matrix.DependencyInjection.Benchmarks;
 
 public readonly struct BenchmarkRoots<T1, T2>(T1 first, T2 second)

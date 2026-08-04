@@ -43,7 +43,7 @@ internal sealed class MetadataTarget(IBuildPaths buildPaths) : IMetadataTarget
                 + Environment.NewLine);
         }
 
-        Host.Info($"Metadata: {modules.Count} categories generated.");
+        Info($"Metadata: {modules.Count} categories generated.");
         return 0;
     }
 }

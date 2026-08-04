@@ -1,5 +1,4 @@
-using TinyCsvParser.Models;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class StreamingRead
@@ -12,8 +11,7 @@ public partial class StreamingRead
         long idSum = 0;
         decimal amountSum = 0;
         var activeCount = 0;
-        foreach (CsvMappingResult<CsvRecord> row in
-                 TinyCsvParserConfiguration.Records.ReadFromString(_csv))
+        foreach (var row in TinyCsvParserConfiguration.Records.ReadFromString(_csv))
         {
             count++;
             idSum += row.Result.Id;

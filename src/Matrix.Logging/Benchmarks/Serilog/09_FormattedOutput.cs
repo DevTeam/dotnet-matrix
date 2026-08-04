@@ -1,19 +1,19 @@
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Display;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class FormattedOutput
 {
     private FormattedOutputSink _serilogOutput = null!;
     private Serilog.Core.Logger _serilogRoot = null!;
-    private Serilog.ILogger _serilogLogger = null!;
+    private ILogger _serilogLogger = null!;
 
     [GlobalSetup(Target = nameof(Serilog))]
     public void SetupSerilog()
     {
-        _serilogOutput = new();
+        _serilogOutput = new FormattedOutputSink();
         var sink = new SerilogFormattedOutputSink(
             _serilogOutput,
             new MessageTemplateTextFormatter(LoggingData.SerilogOutputTemplate));

@@ -8,5 +8,5 @@ namespace Matrix.JsonSerialization.Models;
 public abstract class AnimalModel
 {
     [JsonPropertyOrder(2)]
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 }

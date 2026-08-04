@@ -2,9 +2,9 @@ namespace Matrix.ObjectMapping.Models;
 
 public sealed class NullableSource
 {
-    public string? Text { get; set; }
+    public string? Text { get; init; }
 
-    public AddressSource? Address { get; set; }
+    public AddressSource? Address { get; init; }
 
-    public SimpleSource[]? Items { get; set; }
+    public SimpleSource[]? Items { get; init; }
 }

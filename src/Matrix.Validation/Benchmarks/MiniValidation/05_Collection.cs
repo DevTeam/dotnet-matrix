@@ -1,5 +1,5 @@
 using MiniValidation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 public partial class Collection

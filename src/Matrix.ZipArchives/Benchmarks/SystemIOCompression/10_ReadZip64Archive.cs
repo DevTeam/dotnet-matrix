@@ -1,4 +1,6 @@
 using System.IO.Compression;
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 
 namespace Matrix.ZipArchives.Benchmarks;
 

@@ -3,7 +3,7 @@ using log4net.Config;
 using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class FormattedOutput
@@ -18,8 +18,8 @@ public partial class FormattedOutput
     {
         _log4NetRepository = $"{LoggingData.Category}.{Guid.NewGuid():N}";
         var repository = (Hierarchy)LogManager.CreateRepository(_log4NetRepository);
-        _log4NetSink = new();
-        _log4NetAppender = new(
+        _log4NetSink = new FormattedOutputSink();
+        _log4NetAppender = new Log4NetFormattedOutputAppender(
             _log4NetSink,
             new PatternLayout(LoggingData.Log4NetOutputLayout));
         _log4NetAppender.ActivateOptions();

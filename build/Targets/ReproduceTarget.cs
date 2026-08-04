@@ -10,7 +10,7 @@ internal sealed class ReproduceTarget(
         bool launchBrowser,
         CancellationToken cancellationToken)
     {
-        Host.Info(skipBenchmarks
+        Info(skipBenchmarks
             ? "Reproducing the application from reports already on disk."
             : "Reproducing all validation and benchmark results.");
         var result = await prepareCommitTarget.RunAsync(
@@ -22,7 +22,7 @@ internal sealed class ReproduceTarget(
             return result;
         }
 
-        Host.Info("Reports, charts, metadata, README, and run configurations are ready.");
+        Info("Reports, charts, metadata, README, and run configurations are ready.");
         return await localWebTarget.RunAsync(launchBrowser, cancellationToken);
     }
 }

@@ -1,6 +1,7 @@
 using System.IO.Compression;
 using System.Text;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.ZipArchives.Benchmarks;
 
 public partial class AppendEntry

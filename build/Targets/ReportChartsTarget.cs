@@ -40,13 +40,8 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
     public int Run(IReadOnlyList<DiscoveredMatrixModule> modules)
     {
-        var chartCount = 0;
-        foreach (var module in modules)
-        {
-            chartCount += Render(module);
-        }
-
-        Host.Info($"Charts: {chartCount} rendered.");
+        var chartCount = modules.Sum(Render);
+        Info($"Charts: {chartCount} rendered.");
         return 0;
     }
 
@@ -193,23 +188,19 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
     private static void RenderOverview(
         BenchmarkReport report,
         MatrixChartGroup group,
-        IReadOnlyList<BenchmarkReportEntry> features,
+        BenchmarkReportEntry[] features,
         LibraryLogos logos,
         IReadOnlySet<string> rated,
         string outputPath)
     {
-        var overview = MatrixOverviews.Create(
-            report,
-            group,
-            null,
-            libraryId => rated.Contains(libraryId));
+        var overview = MatrixOverviews.Create(report, group, null, rated.Contains);
         if (overview is null)
         {
             return;
         }
 
         var rows = overview.Rows;
-        var legendRows = (int)Math.Ceiling(features.Count / 3d);
+        var legendRows = (int)Math.Ceiling(features.Length / 3d);
         var height = Math.Max(
             420,
             176
@@ -230,7 +221,7 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
         DrawText(canvas, $"{group.Name} overview", OuterPadding, 47, title);
         DrawText(
             canvas,
-            $"{features.Count} scenario{(features.Count == 1 ? "" : "s")}"
+            $"{features.Length} scenario{(features.Length == 1 ? "" : "s")}"
             + $" · points out of {overview.Maximum} · lower is better for the bars",
             OuterPadding,
             74,
@@ -261,12 +252,12 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
                 y - 3,
                 LabelTextWidth,
                 label);
-            var covered = features.Count - row.MissingFeatures.Count;
+            var covered = features.Length - row.MissingFeatures.Count;
             DrawFittedText(
                 canvas,
                 row.MissingFeatures.Count == 0
-                    ? $"{covered}/{features.Count} scenarios"
-                    : $"{covered}/{features.Count} · Missing: {string.Join(", ", row.MissingFeatures)}",
+                    ? $"{covered}/{features.Length} scenarios"
+                    : $"{covered}/{features.Length} · Missing: {string.Join(", ", row.MissingFeatures)}",
                 LabelTextX,
                 y + 18,
                 LabelTextWidth,
@@ -449,12 +440,12 @@ internal sealed class ReportChartsTarget(IBuildPaths buildPaths) : IReportCharts
 
     private static void DrawLegend(
         SKCanvas canvas,
-        IReadOnlyList<BenchmarkReportEntry> features,
+        BenchmarkReportEntry[] features,
         float startY,
         TextStyle text)
     {
         const float itemWidth = 420;
-        for (var index = 0; index < features.Count; index++)
+        for (var index = 0; index < features.Length; index++)
         {
             var column = index % 3;
             var row = index / 3;

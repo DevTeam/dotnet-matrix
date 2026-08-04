@@ -29,7 +29,7 @@ public partial class PrepareAndRegister
         factory.RegisterObjectDefinition("root1", SpringDefinition(typeof(ComplexRoot1), "sub3"));
     }
 
-    internal static RootObjectDefinition SpringDefinition(Type type, params string[] references)
+    private static RootObjectDefinition SpringDefinition(Type type, params string[] references)
     {
         var arguments = new ConstructorArgumentValues();
         foreach (var reference in references)

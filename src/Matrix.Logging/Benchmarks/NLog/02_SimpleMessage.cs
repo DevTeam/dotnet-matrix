@@ -1,13 +1,18 @@
 using NLog;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class SimpleMessage
 {
     private NLogFixture _nlog = null!;
+    private Logger _nlogLogger = null!;
 
     [GlobalSetup(Target = nameof(NLog))]
-    public void SetupNLog() => _nlog = new NLogFixture(LogLevel.Info);
+    public void SetupNLog()
+    {
+        _nlog = new NLogFixture(LogLevel.Info);
+        _nlogLogger = _nlog.Logger;
+    }
 
     [GlobalCleanup(Target = nameof(NLog))]
     public void CleanupNLog() => _nlog.Dispose();
@@ -16,8 +21,7 @@ public partial class SimpleMessage
     [LibraryBenchmark(LibraryCatalog.NLog)]
     public void NLog()
     {
-        _nlog.Logger.Info(LoggingData.SimpleMessage);
+        _nlogLogger.Info(LoggingData.SimpleMessage);
         LoggingChecks.Simple(LibraryCatalog.NLog, _nlog.Sink.Last);
     }
 }
-

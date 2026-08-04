@@ -1,5 +1,5 @@
 using CsvHelper;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class QuotedFields

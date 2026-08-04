@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -11,6 +12,4 @@ namespace Matrix.Logging.Benchmarks;
     3,
     "Structured Properties",
     "Delivers one event with independently queryable OrderId and ElapsedMs properties.")]
-public partial class StructuredProperties
-{
-}
+public partial class StructuredProperties;

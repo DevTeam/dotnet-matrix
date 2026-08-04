@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Text;
 using nietras.SeparatedValues;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class WriteRows
@@ -12,10 +12,8 @@ public partial class WriteRows
     public string Sep()
     {
         var buffer = new StringBuilder(64);
-        using var destination = new StringWriter(buffer, CultureInfo.InvariantCulture)
-        {
-            NewLine = "\n"
-        };
+        using var destination = new StringWriter(buffer, CultureInfo.InvariantCulture);
+        destination.NewLine = "\n";
         using (var csv = SepConfiguration.Writer.To(destination, true))
         {
             foreach (var record in _records)

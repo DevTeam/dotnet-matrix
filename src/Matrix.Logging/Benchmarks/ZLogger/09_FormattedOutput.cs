@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 using ZLogger;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class FormattedOutput
@@ -12,7 +12,7 @@ public partial class FormattedOutput
     [GlobalSetup(Target = nameof(ZLogger))]
     public void SetupZLogger()
     {
-        _zloggerOutput = new();
+        _zloggerOutput = new FormattedOutputSink();
         _zloggerFactory = LoggerFactory.Create(builder =>
         {
             builder.ClearProviders();
@@ -21,8 +21,7 @@ public partial class FormattedOutput
             {
                 options.UsePlainTextFormatter(formatter => formatter.SetPrefixFormatter(
                     $"{0:yyyy-MM-dd HH:mm:ss,fff} {1:short} {2} - ",
-                    (in MessageTemplate template, in LogInfo info) =>
-                        template.Format(info.Timestamp.Local.DateTime, info.LogLevel, info.Category)));
+                    (in template, in info) => template.Format(info.Timestamp.Local.DateTime, info.LogLevel, info.Category)));
                 return new ZLoggerFormattedOutputProcessor(
                     _zloggerOutput,
                     options.CreateFormatter());

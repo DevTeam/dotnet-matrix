@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Web;
 
 /// <summary>

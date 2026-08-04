@@ -1,5 +1,5 @@
 using Sylvan.Data.Csv;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class AsyncRead
@@ -9,7 +9,7 @@ public partial class AsyncRead
     public async Task<CsvAggregate> Sylvan()
     {
         using var source = new StringReader(_csv);
-        using var csv = await CsvDataReader.CreateAsync(source, SylvanConfiguration.Reader);
+        await using var csv = await CsvDataReader.CreateAsync(source, SylvanConfiguration.Reader);
         var count = 0;
         long idSum = 0;
         decimal amountSum = 0;

@@ -1,5 +1,5 @@
 using Mapster;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.ObjectMapping.Benchmarks;
 
 public partial class Flattening

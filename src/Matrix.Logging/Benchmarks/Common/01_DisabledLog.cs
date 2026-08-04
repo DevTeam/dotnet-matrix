@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -7,7 +8,5 @@ namespace Matrix.Logging.Benchmarks;
     1,
     "Disabled Log",
     "Submits an Information event to a logger whose minimum level is Warning.")]
-public partial class DisabledLog
-{
-}
+public partial class DisabledLog;
 

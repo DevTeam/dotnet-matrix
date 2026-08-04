@@ -1,10 +1,11 @@
 ﻿using Matrix;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+// ReSharper disable UseCollectionExpression
 
 namespace Build.Targets;
 
-internal sealed class ReadmeTarget(
+internal sealed partial class ReadmeTarget(
     IBuildPaths buildPaths,
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
@@ -46,7 +47,7 @@ internal sealed class ReadmeTarget(
             model,
             stream,
             cancellationToken);
-        Host.Info($"README: {path}");
+        Info($"README: {path}");
         return 0;
     }
 
@@ -152,7 +153,7 @@ internal sealed class ReadmeTarget(
     /// rating sums, so the breakdown printed here cannot disagree with the total
     /// printed above it.
     /// </summary>
-    private static IReadOnlyList<ReadmeScore> Breakdown(
+    private static ReadmeScore[] Breakdown(
         BenchmarkReport report,
         string libraryId,
         Func<string, bool> rated) =>
@@ -183,7 +184,7 @@ internal sealed class ReadmeTarget(
         cell.Contested ? MatrixScores.FormatExact(cell.Points) : "—";
 
     private static string Anchor(string value) =>
-        Regex.Replace(value.ToLowerInvariant(), "[^a-z0-9]+", "-").Trim('-');
+        AnchorRegex().Replace(value.ToLowerInvariant(), "-").Trim('-');
 
     private static string Place(int place) => place switch
     {
@@ -198,4 +199,6 @@ internal sealed class ReadmeTarget(
     private static T Read<T>(string path) =>
         JsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
+    [GeneratedRegex("[^a-z0-9]+")]
+    private static partial Regex AnchorRegex();
 }

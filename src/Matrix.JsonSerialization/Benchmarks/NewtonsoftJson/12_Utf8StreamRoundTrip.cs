@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 using NewtonsoftSerializer = Newtonsoft.Json.JsonSerializer;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.JsonSerialization.Benchmarks;
 
 public partial class Utf8StreamRoundTrip

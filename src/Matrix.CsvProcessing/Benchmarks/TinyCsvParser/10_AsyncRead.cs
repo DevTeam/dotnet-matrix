@@ -1,5 +1,4 @@
-using TinyCsvParser.Models;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class AsyncRead
@@ -12,9 +11,7 @@ public partial class AsyncRead
         long idSum = 0;
         decimal amountSum = 0;
         var activeCount = 0;
-        await foreach (CsvMappingResult<CsvRecord> row in
-                       TinyCsvParserConfiguration.AsyncRecords.ReadFromStringAsync(_csv)
-                           .ConfigureAwait(false))
+        await foreach (var row in TinyCsvParserConfiguration.AsyncRecords.ReadFromStringAsync(_csv).ConfigureAwait(false))
         {
             count++;
             idSum += row.Result.Id;

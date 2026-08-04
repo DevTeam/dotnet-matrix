@@ -36,7 +36,7 @@
     /// badge, so it is asked for rather than written here — which is also why this
     /// is a comparison and not a relational pattern.
     /// </summary>
-    private bool OnPodium => Place is { } place && place >= 1 && place <= Scoring.Places;
+    private bool OnPodium => Place is { } place and >= 1 && place <= Scoring.Places;
 
     private string? Title =>
         !Rated

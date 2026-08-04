@@ -1,3 +1,4 @@
+@using System.Diagnostics.CodeAnalysis
 @inject IMatrixView View
 @inject IMatrixScoring Scoring
 @inject IMatrixMeasures Measures
@@ -315,7 +316,6 @@
     private MatrixMedals? _medals;
     private int? _place;
     private int _rated;
-    private string _ratingPlace = "—";
     private int _supported;
     /// <summary>The library takes part in the rating, so its scenarios carry points.</summary>
     private bool _scored;
@@ -349,7 +349,7 @@
         .Libraries(Report)
         .Count(library => View.IsSelected(Report, SelectedLibraries, library.Id));
 
-    private string RatingPlace => _ratingPlace;
+    private string RatingPlace { get; set; } = "—";
 
     private string? PointsTitle => _medals is null ? null : Hint(null);
 
@@ -390,7 +390,7 @@
         _medals = Scoring.Standing(rating, Library.Id);
         _place = Scoring.Place(rating, Library.Id);
         _rated = rating.Count;
-        _ratingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
+        RatingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
         _scored = View.IsRated(Report, Library.Id) && _medals is not null;
         ReadStandings();
         ReadRows();
@@ -500,6 +500,7 @@
         }
 
         var standings = new List<Standing>();
+        // ReSharper disable once LoopCanBeConvertedToQuery
         foreach (var group in charts.Groups)
         {
             var overview = View.Overview(Report, group, SelectedLibraries);
@@ -546,7 +547,7 @@
                 Title(leader, true)));
         }
 
-        _standings = standings.ToArray();
+        _standings = [.. standings];
         _legend = standings
             .SelectMany(standing => standing.Overview.Features)
             .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
@@ -622,21 +623,21 @@
         _ => "No data"
     };
 
+    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
     private sealed record Standing(
         MatrixChartGroup Group,
         MatrixOverview Overview,
         MatrixOverviewRow Row,
         string[] FeatureNames,
         string Rank,
-        /// <summary>The measurements the group score was summed from.</summary>
         string Hint,
-        /// <summary>The row this one is measured against; null when it is that row.</summary>
         MatrixOverviewRow? Leader,
         string TimeRatio,
         string MemoryRatio,
         string TimeTitle,
         string MemoryTitle);
 
+    [SuppressMessage("ReSharper", "MemberHidesStaticFromOuterClass")]
     private sealed record Row(
         int Order,
         string Name,

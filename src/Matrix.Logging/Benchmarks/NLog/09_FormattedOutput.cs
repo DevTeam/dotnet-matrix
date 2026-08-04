@@ -1,6 +1,6 @@
 using NLog;
 using NLog.Config;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class FormattedOutput
@@ -12,7 +12,7 @@ public partial class FormattedOutput
     [GlobalSetup(Target = nameof(NLog))]
     public void SetupNLog()
     {
-        _nlogSink = new();
+        _nlogSink = new FormattedOutputSink();
         var target = new NLogFormattedOutputTarget(_nlogSink)
         {
             Layout = LoggingData.NLogOutputLayout

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Validation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 public partial class Collection
@@ -16,7 +16,7 @@ public partial class Collection
             ValidationContext = new ValidationContext(_input),
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
-        _microsoftCollection.ValidateAsync(_input, context, default)
+        _microsoftCollection.ValidateAsync(_input, context, CancellationToken.None)
             .GetAwaiter()
             .GetResult();
         var errors = context.ValidationErrors;

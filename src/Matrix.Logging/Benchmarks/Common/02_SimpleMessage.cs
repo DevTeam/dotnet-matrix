@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -11,6 +12,4 @@ namespace Matrix.Logging.Benchmarks;
     2,
     "Simple Message",
     "Delivers one literal Information message to an in-memory sink.")]
-public partial class SimpleMessage
-{
-}
+public partial class SimpleMessage;

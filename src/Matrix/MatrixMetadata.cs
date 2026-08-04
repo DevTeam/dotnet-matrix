@@ -53,7 +53,7 @@ public static class MatrixMetadata
             .ToArray();
         EnsureUnique(libraries, item => item.Library.Id, "library id");
         EnsureUnique(
-            libraries.Where(item => item.Library.Package is not null).ToArray(),
+            [.. libraries.Where(item => item.Library.Package is not null)],
             item => item.Library.Package!,
             "primary package");
         EnsureUnique(libraries, item => item.CodeName, "library code name");

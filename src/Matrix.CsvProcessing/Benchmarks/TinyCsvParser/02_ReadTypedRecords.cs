@@ -1,5 +1,4 @@
-using TinyCsvParser.Models;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class ReadTypedRecords
@@ -9,8 +8,8 @@ public partial class ReadTypedRecords
     public CsvRecord[] TinyCsvParser()
     {
         var records = new List<CsvRecord>(3);
-        foreach (CsvMappingResult<CsvRecord> record in
-                 TinyCsvParserConfiguration.Records.ReadFromString(_csv))
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        foreach (var record in TinyCsvParserConfiguration.Records.ReadFromString(_csv))
         {
             records.Add(record.Result);
         }

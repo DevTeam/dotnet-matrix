@@ -9,7 +9,7 @@ public sealed record ReadmeModel(
     /// instead of naming a category that was renamed or removed.
     /// </summary>
     public string SampleCategory =>
-        Categories.FirstOrDefault()?.Id ?? "csv-processing";
+        Categories.Count == 0 ? "csv-processing" : Categories[0].Id;
 
     public string SampleLibrary =>
         Categories

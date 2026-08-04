@@ -1,3 +1,5 @@
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 namespace Matrix.ObjectMapping.Benchmarks;
 
 public partial class PrepareConfiguration

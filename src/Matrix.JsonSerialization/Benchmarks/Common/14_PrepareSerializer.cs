@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.JsonSerialization.Benchmarks;
 
 [MemoryDiagnoser]
@@ -7,6 +8,4 @@ namespace Matrix.JsonSerialization.Benchmarks;
     14,
     "Prepare Serializer",
     "Creates fresh serializer settings and explicit type metadata without serializing data.")]
-public partial class PrepareSerializer
-{
-}
+public partial class PrepareSerializer;

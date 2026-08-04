@@ -1,3 +1,4 @@
+// ReSharper disable UseCollectionExpression
 namespace Matrix.ObjectMapping;
 
 internal static class ObjectMappingData

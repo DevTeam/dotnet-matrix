@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 [MemoryDiagnoser]
@@ -7,6 +8,4 @@ namespace Matrix.Validation.Benchmarks;
     10,
     "Prepare Validator",
     "Creates the complete scalar validator or rule graph without validating an input.")]
-public partial class PrepareValidator
-{
-}
+public partial class PrepareValidator;

@@ -5,10 +5,8 @@ using HostCommandLine = HostApi.CommandLine;
 
 namespace Build.Targets;
 
-internal sealed class MatrixModuleDiscovery(IBuildPaths buildPaths) : IMatrixModuleDiscovery
+internal sealed class MatrixModuleDiscovery(ICommandLineRunner commandLineRunner, IBuildPaths buildPaths) : IMatrixModuleDiscovery
 {
-    private readonly ICommandLineRunner commandLineRunner =
-        Host.GetService<ICommandLineRunner>();
     private IReadOnlyList<DiscoveredMatrixModule>? _modules;
 
     public IReadOnlyList<DiscoveredMatrixModule> Discover() =>

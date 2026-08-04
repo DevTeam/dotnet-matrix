@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Validation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 internal static class MicrosoftExtensionsValidationConfiguration

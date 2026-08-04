@@ -4,13 +4,12 @@ using HostCommandLine = HostApi.CommandLine;
 namespace Build.Targets;
 
 internal sealed class LocalWebTarget(
+    ICommandLineRunner commandLineRunner,
     IBuildPaths buildPaths,
     IQuietProcessRunner processRunner) : ILocalWebTarget
 {
     private const string DynamicUrl = "http://127.0.0.1:0";
     private const string ListeningMarker = "Now listening on: ";
-    private readonly ICommandLineRunner commandLineRunner =
-        Host.GetService<ICommandLineRunner>();
 
     public async Task<int> RunAsync(
         bool launchBrowser,
@@ -21,7 +20,7 @@ internal sealed class LocalWebTarget(
             "src",
             "Matrix.Web",
             "Matrix.Web.csproj");
-        Host.Info("Building the local Web application with all current reports.");
+        Info("Building the local Web application with all current reports.");
         var result = await processRunner.RunAsync(
             DotNet(
                 "local Web build",
@@ -65,18 +64,19 @@ internal sealed class LocalWebTarget(
                 }
             },
             suppressConsoleOutput: false);
-        if (await Task.WhenAny(ready.Task, server) == ready.Task)
+        if (await Task.WhenAny(ready.Task, server) != ready.Task)
         {
-            var url = await ready.Task;
-            Host.Info($"Local .NET Matrix: {url}");
-            if (launchBrowser)
-            {
-                await OpenBrowserAsync(url, cancellationToken);
-            }
-
-            Host.Info("Press Ctrl+C to stop the Web application.");
+            return await server;
         }
 
+        var url = await ready.Task;
+        Info($"Local .NET Matrix: {url}");
+        if (launchBrowser)
+        {
+            await OpenBrowserAsync(url, cancellationToken);
+        }
+
+        Info("Press Ctrl+C to stop the Web application.");
         return await server;
     }
 
@@ -133,12 +133,14 @@ internal sealed class LocalWebTarget(
                 output =>
                 {
                     output.Handled = true;
-                    if (output.IsError)
+                    if (!output.IsError)
                     {
-                        lock (errors)
-                        {
-                            errors.Add(output.Line);
-                        }
+                        return;
+                    }
+
+                    lock (errors)
+                    {
+                        errors.Add(output.Line);
                     }
                 },
                 cancellationToken);
@@ -148,9 +150,9 @@ internal sealed class LocalWebTarget(
             Console.SetOut(consoleOutput);
         }
 
-        if (result.State == ProcessState.Finished && result.ExitCode == 0)
+        if (result is { State: ProcessState.Finished, ExitCode: 0 })
         {
-            Host.Info("Opened the local application in the default browser.");
+            Info("Opened the local application in the default browser.");
             return;
         }
 
@@ -160,7 +162,7 @@ internal sealed class LocalWebTarget(
             details = errors.Count == 0 ? string.Empty : $" {string.Join(' ', errors)}";
         }
 
-        Host.Warning($"Could not open the default browser.{details} Open {url} manually.");
+        Warning($"Could not open the default browser.{details} Open {url} manually.");
     }
 
     private HostCommandLine BrowserCommand(string url)

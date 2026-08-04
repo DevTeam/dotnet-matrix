@@ -26,9 +26,6 @@ public static class MatrixRatings
         Func<string, bool> isRated,
         Func<string, bool>? includeLibrary = null)
     {
-        bool Competes(string libraryId) =>
-            isRated(libraryId) && (includeLibrary?.Invoke(libraryId) ?? true);
-
         var libraries = report.Libraries
             .Where(library => Competes(library.Id))
             .ToArray();
@@ -58,6 +55,9 @@ public static class MatrixRatings
             .OrderByDescending(medals => medals.Points)
             .ThenBy(medals => medals.Name, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+
+        bool Competes(string libraryId) =>
+            isRated(libraryId) && (includeLibrary?.Invoke(libraryId) ?? true);
     }
 
     /// <summary>

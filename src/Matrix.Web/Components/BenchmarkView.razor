@@ -120,6 +120,7 @@ else
             .Select(feature => (feature.Id, feature.Name, feature.Order))
             .Distinct()
             .OrderBy(feature => feature.Order)
+            // ReSharper disable once UseCollectionExpression
             .ToArray();
 
     private static string MeterStyle(double percent) =>

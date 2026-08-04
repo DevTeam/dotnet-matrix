@@ -1,3 +1,5 @@
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 namespace Matrix.Validation.Benchmarks;
 
 public partial class PrepareValidator

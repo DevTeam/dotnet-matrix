@@ -1,12 +1,15 @@
+using System.Diagnostics.CodeAnalysis;
 using SharpCompress.Common;
 using SharpCompress.Writers.Zip;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.ZipArchives.Benchmarks;
 
 public partial class CreateStoredArchive
 {
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.SharpCompress)]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public byte[] SharpCompress()
     {
         using var destination = new MemoryStream();

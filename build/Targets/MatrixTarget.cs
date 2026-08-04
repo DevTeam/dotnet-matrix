@@ -1,4 +1,3 @@
-using HostApi;
 using Matrix;
 using HostCommandLine = HostApi.CommandLine;
 
@@ -64,7 +63,7 @@ internal sealed class MatrixTarget(
 
         var selection = libraries ?? "all libraries";
         var operation = $"{mode} {module.Metadata.Name}";
-        Host.Info($"{operation}: {selection}");
+        Info($"{operation}: {selection}");
         var result = await processRunner.RunAsync(
             new HostCommandLine(
                 "dotnet",
@@ -76,7 +75,7 @@ internal sealed class MatrixTarget(
             cancellationToken);
         if (result == 0)
         {
-            Host.Info($"{operation} completed.");
+            Info($"{operation} completed.");
         }
 
         return result;

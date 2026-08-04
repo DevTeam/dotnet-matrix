@@ -2,6 +2,7 @@
 // ReSharper disable InconsistentNaming
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
+// ReSharper disable UnusedMember.Local
 namespace Matrix.DependencyInjection.Benchmarks;
 
 public partial class Array
@@ -20,6 +21,7 @@ public partial class Array
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.PureDi)]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
     public BenchmarkRoots<ArrayRoot1, ArrayRoot2, ArrayRoot3> PureDI()
     {
         var first = Pure1;

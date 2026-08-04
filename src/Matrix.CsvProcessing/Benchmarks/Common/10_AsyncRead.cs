@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 [MemoryDiagnoser]

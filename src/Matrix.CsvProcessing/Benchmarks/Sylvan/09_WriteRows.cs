@@ -1,6 +1,6 @@
 using Sylvan.Data;
 using Sylvan.Data.Csv;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.CsvProcessing.Benchmarks;
 
 public partial class WriteRows

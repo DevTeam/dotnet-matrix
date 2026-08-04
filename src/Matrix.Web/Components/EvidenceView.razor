@@ -76,6 +76,7 @@ else
         .SelectMany(CreateItems)
         .Where(item => !string.IsNullOrWhiteSpace(item.Evidence.ManifestPath))
         .OrderByDescending(item => item.Evidence.GeneratedAtUtc)
+        // ReSharper disable once UseCollectionExpression
         .ToArray();
 
     private int ScenarioCount => Items
@@ -102,7 +103,7 @@ else
             yield return new EvidenceItem(
                 report.Category.Name,
                 evidence,
-                features.Select(feature => feature.Id).ToArray(),
+                [.. features.Select(feature => feature.Id)],
                 libraries);
         }
     }

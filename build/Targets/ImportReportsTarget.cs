@@ -30,7 +30,7 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
             ExtractSafely(archive, temporaryRoot);
             Validate(temporaryRoot);
             Import(temporaryRoot);
-            Host.Info($"Imported reports and evidence from: {archive}");
+            Info($"Imported reports and evidence from: {archive}");
             return 0;
         }
         catch (Exception exception)
@@ -96,6 +96,7 @@ internal sealed class ImportReportsTarget(IBuildPaths buildPaths) : IImportRepor
                 throw new InvalidDataException("The archive manifest is invalid or unsupported.");
             }
 
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var category in categories.EnumerateArray())
             {
                 var name = category.GetString();

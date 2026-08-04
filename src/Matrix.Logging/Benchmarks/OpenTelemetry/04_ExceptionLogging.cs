@@ -1,14 +1,18 @@
 using Microsoft.Extensions.Logging;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class ExceptionLogging
 {
     private OpenTelemetryFixture _openTelemetry = null!;
+    private ILogger _openTelemetryLogger = null!;
 
     [GlobalSetup(Target = nameof(OpenTelemetry))]
-    public void SetupOpenTelemetry() =>
+    public void SetupOpenTelemetry()
+    {
         _openTelemetry = new OpenTelemetryFixture(LogLevel.Information);
+        _openTelemetryLogger = _openTelemetry.Logger;
+    }
 
     [GlobalCleanup(Target = nameof(OpenTelemetry))]
     public void CleanupOpenTelemetry() => _openTelemetry.Dispose();
@@ -17,7 +21,7 @@ public partial class ExceptionLogging
     [LibraryBenchmark(LibraryCatalog.OpenTelemetry)]
     public void OpenTelemetry()
     {
-        _openTelemetry.Logger.LogError(_exception, LoggingData.ExceptionMessage);
+        _openTelemetryLogger.LogError(_exception, LoggingData.ExceptionMessage);
         LoggingChecks.Exception(
             LibraryCatalog.OpenTelemetry,
             _openTelemetry.Sink.Last,

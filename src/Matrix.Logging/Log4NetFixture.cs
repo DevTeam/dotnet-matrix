@@ -14,12 +14,12 @@ internal sealed class Log4NetFixture : IDisposable
     {
         var repositoryName = $"{LoggingData.Category}.{Guid.NewGuid():N}";
         Repository = (Hierarchy)LogManager.CreateRepository(repositoryName);
-        Sink = new();
+        Sink = new Log4NetCaptureAppender();
         Sink.ActivateOptions();
         IAppender appender = Sink;
         if (buffered)
         {
-            _buffer = new()
+            _buffer = new BufferingForwardingAppender
             {
                 BufferSize = LoggingData.BufferedCapacity,
                 Lossy = false,

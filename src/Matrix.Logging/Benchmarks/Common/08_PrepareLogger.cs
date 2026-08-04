@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -7,6 +8,4 @@ namespace Matrix.Logging.Benchmarks;
     8,
     "Create Logger",
     "Creates, verifies, and releases one Information-enabled logger with an in-memory sink.")]
-public partial class PrepareLogger
-{
-}
+public partial class PrepareLogger;

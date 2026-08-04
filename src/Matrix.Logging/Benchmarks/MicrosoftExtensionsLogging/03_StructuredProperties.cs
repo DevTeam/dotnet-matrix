@@ -1,14 +1,18 @@
 using Microsoft.Extensions.Logging;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 public partial class StructuredProperties
 {
     private MicrosoftLoggingFixture _microsoft = null!;
+    private ILogger _microsoftLogger = null!;
 
     [GlobalSetup(Target = nameof(MicrosoftExtensionsLogging))]
-    public void SetupMicrosoftExtensionsLogging() =>
+    public void SetupMicrosoftExtensionsLogging()
+    {
         _microsoft = new MicrosoftLoggingFixture(LogLevel.Information);
+        _microsoftLogger = _microsoft.Logger;
+    }
 
     [GlobalCleanup(Target = nameof(MicrosoftExtensionsLogging))]
     public void CleanupMicrosoftExtensionsLogging() => _microsoft.Dispose();
@@ -17,7 +21,7 @@ public partial class StructuredProperties
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsLogging)]
     public void MicrosoftExtensionsLogging()
     {
-        _microsoft.Logger.LogInformation(
+        _microsoftLogger.LogInformation(
             LoggingData.StructuredTemplate,
             LoggingData.OrderId,
             LoggingData.ElapsedMs);
@@ -26,4 +30,3 @@ public partial class StructuredProperties
             _microsoft.Sink.Last);
     }
 }
-

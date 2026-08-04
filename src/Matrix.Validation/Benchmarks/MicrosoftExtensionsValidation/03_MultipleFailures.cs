@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Validation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Benchmarks;
 
 public partial class MultipleFailures
@@ -16,7 +16,7 @@ public partial class MultipleFailures
             ValidationContext = new ValidationContext(_input),
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
-        _microsoftMultipleFailures.ValidateAsync(_input, context, default)
+        _microsoftMultipleFailures.ValidateAsync(_input, context, CancellationToken.None)
             .GetAwaiter()
             .GetResult();
         var errors = context.ValidationErrors;

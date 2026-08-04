@@ -1,3 +1,4 @@
+// ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
@@ -11,7 +12,5 @@ namespace Matrix.Logging.Benchmarks;
     7,
     "Buffered Logging",
     "Enqueues one event to a library-provided async or buffering wrapper and validates delivery after flush.")]
-public partial class BufferedLogging
-{
-}
+public partial class BufferedLogging;
 

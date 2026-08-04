@@ -1,5 +1,5 @@
 using System.Text.Json;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.JsonSerialization.Benchmarks;
 
 public partial class SourceGenerationRoundTrip

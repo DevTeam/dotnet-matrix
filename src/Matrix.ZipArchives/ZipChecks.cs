@@ -70,21 +70,20 @@ internal static class ZipChecks
     private static void ValidateArchive(
         string library,
         byte[] archiveBytes,
-        IReadOnlyList<ZipEntryData> expected)
+        ZipEntryData[] expected)
     {
         using var source = new MemoryStream(archiveBytes, false);
-        using var archive = new System.IO.Compression.ZipArchive(
+        using var archive = new ZipArchive(
             source,
             ZipArchiveMode.Read,
             false,
             Encoding.UTF8);
         MatrixValidation.Require(
             library,
-            archive.Entries.Count == expected.Count,
-            $"Expected {expected.Count} entries, found {archive.Entries.Count}.");
-        for (var index = 0; index < expected.Count; index++)
+            archive.Entries.Count == expected.Length,
+            $"Expected {expected.Length} entries, found {archive.Entries.Count}.");
+        foreach (var item in expected)
         {
-            var item = expected[index];
             var entry = archive.GetEntry(item.Name);
             MatrixValidation.Require(library, entry is not null, $"Entry '{item.Name}' was not found.");
             using var content = entry!.Open();

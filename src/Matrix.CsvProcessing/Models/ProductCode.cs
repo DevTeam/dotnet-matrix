@@ -2,9 +2,7 @@ using System.Globalization;
 
 namespace Matrix.CsvProcessing.Models;
 
-public readonly record struct ProductCode(int Value) :
-    IParsable<ProductCode>,
-    ISpanParsable<ProductCode>
+public readonly record struct ProductCode(int Value) : ISpanParsable<ProductCode>
 {
     public static ProductCode Parse(string value, IFormatProvider? provider) =>
         Parse(value.AsSpan(), provider);
@@ -17,15 +15,8 @@ public readonly record struct ProductCode(int Value) :
 
     public static ProductCode Parse(
         ReadOnlySpan<char> value,
-        IFormatProvider? provider)
-    {
-        if (TryParse(value, provider, out var result))
-        {
-            return result;
-        }
-
-        throw new FormatException($"'{value.ToString()}' is not a product code.");
-    }
+        IFormatProvider? provider) =>
+        TryParse(value, provider, out var result) ? result : throw new FormatException($"'{value.ToString()}' is not a product code.");
 
     public static bool TryParse(
         ReadOnlySpan<char> value,

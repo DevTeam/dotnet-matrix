@@ -1,5 +1,5 @@
 using Microsoft.Extensions.Validation;
-
+// ReSharper disable CheckNamespace
 namespace Matrix.Validation.Models;
 
 #pragma warning disable ASP0029

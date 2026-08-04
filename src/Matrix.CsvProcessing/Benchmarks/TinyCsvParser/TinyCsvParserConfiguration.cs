@@ -1,9 +1,9 @@
 using System.Globalization;
 using TinyCsvParser;
-using TinyCsvParser.Mappings;
 using TinyCsvParser.Models;
 using TinyCsvParser.TypeConverters;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace Matrix.CsvProcessing.Benchmarks;
 
 internal static class TinyCsvParserConfiguration

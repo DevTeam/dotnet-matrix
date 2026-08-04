@@ -11,8 +11,6 @@ public sealed record MatrixScoreDetail(
     MatrixScoreCell Time,
     MatrixScoreCell Memory)
 {
-    public double Points => Time.Points + Memory.Points;
-
     /// <summary>The library produced at least one measurement here.</summary>
     public bool Covered => Time.Measured || Memory.Measured;
 }

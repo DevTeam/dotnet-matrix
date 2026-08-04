@@ -1,9 +1,11 @@
 using Build.Targets;
 using Matrix;
 using System.CommandLine;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Build;
 
+[SuppressMessage("Design", "CA1068:CancellationToken parameters must come last")]
 internal sealed class BuildApplication(
     string[] args,
     CancellationToken cancellationToken,

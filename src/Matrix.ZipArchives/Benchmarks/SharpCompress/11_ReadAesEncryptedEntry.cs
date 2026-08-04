@@ -1,6 +1,7 @@
 using SharpCompress.Archives.Zip;
 using SharpCompress.Readers;
-
+// ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.ZipArchives.Benchmarks;
 
 public partial class ReadAesEncryptedEntry

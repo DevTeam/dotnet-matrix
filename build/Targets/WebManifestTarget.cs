@@ -2,6 +2,7 @@ using SkiaSharp;
 using Svg.Skia;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+// ReSharper disable UseCollectionExpression
 
 namespace Build.Targets;
 
@@ -55,7 +56,7 @@ internal sealed class WebManifestTarget(IBuildPaths buildPaths) : IWebManifestTa
         File.WriteAllText(
             manifestPath,
             JsonSerializer.Serialize(Create(modules), SerializerOptions) + Environment.NewLine);
-        Host.Info($"Web manifest: {manifestPath}");
+        Info($"Web manifest: {manifestPath}");
         return 0;
     }
 

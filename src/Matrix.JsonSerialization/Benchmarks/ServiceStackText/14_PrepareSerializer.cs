@@ -1,3 +1,5 @@
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 namespace Matrix.JsonSerialization.Benchmarks;
 
 public partial class PrepareSerializer

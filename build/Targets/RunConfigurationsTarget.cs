@@ -23,7 +23,7 @@ internal sealed class RunConfigurationsTarget(IBuildPaths buildPaths)
             File.WriteAllText(path, CreateDocument(configuration) + Environment.NewLine);
         }
 
-        Host.Info($"Run configurations: {configurations.Length} generated.");
+        Info($"Run configurations: {configurations.Length} generated.");
         return 0;
     }
 

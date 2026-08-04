@@ -28,14 +28,4 @@ public sealed record MatrixMedals(
 
     /// <summary>The most one metric can contribute.</summary>
     public int MetricMaximum => Scenarios * MatrixRatings.MaximumPoints;
-
-    public int Gold => Count(1);
-
-    public int Silver => Count(2);
-
-    public int Bronze => Count(3);
-
-    public int Total => Awards.Count;
-
-    public int Count(int place) => Awards.Count(award => award.Place == place);
 }

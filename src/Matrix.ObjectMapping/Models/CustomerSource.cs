@@ -2,9 +2,9 @@ namespace Matrix.ObjectMapping.Models;
 
 public sealed class CustomerSource
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 
-    public AddressSource Address { get; set; } = new();
+    public AddressSource Address { get; init; } = new();
 }

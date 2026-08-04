@@ -44,9 +44,9 @@ public static class SerializationData
 
     public static SimpleModel[] Collection() =>
     [
-        new SimpleModel { Id = 1, Name = "One", Active = true },
-        new SimpleModel { Id = 2, Name = "Two", Active = false },
-        new SimpleModel { Id = 3, Name = "Three", Active = true }
+        new() { Id = 1, Name = "One", Active = true },
+        new() { Id = 2, Name = "Two", Active = false },
+        new() { Id = 3, Name = "Three", Active = true }
     ];
 
     public static Dictionary<string, int> Dictionary() =>

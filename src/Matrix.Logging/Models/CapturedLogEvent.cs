@@ -1,3 +1,4 @@
+// ReSharper disable NotAccessedPositionalProperty.Global
 namespace Matrix.Logging.Models;
 
 public sealed record CapturedLogEvent(
