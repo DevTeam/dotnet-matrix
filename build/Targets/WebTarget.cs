@@ -192,78 +192,10 @@ internal sealed partial class WebTarget(
                 Version.Parse(parts[0])));
         }
 
-        var releases = versions
+        return versions
             .OrderByDescending(version => version.SortKey)
             .Select(version => version.Value)
             .ToArray();
-
-        // The head of the default branch is offered as a live version: its reports
-        // are read straight from the branch, so they follow every merge without a
-        // redeploy. It leads the list because it is newer than any tag. When the
-        // head is itself tagged, the two entries would serve identical reports, so
-        // only the release is kept.
-        var branch = await ReadDefaultBranchAsync(cancellationToken);
-        var head = await ReadCommitAsync(branch, cancellationToken);
-        var tagged = head is not null && releases.Any(release =>
-            release.Commit.Equals(head, StringComparison.OrdinalIgnoreCase));
-        // ReSharper disable once InvertIf
-        if (tagged)
-        {
-            Info($"Branch {branch} is at a released commit, omitting it from the list");
-            return releases;
-        }
-
-        return [new MatrixVersion(branch, null, branch, false), .. releases];
-    }
-
-    private async Task<string?> ReadCommitAsync(
-        string reference,
-        CancellationToken cancellationToken)
-    {
-        try
-        {
-            return (await GitAsync(
-                ["rev-parse", "--verify", "--quiet", $"{reference}^{{commit}}"],
-                cancellationToken)).Trim();
-        }
-        catch (InvalidOperationException)
-        {
-            return null;
-        }
-    }
-
-    /// <summary>
-    /// The branch is discovered rather than hardcoded, so renaming master to main
-    /// needs no change here. CI checkouts do not always set the origin head, hence
-    /// the fallbacks.
-    /// </summary>
-    private async Task<string> ReadDefaultBranchAsync(CancellationToken cancellationToken)
-    {
-        try
-        {
-            var reference = (await GitAsync(
-                ["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"],
-                cancellationToken)).Trim();
-            var name = reference.Split('/').LastOrDefault();
-            if (!string.IsNullOrEmpty(name))
-            {
-                return name;
-            }
-        }
-        catch (InvalidOperationException)
-        {
-            // The origin head is not set in this clone.
-        }
-
-        if (Environment.GetEnvironmentVariable("GITHUB_REF_NAME") is { Length: > 0 } fromCi)
-        {
-            return fromCi;
-        }
-
-        var current = (await GitAsync(
-            ["rev-parse", "--abbrev-ref", "HEAD"],
-            cancellationToken)).Trim();
-        return current is "HEAD" or "" ? "master" : current;
     }
 
     private async Task<GitHubRepository> ReadRepositoryAsync(CancellationToken cancellationToken)

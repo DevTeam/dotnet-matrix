@@ -7,9 +7,9 @@ namespace Matrix;
 /// </summary>
 /// <remarks>
 /// <paramref name="Commit"/> is what the report URLs point at: a commit for a
-/// release, a branch name for the unreleased head.
+/// release, empty for the local workspace.
 /// <paramref name="Released"/> separates tags, whose numbers are fixed forever,
-/// from the workspace and the branch, which can change under the reader.
+/// from the workspace, which can change under the reader.
 /// </remarks>
 public sealed record MatrixVersion(
     string Version,

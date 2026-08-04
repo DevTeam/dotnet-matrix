@@ -33,23 +33,15 @@
                         </option>
                     }
                 </select>
-                @switch (SelectedVersion)
+                @if (SelectedVersion is { Released: true, Commit.Length: > 0 })
                 {
-                    case { Released: true, Commit.Length: > 0 }:
-                        <a class="commit-link"
-                           href="@CommitUrl(SelectedVersion)"
-                           target="_blank"
-                           rel="noreferrer"
-                           title="Open commit on GitHub">
-                            @ShortCommit(SelectedVersion.Commit) ↗
-                        </a>
-                        break;
-                    case { Released: false, Commit.Length: > 0 }:
-                        <span class="release-chip"
-                              title="Reports are read from the branch and change with every merge">
-                            unreleased
-                        </span>
-                        break;
+                    <a class="commit-link"
+                       href="@CommitUrl(SelectedVersion)"
+                       target="_blank"
+                       rel="noreferrer"
+                       title="Open commit on GitHub">
+                        @ShortCommit(SelectedVersion.Commit) ↗
+                    </a>
                 }
             </div>
         }
@@ -1317,7 +1309,6 @@
         version switch
         {
             { Version: "local" } => "Local · workspace",
-            { Released: false } => $"{version.Version} · latest",
             { DateUtc: { } date } => $"{version.Version} · {date:dd MMM yyyy}",
             _ => version.Version
         };
