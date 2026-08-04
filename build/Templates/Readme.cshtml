@@ -271,7 +271,7 @@ dotnet run --project .\build -- finalize-commit
 
 ## Link to a category or a library
 
-The application reads three optional query parameters, so a page about a library can
+The application reads four optional query parameters, so a page about a library can
 link straight to the relevant comparison instead of the front page:
 
 | Link | Opens |
@@ -280,8 +280,9 @@ link straight to the relevant comparison instead of the front page:
 | [@(Model.ApplicationUrl)?category=@Model.SampleCategory](@(Model.ApplicationUrl)?category=@Model.SampleCategory) | that category |
 | [@(Model.ApplicationUrl)?library=@Model.SampleLibrary](@(Model.ApplicationUrl)?library=@Model.SampleLibrary) | the library overview, in its own category |
 | [@(Model.ApplicationUrl)?version=latest&library=@Model.SampleLibrary](@(Model.ApplicationUrl)?version=latest&library=@Model.SampleLibrary) | the same overview, newest release named explicitly |
+| [@(Model.ApplicationUrl)?category=@Model.SampleCategory&libraries=@Model.SampleLibrary](@(Model.ApplicationUrl)?category=@Model.SampleCategory&libraries=@Model.SampleLibrary) | that category, narrowed to one library |
 
-The three are independent and combine freely; the links in the tables above are the
+The four are independent and combine freely; the links in the tables above are the
 same thing with the values filled in.
 
 ### `category`
@@ -295,6 +296,21 @@ Accepts the library id, its displayed name or its NuGet package id, and finds th
 category on its own, so `?library=@Model.SampleLibrary` needs no `category` beside it.
 Add `category` only to break a tie between two categories that use the same library
 id. The library overview opens as a dialog over the matrix.
+
+### `libraries`
+
+Narrows the comparison to the libraries you name, for example
+`?libraries=@Model.SampleLibrary`. Ids, displayed names and NuGet package ids all
+work, separated by commas and matched the same forgiving way as `category`. Start the
+list with `-` to name what to leave out instead, as in `?libraries=-CsvHelper`, and
+use `none` for an empty comparison.
+
+This one changes the numbers, which is why it is in the address at all: points are
+measured against the best result **among the compared libraries**, so a link that
+dropped the selection would show a different rating under the same names. Leave it
+out for the whole category — that is the default view, and the reason it carries no
+parameter. Ticking boxes in the application writes it for you, taking whichever list
+is shorter.
 
 ### `version`
 

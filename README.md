@@ -25,7 +25,7 @@
 <table align="center">
 <tr>
 <td width="180" align="center"><strong>7</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>45</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>46</strong><br><sub>LIBRARIES</sub></td>
 <td width="180" align="center"><strong>80</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
@@ -37,7 +37,7 @@
 | [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 | 10 |
 | [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 |
 | [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 |
-| [**Logging**](#logging) | [Microsoft.Extensions.Logging](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 5 | 8 |
+| [**Logging**](#logging) | [Microsoft.Extensions.Logging](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 6 | 8 |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 |
 | [**Validation**](#validation) | [Microsoft.Extensions.Validation](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 4 | 10 |
 | [**ZIP Archives**](#zip-archives) | [SharpZipLib](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 3 | 13 |
@@ -788,7 +788,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 <table>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/autofac.png" width="48" height="48" alt="Autofac logo"></td>
-<td><strong><a href="https://autofac.readthedocs.io/en/latest/">Autofac</a></strong> 9.3.1<br>A flexible inversion of control container for building extensible .NET applications.</td>
+<td><strong><a href="https://autofac.readthedocs.io/en/latest/">Autofac</a></strong> 9.3.2<br>A flexible inversion of control container for building extensible .NET applications.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Autofac">Compare →</a></td>
 </tr>
 <tr>
@@ -1242,7 +1242,7 @@ Creates fresh serializer settings and explicit type metadata without serializing
 ## Logging
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=Microsoft.Extensions.Logging">Microsoft.Extensions.Logging</a></strong> leads the current rating · 5 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=Microsoft.Extensions.Logging">Microsoft.Extensions.Logging</a></strong> leads the current rating · 6 libraries · 8 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=logging"><strong>Explore interactively →</strong></a></p>
@@ -1363,7 +1363,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </details>
 
 <details>
-<summary><strong>Compared libraries (5)</strong></summary>
+<summary><strong>Compared libraries (6)</strong></summary>
 
 <table>
 <tr>
@@ -1380,6 +1380,11 @@ rating above. The same breakdown appears as a hint on any points value in the
 <td width="64"><img src="metadata/Logging/logos/nlog.svg" width="48" height="48" alt="NLog logo"></td>
 <td><strong><a href="https://nlog-project.org/">NLog</a></strong> 6.1.4<br>A configurable logging platform with structured events, scope context, targets, layouts, and asynchronous wrappers.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=NLog">Compare →</a></td>
+</tr>
+<tr>
+<td width="64"><img src="metadata/Logging/logos/open-telemetry.svg" width="48" height="48" alt="OpenTelemetry logo"></td>
+<td><strong><a href="https://opentelemetry.io/docs/languages/dotnet/logs/">OpenTelemetry</a></strong> 1.17.0<br>The OpenTelemetry .NET logging provider and processing pipeline for collecting, enriching, batching, and exporting MEL log records.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=OpenTelemetry">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/Logging/logos/serilog.svg" width="48" height="48" alt="Serilog logo"></td>
@@ -1979,7 +1984,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 <table>
 <tr>
 <td width="64"><img src="metadata/ZipArchives/logos/sharp-compress.svg" width="48" height="48" alt="SharpCompress logo"></td>
-<td><strong><a href="https://github.com/adamhathcock/sharpcompress/blob/master/docs/USAGE.md">SharpCompress</a></strong> 0.50.2<br>A fully managed archive library with random-access, forward-only, non-seekable, encrypted, and asynchronous ZIP APIs.</td>
+<td><strong><a href="https://github.com/adamhathcock/sharpcompress/blob/master/docs/USAGE.md">SharpCompress</a></strong> 0.50.3<br>A fully managed archive library with random-access, forward-only, non-seekable, encrypted, and asynchronous ZIP APIs.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpCompress">Compare →</a></td>
 </tr>
 <tr>
@@ -2146,7 +2151,7 @@ dotnet run --project .\build -- finalize-commit
 
 ## Link to a category or a library
 
-The application reads three optional query parameters, so a page about a library can
+The application reads four optional query parameters, so a page about a library can
 link straight to the relevant comparison instead of the front page:
 
 | Link | Opens |
@@ -2155,8 +2160,9 @@ link straight to the relevant comparison instead of the front page:
 | [https://matrix.dev-team.org/?category=csv-processing](https://matrix.dev-team.org/?category=csv-processing) | that category |
 | [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
 | [https://matrix.dev-team.org/?version=latest&library=CsvHelper](https://matrix.dev-team.org/?version=latest&library=CsvHelper) | the same overview, newest release named explicitly |
+| [https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper](https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper) | that category, narrowed to one library |
 
-The three are independent and combine freely; the links in the tables above are the
+The four are independent and combine freely; the links in the tables above are the
 same thing with the values filled in.
 
 ### `category`
@@ -2170,6 +2176,21 @@ Accepts the library id, its displayed name or its NuGet package id, and finds th
 category on its own, so `?library=CsvHelper` needs no `category` beside it.
 Add `category` only to break a tie between two categories that use the same library
 id. The library overview opens as a dialog over the matrix.
+
+### `libraries`
+
+Narrows the comparison to the libraries you name, for example
+`?libraries=CsvHelper`. Ids, displayed names and NuGet package ids all
+work, separated by commas and matched the same forgiving way as `category`. Start the
+list with `-` to name what to leave out instead, as in `?libraries=-CsvHelper`, and
+use `none` for an empty comparison.
+
+This one changes the numbers, which is why it is in the address at all: points are
+measured against the best result **among the compared libraries**, so a link that
+dropped the selection would show a different rating under the same names. Leave it
+out for the whole category — that is the default view, and the reason it carries no
+parameter. Ticking boxes in the application writes it for you, taking whichever list
+is shorter.
 
 ### `version`
 

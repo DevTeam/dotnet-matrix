@@ -2289,7 +2289,7 @@ tbody th {
    scenario name takes whatever is left instead of setting the table width. */
 .modal-scenarios table {
     width: 100%;
-    min-width: 560px;
+    min-width: 640px;
     border-collapse: collapse;
     font-size: 13px;
     table-layout: fixed;
@@ -2299,7 +2299,7 @@ tbody th {
    produce, so no row alone widens the table. */
 .modal-scenarios th:nth-child(2),
 .modal-scenarios th:nth-child(3) {
-    width: 214px;
+    width: 200px;
 }
 
 .modal-scenarios th {
@@ -2337,8 +2337,11 @@ tbody th {
     gap: 10px;
 }
 
+/* The longest scenario name is wider than its column once the points column
+   takes its share; wrapping costs a line, truncating would cost the name. */
 .modal-scenario-name > span {
     min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .modal-scenario-note {
@@ -2350,7 +2353,7 @@ tbody th {
 .modal-scenario-metric {
     display: grid;
     align-items: center;
-    grid-template-columns: minmax(0, 1fr) 74px 54px;
+    grid-template-columns: minmax(0, 1fr) 72px 62px;
     gap: 8px;
 }
 
@@ -2360,15 +2363,61 @@ tbody th {
     text-align: right;
 }
 
+/* A library five orders of magnitude behind prints a ratio wider than its track;
+   clipping it keeps one row from setting the width of the whole table. */
 .modal-scenario-metric small {
+    overflow: hidden;
     color: var(--muted);
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     text-align: right;
+    text-overflow: ellipsis;
 }
 
 .modal-scenario-metric small.is-best {
     color: var(--accent);
+}
+
+/* The rating scenario by scenario, printed rather than hinted: a tooltip never
+   opens on a touch screen, and this card is where the score is the subject. */
+/* Wide enough for the split of a library far behind, where both halves carry
+   three decimals: `2.823 + 6.296` is the longest this line gets. */
+.modal-scenarios th.modal-scenario-points {
+    width: 112px;
+}
+
+.modal-scenarios td.modal-scenario-points {
+    font-family: 'DM Mono', monospace;
+    text-align: right;
+}
+
+.modal-scenario-points strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* The split, because time and memory are separate columns in the standings. */
+.modal-scenario-points small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.modal-scenarios tfoot td {
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.modal-scenarios tfoot td.modal-scenario-points {
+    color: var(--text);
+}
+
+.modal-scenarios tfoot strong {
+    font-size: 15px;
 }
 
 @media (max-width: 980px) {
@@ -2667,13 +2716,50 @@ tbody th {
         flex: 1 1 calc(50% - 6px);
     }
 
-    .modal-scenarios td:first-child,
+    .modal-scenarios tbody td:first-child,
     .modal-scenario-note {
         flex: 1 0 100%;
     }
 
     .modal-scenario-metric {
         grid-template-columns: minmax(0, 1fr) 66px 50px;
+    }
+
+    /* Stacked, the points sit on their own line under the pair of metrics. Time
+       and memory are told apart by their units; points have none, so the heading
+       the stack dropped comes back as a label. */
+    .modal-scenarios tbody td.modal-scenario-points {
+        display: flex;
+        flex: 1 0 100%;
+        align-items: baseline;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .modal-scenarios tbody td.modal-scenario-points::before {
+        content: 'Points';
+        margin-right: auto;
+        color: var(--muted);
+        font-family: 'Manrope', system-ui, sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+
+    /* The footer keeps its own label, so it stays a two-cell row rather than
+       taking the stacked layout of the body. */
+    .modal-scenarios tfoot tr {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 12px;
+    }
+
+    .modal-scenarios tfoot td {
+        padding: 0;
+        flex: 0 1 auto;
     }
 
     .modal-standing-row {
@@ -2884,5 +2970,40 @@ tbody th {
 
     .hero-copy {
         display: none;
+    }
+}
+
+/* Touch input only. A pointer lands on an 18px line of text without trying; a
+   fingertip does not, and the library name is the way into the card from every
+   table on the page. The hit area grows and nothing moves: the negative margin
+   returns exactly what the padding took. Rows here are 90px apart in the
+   standings and 140px in the charts, so no two targets can overlap. */
+@media (hover: none) {
+    .library-open {
+        padding-block: 13px;
+        margin-block: -13px;
+    }
+
+    /* A fixed-size icon button cannot take padding without shrinking its glyph,
+       so the hit area is an overlay instead of a box change. */
+    .help-button,
+    .library-info,
+    .copy-link,
+    .modal-close {
+        position: relative;
+    }
+
+    .help-button::after,
+    .library-info::after,
+    .copy-link::after,
+    .modal-close::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        min-width: 40px;
+        height: 40px;
+        transform: translate(-50%, -50%);
     }
 }

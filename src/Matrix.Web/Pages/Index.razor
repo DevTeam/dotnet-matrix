@@ -1,6 +1,7 @@
 ﻿@page "/"
 @inject IMatrixDataSource DataSource
 @inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
 
 <PageTitle>.NET Matrix — compare .NET libraries</PageTitle>
 
@@ -366,8 +367,21 @@
 
     private const string CategoryParameter = "category";
     private const string LibraryParameter = "library";
+    private const string LibrariesParameter = "libraries";
     private const string VersionParameter = "version";
     private const string LatestVersion = "latest";
+
+    /// <summary>
+    /// Written when the comparison is empty, because an absent parameter already
+    /// means the whole category and the two states have to stay distinguishable.
+    /// </summary>
+    private const string NoLibraries = "none";
+
+    /// <summary>
+    /// Marks <c>?libraries=</c> as a list of what to leave out rather than what to
+    /// keep, as in <c>?libraries=-MvvmCross,Catel</c>.
+    /// </summary>
+    private const string Without = "-";
 
     /// <summary>
     /// A link published elsewhere can name the category to open, as in
@@ -385,6 +399,18 @@
     [Parameter]
     [SupplyParameterFromQuery(Name = LibraryParameter)]
     public string? Library { get; set; }
+
+    /// <summary>
+    /// Narrows the comparison, as in <c>?libraries=Pure.DI,DryIoc,Grace</c>, or names
+    /// what to leave out, as in <c>?libraries=-MvvmCross,Catel</c>. This belongs in
+    /// the address because it belongs in the result: points are measured against the
+    /// best of the compared libraries, so a link that dropped the selection would
+    /// show different numbers under the same names. Absent means the whole category,
+    /// which is why the default view carries no parameter.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = LibrariesParameter)]
+    public string? ComparedLibraries { get; set; }
 
     /// <summary>
     /// Pins the reports to one release, as in <c>?version=1.4.0</c>. Absent, or
@@ -451,10 +477,13 @@
         if (keys.Length > 0 && keys.All(_selectedLibraries.Contains))
         {
             _selectedLibraries.ExceptWith(keys);
-            return;
+        }
+        else
+        {
+            _selectedLibraries.UnionWith(keys);
         }
 
-        _selectedLibraries.UnionWith(keys);
+        RememberComparedLibraries();
     }
 
     private void ClearSearchOnEscape(KeyboardEventArgs eventArgs)
@@ -538,10 +567,16 @@
     private bool IsLatest(string? version) =>
         version is null || version == LatestVersionId;
 
+    /// <summary>
+    /// A release change reloads every report and reselects everything, so the
+    /// comparison of the previous release is dropped rather than carried over.
+    /// </summary>
     private string VersionLink(string version) =>
-        Navigation.GetUriWithQueryParameter(
-            VersionParameter,
-            IsLatest(version) ? null : version);
+        Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+        {
+            [VersionParameter] = IsLatest(version) ? null : version,
+            [LibrariesParameter] = null
+        });
 
     private void SelectCategory(string categoryId)
     {
@@ -553,8 +588,10 @@
             Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
             {
                 [CategoryParameter] = categoryId,
-                // The library of the previous category has no meaning here.
-                [LibraryParameter] = null
+                // The library and the comparison of the previous category have no
+                // meaning here, and a stale set would silently narrow the new one.
+                [LibraryParameter] = null,
+                [LibrariesParameter] = null
             }),
             replace: true);
     }
@@ -582,9 +619,19 @@
     /// a history entry, so the back button closes the dialog for a visitor who
     /// opened it here, and leaves the site for one who arrived on the link.
     /// </summary>
+    /// <remarks>
+    /// The comparison is named explicitly here and in the two below. The address is
+    /// written outside the router, so what Blazor believes the current address to be
+    /// can lag behind it; stating the value rather than inheriting it is what keeps
+    /// a navigation from dropping a selection.
+    /// </remarks>
     private void OpenLibrary(string libraryId) =>
         Navigation.NavigateTo(
-            Navigation.GetUriWithQueryParameter(LibraryParameter, libraryId));
+            Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+            {
+                [LibrariesParameter] = ComparedLibrariesValue,
+                [LibraryParameter] = libraryId
+            }));
 
     /// <summary>
     /// Closing leaves the category behind, so the address stays a link to what is on
@@ -595,6 +642,7 @@
             Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
             {
                 [CategoryParameter] = _selectedCategoryId,
+                [LibrariesParameter] = ComparedLibrariesValue,
                 [LibraryParameter] = null
             }),
             replace: true);
@@ -604,6 +652,7 @@
         {
             [VersionParameter] = IsLatest(_selectedVersion) ? null : _selectedVersion,
             [CategoryParameter] = _selectedCategoryId,
+            [LibrariesParameter] = ComparedLibrariesValue,
             [LibraryParameter] = libraryId
         });
 
@@ -680,6 +729,8 @@
             _selectedCategoryId = categoryId;
         }
 
+        ApplyComparedLibraries();
+
         if (string.IsNullOrWhiteSpace(Library))
         {
             _openLibraryId = null;
@@ -713,6 +764,8 @@
         {
             _selectedLibraries.Remove(key);
         }
+
+        RememberComparedLibraries();
     }
 
     private void SelectAllLibraries()
@@ -723,6 +776,157 @@
             {
                 _selectedLibraries.Add(LibraryKey(report.Category.Id, library.Id));
             }
+        }
+
+        RememberComparedLibraries();
+    }
+
+    /// <summary>
+    /// Reads <c>?libraries=</c> into the selection of the category on screen. Names,
+    /// ids and package names all match, and an unknown name is simply not selected:
+    /// a link edited by hand should behave, not fail.
+    /// </summary>
+    private void ApplyComparedLibraries()
+    {
+        // The address already describes what is selected, so there is nothing to
+        // read back. This is also what keeps a navigation from undoing a selection
+        // whose address was written straight to the history entry.
+        if (string.Equals(ComparedLibraries, ComparedLibrariesValue, StringComparison.Ordinal))
+        {
+            return;
+        }
+
+        if (_selectedCategoryId is not { } categoryId
+            || _reports.FirstOrDefault(report => report.Category.Id.Equals(
+                categoryId,
+                StringComparison.OrdinalIgnoreCase)) is not { } report)
+        {
+            return;
+        }
+
+        var libraries = Libraries(report).ToArray();
+        if (string.IsNullOrWhiteSpace(ComparedLibraries))
+        {
+            foreach (var library in libraries)
+            {
+                _selectedLibraries.Add(LibraryKey(categoryId, library.Id));
+            }
+
+            return;
+        }
+
+        var excluding = ComparedLibraries.StartsWith(Without, StringComparison.Ordinal);
+        var named = ComparedLibraries[(excluding ? Without.Length : 0)..]
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(Simplify)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var library in libraries)
+        {
+            var key = LibraryKey(categoryId, library.Id);
+            if (Names(library).Any(named.Contains) != excluding)
+            {
+                _selectedLibraries.Add(key);
+            }
+            else
+            {
+                _selectedLibraries.Remove(key);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Everything a link may call this library by. A page about a library knows its
+    /// package name long before it knows the id used here.
+    /// </summary>
+    private static IEnumerable<string> Names(MatrixLibrary library)
+    {
+        yield return Simplify(library.Id);
+        yield return Simplify(library.Name);
+        if (library.Package is { Length: > 0 } package)
+        {
+            yield return Simplify(package);
+        }
+    }
+
+    /// <summary>
+    /// The address follows the selection, but this is not navigation: the selection
+    /// is already applied and the address bar is catching up with it. Going through
+    /// <c>NavigateTo</c> makes the router set the parameters again and render the
+    /// whole workspace a second time — measured at 825 ms against 1 650 ms for
+    /// selecting all twenty-three libraries. Writing the entry directly costs one
+    /// interop call and no render. History behaves the same as <c>replace: true</c>:
+    /// no entry is added, so the back button still points at wherever the visitor
+    /// came from rather than at every checkbox they touched.
+    /// </summary>
+    private async Task RememberComparedLibrariesAsync()
+    {
+        var value = ComparedLibrariesValue;
+        var address = Navigation.GetUriWithQueryParameter(LibrariesParameter, value);
+        // The router is bypassed, so nothing else will refresh the parameter; kept
+        // in step here, the next real navigation sees no change and leaves the
+        // selection alone.
+        ComparedLibraries = value;
+        try
+        {
+            await JsRuntime.InvokeVoidAsync("history.replaceState", null, string.Empty, address);
+        }
+        catch (JSException)
+        {
+            // A browser that refuses the call leaves the address behind; the
+            // comparison on screen is still correct, and the links built for
+            // copying carry the selection of their own accord.
+        }
+    }
+
+    /// <summary>
+    /// Fire and forget: the selection is already applied, and the address is a
+    /// side effect the visitor should never wait for.
+    /// </summary>
+    private void RememberComparedLibraries() => _ = RememberComparedLibrariesAsync();
+
+    /// <summary>
+    /// Only the category on screen, and only when the set is not everything: the
+    /// default view keeps a clean address.
+    /// </summary>
+    private string? ComparedLibrariesValue
+    {
+        get
+        {
+            if (_selectedCategoryId is not { } categoryId
+                || _reports.FirstOrDefault(report => report.Category.Id.Equals(
+                    categoryId,
+                    StringComparison.OrdinalIgnoreCase)) is not { } report)
+            {
+                return null;
+            }
+
+            var libraries = Libraries(report).ToArray();
+            var chosen = libraries
+                .Where(library => _selectedLibraries.Contains(LibraryKey(categoryId, library.Id)))
+                .Select(library => library.Id)
+                .ToArray();
+            if (chosen.Length == libraries.Length)
+            {
+                return null;
+            }
+
+            if (chosen.Length == 0)
+            {
+                return NoLibraries;
+            }
+
+            // Dropping two of twenty-two is the common gesture, and naming the twenty
+            // would make an address nobody wants to paste. Whichever list is shorter
+            // wins, and the leading dash says which one it is.
+            var dropped = libraries.Length - chosen.Length;
+            return dropped < chosen.Length
+                ? Without + string.Join(
+                    ',',
+                    libraries
+                        .Where(library =>
+                            !_selectedLibraries.Contains(LibraryKey(categoryId, library.Id)))
+                        .Select(library => library.Id))
+                : string.Join(',', chosen);
         }
     }
 

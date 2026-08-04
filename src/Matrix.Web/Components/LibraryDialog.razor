@@ -204,6 +204,10 @@
                         <h3>Scenarios</h3>
                         <span class="section-meta">
                             @_supported of @_rows.Length supported · ratio against the best of @Compared
+                            @if (_scored)
+                            {
+                                <text> · points out of @(MatrixRatings.MaximumPoints * MatrixRatings.Metrics) each</text>
+                            }
                         </span>
                     </div>
                     <div class="modal-scenarios">
@@ -213,6 +217,13 @@
                                 <th>Scenario</th>
                                 <th>Time</th>
                                 <th>Memory</th>
+                                @* The rating in full, on the page rather than in a
+                                   hint: a tooltip never opens on a touch screen, and
+                                   this is the one place the score is the subject. *@
+                                @if (_scored)
+                                {
+                                    <th class="modal-scenario-points">Points</th>
+                                }
                             </tr>
                             </thead>
                             <tbody>
@@ -257,9 +268,33 @@
                                     {
                                         <td class="modal-scenario-note" colspan="2">@row.Note</td>
                                     }
+                                    @if (_scored)
+                                    {
+                                        <td class="modal-scenario-points">
+                                            <strong>@MatrixScores.FormatExact(row.Points)</strong>
+                                            @* The split, because time and memory are
+                                               separate columns in the standings. *@
+                                            <small>
+                                                @MatrixScores.FormatExact(row.TimePoints)
+                                                + @MatrixScores.FormatExact(row.MemoryPoints)
+                                            </small>
+                                        </td>
+                                    }
                                 </tr>
                             }
                             </tbody>
+                            @if (_scored && _medals is { } total)
+                            {
+                                <tfoot>
+                                <tr>
+                                    <td colspan="3">Rating</td>
+                                    <td class="modal-scenario-points">
+                                        <strong>@MatrixScores.Format(total.Points)</strong>
+                                        <small>of @total.Maximum</small>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            }
                         </table>
                     </div>
                 </section>
@@ -277,9 +312,14 @@
     private int _rated;
     private string _ratingPlace = "—";
     private int _supported;
+    /// <summary>The library takes part in the rating, so its scenarios carry points.</summary>
+    private bool _scored;
+
     private Standing[] _standings = [];
     private (string Name, string Title)[] _legend = [];
     private Row[] _rows = [];
+    private IReadOnlyDictionary<string, MatrixScoreDetail> _scores =
+        new Dictionary<string, MatrixScoreDetail>();
 
     [Parameter, EditorRequired]
     public required CategoryReport Report { get; set; }
@@ -346,6 +386,7 @@
         _place = MatrixView.Place(rating, Library.Id);
         _rated = rating.Count;
         _ratingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
+        _scored = MatrixView.IsRated(Report, Library.Id) && _medals is not null;
         ReadStandings();
         ReadRows();
     }
@@ -392,6 +433,16 @@
             order[feature.Id] = (feature.Order, feature.Name);
         }
 
+        // The rating, scenario by scenario, from the function the rating itself sums.
+        _scores = Report.Benchmarks is { } benchmarks
+            ? MatrixScores
+                .Explain(
+                    benchmarks.Features,
+                    Library.Id,
+                    libraryId => MatrixView.IsRated(Report, libraryId)
+                                 && MatrixView.IsSelected(Report, SelectedLibraries, libraryId))
+                .ToDictionary(detail => detail.FeatureId, StringComparer.OrdinalIgnoreCase)
+            : [];
         _rows = order
             .OrderBy(entry => entry.Value.Order)
             .Select(entry => ReadRow(entry.Key, entry.Value.Order, entry.Value.Name))
@@ -401,6 +452,7 @@
 
     private Row ReadRow(string featureId, int order, string name)
     {
+        var score = _scores.GetValueOrDefault(featureId);
         var status = (Report.Features?.Features ?? [])
             .FirstOrDefault(feature => feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
             ?.Results
@@ -431,7 +483,9 @@
             MatrixMetrics.ScalePercent(row?.Time ?? 0, MatrixScenarios.Maximum(rows, false)),
             MatrixMetrics.ScalePercent(row?.Memory ?? 0, MatrixScenarios.Maximum(rows, true)),
             Ratio(row?.Time, MatrixScenarios.Minimum(rows, false)),
-            Ratio(row?.Memory, MatrixScenarios.Minimum(rows, true)));
+            Ratio(row?.Memory, MatrixScenarios.Minimum(rows, true)),
+            score?.Time.Points ?? 0,
+            score?.Memory.Points ?? 0);
     }
 
     private void ReadStandings()
@@ -598,5 +652,10 @@
         double TimePercent,
         double MemoryPercent,
         string TimeRatio,
-        string MemoryRatio);
+        string MemoryRatio,
+        double TimePoints,
+        double MemoryPoints)
+    {
+        public double Points => TimePoints + MemoryPoints;
+    }
 }

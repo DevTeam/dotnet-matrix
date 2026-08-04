@@ -324,6 +324,16 @@ presentation rules are part of this document.
   scoped to that group's scenarios, and on the library card — its points tile,
   each row of the rating breakdown, and each group standing. Every one of them
   carries `cursor: help`, which is the only thing that says a hint is there.
+- **A hint is a shortcut, never the only copy.** `title` does not fire on a touch
+  screen, so anything that exists only in one would not exist on a phone. The
+  library card therefore prints the full breakdown: the `Scenarios` table carries
+  a `Points` column with the total for the scenario and the `time + memory` split
+  under it, and a footer row that adds up to the rating. Same numbers, same
+  source, on the page rather than behind a pointer.
+- **The compared set is in the address.** `?libraries=` names what is being
+  compared, or what to leave out after a leading `-`. It has to be there: points
+  are measured against the best result among the compared libraries, so a link
+  that dropped the selection would show a different rating under the same names.
 - **Points in a hint print to one decimal** (`MatrixScores.FormatExact`), while a
   table cell keeps whole points. A breakdown exists to be added up: at whole
   points a scenario lost by half a percent shows as a perfect 100, four of them
