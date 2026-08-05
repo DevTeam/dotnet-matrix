@@ -1,4 +1,5 @@
 @inject IMatrixView View
+@inject IMatrixScoring Scoring
 
 @foreach (var report in Reports)
 {
@@ -37,6 +38,12 @@
                 </span>
                 Has a note
             </li>
+            <li>
+                <span class="feature-status is-medal">
+                    <RatingIcon Place="gold"/>
+                </span>
+                Fastest &amp; lightest here
+            </li>
         </ul>
         <div class="table-scroll">
             <table class="feature-table">
@@ -66,6 +73,7 @@
                 {
                     var description = View.FeatureDescription(report, feature.Id);
                     var expanded = _expanded.Contains(feature.Id);
+                    var medals = ScenarioMedals(report, feature, libraries);
                     <tr>
                         <th>
                             @if (description is null)
@@ -92,18 +100,30 @@
                         {
                             var value = feature.Results.FirstOrDefault(result =>
                                 result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase));
+                            var medal = medals.GetValueOrDefault(library.Id);
                             <td>
-                                @if (value is not null)
+                                @* Fastest and lightest here replaces the checkmark rather
+                                   than sitting above it: a star already says the scenario
+                                   was supported, so the row stays as compact as the plain
+                                   status grid. *@
+                                @if (medal is not null)
+                                {
+                                    <span class="feature-status is-medal @(value is not null ? ReasonClass(value) : null)"
+                                          title="@Tooltip(feature, library, value, medal)">
+                                        <RatingIcon Place="@medal"/>
+                                    </span>
+                                }
+                                else if (value is not null)
                                 {
                                     <span class="feature-status @StatusClass(value.Status) @ReasonClass(value)"
-                                          title="@Tooltip(feature, library, value)">
+                                          title="@Tooltip(feature, library, value, null)">
                                         <StatusIcon Kind="@StatusClass(value.Status)"/>
                                     </span>
                                 }
                                 else
                                 {
                                     <span class="feature-status missing"
-                                          title="@($"{library.Name} · {feature.Name}: no data")">
+                                          title="@Tooltip(feature, library, null, null)">
                                         <StatusIcon Kind="missing"/>
                                     </span>
                                 }
@@ -155,10 +175,18 @@
     private static string Tooltip(
         FeatureReportEntry feature,
         MatrixLibrary library,
-        FeatureResult result)
+        FeatureResult? result,
+        string? medal)
     {
-        var head = $"{library.Name} · {feature.Name}: {StatusLabel(result.Status)}";
-        return result.Reason is null ? head : $"{head}\n{result.Reason}";
+        var head = result is null
+            ? $"{library.Name} · {feature.Name}: no data"
+            : $"{library.Name} · {feature.Name}: {StatusLabel(result.Status)}";
+        if (result?.Reason is { } reason)
+        {
+            head = $"{head}\n{reason}";
+        }
+
+        return medal is null ? head : $"{head}\n{Ordinal(medal)} here on time and memory combined";
     }
 
     private static string ReasonClass(FeatureResult result) =>
@@ -175,4 +203,61 @@
 
     private static string StatusLabel(string status) =>
         status == "NotApplicable" ? "N/A" : status;
+
+    private static readonly IReadOnlyDictionary<string, string> NoMedals =
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Who placed on this one scenario, time and memory combined — the same rule
+    /// the category rating scores with, run over a single benchmark entry instead
+    /// of all of them. A scenario the benchmark report never measured, or one
+    /// nobody selected scored anything on, gives out no medals.
+    /// </summary>
+    private IReadOnlyDictionary<string, string> ScenarioMedals(
+        CategoryReport report,
+        FeatureReportEntry feature,
+        IReadOnlyList<MatrixLibrary> libraries)
+    {
+        var benchmark = report.Benchmarks?.Features.FirstOrDefault(entry =>
+            entry.Id.Equals(feature.Id, StringComparison.OrdinalIgnoreCase));
+        if (benchmark is null)
+        {
+            return NoMedals;
+        }
+
+        bool Include(string libraryId) =>
+            View.IsRated(report, libraryId) && View.IsSelected(report, SelectedLibraries, libraryId);
+
+        return libraries
+            .Where(library => Include(library.Id))
+            .Select(library => (library.Id, Points: ScenarioPoints(benchmark, library.Id, Include)))
+            .Where(entry => entry.Points > 0)
+            .OrderByDescending(entry => entry.Points)
+            .Take(Scoring.Places)
+            .Select((entry, index) => (entry.Id, Place: Medal(index)))
+            .ToDictionary(entry => entry.Id, entry => entry.Place, StringComparer.OrdinalIgnoreCase);
+    }
+
+    private static double ScenarioPoints(
+        BenchmarkReportEntry benchmark,
+        string libraryId,
+        Func<string, bool> includeLibrary)
+    {
+        var detail = MatrixScores.Explain([benchmark], libraryId, includeLibrary).FirstOrDefault();
+        return detail is null ? 0 : detail.Time.Points + detail.Memory.Points;
+    }
+
+    private static string Medal(int index) => index switch
+    {
+        0 => "gold",
+        1 => "silver",
+        _ => "bronze"
+    };
+
+    private static string Ordinal(string medal) => medal switch
+    {
+        "gold" => "1st",
+        "silver" => "2nd",
+        _ => "3rd"
+    };
 }
