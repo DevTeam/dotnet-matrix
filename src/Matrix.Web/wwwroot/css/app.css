@@ -1111,11 +1111,11 @@ select {
     margin-bottom: 22px;
 }
 
-/* Bounded by the viewport so the horizontal scrollbar always stays on screen:
-   the matrix is far wider than any display once every library is selected. */
+/* Only sideways: the matrix is far wider than any display once every library
+   is selected, but its height is the page's to scroll, not a box within it. */
 .table-scroll {
-    max-height: max(320px, calc(100vh - 210px));
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: visible;
     overscroll-behavior: contain;
     scrollbar-color: var(--line) var(--surface-2);
     scrollbar-width: thin;
@@ -2790,8 +2790,9 @@ tbody th {
         padding: 16px;
     }
 
-    /* The standings stack too: the library on one line, its four numbers on the
-       next, each carrying the heading it lost. */
+    /* The standings stack too: place and library share the first line, and
+       scenarios and points share a second line below it — the count and the
+       number it earned, side by side — each carrying the heading it lost. */
     .rating-table table {
         min-width: 0;
     }
@@ -2803,14 +2804,20 @@ tbody th {
     .rating-table tbody tr {
         display: flex;
         flex-wrap: wrap;
-        align-items: baseline;
+        align-items: center;
         gap: 4px 10px;
         padding: 8px 12px;
     }
 
+    /* A generic `th, td` rule elsewhere on the page draws a border above every
+       cell, meant for a row of table cells sitting side by side. Here each cell
+       is a flex item that can start a wrapped line of its own — Scenarios, or
+       Points behind a long name — and that border was drawing a stray seam
+       above whichever cell wrapped, not just above the row as a whole. */
     .rating-table td {
         padding: 0;
         flex: 1 1 auto;
+        border-top: 0;
         text-align: left;
     }
 
@@ -2824,6 +2831,37 @@ tbody th {
     .rating-table td.rating-column-name {
         min-width: 0;
         flex: 1 1 calc(100% - 60px);
+    }
+
+    /* Desktop pulls the medal to the far edge of a narrow name column, right
+       beside the points column that follows it on the same row. Here the name
+       column spans nearly the whole line by itself, so the same auto margin
+       would strand the medal out past the name, with nothing beside it: it
+       stays put next to the name instead. */
+    .rating-name .rating-badge {
+        margin-left: 0;
+    }
+
+    /* Time and memory are the breakdown, not the headline: on a phone only the
+       total they add up to is worth the width. The figures stay one tap away,
+       in the same breakdown the library's own overview shows. */
+    .rating-table td.rating-column-score {
+        display: none;
+    }
+
+    /* Scenarios and points share the second line: scenarios grows to hold its
+       place at the left, points rides the auto margin to the right edge, and
+       neither claims the full line for itself the way the name does above. */
+    .rating-table td.rating-column-scenarios {
+        order: 2;
+        flex: 1 1 auto;
+    }
+
+    .rating-table td.rating-column-total {
+        order: 3;
+        flex: 0 0 auto;
+        margin-left: auto;
+        text-align: right;
     }
 
     .rating-label {
