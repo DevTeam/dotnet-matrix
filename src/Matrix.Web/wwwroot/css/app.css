@@ -585,10 +585,11 @@ select {
     letter-spacing: -.03em;
 }
 
-/* The last track is the score, the same column the standings end with. */
+/* The score keeps the column the standings share; the medal takes the last
+   track after it, as in the standings. */
 .overview-chart-row {
     display: grid;
-    grid-template-columns: minmax(0, 29fr) minmax(0, 32fr) minmax(0, 32fr) 58px;
+    grid-template-columns: minmax(0, 29fr) minmax(0, 32fr) minmax(0, 32fr) 58px 20px;
     align-items: center;
     gap: 24px;
     padding: 7px 10px;
@@ -653,10 +654,10 @@ select {
     font-size: 11px;
 }
 
-/* Fixed rank and medal columns keep every logo, name and star on one vertical. */
+/* Fixed rank column keeps every logo and name on one vertical. */
 .overview-chart-label {
     display: grid;
-    grid-template-columns: 22px auto minmax(0, 1fr) 14px;
+    grid-template-columns: 22px auto minmax(0, 1fr);
     min-width: 0;
     align-items: center;
     gap: 10px;
@@ -928,8 +929,16 @@ select {
     text-align: left;
 }
 
-.rating-table th:not(.rating-column-place):not(.rating-column-name) {
+.rating-table th:not(.rating-column-place):not(.rating-column-name):not(.rating-column-badge) {
     width: 74px;
+}
+
+.rating-column-badge {
+    width: 30px;
+}
+
+.rating-table td.rating-column-badge {
+    text-align: center;
 }
 
 .rating-table td.is-partial {
@@ -963,10 +972,6 @@ select {
     white-space: nowrap;
 }
 
-.rating-name .rating-badge {
-    margin-left: auto;
-}
-
 .rating-label {
     display: none;
 }
@@ -975,6 +980,7 @@ select {
     display: grid;
     width: 14px;
     height: 14px;
+    justify-self: center;
     place-items: center;
 }
 
@@ -2840,15 +2846,6 @@ tbody th {
         flex: 1 1 calc(100% - 60px);
     }
 
-    /* Desktop pulls the medal to the far edge of a narrow name column, right
-       beside the points column that follows it on the same row. Here the name
-       column spans nearly the whole line by itself, so the same auto margin
-       would strand the medal out past the name, with nothing beside it: it
-       stays put next to the name instead. */
-    .rating-name .rating-badge {
-        margin-left: 0;
-    }
-
     /* Time and memory are the breakdown, not the headline: on a phone only the
        total they add up to is worth the width. The figures stay one tap away,
        in the same breakdown the library's own overview shows. */
@@ -2869,6 +2866,13 @@ tbody th {
         flex: 0 0 auto;
         margin-left: auto;
         text-align: right;
+    }
+
+    /* Rides in beside the points it follows on desktop too, right after the
+       auto margin that pushes the total to the row's edge. */
+    .rating-table td.rating-column-badge {
+        order: 4;
+        flex: 0 0 auto;
     }
 
     .rating-label {

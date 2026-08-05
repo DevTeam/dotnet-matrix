@@ -41,6 +41,7 @@
                 <strong>Points</strong>
                 <small>time + memory</small>
             </div>
+            <div></div>
         </div>
 
         @for (var index = 0; index < overview.Rows.Count; index++)
@@ -76,14 +77,6 @@
                             @Coverage(overview, row)
                         </small>
                     </div>
-                    @* Always rendered, so medals and the out-of-rating mark keep to
-                       one column at the right edge of the label. *@
-                    <span class="overview-chart-medal" title="@mark.Title">
-                        @if (mark.Icon is { } icon)
-                        {
-                            <RatingIcon Place="@icon"/>
-                        }
-                    </span>
                 </div>
                 <OverviewBar Values="@row.PerformanceValues"
                              FeatureNames="@featureNames"
@@ -110,6 +103,14 @@
                     else
                     {
                         <text>—</text>
+                    }
+                </span>
+                @* Always rendered, so medals and the out-of-rating mark keep to
+                   one column at the right edge of the row. *@
+                <span class="overview-chart-medal" title="@mark.Title">
+                    @if (mark.Icon is { } icon)
+                    {
+                        <RatingIcon Place="@icon"/>
                     }
                 </span>
             </div>

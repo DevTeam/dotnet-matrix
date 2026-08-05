@@ -29,6 +29,7 @@
                     <th>Time</th>
                     <th>Memory</th>
                     <th>Points</th>
+                    <th class="rating-column-badge"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,9 +53,6 @@
                                         @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">
                                     @item.Name
                                 </button>
-                                <RatingBadge Standing="@item"
-                                             Place="@place"
-                                             Category="@Report.Category.Name"/>
                             </span>
                         </td>
                         @* The labels repeat the column headings and show only where
@@ -85,6 +83,11 @@
                                 type="button"
                                 aria-label="@BreakdownLabel(item)"
                                 @onclick="() => OnOpenLibrary.InvokeAsync(item.LibraryId)">@Scoring.Format(item.Points)</button>
+                        </td>
+                        <td class="rating-column-badge">
+                            <RatingBadge Standing="@item"
+                                         Place="@place"
+                                         Category="@Report.Category.Name"/>
                         </td>
                     </tr>
                 }
