@@ -2469,6 +2469,13 @@ tbody th {
 .modal-scenarios td.modal-scenario-points {
     font-family: 'DM Mono', monospace;
     text-align: right;
+}
+
+/* The same split fill as the standings row, but spanning the whole scenario
+   row rather than just the points cell — the name and the meters explain the
+   number this fills in behind, so the fill reads against all of them. */
+.modal-scenarios tbody tr,
+.modal-scenarios tfoot tr {
     background-image: linear-gradient(
         to right,
         var(--cyan-soft) var(--points-time, 0%),
@@ -2494,7 +2501,7 @@ tbody th {
 
 .modal-scenarios tfoot td {
     border-top: 1px solid var(--line);
-    background: var(--surface-2);
+    background-color: var(--surface-2);
     color: var(--muted);
     font-size: 12px;
 }

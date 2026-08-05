@@ -240,7 +240,8 @@
                             <tbody>
                             @foreach (var row in _rows)
                             {
-                                <tr class="@(row.HasResult ? null : "is-quiet")">
+                                <tr class="@(row.HasResult ? null : "is-quiet")"
+                                    style="@(_scored ? $"--points-time: {Share(row.TimePoints, ScenarioMaximum)}; --points: {Share(row.Points, ScenarioMaximum)}" : null)">
                                     <td>
                                         <span class="modal-scenario-name" title="@row.Description">
                                             <span class="feature-status @row.StatusClass"
@@ -281,8 +282,7 @@
                                     }
                                     @if (_scored)
                                     {
-                                        <td class="modal-scenario-points"
-                                            style="--points-time: @Share(row.TimePoints, ScenarioMaximum); --points: @Share(row.Points, ScenarioMaximum)">
+                                        <td class="modal-scenario-points">
                                             <strong>@Scoring.FormatExact(row.Points)</strong>
                                             @* The split, because time and memory are
                                                separate columns in the standings. *@
@@ -298,10 +298,9 @@
                             @if (_scored && _medals is { } total)
                             {
                                 <tfoot>
-                                <tr>
+                                <tr style="@($"--points-time: {Share(total.TimePoints, total.Maximum)}; --points: {Share(total.Points, total.Maximum)}")">
                                     <td colspan="3">Rating</td>
-                                    <td class="modal-scenario-points"
-                                        style="--points-time: @Share(total.TimePoints, total.Maximum); --points: @Share(total.Points, total.Maximum)">
+                                    <td class="modal-scenario-points">
                                         <strong>@Scoring.Format(total.Points)</strong>
                                         <small>of @total.Maximum</small>
                                     </td>
