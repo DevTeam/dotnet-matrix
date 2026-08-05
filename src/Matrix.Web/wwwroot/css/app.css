@@ -1118,11 +1118,16 @@ select {
 }
 
 /* Only sideways: the matrix is far wider than any display once every library
-   is selected, but its height is the page's to scroll, not a box within it. */
+   is selected, but its height is the page's to scroll, not a box within it.
+   `overflow-y: visible` would look right but the spec forces a `visible` paired
+   with a non-`visible` overflow-x to compute as `auto`, turning this into a
+   vertical scroll container that traps the wheel instead of scrolling the
+   page; `clip` sidesteps that coercion, and `overscroll-behavior-x` alone
+   keeps the containment to the axis that actually scrolls. */
 .table-scroll {
     overflow-x: auto;
-    overflow-y: visible;
-    overscroll-behavior: contain;
+    overflow-y: clip;
+    overscroll-behavior-x: contain;
     scrollbar-color: var(--line) var(--surface-2);
     scrollbar-width: thin;
     /* Edge shadow that fades out at the end of the scroll: the horizontal
