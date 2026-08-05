@@ -1,3 +1,4 @@
+@using System.Globalization
 @inject IMatrixView View
 @inject IMatrixScoring Scoring
 @inject IMatrixPalette Palette
@@ -51,6 +52,7 @@
                rather than for every row in advance: see Reveal below. Bound to the
                row, so moving along one costs nothing. *@
             <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)"
+                 style="--points-time: @Share(overview, row, row.TimePoints); --points: @Share(overview, row, row.Points)"
                  @onmouseenter="() => Reveal(row.LibraryId)">
                 <div class="overview-chart-label">
                     @* A library outside the rating holds no place in it. *@
@@ -233,6 +235,16 @@
 
     private static string Coverage(MatrixOverview overview, MatrixOverviewRow row) =>
         $"{overview.Features.Count - row.MissingFeatures.Count}/{overview.Features.Count}";
+
+    /// <summary>
+    /// The share of the group maximum a value holds, as the width of its fill.
+    /// A reference row is out of the rating and scores nothing, so its fill stays
+    /// empty rather than showing a share it never competed for.
+    /// </summary>
+    private static string Share(MatrixOverview overview, MatrixOverviewRow row, double points) =>
+        row.Rated && overview.Maximum > 0
+            ? (100d * points / overview.Maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
+            : "0%";
 
     private static string CoverageTitle(MatrixOverviewRow row) =>
         row.MissingFeatures.Count == 0

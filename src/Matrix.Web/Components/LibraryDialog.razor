@@ -1,4 +1,5 @@
 @using System.Diagnostics.CodeAnalysis
+@using System.Globalization
 @inject IMatrixView View
 @inject IMatrixScoring Scoring
 @inject IMatrixMeasures Measures
@@ -83,7 +84,9 @@
                     <strong>@RatingPlace</strong>
                     <span>rating</span>
                 </div>
-                <div class="is-explained" title="@PointsTitle">
+                <div class="is-explained"
+                     style="--points-time: @Share(_medals?.TimePoints ?? 0, _medals?.Maximum ?? 0); --points: @Share(_medals?.Points ?? 0, _medals?.Maximum ?? 0)"
+                     title="@PointsTitle">
                     <strong>@(_medals is null ? "0" : Scoring.Format(_medals.Points))<small>/@(_medals?.Maximum ?? 0)</small></strong>
                     <span>points</span>
                 </div>
@@ -107,12 +110,12 @@
                     @* Each number carries the measurements it was summed from, so
                        the breakdown can be checked without leaving the card. *@
                     <ul class="modal-rating">
-                        <li title="@Hint(false)">
+                        <li class="is-time" style="--points: @Share(rating.TimePoints, rating.MetricMaximum)" title="@Hint(false)">
                             <span>Execution time</span>
                             <strong>@Scoring.Format(rating.TimePoints)</strong>
                             <small>of @rating.MetricMaximum</small>
                         </li>
-                        <li title="@Hint(true)">
+                        <li class="is-memory" style="--points: @Share(rating.MemoryPoints, rating.MetricMaximum)" title="@Hint(true)">
                             <span>Allocated memory</span>
                             <strong>@Scoring.Format(rating.MemoryPoints)</strong>
                             <small>of @rating.MetricMaximum</small>
@@ -126,7 +129,9 @@
                                 <small>of @(missing * Scoring.MaximumPoints * Scoring.Metrics)</small>
                             </li>
                         }
-                        <li class="is-total" title="@Hint(null)">
+                        <li class="is-total"
+                            style="--points-time: @Share(rating.TimePoints, rating.Maximum); --points: @Share(rating.Points, rating.Maximum)"
+                            title="@Hint(null)">
                             <span>Rating</span>
                             <strong>@Scoring.Format(rating.Points)</strong>
                             <small>of @rating.Maximum</small>
@@ -276,7 +281,8 @@
                                     }
                                     @if (_scored)
                                     {
-                                        <td class="modal-scenario-points">
+                                        <td class="modal-scenario-points"
+                                            style="--points-time: @Share(row.TimePoints, ScenarioMaximum); --points: @Share(row.Points, ScenarioMaximum)">
                                             <strong>@Scoring.FormatExact(row.Points)</strong>
                                             @* The split, because time and memory are
                                                separate columns in the standings. *@
@@ -294,7 +300,8 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="3">Rating</td>
-                                    <td class="modal-scenario-points">
+                                    <td class="modal-scenario-points"
+                                        style="--points-time: @Share(total.TimePoints, total.Maximum); --points: @Share(total.Points, total.Maximum)">
                                         <strong>@Scoring.Format(total.Points)</strong>
                                         <small>of @total.Maximum</small>
                                     </td>
@@ -594,6 +601,18 @@
 
     private static string Width(double percent) =>
         $"width: {percent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+
+    /// <summary>What one scenario is worth on both metrics, the denominator every row's fill shares.</summary>
+    private int ScenarioMaximum => Scoring.MaximumPoints * Scoring.Metrics;
+
+    /// <summary>
+    /// The share of a maximum a value holds, as the width of its fill.
+    /// Invariant, because a decimal comma is not a CSS length.
+    /// </summary>
+    private static string Share(double points, int maximum) =>
+        maximum > 0
+            ? (100d * points / maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
+            : "0%";
 
     private static string? Best(string ratio) => ratio == "1.00x" ? "is-best" : null;
 

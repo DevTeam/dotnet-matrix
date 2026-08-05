@@ -13,6 +13,7 @@
     --accent: #b7f34a;
     --accent-soft: rgba(183, 243, 74, .12);
     --cyan: #68d8ef;
+    --cyan-soft: rgba(104, 216, 239, .12);
     --danger: #ff6b70;
     --warning: #f4bd50;
     /* Four steps, one per level of the interface: the block that sits on the page,
@@ -611,7 +612,20 @@ select {
 }
 
 .overview-chart-row.is-striped {
-    background: var(--surface);
+    background-color: var(--surface);
+}
+
+/* Same split fill as the standings table: cyan up to the time share, lime up to
+   the combined share, nothing after. The header row carries neither custom
+   property, so it keeps its own border and stays unfilled. */
+.overview-chart-row:not(.overview-chart-columns) {
+    background-image: linear-gradient(
+        to right,
+        var(--cyan-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
 }
 
 .overview-chart-columns {
@@ -875,10 +889,14 @@ select {
 /* How much of the maximum the row actually holds. Below the leaders the points
    fall to a few percent and the place number implies a difference the numbers do
    not carry; the fill is what shows that two adjacent ranks are both nowhere.
+   Split in two, cyan for time and lime for memory — the same two colours the
+   meter bars use — so the fill also says which of the two a row leans on.
    Background only, so no cell moves and the stacked phone layout is unaffected. */
 .rating-table tbody tr {
     background-image: linear-gradient(
         to right,
+        var(--cyan-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points-time, 0%),
         var(--accent-soft) var(--points, 0%),
         transparent var(--points, 0%));
     background-repeat: no-repeat;
@@ -2154,6 +2172,17 @@ tbody th {
     cursor: help;
 }
 
+/* The same split fill as the standings row this tile summarises. */
+.modal-metrics div.is-explained {
+    background-image: linear-gradient(
+        to right,
+        var(--cyan-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
+}
+
 .modal-metrics strong {
     display: block;
     font-size: 22px;
@@ -2229,8 +2258,34 @@ tbody th {
     color: var(--warning);
 }
 
+/* Each metric row fills in its own colour — cyan for time, lime for memory —
+   and the total row splits between the two, all against the same --points
+   custom property the standings row uses. */
+.modal-rating li.is-time {
+    background-image: linear-gradient(
+        to right,
+        var(--cyan-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
+}
+
+.modal-rating li.is-memory {
+    background-image: linear-gradient(
+        to right,
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
+}
+
 .modal-rating .is-total {
-    background: var(--surface-2);
+    background-color: var(--surface-2);
+    background-image: linear-gradient(
+        to right,
+        var(--cyan-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
 }
 
 .modal-rating .is-total strong {
@@ -2404,6 +2459,13 @@ tbody th {
 .modal-scenarios td.modal-scenario-points {
     font-family: 'DM Mono', monospace;
     text-align: right;
+    background-image: linear-gradient(
+        to right,
+        var(--cyan-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points-time, 0%),
+        var(--accent-soft) var(--points, 0%),
+        transparent var(--points, 0%));
+    background-repeat: no-repeat;
 }
 
 .modal-scenario-points strong {

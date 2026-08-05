@@ -38,7 +38,7 @@
                     var place = index + 1;
                     @* Bound to the row rather than to the three cells that carry a
                        breakdown, so moving along a row costs no render. *@
-                    <tr style="--points: @Share(item)"
+                    <tr style="--points-time: @Share(item.TimePoints, item.Maximum); --points: @Share(item.Points, item.Maximum)"
                         @onmouseenter="() => Reveal(item.LibraryId)">
                         <td class="rating-column-place">@place</td>
                         <td class="rating-column-name">
@@ -148,12 +148,12 @@
             : null;
 
     /// <summary>
-    /// The share of the maximum this row holds, as the width of its fill.
+    /// The share of the maximum a value holds, as the width of its fill.
     /// Invariant, because a decimal comma is not a CSS length.
     /// </summary>
-    private static string Share(MatrixMedals item) =>
-        item.Maximum > 0
-            ? (100d * item.Points / item.Maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
+    private static string Share(double points, int maximum) =>
+        maximum > 0
+            ? (100d * points / maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
             : "0%";
 
     private static string Coverage(MatrixMedals item) =>
