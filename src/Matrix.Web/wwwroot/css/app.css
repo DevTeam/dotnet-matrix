@@ -705,8 +705,12 @@ select {
     background: var(--surface-2);
 }
 
+/* A scenario that measures next to nothing beside one that dominates the total
+   would otherwise round away to nothing: min-width keeps every segment with a
+   share above zero visible, even if the true share is a fraction of a pixel. */
 .overview-bar span {
     flex: 0 0 auto;
+    min-width: 2px;
     height: 100%;
 }
 
