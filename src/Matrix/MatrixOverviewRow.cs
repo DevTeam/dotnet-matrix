@@ -9,8 +9,9 @@ namespace Matrix;
 /// </summary>
 /// <param name="Rated">
 /// False for a library the category keeps out of its rating, such as a
-/// hand-written baseline. It is drawn as a reference but scores nothing and does
-/// not set the best result the others are measured against.
+/// hand-written baseline. It is drawn as a reference and still earns real
+/// <see cref="TimePoints"/>/<see cref="MemoryPoints"/> against the field's best,
+/// but it never defines that best itself and never takes a place.
 /// </param>
 public sealed record MatrixOverviewRow(
     string LibraryId,

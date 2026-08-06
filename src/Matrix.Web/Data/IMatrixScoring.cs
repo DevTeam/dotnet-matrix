@@ -26,6 +26,13 @@ internal interface IMatrixScoring
     /// </summary>
     string FormatExact(double points);
 
+    /// <summary>
+    /// <see cref="Format"/>, or nothing once <paramref name="points"/> passes
+    /// <paramref name="maximum"/> — the only number a reference row ever needs,
+    /// since a rated library can never pass its field's maximum.
+    /// </summary>
+    string FormatWithinMax(double points, double maximum);
+
     IReadOnlyList<MatrixMedals> Rating(
         CategoryReport report,
         IReadOnlySet<string> selectedLibraries);

@@ -82,6 +82,16 @@ public static class MatrixScores
             ? points.ToString("0.#", CultureInfo.InvariantCulture)
             : points.ToString("0.###", CultureInfo.InvariantCulture);
 
+    /// <summary>
+    /// <see cref="Format"/>, or nothing once <paramref name="points"/> passes
+    /// <paramref name="maximum"/>. A rated library can never pass its field's
+    /// maximum — see workflows/rating.md — so this only ever blanks a reference
+    /// row's own score once it outscores the whole rated field; there is no
+    /// number on that scale left to show it against.
+    /// </summary>
+    public static string FormatWithinMax(double points, double maximum) =>
+        points > maximum ? string.Empty : Format(points);
+
     public static IReadOnlyDictionary<string, MatrixScore> Create(
         IEnumerable<BenchmarkReportEntry> features,
         IEnumerable<string> libraryIds,
@@ -136,35 +146,44 @@ public static class MatrixScores
         features
             .Select(feature =>
             {
-                var results = feature.Results
-                    .Where(result =>
-                        result.Successful && (includeLibrary?.Invoke(result.LibraryId) ?? true))
-                    .ToArray();
+                var results = feature.Results.Where(result => result.Successful).ToArray();
                 return new MatrixScoreDetail(
                     feature.Id,
                     feature.Name,
-                    Cell(results, libraryId, result => result.MeanNanoseconds, TimeResolution),
+                    Cell(results, libraryId, result => result.MeanNanoseconds, TimeResolution, includeLibrary),
                     Cell(
                         results,
                         libraryId,
                         result => result.AllocatedBytesPerOperation,
-                        MemoryResolution));
+                        MemoryResolution,
+                        includeLibrary));
             })
             .ToArray();
 
+    /// <summary>
+    /// <paramref name="includeLibrary"/> decides who defines <c>best</c> — the
+    /// field this cell's library is measured against — not whether its own
+    /// result is looked up. A library outside that field, such as a hand-written
+    /// baseline, still gets its own measurement scored against the field's best;
+    /// it simply never becomes the best itself. See workflows/rating.md.
+    /// </summary>
     private static MatrixScoreCell Cell(
         IReadOnlyList<BenchmarkResult> results,
         string libraryId,
         Func<BenchmarkResult, double?> metric,
-        double resolution)
+        double resolution,
+        Func<string, bool>? includeLibrary)
     {
         var measured = results.Where(result => metric(result) is not null).ToArray();
-        if (measured.Length == 0)
+        var contestants = measured
+            .Where(result => includeLibrary?.Invoke(result.LibraryId) ?? true)
+            .ToArray();
+        if (contestants.Length == 0)
         {
             return new MatrixScoreCell(null, null, resolution, 0);
         }
 
-        var best = measured.Min(result => metric(result)!.Value);
+        var best = contestants.Min(result => metric(result)!.Value);
         var own = measured.FirstOrDefault(result =>
             result.LibraryId.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
         return own is null

@@ -15,9 +15,10 @@ public static class MatrixOverviews
     /// </param>
     /// <param name="isRated">
     /// Which libraries take part in the rating. A library outside it is still
-    /// drawn — a hand-written baseline is the most useful row on the chart — but
-    /// it scores nothing and does not define the best result, so the points here
-    /// are measured against the same field as the category standings.
+    /// drawn — a hand-written baseline is the most useful row on the chart — and
+    /// still earns a real score against the field's best, so its row is exactly
+    /// as informative as any other. It only never defines that best itself and
+    /// never takes a place: see <see cref="MatrixOverviewRow.Rated"/>.
     /// </param>
     public static MatrixOverview? Create(
         BenchmarkReport report,
@@ -43,15 +44,14 @@ public static class MatrixOverviews
         var score = MatrixScores.Create(
             features,
             competitors.Select(library => library.Id),
-            libraryId => (includeLibrary?.Invoke(libraryId) ?? true) && Rated(libraryId));
+            CompetesForBest);
 
-        // Rated libraries first, by score; the reference rows follow, ordered by
-        // what they measured, because they have no score to be ordered by.
+        // By score, rated and reference rows alike: a row sits where its own
+        // number puts it. A reference row's score just never assigns it a place
+        // in the rating — see MatrixOverviewRow.Rated and the callers of Rank().
         var rows = libraries
-            .Select(library => CreateRow(library, features, score, Rated(library.Id)))
-            .OrderByDescending(row => row.Rated)
-            .ThenByDescending(row => row.Rated ? row.Points : 0)
-            .ThenBy(row => row.Rated ? 0 : MatrixMetrics.Total(row.PerformanceValues))
+            .Select(library => CreateRow(library, features, score, Rated(library.Id), CompetesForBest))
+            .OrderByDescending(row => row.Points)
             .ThenBy(row => row.Name, StringComparer.OrdinalIgnoreCase)
             .ToArray();
         return new MatrixOverview(
@@ -62,20 +62,26 @@ public static class MatrixOverviews
             rows.Select(row => MatrixMetrics.Total(row.MemoryValues)).DefaultIfEmpty().Max());
 
         bool Rated(string libraryId) => isRated?.Invoke(libraryId) ?? true;
+
+        bool CompetesForBest(string libraryId) =>
+            (includeLibrary?.Invoke(libraryId) ?? true) && Rated(libraryId);
     }
 
     private static MatrixOverviewRow CreateRow(
         BenchmarkLibrary library,
         IReadOnlyList<BenchmarkReportEntry> features,
         IReadOnlyDictionary<string, MatrixScore> score,
-        bool rated)
+        bool rated,
+        Func<string, bool> competesForBest)
     {
         var results = features
             .Select(feature => feature.Results.FirstOrDefault(result =>
                 result.Successful
                 && result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase)))
             .ToArray();
-        var earned = score.GetValueOrDefault(library.Id) ?? new MatrixScore(0, 0, 0);
+        var earned = rated
+            ? score.GetValueOrDefault(library.Id) ?? new MatrixScore(0, 0, 0)
+            : Reference(features, library.Id, competesForBest);
         return new MatrixOverviewRow(
             library.Id,
             library.Name,
@@ -85,5 +91,25 @@ public static class MatrixOverviews
             earned.Time,
             earned.Memory,
             rated);
+    }
+
+    /// <summary>
+    /// What a library outside the rating would have scored against the field it
+    /// is compared with. Runs through <see cref="MatrixScores.Explain"/> rather
+    /// than the bulk <see cref="MatrixScores.Create"/> above, because such a
+    /// library must never enter that bulk pass — doing so would let it help
+    /// define <c>best</c>, which is exactly what keeping it out of the rating
+    /// forbids. See workflows/rating.md.
+    /// </summary>
+    private static MatrixScore Reference(
+        IReadOnlyList<BenchmarkReportEntry> features,
+        string libraryId,
+        Func<string, bool> competesForBest)
+    {
+        var details = MatrixScores.Explain(features, libraryId, competesForBest);
+        return new MatrixScore(
+            details.Sum(detail => detail.Time.Points),
+            details.Sum(detail => detail.Memory.Points),
+            details.Count(detail => detail.Covered));
     }
 }

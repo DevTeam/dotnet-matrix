@@ -18,4 +18,30 @@ public sealed record MatrixOverview(
 {
     /// <summary>The most a library can score in this group.</summary>
     public int Maximum => MatrixScores.Maximum(Features.Count);
+
+    /// <summary>
+    /// A library's 1-based rank among rated rows only, or null when it is not
+    /// rated. <see cref="Rows"/> is ordered by score for every row alike, so a
+    /// reference row's own number can move it anywhere in that order without
+    /// this taking a place away from — or handing one to — a rated library.
+    /// </summary>
+    public int? RatedRank(string libraryId)
+    {
+        var rank = 0;
+        foreach (var row in Rows)
+        {
+            if (!row.Rated)
+            {
+                continue;
+            }
+
+            rank++;
+            if (row.LibraryId.Equals(libraryId, StringComparison.OrdinalIgnoreCase))
+            {
+                return rank;
+            }
+        }
+
+        return null;
+    }
 }

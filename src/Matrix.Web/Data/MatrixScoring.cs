@@ -21,6 +21,8 @@ internal sealed class MatrixScoring(IMatrixView view, IMatrixMeasures measures) 
 
     public string FormatExact(double points) => MatrixScores.FormatExact(points);
 
+    public string FormatWithinMax(double points, double maximum) => MatrixScores.FormatWithinMax(points, maximum);
+
     public IReadOnlyList<MatrixMedals> Rating(
         CategoryReport report,
         IReadOnlySet<string> selectedLibraries) =>

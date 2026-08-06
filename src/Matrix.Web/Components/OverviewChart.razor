@@ -47,7 +47,6 @@
         @for (var index = 0; index < overview.Rows.Count; index++)
         {
             var row = overview.Rows[index];
-            var place = index + 1;
             var mark = Mark(row);
             @* The breakdown of the points is built when the pointer reaches the row
                rather than for every row in advance: see Reveal below. Bound to the
@@ -56,8 +55,10 @@
                  style="--points-time: @Share(overview, row, row.TimePoints); --points: @Share(overview, row, row.Points)"
                  @onmouseenter="() => Reveal(row.LibraryId)">
                 <div class="overview-chart-label">
-                    @* A library outside the rating holds no place in it. *@
-                    <span class="overview-chart-rank">@(row.Rated ? place.ToString() : "")</span>
+                    @* A library outside the rating holds no place in it — its rank
+                       among rated rows only, not its position in this list, which
+                       its own score can move freely. *@
+                    <span class="overview-chart-rank">@(overview.RatedRank(row.LibraryId)?.ToString() ?? "")</span>
                     <LibraryLogo Source="@View.Logo(Report, row.LibraryId)"
                                  Name="@row.Name"
                                  Size="sm"/>
@@ -89,21 +90,16 @@
                       title="@PointsTitle(overview, row)">
                     @* The heading is gone once the row stacks on a phone. *@
                     <span class="rating-label">Points</span>
-                    @if (row.Rated)
-                    {
-                        @* As in the standings: the tooltip serves a pointer, the button
-                           serves everyone else. *@
-                        <button class="library-open"
-                                type="button"
-                                aria-label="@BreakdownLabel(overview, row)"
-                                @onclick="() => OnOpenLibrary.InvokeAsync(row.LibraryId)">
-                            @Scoring.Format(row.Points)
-                        </button>
-                    }
-                    else
-                    {
-                        <text>—</text>
-                    }
+                    @* As in the standings: the tooltip serves a pointer, the button
+                       serves everyone else. A rated row can never pass the maximum
+                       (see workflows/rating.md), so FormatWithinMax only ever blanks
+                       a reference row that outscored the whole rated field. *@
+                    <button class="library-open"
+                            type="button"
+                            aria-label="@BreakdownLabel(overview, row)"
+                            @onclick="() => OnOpenLibrary.InvokeAsync(row.LibraryId)">
+                        @Scoring.FormatWithinMax(row.Points, overview.Maximum)
+                    </button>
                 </span>
                 @* Always rendered, so medals and the out-of-rating mark keep to
                    one column at the right edge of the row. *@
@@ -204,7 +200,9 @@
     /// it can only say the number.
     /// </summary>
     private string BreakdownLabel(MatrixOverview overview, MatrixOverviewRow row) =>
-        $"{row.Name}: {Scoring.Format(row.Points)} of {overview.Maximum} points"
+        (Scoring.FormatWithinMax(row.Points, overview.Maximum) is { Length: > 0 } label
+            ? $"{row.Name}: {label} of {overview.Maximum} points"
+            : $"{row.Name}: ahead of the {overview.Maximum} rated maximum")
         + $" in the {Group.Name} overview."
         + " Open the overview for the points of every scenario";
 
@@ -216,15 +214,22 @@
     /// </summary>
     private string? PointsTitle(MatrixOverview overview, MatrixOverviewRow row)
     {
-        if (!row.Rated)
+        if (!row.LibraryId.Equals(_revealed, StringComparison.OrdinalIgnoreCase))
         {
-            return "Outside the rating: shown as a reference only";
+            return row.Rated ? null : ReferenceNote;
         }
 
-        return row.LibraryId.Equals(_revealed, StringComparison.OrdinalIgnoreCase)
-            ? Scoring.Hint(Report, overview.Features, SelectedLibraries, row.LibraryId, null)
-            : null;
+        var hint = Scoring.Hint(Report, overview.Features, SelectedLibraries, row.LibraryId, null);
+        return row.Rated ? hint : $"{ReferenceNote}\n\n{hint}";
     }
+
+    /// <summary>
+    /// A reference row's own score is never capped the way a rated row's is (see
+    /// workflows/rating.md), so it can pass the group maximum — shown as that
+    /// maximum with a trailing '+' rather than a number nobody else could reach.
+    /// </summary>
+    private const string ReferenceNote =
+        "Outside the rating: shown as a reference, not part of it";
 
     private string PlaceTitle(string place) =>
         $"{Report.Category.Name} · {place} ({place switch
@@ -239,11 +244,11 @@
 
     /// <summary>
     /// The share of the group maximum a value holds, as the width of its fill.
-    /// A reference row is out of the rating and scores nothing, so its fill stays
-    /// empty rather than showing a share it never competed for.
+    /// A reference row scores the same way as any other and fills exactly as
+    /// much, even though it never defines the maximum and never takes a place.
     /// </summary>
     private static string Share(MatrixOverview overview, MatrixOverviewRow row, double points) =>
-        row.Rated && overview.Maximum > 0
+        overview.Maximum > 0
             ? (100d * points / overview.Maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
             : "0%";
 

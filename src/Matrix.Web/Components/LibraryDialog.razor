@@ -215,7 +215,7 @@
                         <h3>Scenarios</h3>
                         <span class="section-meta">
                             @_supported of @_rows.Length supported · ratio against the best of @Compared
-                            @if (_scored)
+                            @if (_hasScenarioScores)
                             {
                                 <text> · points out of @(Scoring.MaximumPoints * Scoring.Metrics) each</text>
                             }
@@ -231,7 +231,7 @@
                                 @* The rating in full, on the page rather than in a
                                    hint: a tooltip never opens on a touch screen, and
                                    this is the one place the score is the subject. *@
-                                @if (_scored)
+                                @if (_hasScenarioScores)
                                 {
                                     <th class="modal-scenario-points">Points</th>
                                 }
@@ -241,7 +241,7 @@
                             @foreach (var row in _rows)
                             {
                                 <tr class="@(row.HasResult ? null : "is-quiet")"
-                                    style="@(_scored ? $"--points-time: {Share(row.TimePoints, ScenarioMaximum)}; --points: {Share(row.Points, ScenarioMaximum)}" : null)">
+                                    style="@(_hasScenarioScores ? $"--points-time: {Share(row.TimePoints, ScenarioMaximum)}; --points: {Share(row.Points, ScenarioMaximum)}" : null)">
                                     <td>
                                         <span class="modal-scenario-name" title="@row.Description">
                                             <span class="feature-status @row.StatusClass"
@@ -280,7 +280,7 @@
                                     {
                                         <td class="modal-scenario-note" colspan="2">@row.Note</td>
                                     }
-                                    @if (_scored)
+                                    @if (_hasScenarioScores)
                                     {
                                         <td class="modal-scenario-points">
                                             <strong>@Scoring.FormatExact(row.Points)</strong>
@@ -295,7 +295,7 @@
                                 </tr>
                             }
                             </tbody>
-                            @if (_scored && _medals is { } total)
+                            @if (_hasRatingTotal && _medals is { } total)
                             {
                                 <tfoot>
                                 <tr style="@($"--points-time: {Share(total.TimePoints, total.Maximum)}; --points: {Share(total.Points, total.Maximum)}")">
@@ -323,8 +323,10 @@
     private int? _place;
     private int _rated;
     private int _supported;
-    /// <summary>The library takes part in the rating, so its scenarios carry points.</summary>
-    private bool _scored;
+    /// <summary>Benchmarks exist for this report, so every scenario row below carries points — including a reference row's, scored against the same field the rating uses.</summary>
+    private bool _hasScenarioScores;
+    /// <summary>The library takes part in the rating, so a rating total row follows the scenarios.</summary>
+    private bool _hasRatingTotal;
 
     private Standing[] _standings = [];
     private (string Name, string Title)[] _legend = [];
@@ -397,7 +399,8 @@
         _place = Scoring.Place(rating, Library.Id);
         _rated = rating.Count;
         RatingPlace = _place is { } place ? $"{place}{Suffix(place)}" : "—";
-        _scored = View.IsRated(Report, Library.Id) && _medals is not null;
+        _hasScenarioScores = Report.Benchmarks is not null;
+        _hasRatingTotal = View.IsRated(Report, Library.Id) && _medals is not null;
         ReadStandings();
         ReadRows();
     }
@@ -515,16 +518,18 @@
                 continue;
             }
 
-            var rank = overview.Rows.ToList().FindIndex(item =>
+            var row = overview.Rows.FirstOrDefault(item =>
                 item.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
-            if (rank < 0)
+            if (row is null)
             {
                 continue;
             }
 
-            var row = overview.Rows[rank];
             var rated = overview.Rows.Count(item => item.Rated);
             var leader = overview.Rows.FirstOrDefault(item => item.Rated);
+            // Rank among rated rows only: a reference row's own score can place it
+            // anywhere in Rows without moving a rated row's rank.
+            var ratedRank = overview.RatedRank(Library.Id);
             standings.Add(new Standing(
                 group,
                 overview,
@@ -534,19 +539,24 @@
                         ? $"{feature.Name} — {text}"
                         : feature.Name)
                     .ToArray(),
-                row.Rated
-                    ? $"{Scoring.Format(row.Points)} of {overview.Maximum} points"
-                      + $" · rank {rank + 1} of {rated}"
-                    : "reference · not part of the rating",
-                row.Rated
-                    ? Scoring.Hint(
-                        Report,
-                        overview.Features,
-                        SelectedLibraries,
-                        Library.Id,
-                        null)
-                    : "Outside the rating: shown as a reference only",
-                row.Rated && rank > 0 ? leader : null,
+                // A rated row can never pass the maximum (see workflows/rating.md),
+                // so FormatWithinMax only ever blanks a reference row here.
+                ratedRank is { } place
+                    ? $"{Scoring.FormatWithinMax(row.Points, overview.Maximum)} of {overview.Maximum} points"
+                      + $" · rank {place} of {rated}"
+                    : Scoring.FormatWithinMax(row.Points, overview.Maximum) is { Length: > 0 } label
+                        ? $"{label} of {overview.Maximum} points · reference, not part of the rating"
+                        : "reference, not part of the rating",
+                Scoring.Hint(
+                    Report,
+                    overview.Features,
+                    SelectedLibraries,
+                    Library.Id,
+                    null)
+                + (ratedRank is null
+                    ? "\n\nOutside the rating: shown as a reference, not part of it"
+                    : string.Empty),
+                ratedRank is > 1 ? leader : null,
                 Ratio(row.PerformanceValues, leader?.PerformanceValues),
                 Ratio(row.MemoryValues, leader?.MemoryValues),
                 Title(leader, false),

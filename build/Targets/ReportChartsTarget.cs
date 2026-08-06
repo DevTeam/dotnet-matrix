@@ -249,7 +249,7 @@ internal sealed class ReportChartsTarget(
             DrawLogo(canvas, logos.Find(row.LibraryId), row.Name, y + 6);
             DrawFittedText(
                 canvas,
-                row.Rated ? $"{index + 1}. {row.Name}" : row.Name,
+                overview.RatedRank(row.LibraryId) is { } rank ? $"{rank}. {row.Name}" : row.Name,
                 LabelTextX,
                 y - 3,
                 LabelTextWidth,
@@ -286,7 +286,10 @@ internal sealed class ReportChartsTarget(
                 value);
             DrawText(
                 canvas,
-                row.Rated ? MatrixScores.Format(row.Points) : "—",
+                // A rated row can never pass the maximum (see workflows/rating.md),
+                // so this only ever blanks a reference row that outscored the
+                // whole rated field — see the same choice in OverviewChart.razor.
+                MatrixScores.FormatWithinMax(row.Points, overview.Maximum),
                 pointsX,
                 y + 5,
                 row.Rated ? points : hint);
