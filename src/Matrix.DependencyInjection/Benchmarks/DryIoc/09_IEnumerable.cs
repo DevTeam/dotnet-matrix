@@ -18,6 +18,9 @@ public partial class Enumerable
         container.Register<IPlugin, Plugin3>(Reuse.Transient);
         container.Register<IPlugin, Plugin4>(Reuse.Transient);
         container.Register<IPlugin, Plugin5>(Reuse.Transient);
+        container.RegisterDelegate<IEnumerable<IPlugin>>(
+            r => r.Resolve<LazyEnumerable<IPlugin>>(),
+            Reuse.Singleton);
         container.Register<EnumerableRoot1>(Reuse.Transient);
         container.Register<EnumerableRoot2>(Reuse.Transient);
         container.Register<EnumerableRoot3>(Reuse.Transient);

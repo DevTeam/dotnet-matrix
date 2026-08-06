@@ -14,6 +14,9 @@ public partial class Enumerable
             .Bind<IPlugin>(Tag.Unique).To<Plugin3>()
             .Bind<IPlugin>(Tag.Unique).To<Plugin4>()
             .Bind<IPlugin>(Tag.Unique).To<Plugin5>()
+            .Bind(Tag.OnConstructorArg<EnumerableRoot1>("plugins"), Tag.OnConstructorArg<EnumerableRoot2>("plugins"), Tag.OnConstructorArg<EnumerableRoot3>("plugins"))
+                .As(Lifetime.Singleton)
+                .To(IEnumerable<IPlugin> (IEnumerable<IPlugin> plugins) => plugins)
             .Root<EnumerableRoot1>(nameof(Pure1))
             .Root<EnumerableRoot2>(nameof(Pure2))
             .Root<EnumerableRoot3>(nameof(Pure3));
