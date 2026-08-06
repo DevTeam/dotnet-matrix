@@ -9,7 +9,7 @@ public partial class Generics
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<IGenericService<TT>>().To<GenericService<TT>>()
+            .Transient<GenericService<TT>>()
             .Root<GenericRoot<int>>(nameof(PureInt))
             .Root<GenericRoot<float>>(nameof(PureFloat))
             .Root<GenericRoot<object>>(nameof(PureObject));

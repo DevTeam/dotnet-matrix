@@ -28,7 +28,7 @@ internal partial class PureDiInterceptionComposition
         // OnDependencyInjection = On
         // OnDependencyInjectionContractTypeNameWildcard = *ICalculator
         DI.Setup()
-            .Bind<ICalculator>().To<Calculator>()
+            .Transient<Calculator>()
             .Root<ICalculator>(nameof(Root));
 
     [SuppressMessage("Performance", "CA1822:Mark members as static")]

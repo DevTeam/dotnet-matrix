@@ -9,8 +9,8 @@ public partial class Combined
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<ICombinedSingleton>().As(Lifetime.Singleton).To<CombinedSingleton>()
-            .Bind<ICombinedTransient>().To<CombinedTransient>()
+            .Singleton<CombinedSingleton>()
+            .Transient<CombinedTransient>()
             .Root<CombinedRoot1>(nameof(Pure1))
             .Root<CombinedRoot2>(nameof(Pure2))
             .Root<CombinedRoot3>(nameof(Pure3));

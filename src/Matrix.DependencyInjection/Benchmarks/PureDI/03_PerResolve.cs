@@ -8,7 +8,7 @@ public partial class PerResolve
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<IPerResolveDependency>().As(Lifetime.PerResolve).To<PerResolveDependency>()
+            .PerResolve<PerResolveDependency>()
             .Root<PerResolveRoot>(nameof(PureRoot));
 
     [Benchmark]

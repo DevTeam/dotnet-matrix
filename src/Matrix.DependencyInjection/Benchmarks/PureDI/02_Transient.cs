@@ -9,9 +9,7 @@ public partial class Transient
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<ITransient1>().To<Transient1>()
-            .Bind<ITransient2>().To<Transient2>()
-            .Bind<ITransient3>().To<Transient3>()
+            .Transient<Transient1, Transient2, Transient3>()
             .Root<ITransient1>(nameof(Pure1))
             .Root<ITransient2>(nameof(Pure2))
             .Root<ITransient3>(nameof(Pure3));

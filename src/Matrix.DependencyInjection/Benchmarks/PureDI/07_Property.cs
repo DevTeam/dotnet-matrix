@@ -9,9 +9,7 @@ public partial class Property
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind().To<PropertyServiceA>()
-            .Bind().To<PropertyServiceB>()
-            .Bind().To<PropertyServiceC>()
+            .Transient<PropertyServiceA, PropertyServiceB, PropertyServiceC>()
             .Root<PropertyRoot1>(nameof(Pure1))
             .Root<PropertyRoot2>(nameof(Pure2))
             .Root<PropertyRoot3>(nameof(Pure3));

@@ -25,7 +25,7 @@ internal partial class ScopedPureComposition
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<IScopedDependency>().As(Lifetime.Scoped).To<ScopedDependency>()
+            .Scoped<ScopedDependency>()
             .Root<ScopedRoot>(nameof(PureRoot));
 }
 

@@ -9,9 +9,7 @@ public partial class Singleton
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<ISingleton1>().As(Lifetime.Singleton).To<Singleton1>()
-            .Bind<ISingleton2>().As(Lifetime.Singleton).To<Singleton2>()
-            .Bind<ISingleton3>().As(Lifetime.Singleton).To<Singleton3>()
+            .Singleton<Singleton1, Singleton2, Singleton3>()
             .Root<ISingleton1>(nameof(Pure1))
             .Root<ISingleton2>(nameof(Pure2))
             .Root<ISingleton3>(nameof(Pure3));

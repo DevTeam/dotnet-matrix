@@ -9,12 +9,8 @@ public partial class Complex
     [Conditional("DI")]
     private static void SetupDI() =>
         DI.Setup()
-            .Bind<IFirstService>().As(Lifetime.Singleton).To<FirstService>()
-            .Bind<ISecondService>().As(Lifetime.Singleton).To<SecondService>()
-            .Bind<IThirdService>().As(Lifetime.Singleton).To<ThirdService>()
-            .Bind().To<SubObject1>()
-            .Bind().To<SubObject2>()
-            .Bind().To<SubObject3>()
+            .Singleton<FirstService, SecondService, ThirdService>()
+            .Transient<SubObject1, SubObject2, SubObject3>()
             .Root<ComplexRoot1>(nameof(Pure1))
             .Root<ComplexRoot2>(nameof(Pure2))
             .Root<ComplexRoot3>(nameof(Pure3));
