@@ -20,21 +20,11 @@ public partial class InterceptionWithProxy
     }
 }
 
-
 internal partial class PureDiInterceptionComposition
 {
     [Conditional("DI")]
     private static void SetupDI() =>
-        // OnDependencyInjection = On
-        // OnDependencyInjectionContractTypeNameWildcard = *ICalculator
         DI.Setup()
-            .Transient<Calculator>()
+            .Transient(ICalculator (Calculator calculator) => InterceptionProxy.Create<ICalculator>(calculator))
             .Root<ICalculator>(nameof(Root));
-
-    [SuppressMessage("Performance", "CA1822:Mark members as static")]
-    private partial T OnDependencyInjection<T>(
-        in T value,
-        object? tag,
-        Lifetime lifetime) =>
-        InterceptionProxy.Create(value);
 }
