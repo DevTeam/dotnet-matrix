@@ -1,0 +1,1052 @@
+{
+  "SchemaVersion": 2,
+  "ModuleId": "linq-queries",
+  "GeneratedAtUtc": "2026-08-11T09:36:28.3569037+00:00",
+  "Environments": [
+    {
+      "Id": "3157699415c0",
+      "OperatingSystem": "Ubuntu 24.04.4 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.10",
+      "RuntimeVersion": "10.0.10",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.302",
+      "Processor": "AMD EPYC 9V74 80-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "HandCoded",
+      "Name": "Hand-coded",
+      "Baseline": true
+    },
+    {
+      "Id": "LinqAF",
+      "Name": "LinqAF",
+      "Package": "LinqAF",
+      "Version": "3.0.0",
+      "Baseline": false
+    },
+    {
+      "Id": "NetFabric.Hyperlinq",
+      "Name": "NetFabric.Hyperlinq",
+      "Package": "NetFabric.Hyperlinq",
+      "Version": "3.0.0-beta9",
+      "Baseline": false
+    },
+    {
+      "Id": "StructLinq",
+      "Name": "StructLinq",
+      "Package": "StructLinq",
+      "Version": "0.28.2",
+      "Baseline": false
+    },
+    {
+      "Id": "System.Linq",
+      "Name": "System.Linq",
+      "Baseline": true
+    },
+    {
+      "Id": "ZLinq",
+      "Name": "ZLinq",
+      "Package": "ZLinq",
+      "Version": "1.5.6",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "FilterCount",
+      "Name": "Filter and Count",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 10703.019392503416,
+          "StandardErrorNanoseconds": 9.872657928302333,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 11265.710152845442,
+          "StandardErrorNanoseconds": 16.408466755235246,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 14736.147225975094,
+          "StandardErrorNanoseconds": 26.06141737962537,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 12651.697780407343,
+          "StandardErrorNanoseconds": 31.366057067780538,
+          "AllocatedBytesPerOperation": 64,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 10181.909559678921,
+          "StandardErrorNanoseconds": 3.1190667737386817,
+          "AllocatedBytesPerOperation": 48,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 10975.44366586297,
+          "StandardErrorNanoseconds": 2.2548021123267366,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "ProjectToArray",
+      "Name": "Project To Array",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 9654.224370606662,
+          "StandardErrorNanoseconds": 14.777617783562913,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 27250.083387079434,
+          "StandardErrorNanoseconds": 73.59385363506459,
+          "AllocatedBytesPerOperation": 155008,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 10077.712661044341,
+          "StandardErrorNanoseconds": 76.63871874274963,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 11029.388628480947,
+          "StandardErrorNanoseconds": 9.795959647822214,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 4819.921480453301,
+          "StandardErrorNanoseconds": 6.42365732242741,
+          "AllocatedBytesPerOperation": 40072,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 5115.465517341309,
+          "StandardErrorNanoseconds": 9.146613074186853,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "FilterProjectToList",
+      "Name": "Filter, Project, Materialize",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 9889.8321484375,
+          "StandardErrorNanoseconds": 50.1178098098686,
+          "AllocatedBytesPerOperation": 33048,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 8792.62207364485,
+          "StandardErrorNanoseconds": 46.904986074689,
+          "AllocatedBytesPerOperation": 33048,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 8868.728352224873,
+          "StandardErrorNanoseconds": 58.040157051943396,
+          "AllocatedBytesPerOperation": 33048,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 25429.865898058255,
+          "StandardErrorNanoseconds": 55.924346992258705,
+          "AllocatedBytesPerOperation": 10136,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 5879.197412976146,
+          "StandardErrorNanoseconds": 52.66447539688672,
+          "AllocatedBytesPerOperation": 10168,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 7800.904947824078,
+          "StandardErrorNanoseconds": 15.948304486038023,
+          "AllocatedBytesPerOperation": 10064,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "ChainedPipeline",
+      "Name": "Chained Pipeline",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 8483.095595787148,
+          "StandardErrorNanoseconds": 8.01680634453675,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 9385.300239796878,
+          "StandardErrorNanoseconds": 8.758039945856975,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 11636.408158548182,
+          "StandardErrorNanoseconds": 8.301519730289039,
+          "AllocatedBytesPerOperation": 8496,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 12427.096942318592,
+          "StandardErrorNanoseconds": 5.411215395060039,
+          "AllocatedBytesPerOperation": 4160,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 15199.348118839374,
+          "StandardErrorNanoseconds": 13.41057463199601,
+          "AllocatedBytesPerOperation": 4240,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 12233.513566507036,
+          "StandardErrorNanoseconds": 18.232608108791272,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "ListSource",
+      "Name": "List Source",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 19400.982806762542,
+          "StandardErrorNanoseconds": 133.330425128621,
+          "AllocatedBytesPerOperation": 46432,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 24631.941665216636,
+          "StandardErrorNanoseconds": 97.13605916048834,
+          "AllocatedBytesPerOperation": 46400,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 19459.01577644332,
+          "StandardErrorNanoseconds": 15.074394381200646,
+          "AllocatedBytesPerOperation": 30192,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 18668.277784863945,
+          "StandardErrorNanoseconds": 45.15380096596703,
+          "AllocatedBytesPerOperation": 13456,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 13733.600071550358,
+          "StandardErrorNanoseconds": 78.00578439715815,
+          "AllocatedBytesPerOperation": 13536,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 18120.055033598805,
+          "StandardErrorNanoseconds": 67.1739038481039,
+          "AllocatedBytesPerOperation": 13384,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "OpaqueSource",
+      "Name": "Opaque Source",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 30013.206037989523,
+          "StandardErrorNanoseconds": 68.21991043023914,
+          "AllocatedBytesPerOperation": 46464,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 40963.59554356515,
+          "StandardErrorNanoseconds": 95.30450398338175,
+          "AllocatedBytesPerOperation": 46432,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 29735.883670691288,
+          "StandardErrorNanoseconds": 59.24152220680335,
+          "AllocatedBytesPerOperation": 30224,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 31051.801569586165,
+          "StandardErrorNanoseconds": 97.86332904544689,
+          "AllocatedBytesPerOperation": 13480,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 29010.204043628622,
+          "StandardErrorNanoseconds": 148.42029537726629,
+          "AllocatedBytesPerOperation": 13536,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 33474.316966675586,
+          "StandardErrorNanoseconds": 144.2823394572952,
+          "AllocatedBytesPerOperation": 13416,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "SpanSource",
+      "Name": "Span Source",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 15408.966235279688,
+          "StandardErrorNanoseconds": 91.67227409923912,
+          "AllocatedBytesPerOperation": 46432,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 14491.273180105374,
+          "StandardErrorNanoseconds": 17.104846444832575,
+          "AllocatedBytesPerOperation": 30192,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 14340.04624855991,
+          "StandardErrorNanoseconds": 42.84627846917046,
+          "AllocatedBytesPerOperation": 13384,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "PagedSlice",
+      "Name": "Paged Slice",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 889.6121471448748,
+          "StandardErrorNanoseconds": 2.9958853685651854,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 2649.458084931859,
+          "StandardErrorNanoseconds": 8.325330240236594,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 923.269947990754,
+          "StandardErrorNanoseconds": 3.301269467763056,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 916.5819692028084,
+          "StandardErrorNanoseconds": 1.3103429427988273,
+          "AllocatedBytesPerOperation": 4088,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 228.74064422545393,
+          "StandardErrorNanoseconds": 1.1429139611067822,
+          "AllocatedBytesPerOperation": 4120,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 260.71668260788573,
+          "StandardErrorNanoseconds": 4.134865096830402,
+          "AllocatedBytesPerOperation": 4024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "AnyMatch",
+      "Name": "Any Match",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 6697.0255773937,
+          "StandardErrorNanoseconds": 1.724053830668009,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 3387.5075029242807,
+          "StandardErrorNanoseconds": 7.399457950665716,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 6708.367736921097,
+          "StandardErrorNanoseconds": 4.802475856687002,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 8614.48140414467,
+          "StandardErrorNanoseconds": 4.985183224409981,
+          "AllocatedBytesPerOperation": 32,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 3379.119675364078,
+          "StandardErrorNanoseconds": 2.6295706193308845,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 3391.322890661119,
+          "StandardErrorNanoseconds": 5.935454496407,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 10,
+      "Id": "FirstMatch",
+      "Name": "First Match",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 3409.0366833006105,
+          "StandardErrorNanoseconds": 5.514834018660541,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 2820.6168633126813,
+          "StandardErrorNanoseconds": 1.080145448147841,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 3190.916055191488,
+          "StandardErrorNanoseconds": 0.977768035273465,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 5133.999198981269,
+          "StandardErrorNanoseconds": 1.851439027996506,
+          "AllocatedBytesPerOperation": 32,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 2767.0306952288092,
+          "StandardErrorNanoseconds": 1.5300472043289381,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 2790.139867665817,
+          "StandardErrorNanoseconds": 1.6783822364654666,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 11,
+      "Id": "FlattenSelectMany",
+      "Name": "Flatten Nested Sequences",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 8335.073692346257,
+          "StandardErrorNanoseconds": 21.075497313498513,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 82629.52117996605,
+          "StandardErrorNanoseconds": 670.8674141684818,
+          "AllocatedBytesPerOperation": 155008,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 35309.561071908596,
+          "StandardErrorNanoseconds": 155.90270640707868,
+          "AllocatedBytesPerOperation": 106184,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 47498.52647569445,
+          "StandardErrorNanoseconds": 369.48569708736846,
+          "AllocatedBytesPerOperation": 56088,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 6391.352702905061,
+          "StandardErrorNanoseconds": 28.484582742166584,
+          "AllocatedBytesPerOperation": 40120,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 28042.49818638393,
+          "StandardErrorNanoseconds": 125.0362403739839,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 12,
+      "Id": "DistinctValues",
+      "Name": "Distinct Values",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 42124.55091469332,
+          "StandardErrorNanoseconds": 42.93341088560104,
+          "AllocatedBytesPerOperation": 71048,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 246998.1151028459,
+          "StandardErrorNanoseconds": 258.2390165032544,
+          "AllocatedBytesPerOperation": 252640,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "NetFabric.Hyperlinq",
+          "Successful": true,
+          "MeanNanoseconds": 68325.22913284632,
+          "StandardErrorNanoseconds": 218.78007648758978,
+          "AllocatedBytesPerOperation": 183509,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 33669.184446505875,
+          "StandardErrorNanoseconds": 212.65420094879593,
+          "AllocatedBytesPerOperation": 4104,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 88748.06331632652,
+          "StandardErrorNanoseconds": 91.50067408749061,
+          "AllocatedBytesPerOperation": 183605,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 42491.29390698586,
+          "StandardErrorNanoseconds": 15.177438531464235,
+          "AllocatedBytesPerOperation": 4080,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 13,
+      "Id": "ZipPairs",
+      "Name": "Zip Pairs",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 10226.158385217115,
+          "StandardErrorNanoseconds": 3.8739545488474287,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 33760.661486512414,
+          "StandardErrorNanoseconds": 115.24781163858513,
+          "AllocatedBytesPerOperation": 155008,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 29344.3906103424,
+          "StandardErrorNanoseconds": 58.669383440350416,
+          "AllocatedBytesPerOperation": 40128,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 82991.95620748299,
+          "StandardErrorNanoseconds": 56.95888212239848,
+          "AllocatedBytesPerOperation": 40184,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 14965.402500597513,
+          "StandardErrorNanoseconds": 20.017470155477316,
+          "AllocatedBytesPerOperation": 40024,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 14,
+      "Id": "Aggregate",
+      "Name": "Aggregate",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 5307.026601352999,
+          "StandardErrorNanoseconds": 4.477868121363443,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 3555.806316899702,
+          "StandardErrorNanoseconds": 1.220102684847031,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 7113.726095448371,
+          "StandardErrorNanoseconds": 12.645329232389056,
+          "AllocatedBytesPerOperation": 32,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 3590.7664706334563,
+          "StandardErrorNanoseconds": 1.8786141763279107,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 3700.071715772402,
+          "StandardErrorNanoseconds": 3.1231149936227984,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 15,
+      "Id": "OrderedTopN",
+      "Name": "Ordered Top N",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 246350.677005597,
+          "StandardErrorNanoseconds": 1915.867835954896,
+          "AllocatedBytesPerOperation": 40128,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 306377.9223042582,
+          "StandardErrorNanoseconds": 1660.5044631208345,
+          "AllocatedBytesPerOperation": 263310,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 317032.1851311953,
+          "StandardErrorNanoseconds": 1156.228261096613,
+          "AllocatedBytesPerOperation": 248,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 36560.39876606309,
+          "StandardErrorNanoseconds": 230.27690578579515,
+          "AllocatedBytesPerOperation": 80448,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 41957.40788969743,
+          "StandardErrorNanoseconds": 16.12956100965642,
+          "AllocatedBytesPerOperation": 264,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 16,
+      "Id": "GroupByAggregate",
+      "Name": "Group and Aggregate",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 70756.19604820627,
+          "StandardErrorNanoseconds": 240.26299369110018,
+          "AllocatedBytesPerOperation": 1144,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 249232.74670410156,
+          "StandardErrorNanoseconds": 1168.9954688429095,
+          "AllocatedBytesPerOperation": 199376,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 108087.17203663793,
+          "StandardErrorNanoseconds": 190.69620064926573,
+          "AllocatedBytesPerOperation": 134416,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 108222.22385204081,
+          "StandardErrorNanoseconds": 309.2994826005883,
+          "AllocatedBytesPerOperation": 133720,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 17,
+      "Id": "JoinLookup",
+      "Name": "Join and Project",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 29256.54972489457,
+          "StandardErrorNanoseconds": 81.07669501979798,
+          "AllocatedBytesPerOperation": 94664,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "LinqAF",
+          "Successful": true,
+          "MeanNanoseconds": 258312.3428717799,
+          "StandardErrorNanoseconds": 573.5847937291206,
+          "AllocatedBytesPerOperation": 383550,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "System.Linq",
+          "Successful": true,
+          "MeanNanoseconds": 116837.37251157408,
+          "StandardErrorNanoseconds": 95.13992844590284,
+          "AllocatedBytesPerOperation": 132552,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "ZLinq",
+          "Successful": true,
+          "MeanNanoseconds": 84569.30033783782,
+          "StandardErrorNanoseconds": 430.90720874582865,
+          "AllocatedBytesPerOperation": 132288,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    },
+    {
+      "Order": 18,
+      "Id": "ValueDelegateFilter",
+      "Name": "Struct Predicate Filter",
+      "Results": [
+        {
+          "LibraryId": "HandCoded",
+          "Successful": true,
+          "MeanNanoseconds": 10955.413826710263,
+          "StandardErrorNanoseconds": 1.3177502119811075,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        },
+        {
+          "LibraryId": "StructLinq",
+          "Successful": true,
+          "MeanNanoseconds": 11089.494129939209,
+          "StandardErrorNanoseconds": 45.87740307529653,
+          "AllocatedBytesPerOperation": 40,
+          "EnvironmentId": "3157699415c0",
+          "EvidenceId": "31477608876-1-linq-queries-measured"
+        }
+      ]
+    }
+  ],
+  "Evidence": [
+    {
+      "Id": "31477608876-1-linq-queries-measured",
+      "Kind": "measured",
+      "GeneratedAtUtc": "2026-08-11T09:36:28.3462079+00:00",
+      "CommitSha": "36ddc889d01b22533c40372d1b0f5e2f809a1d8b",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/31477608876",
+      "Job": "Quick",
+      "EnvironmentId": "3157699415c0",
+      "ArchiveName": "matrix-reports",
+      "ManifestPath": "reports/LinqQueries/evidence/31477608876-1-linq-queries-measured/manifest.json",
+      "Repository": "DevTeam/dotnet-matrix"
+    }
+  ]
+}
