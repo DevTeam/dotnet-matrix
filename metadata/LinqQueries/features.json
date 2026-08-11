@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "features": [
+    {
+      "id": "FilterCount",
+      "order": 1,
+      "name": "Filter and Count",
+      "description": "Filters 10,000 integers with a predicate and counts the survivors."
+    },
+    {
+      "id": "ProjectToArray",
+      "order": 2,
+      "name": "Project To Array",
+      "description": "Projects 10,000 integers through a selector and materializes a new array."
+    },
+    {
+      "id": "FilterProjectToList",
+      "order": 3,
+      "name": "Filter, Project, Materialize",
+      "description": "Filters 5,000 orders by amount, projects one property, and materializes a list."
+    },
+    {
+      "id": "ChainedPipeline",
+      "order": 4,
+      "name": "Chained Pipeline",
+      "description": "Composes a filter, a projection, a second filter, and a limit into one four-stage query."
+    },
+    {
+      "id": "ListSource",
+      "order": 5,
+      "name": "List Source",
+      "description": "Runs the canonical filter and projection over a List\u003Cint\u003E."
+    },
+    {
+      "id": "OpaqueSource",
+      "order": 6,
+      "name": "Opaque Source",
+      "description": "Runs the same query over an IEnumerable\u003Cint\u003E exposing no count, indexer, or array."
+    },
+    {
+      "id": "SpanSource",
+      "order": 7,
+      "name": "Span Source",
+      "description": "Runs the same query over a ReadOnlySpan\u003Cint\u003E."
+    },
+    {
+      "id": "PagedSlice",
+      "order": 8,
+      "name": "Paged Slice",
+      "description": "Skips 4,000 integers, takes the next 1,000, and materializes them."
+    },
+    {
+      "id": "AnyMatch",
+      "order": 9,
+      "name": "Any Match",
+      "description": "Reports whether any of 10,000 integers satisfies a predicate first met at index 9,500."
+    },
+    {
+      "id": "FirstMatch",
+      "order": 10,
+      "name": "First Match",
+      "description": "Returns the first of 5,000 orders satisfying a predicate first met at index 4,500."
+    },
+    {
+      "id": "FlattenSelectMany",
+      "order": 11,
+      "name": "Flatten Nested Sequences",
+      "description": "Flattens 500 inner arrays of 20 integers and materializes the result."
+    },
+    {
+      "id": "DistinctValues",
+      "order": 12,
+      "name": "Distinct Values",
+      "description": "Reduces 10,000 integers containing 1,000 distinct values to the distinct set."
+    },
+    {
+      "id": "ZipPairs",
+      "order": 13,
+      "name": "Zip Pairs",
+      "description": "Pairs two sequences of 10,000 integers and materializes the products."
+    },
+    {
+      "id": "Aggregate",
+      "order": 14,
+      "name": "Aggregate",
+      "description": "Folds 10,000 integers with a caller-supplied accumulator and a seed."
+    },
+    {
+      "id": "OrderedTopN",
+      "order": 15,
+      "name": "Ordered Top N",
+      "description": "Orders 5,000 orders by descending amount and materializes the identifiers of the top 20."
+    },
+    {
+      "id": "GroupByAggregate",
+      "order": 16,
+      "name": "Group and Aggregate",
+      "description": "Groups 5,000 orders by region and produces one summed total per region."
+    },
+    {
+      "id": "JoinLookup",
+      "order": 17,
+      "name": "Join and Project",
+      "description": "Joins 5,000 orders to 500 customers on the customer key and projects the pairs."
+    },
+    {
+      "id": "ValueDelegateFilter",
+      "order": 18,
+      "name": "Struct Predicate Filter",
+      "description": "Filters and counts 10,000 integers with a struct-typed predicate instead of a delegate."
+    }
+  ]
+}

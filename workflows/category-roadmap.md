@@ -45,6 +45,7 @@ which is scored across every scenario; see [rating.md](rating.md).
 | Validation | `validation` | `src/Matrix.Validation` | 3 | 10 | Basic, Object Graph, Rules, Prepare |
 | JSON Serialization | `json-serialization` | `src/Matrix.JsonSerialization` | 3 | 14 | Basic, Nested, Collections, Advanced, Stream, Prepare |
 | CSV Processing | `csv-processing` | `src/Matrix.CsvProcessing` | 3 | 10 | Read, Correctness, Throughput, Write |
+| LINQ Queries | `linq-queries` | `src/Matrix.LinqQueries` | 6 | 18 | Core, Sources, Partitioning, Sequences, Advanced, Allocation-Free |
 | Logging | `logging` | `src/Matrix.Logging` | 5 | 8 | Core, Structured, Prepare |
 | ZIP Archives | `zip-archives` | `src/Matrix.ZipArchives` | 3 | 13 | Metadata, Read, Write, Advanced |
 
@@ -74,6 +75,13 @@ follows [add-library.md](add-library.md), not this document.
 - **CSV Processing**: `Custom Conversion` and `Async Read` are feature-only.
   The in-memory source does not model external I/O scheduling, so async read is
   not comparable as a performance scenario.
+- **LINQ Queries**: among rated libraries, span-source support is limited to
+  ZLinq and Hyperlinq, and the struct-predicate scenario is supported only by
+  StructLinq. `GroupJoin`,
+  `ToDictionary`, set-combination operators, `Chunk`, `Average`, and async
+  variants are deliberately excluded. Hyperlinq 3.0.0-beta9 is a prerelease
+  whose package omits its `Microsoft.Bcl.AsyncInterfaces` dependency;
+  StructLinq 0.28.2 was last released in 2022.
 - **Logging**: every scenario delivers to an equivalent in-memory sink, as
   required by its feature contract. Console, file, database, and network sinks
   remain out of scope because their I/O dominates library overhead.

@@ -1,0 +1,90 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>linq-queries</MatrixModuleId>
+        <MatrixModuleName>LINQ Queries</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>LINQ</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>LinqQueries</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.LinqQueries.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- LinqAF redeclares the System.Linq extension methods, so the implicit
+             using would make every call ambiguous. System.Linq is imported per file. -->
+        <Using Remove="System.Linq"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="ZLinq" Version="1.5.6">
+            <MatrixLibraryId>ZLinq</MatrixLibraryId>
+            <MatrixLibraryName>ZLinq</MatrixLibraryName>
+            <MatrixCodeName>ZLinq</MatrixCodeName>
+            <MatrixDescription>A zero-allocation LINQ implementation built on struct enumerators, with span and SIMD support and a complete operator surface.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cysharp/ZLinq#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cysharp/ZLinq</MatrixRepositoryUrl>
+            <MatrixLogo>logos/zlinq.png</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="StructLinq" Version="0.28.2">
+            <MatrixLibraryId>StructLinq</MatrixLibraryId>
+            <MatrixLibraryName>StructLinq</MatrixLibraryName>
+            <MatrixCodeName>StructLinq</MatrixCodeName>
+            <MatrixDescription>A struct-based LINQ implementation with optional struct predicates that avoid delegate indirection. Last released in 2022.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/reegeek/StructLinq#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/reegeek/StructLinq</MatrixRepositoryUrl>
+            <MatrixLogo>logos/struct-linq.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="NetFabric.Hyperlinq" Version="3.0.0-beta9">
+            <MatrixLibraryId>NetFabric.Hyperlinq</MatrixLibraryId>
+            <MatrixLibraryName>NetFabric.Hyperlinq</MatrixLibraryName>
+            <MatrixCodeName>Hyperlinq</MatrixCodeName>
+            <MatrixDescription>A value-enumerable LINQ implementation with span sources and low-allocation pipelines. The compared version is a prerelease.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/NetFabric/NetFabric.Hyperlinq#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/NetFabric/NetFabric.Hyperlinq</MatrixRepositoryUrl>
+            <MatrixLogo>logos/hyperlinq.png</MatrixLogo>
+        </PackageReference>
+        <!-- NetFabric.Hyperlinq 3.0.0-beta9 references Microsoft.Bcl.AsyncInterfaces
+             without declaring it as a package dependency. -->
+        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.10"/>
+        <PackageReference Include="LinqAF" Version="3.0.0">
+            <MatrixLibraryId>LinqAF</MatrixLibraryId>
+            <MatrixLibraryName>LinqAF</MatrixLibraryName>
+            <MatrixCodeName>LinqAF</MatrixCodeName>
+            <MatrixDescription>A low-allocation re-implementation of LINQ-to-Objects that shadows the System.Linq operators and returns struct enumerables. Last released in 2019.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/kevin-montrose/LinqAF#readme</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/kevin-montrose/LinqAF</MatrixRepositoryUrl>
+            <MatrixLogo>logos/linq-af.svg</MatrixLogo>
+        </PackageReference>
+        <MatrixLibrary Include="System.Linq">
+            <MatrixLibraryName>System.Linq</MatrixLibraryName>
+            <MatrixCodeName>SystemLinq</MatrixCodeName>
+            <MatrixDescription>The LINQ-to-Objects implementation included with .NET, exposing the Enumerable operators over IEnumerable sequences.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.linq</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-linq.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>true</MatrixRating>
+        </MatrixLibrary>
+        <MatrixLibrary Include="HandCoded">
+            <MatrixLibraryName>Hand-coded</MatrixLibraryName>
+            <MatrixCodeName>HandCoded</MatrixCodeName>
+            <MatrixDescription>Direct loops written in C# without any query library.</MatrixDescription>
+            <MatrixLogo>logos/hand-coded.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>false</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
