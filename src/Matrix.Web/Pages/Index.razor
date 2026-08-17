@@ -12,6 +12,7 @@
        what actually takes it out of the tab order and out of the accessibility tree.
        Nothing about it is visible. *@
     <header class="topbar" inert="@IsDialogOpen">
+        <div class="topbar-default">
         <a class="brand" href="./" aria-label=".NET Matrix home">
             <img class="brand-mark" src="icon.svg" alt="" aria-hidden="true"/>
             <span>
@@ -74,6 +75,66 @@
                     </svg>
                 </a>
             </div>
+        </div>
+        </div>
+
+        <div class="topbar-context" aria-label="Current comparison">
+            <div class="context-category">
+                <span>Category</span>
+                <strong>@SelectedCategoryName</strong>
+            </div>
+            @if (HasFeatureFilter)
+            {
+                <details class="context-selection">
+                    <summary title="@SelectedFeatureNames">
+                        <span>Scenarios</span>
+                        <strong>@FeatureSelectionSummary</strong>
+                    </summary>
+                    <div class="context-selection-menu">
+                        <strong>Selected scenarios</strong>
+                        <small>@SelectedFeatureCount of @CategoryFeatureCount</small>
+                        @if (SelectedFeatureNameItems.Count == 0)
+                        {
+                            <p>None selected.</p>
+                        }
+                        else
+                        {
+                            <ul>
+                                @foreach (var name in SelectedFeatureNameItems)
+                                {
+                                    <li>@name</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </details>
+            }
+            @if (HasLibraryFilter)
+            {
+                <details class="context-selection">
+                    <summary title="@SelectedLibraryNames">
+                        <span>Libraries</span>
+                        <strong>@LibrarySelectionSummary</strong>
+                    </summary>
+                    <div class="context-selection-menu">
+                        <strong>Selected libraries</strong>
+                        <small>@SelectedLibraryCount of @CategoryLibraryCount</small>
+                        @if (SelectedLibraryNameItems.Count == 0)
+                        {
+                            <p>None selected.</p>
+                        }
+                        else
+                        {
+                            <ul>
+                                @foreach (var name in SelectedLibraryNameItems)
+                                {
+                                    <li>@name</li>
+                                }
+                            </ul>
+                        }
+                    </div>
+                </details>
+            }
         </div>
     </header>
 
@@ -570,6 +631,26 @@
 
     private int SelectedShownFeatureCount => ShownFeatureKeys.Count(_selectedFeatures.Contains);
 
+    private int CategoryFeatureCount => CategoryFeatures.Count();
+
+    private bool HasFeatureFilter => SelectedFeatureCount < CategoryFeatureCount;
+
+    private IReadOnlyList<string> CategoryFeatureNameItems => CategoryFeatures
+        .Select(entry => entry.Feature.Name)
+        .ToArray();
+
+    private IReadOnlyList<string> SelectedFeatureNameItems => CategoryFeatures
+        .Where(entry => _selectedFeatures.Contains(
+            FeatureKey(entry.Report.Category.Id, entry.Feature.Id)))
+        .Select(entry => entry.Feature.Name)
+        .ToArray();
+
+    private string SelectedFeatureNames => SelectionNames(SelectedFeatureNameItems);
+
+    private string FeatureSelectionSummary => SelectionSummary(
+        CategoryFeatureNameItems,
+        SelectedFeatureNameItems);
+
     /// <summary>
     /// The displayed name and the id both match: a scenario is written as
     /// "Read Simple Rows" in the list and as ReadSimpleRows in a link.
@@ -583,6 +664,51 @@
         .SelectMany(Libraries)
         .Count(library => _selectedLibraries.Contains(
             LibraryKey(_selectedCategoryId!, library.Id)));
+
+    private int CategoryLibraryCount => VisibleReports.SelectMany(Libraries).Count();
+
+    private bool HasLibraryFilter => SelectedLibraryCount < CategoryLibraryCount;
+
+    private IReadOnlyList<string> CategoryLibraryNameItems => VisibleReports
+        .SelectMany(report => Libraries(report).Select(library => library.Name))
+        .ToArray();
+
+    private IReadOnlyList<string> SelectedLibraryNameItems => VisibleReports
+        .SelectMany(report => Libraries(report)
+            .Where(library => _selectedLibraries.Contains(
+                LibraryKey(report.Category.Id, library.Id)))
+            .Select(library => library.Name))
+        .ToArray();
+
+    private string SelectedLibraryNames => SelectionNames(SelectedLibraryNameItems);
+
+    private string LibrarySelectionSummary => SelectionSummary(
+        CategoryLibraryNameItems,
+        SelectedLibraryNameItems);
+
+    private static string SelectionNames(IReadOnlyList<string> names) =>
+        names.Count == 0 ? "None" : string.Join(", ", names);
+
+    private static string SelectionSummary(
+        IReadOnlyList<string> all,
+        IReadOnlyList<string> selected)
+    {
+        if (selected.Count == 0)
+        {
+            return "None";
+        }
+
+        if (selected.Count <= 3)
+        {
+            return string.Join(", ", selected);
+        }
+
+        var selectedNames = selected.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var excluded = all.Where(name => !selectedNames.Contains(name)).ToArray();
+        return excluded.Length <= 3
+            ? $"Except {string.Join(", ", excluded)}"
+            : $"{selected.Count} of {all.Count} selected";
+    }
 
     /// <summary>
     /// The rows the name filter currently leaves visible. Bulk selection works on
