@@ -1260,12 +1260,14 @@ select {
     /* Edge shadow that fades out at the end of the scroll: the horizontal
        scrollbar can sit below the fold, so scrollability needs to be visible. */
     background-image:
+        linear-gradient(to right, var(--surface), rgba(17, 20, 27, 0)),
         linear-gradient(to left, var(--surface), rgba(17, 20, 27, 0)),
+        radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0)),
         radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .55), rgba(0, 0, 0, 0));
-    background-attachment: local, scroll;
-    background-position: 100% 0, 100% 0;
+    background-attachment: local, local, scroll, scroll;
+    background-position: 0 0, 100% 0, 0 0, 100% 0;
     background-repeat: no-repeat;
-    background-size: 44px 100%, 18px 100%;
+    background-size: 44px 100%, 44px 100%, 18px 100%, 18px 100%;
 }
 
 .table-scroll::-webkit-scrollbar {
@@ -1290,6 +1292,13 @@ select {
 
 .table-scroll::-webkit-scrollbar-corner {
     background: var(--surface-2);
+}
+
+/* Mobile browsers are free to hide native scrollbars, which makes a tall feature
+   matrix look finite until its very bottom. Script positions this supplementary
+   rail over the visible table and keeps its thumb in sync with table-scroll. */
+.feature-scroll-dock {
+    display: none;
 }
 
 table {
@@ -2864,6 +2873,68 @@ tbody th {
     }
 
     /* The sticky feature column would otherwise take half of a phone screen. */
+    .table-scroll {
+        width: 100%;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .feature-scroll-dock.is-visible {
+        position: fixed;
+        z-index: 19;
+        bottom: max(8px, env(safe-area-inset-bottom));
+        display: block;
+        height: 24px;
+        padding: 8px 6px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(17, 20, 27, .94);
+        box-shadow: 0 5px 18px rgba(0, 0, 0, .38);
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-scroll-dock-track {
+        position: relative;
+        height: 6px;
+        border-radius: 999px;
+        background: var(--surface-3);
+        touch-action: none;
+    }
+
+    .feature-scroll-dock-thumb {
+        position: absolute;
+        top: -4px;
+        left: 0;
+        height: 14px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--muted);
+        cursor: grab;
+        touch-action: none;
+    }
+
+    .feature-scroll-dock-thumb:active {
+        cursor: grabbing;
+    }
+
+    .feature-scroll-dock-thumb:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+
+    /* Width:100% lets the table algorithm squeeze a large library set into the
+       viewport. Its intrinsic width keeps every status column tappable and makes
+       the existing table-scroll container the horizontal swipe surface. */
+    .feature-table {
+        width: max-content;
+        min-width: 100%;
+    }
+
+    .feature-table thead th:not(:first-child),
+    .feature-table tbody td {
+        min-width: 56px;
+    }
+
     .feature-table thead th:first-child,
     .feature-table tbody th {
         min-width: 136px;
