@@ -1626,7 +1626,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | 71.75 ns | 71.75 ns | 100 | 120 B | 120 B | 100 |
 | Template Rendering | 35.27 ns | 35.27 ns | 100 | 0 B | 0 B | 100 |
 | Buffered Logging | — | 93.36 ns | 0 | — | 0 B | 0 |
-| Create Logger | 44.44 μs | 1.08 μs | 15.6 | 21.25 KB | 3.07 KB | 38.1 |
+| Prepare Logger | 44.44 μs | 1.08 μs | 15.6 | 21.25 KB | 3.07 KB | 38.1 |
 | Formatted Output | — | 222.72 ns | 0 | — | 0 B | 0 |
 
 #### 2. NLog — 1143 of 1800
@@ -1640,7 +1640,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | 92.22 ns | 71.75 ns | 88.3 | 248 B | 120 B | 72.8 |
 | Template Rendering | 84.18 ns | 35.27 ns | 65.3 | 232 B | 0 B | 30.6 |
 | Buffered Logging | 93.36 ns | 93.36 ns | 100 | 120 B | 0 B | 40.8 |
-| Create Logger | 5.21 μs | 1.08 μs | 45.5 | 24.46 KB | 3.07 KB | 35.6 |
+| Prepare Logger | 5.21 μs | 1.08 μs | 45.5 | 24.46 KB | 3.07 KB | 35.6 |
 | Formatted Output | 222.72 ns | 222.72 ns | 100 | 272 B | 0 B | 28.5 |
 
 #### 3. Serilog — 983 of 1800
@@ -1654,7 +1654,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | 238.47 ns | 71.75 ns | 55.1 | 544 B | 120 B | 50.4 |
 | Template Rendering | 213.07 ns | 35.27 ns | 41.2 | 432 B | 0 B | 22.9 |
 | Buffered Logging | 395.4 ns | 93.36 ns | 48.8 | 160 B | 0 B | 36.1 |
-| Create Logger | 1.08 μs | 1.08 μs | 100 | 3.07 KB | 3.07 KB | 100 |
+| Prepare Logger | 1.08 μs | 1.08 μs | 100 | 3.07 KB | 3.07 KB | 100 |
 | Formatted Output | 417.86 ns | 222.72 ns | 73.1 | 296 B | 0 B | 27.4 |
 
 #### 4. log4net — 833 of 1800
@@ -1668,7 +1668,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | 343.96 ns | 71.75 ns | 45.9 | 848 B | 120 B | 40.6 |
 | Template Rendering | 135.52 ns | 35.27 ns | 51.5 | 280 B | 0 B | 28.1 |
 | Buffered Logging | 516.38 ns | 93.36 ns | 42.7 | 848 B | 0 B | 16.6 |
-| Create Logger | 14.52 μs | 1.08 μs | 27.2 | 6.79 KB | 3.07 KB | 67.4 |
+| Prepare Logger | 14.52 μs | 1.08 μs | 27.2 | 6.79 KB | 3.07 KB | 67.4 |
 | Formatted Output | 252.91 ns | 222.72 ns | 93.9 | 217 B | 0 B | 31.6 |
 
 #### 5. OpenTelemetry — 818 of 1800
@@ -1682,7 +1682,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | 185.52 ns | 71.75 ns | 62.5 | 168 B | 120 B | 86.6 |
 | Template Rendering | 282 ns | 35.27 ns | 35.8 | 112 B | 0 B | 42 |
 | Buffered Logging | 198.24 ns | 93.36 ns | 68.8 | 48 B | 0 B | 57.7 |
-| Create Logger | 256.53 μs | 1.08 μs | 6.483 | 81.1 KB | 3.07 KB | 19.5 |
+| Prepare Logger | 256.53 μs | 1.08 μs | 6.483 | 81.1 KB | 3.07 KB | 19.5 |
 | Formatted Output | — | 222.72 ns | 0 | — | 0 B | 0 |
 
 #### 6. ZLogger — 559 of 1800
@@ -1696,7 +1696,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Scope Or Context | — | 71.75 ns | 0 | — | 120 B | 0 |
 | Template Rendering | — | 35.27 ns | 0 | — | 0 B | 0 |
 | Buffered Logging | 124.11 ns | 93.36 ns | 86.8 | 0 B | 0 B | 100 |
-| Create Logger | 66.86 μs | 1.08 μs | 12.7 | 21.36 KB | 3.07 KB | 38 |
+| Prepare Logger | 66.86 μs | 1.08 μs | 12.7 | 21.36 KB | 3.07 KB | 38 |
 | Formatted Output | 381.63 ns | 222.72 ns | 76.5 | 0 B | 0 B | 100 |
 
 </details>
@@ -1803,11 +1803,11 @@ Enqueues one event to a library-provided async or buffering wrapper and validate
 
 ![Logging Buffered Logging benchmark](reports/Logging/charts/07-buffered-logging.png)
 
-#### 08 · Create Logger
+#### 08 · Prepare Logger
 
 Creates, verifies, and releases one Information-enabled logger with an in-memory sink.
 
-![Logging Create Logger benchmark](reports/Logging/charts/08-create-logger.png)
+![Logging Prepare Logger benchmark](reports/Logging/charts/08-prepare-logger.png)
 
 #### 09 · Formatted Output
 

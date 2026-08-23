@@ -6,6 +6,6 @@ namespace Matrix.Logging.Benchmarks;
 [MatrixFeature(
     "PrepareLogger",
     8,
-    "Create Logger",
+    "Prepare Logger",
     "Creates, verifies, and releases one Information-enabled logger with an in-memory sink.")]
 public partial class PrepareLogger;

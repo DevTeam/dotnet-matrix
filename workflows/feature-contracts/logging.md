@@ -104,7 +104,7 @@ Application category is `Matrix.Logging`.
 - Rating: feature-only because enqueue completion is not equivalent to
   synchronous sink delivery.
 
-## 8. Create Logger
+## 8. Prepare Logger
 
 - Operation: construct a logger configuration with one in-memory sink and
   Information minimum level, obtain the named logger, verify it is enabled,
@@ -116,6 +116,24 @@ Application category is `Matrix.Logging`.
 - Supported: a complete usable logger is created and released inside one
   invocation.
 - Rating: `prepare`.
+
+## 9. Formatted Output
+
+- Operation: submit the Information message `Formatted event` through the
+  library's own output formatter into a bounded in-memory sink.
+- Inside invocation: event creation, layout/template formatting, and
+  synchronous delivery of the formatted text or UTF-8 bytes to the sink.
+- Outside invocation: setup builds the formatter with a library-appropriate
+  timestamp/level/logger/message layout; cleanup validates all three
+  validation invocations.
+- Validation: the sink has received three formatted records and the last one
+  ends with `Formatted event`.
+- Supported: the library defines a text output formatter that the matrix can
+  drive synchronously; matrix-owned formatting is not support.
+- Unsupported: the library defines no comparable output formatter. This is
+  the case for Microsoft.Extensions.Logging, whose core package ships none,
+  and for OpenTelemetry, which exports log records instead.
+- Rating: `structured`.
 
 ## Availability meanings
 
