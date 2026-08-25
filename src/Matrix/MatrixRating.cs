@@ -24,6 +24,7 @@ public static class MatrixRatings
         BenchmarkReport report,
         MatrixChartCatalog charts,
         Func<string, bool> isRated,
+        Func<string, bool> isFeatureRated,
         Func<string, bool>? includeLibrary = null)
     {
         var libraries = report.Libraries
@@ -34,9 +35,17 @@ public static class MatrixRatings
             return [];
         }
 
+        // A feature named Rated: false in its own contract is excluded here,
+        // the same way an unrated library is excluded from Competes above —
+        // named once per scenario, never recomputed from who currently enters.
+        // See workflows/rating.md, "The Rated flag that does exist".
+        var ratedFeatures = report.Features
+            .Where(feature => isFeatureRated(feature.Id))
+            .ToArray();
+
         var awards = ReadAwards(report, charts, Competes);
         var score = MatrixScores.Create(
-            report.Features,
+            ratedFeatures,
             libraries.Select(library => library.Id),
             Competes);
         return libraries
@@ -50,7 +59,7 @@ public static class MatrixRatings
                     earned.Time,
                     earned.Memory,
                     earned.Covered,
-                    report.Features.Count);
+                    ratedFeatures.Length);
             })
             .OrderByDescending(medals => medals.Points)
             .ThenBy(medals => medals.Name, StringComparer.OrdinalIgnoreCase)

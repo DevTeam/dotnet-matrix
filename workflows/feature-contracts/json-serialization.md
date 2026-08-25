@@ -123,8 +123,15 @@ time and validate the canonical payload and model. Runtime reflection fallback
 does not qualify.
 
 This feature is `NotApplicable` for libraries without a source-generation
-programming model. It is rated like every other scenario and drawn in the
-`advanced` chart group.
+programming model.
+
+Not rated: with this few rated entrants, the reference is a library's own
+result, not a result earned against a competitor, so the full 200 points would
+not reflect a win. The current entrant count is not repeated here — it is
+computed from the report and shown live in the feature matrix and
+`README.md`. See workflows/rating.md, "No per-scenario exclusion by threshold
+or editorial judgment". It is still benchmarked and validated, and its own
+chart still shows the result.
 
 ## 14. Prepare Serializer
 

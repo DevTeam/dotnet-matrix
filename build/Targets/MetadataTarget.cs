@@ -167,9 +167,11 @@ internal sealed partial class MetadataTarget(
 
         // Not an error: a chart group is a curated view, not a partition. It is
         // reported because such a scenario is rated but appears in no overview
-        // chart, and that is easy to arrive at by accident.
+        // chart, and that is easy to arrive at by accident. A feature marked
+        // Rated: false is excluded from this check — it belongs in no group by
+        // design, not by omission.
         var undrawn = features
-            .Where(feature => !placements.ContainsKey(feature.Id))
+            .Where(feature => feature.Rated && !placements.ContainsKey(feature.Id))
             .Select(feature => feature.Id)
             .ToArray();
         if (undrawn.Length != 0)

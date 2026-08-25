@@ -44,6 +44,10 @@
                 </span>
                 Fastest &amp; lightest here
             </li>
+            <li>
+                <NotRatedBadge Reason="Not part of the category rating"/>
+                Not rated — still measured
+            </li>
         </ul>
         <div class="table-scroll">
             <table class="feature-table">
@@ -72,6 +76,7 @@
                 @foreach (var feature in features)
                 {
                     var description = View.FeatureDescription(report, feature.Id);
+                    var notRatedReason = View.FeatureNotRatedReason(report, feature.Id);
                     var expanded = _expanded.Contains(feature.Id);
                     var medals = ScenarioMedals(report, feature, libraries);
                     <tr>
@@ -80,6 +85,10 @@
                             {
                                 <span class="feature-order">@feature.Order.ToString("00")</span>
                                 @feature.Name
+                                @if (notRatedReason is not null)
+                                {
+                                    <NotRatedBadge Reason="@notRatedReason"/>
+                                }
                             }
                             else
                             {
@@ -90,6 +99,10 @@
                                         @onclick="() => Toggle(feature.Id)">
                                     <span class="feature-order">@feature.Order.ToString("00")</span>
                                     <span>@feature.Name</span>
+                                    @if (notRatedReason is not null)
+                                    {
+                                        <NotRatedBadge Reason="@notRatedReason"/>
+                                    }
                                     <span class="feature-toggle-mark" aria-hidden="true">
                                         @(expanded ? "−" : "?")
                                     </span>

@@ -85,7 +85,9 @@ public static class MatrixMetadata
                 feature!.Id,
                 feature.Order,
                 feature.Name,
-                feature.Description.Trim()))
+                feature.Description.Trim(),
+                feature.Rated,
+                feature.Reason?.Trim()))
             .DistinctBy(feature => feature.Id, StringComparer.OrdinalIgnoreCase)
             .OrderBy(feature => feature.Order)
             .ToArray();
@@ -95,6 +97,14 @@ public static class MatrixMetadata
             {
                 throw new InvalidOperationException(
                     $"Matrix feature '{feature.Id}' must define a description.");
+            }
+
+            // A false Rated with no stated reason is exactly the undocumented
+            // "feature-only" leftover this mechanism replaced.
+            if (!feature.Rated && string.IsNullOrEmpty(feature.Reason))
+            {
+                throw new InvalidOperationException(
+                    $"Matrix feature '{feature.Id}' is Rated: false and must give a reason.");
             }
         }
 

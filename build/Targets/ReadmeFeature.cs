@@ -5,4 +5,5 @@ public sealed record ReadmeFeature(
     int Order,
     string Name,
     string? Description,
-    string ChartPath);
+    string ChartPath,
+    string? NotRatedReason);

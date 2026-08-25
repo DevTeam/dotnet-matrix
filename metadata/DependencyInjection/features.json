@@ -5,91 +5,121 @@
       "id": "Singleton",
       "order": 1,
       "name": "Singleton",
-      "description": "Registers three singleton services and resolves each of them repeatedly. Every resolve of the same service must return the same instance."
+      "description": "Registers three singleton services and resolves each of them repeatedly. Every resolve of the same service must return the same instance.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Transient",
       "order": 2,
       "name": "Transient",
-      "description": "Registers three transient services and resolves each of them repeatedly. Every resolve must create a new instance, never reusing an earlier one."
+      "description": "Registers three transient services and resolves each of them repeatedly. Every resolve must create a new instance, never reusing an earlier one.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "PerResolve",
       "order": 3,
       "name": "PerResolve",
-      "description": "Resolves an object graph that asks for the same dependency twice. Both requests inside one resolution share an instance, while the next resolution gets a new one."
+      "description": "Resolves an object graph that asks for the same dependency twice. Both requests inside one resolution share an instance, while the next resolution gets a new one.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Scoped",
       "order": 4,
       "name": "Scoped",
-      "description": "Resolves scoped services inside explicit scopes. One instance per scope, different instances across scopes, and scope-owned disposables are disposed when the scope ends."
+      "description": "Resolves scoped services inside explicit scopes. One instance per scope, different instances across scopes, and scope-owned disposables are disposed when the scope ends.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Combined",
       "order": 5,
       "name": "Combined",
-      "description": "Resolves three roots that mix singleton and transient dependencies. The singleton is shared across every root while each transient dependency is distinct."
+      "description": "Resolves three roots that mix singleton and transient dependencies. The singleton is shared across every root while each transient dependency is distinct.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Complex",
       "order": 6,
       "name": "Complex",
-      "description": "Registers and resolves three multi-level object graphs, checking that every nested dependency has the expected implementation type and lifetime."
+      "description": "Registers and resolves three multi-level object graphs, checking that every nested dependency has the expected implementation type and lifetime.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Property",
       "order": 7,
       "name": "Property",
-      "description": "Resolves three roots that carry writable service properties. The container, or its intended property-injection extension, must assign them during activation."
+      "description": "Resolves three roots that carry writable service properties. The container, or its intended property-injection extension, must assign them during activation.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Generics",
       "order": 8,
       "name": "Generics",
-      "description": "Registers one open generic service mapping and resolves roots closed over int, float and object. Registering every closed type separately does not count."
+      "description": "Registers one open generic service mapping and resolves roots closed over int, float and object. Registering every closed type separately does not count.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Enumerable",
       "order": 9,
       "name": "IEnumerable",
-      "description": "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients."
+      "description": "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.",
+      "rated": false,
+      "reason": "Too few rated libraries implement genuine lazy enumeration for this to be a competitive result; the scenario was measured and drawn in no chart group before it briefly entered one by accident."
     },
     {
       "id": "Array",
       "order": 10,
       "name": "Array",
-      "description": "Resolves three roots that materialise their injected sequence of five plugins into an array while the root is being activated."
+      "description": "Resolves three roots that materialise their injected sequence of five plugins into an array while the root is being activated.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "Conditional",
       "order": 11,
       "name": "Conditional",
-      "description": "Gives each of three consumers a different implementation of one contract, chosen through the metadata, key, predicate or consumer-context mechanism of the library."
+      "description": "Gives each of three consumers a different implementation of one contract, chosen through the metadata, key, predicate or consumer-context mechanism of the library.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "ChildContainer",
       "order": 12,
       "name": "Child Container",
-      "description": "Creates a real nested child container that inherits the registrations of its parent and can add or override them without changing the parent."
+      "description": "Creates a real nested child container that inherits the registrations of its parent and can add or override them without changing the parent.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "InterceptionWithProxy",
       "order": 13,
       "name": "Interception With Proxy",
-      "description": "Resolves a service through the interception or activation extension point of the library. The result must be a proxy whose interceptor proceeds to the real target."
+      "description": "Resolves a service through the interception or activation extension point of the library. The result must be a proxy whose interceptor proceeds to the real target.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "PrepareAndRegister",
       "order": 14,
       "name": "Prepare And Register",
-      "description": "Measures creating the container and registering the whole prescribed graph, without resolving anything from it."
+      "description": "Measures creating the container and registering the whole prescribed graph, without resolving anything from it.",
+      "rated": true,
+      "reason": null
     },
     {
       "id": "PrepareAndRegisterAndSimpleResolve",
       "order": 15,
       "name": "Prepare And Register And Simple Resolve",
-      "description": "Measures the same setup as Prepare And Register, followed by a single resolve of one singleton root."
+      "description": "Measures the same setup as Prepare And Register, followed by a single resolve of one singleton root.",
+      "rated": true,
+      "reason": null
     }
   ]
 }

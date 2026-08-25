@@ -7,7 +7,9 @@ namespace Matrix.DependencyInjection.Benchmarks;
     nameof(FeatureId.Enumerable),
     9,
     "IEnumerable",
-    "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.")]
+    "Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.",
+    rated: false,
+    reason: "Too few rated libraries implement genuine lazy enumeration for this to be a competitive result; the scenario was measured and drawn in no chart group before it briefly entered one by accident.")]
 [FeatureUnavailable(
     LibraryCatalog.Autofac,
     FeatureStatus.Unsupported,

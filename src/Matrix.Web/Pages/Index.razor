@@ -241,6 +241,10 @@
                         <h3>Scenarios</h3>
                         <span class="filter-count">
                             @SelectedShownFeatureCount / @ShownFeatureCount
+                            @if (ShownNotRatedFeatureCount > 0)
+                            {
+                                <text> · </text><span class="filter-count-note">@ShownNotRatedFeatureCount not rated</span>
+                            }
                         </span>
                     </div>
                     <input class="filter-search"
@@ -271,17 +275,24 @@
                                 @foreach (var feature in features)
                                 {
                                     var key = FeatureKey(report.Category.Id, feature.Id);
-                                    <label class="check-row"
-                                           title="@View.FeatureDescription(report, feature.Id)">
-                                        <input type="checkbox"
-                                               checked="@_selectedFeatures.Contains(key)"
-                                               @onchange="eventArgs => ToggleFeature(key, eventArgs)"/>
-                                        <span>
-                                            <span class="feature-order">
-                                                @feature.Order.ToString("00")
-                                            </span>@feature.Name
-                                        </span>
-                                    </label>
+                                    var notRatedReason = View.FeatureNotRatedReason(report, feature.Id);
+                                    <div class="scenario-row @(notRatedReason is null ? null : "is-not-rated")">
+                                        <label class="check-row"
+                                               title="@View.FeatureDescription(report, feature.Id)">
+                                            <input type="checkbox"
+                                                   checked="@_selectedFeatures.Contains(key)"
+                                                   @onchange="eventArgs => ToggleFeature(key, eventArgs)"/>
+                                            <span>
+                                                <span class="feature-order">
+                                                    @feature.Order.ToString("00")
+                                                </span>@feature.Name
+                                            </span>
+                                        </label>
+                                        @if (notRatedReason is not null)
+                                        {
+                                            <NotRatedBadge Reason="@notRatedReason"/>
+                                        }
+                                    </div>
                                 }
                             </div>
                         </div>
@@ -630,6 +641,17 @@
     private int ShownFeatureCount => ShownFeatureKeys.Count();
 
     private int SelectedShownFeatureCount => ShownFeatureKeys.Count(_selectedFeatures.Contains);
+
+    /// <summary>
+    /// How many of the currently shown scenarios carry a stated reason not to be
+    /// rated, so the panel's count line does not silently include them in what
+    /// looks like a plain total.
+    /// </summary>
+    private int ShownNotRatedFeatureCount => VisibleReports
+        .SelectMany(report => View.Features(report)
+            .Where(MatchesFeature)
+            .Where(feature => !View.IsFeatureRated(report, feature.Id)))
+        .Count();
 
     private int CategoryFeatureCount => CategoryFeatures.Count();
 

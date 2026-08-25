@@ -91,8 +91,15 @@ validation API and produce exactly one failure at `UserName`.
 The lookup yields once before returning so completion is observably
 asynchronous, but external I/O and timing are absent, so the measurement is
 mostly task-scheduling and async-pipeline overhead rather than the rule itself.
-It is rated like every other scenario and drawn in the `basic` chart group.
 Libraries without asynchronous rules are `Unsupported`.
+
+Not rated: with this few rated entrants, the reference is a library's own
+result, not a result earned against a competitor, so the full 200 points would
+not reflect a win. The current entrant count is not repeated here — it is
+computed from the report and shown live in the feature matrix and
+`README.md`. See workflows/rating.md, "No per-scenario exclusion by threshold
+or editorial judgment". It is still benchmarked and validated, and its own
+chart still shows the result.
 
 ## 10. Prepare Validator
 

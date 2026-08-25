@@ -32,6 +32,7 @@ internal sealed class MatrixScoring(IMatrixView view, IMatrixMeasures measures) 
                 report.Benchmarks,
                 report.ChartCatalog,
                 libraryId => view.IsRated(report, libraryId),
+                featureId => view.IsFeatureRated(report, featureId),
                 libraryId => view.IsSelected(report, selectedLibraries, libraryId));
 
     public int? Place(IReadOnlyList<MatrixMedals> rating, string libraryId)

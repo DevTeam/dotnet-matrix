@@ -283,13 +283,20 @@
                                     @if (_hasScenarioScores)
                                     {
                                         <td class="modal-scenario-points">
-                                            <strong>@Scoring.FormatExact(row.Points)</strong>
-                                            @* The split, because time and memory are
-                                               separate columns in the standings. *@
-                                            <small>
-                                                @Scoring.FormatExact(row.TimePoints)
-                                                + @Scoring.FormatExact(row.MemoryPoints)
-                                            </small>
+                                            @if (row.NotRatedReason is { } notRatedReason)
+                                            {
+                                                <NotRatedBadge Reason="@notRatedReason"/>
+                                            }
+                                            else
+                                            {
+                                                <strong>@Scoring.FormatExact(row.Points)</strong>
+                                                @* The split, because time and memory are
+                                                   separate columns in the standings. *@
+                                                <small>
+                                                    @Scoring.FormatExact(row.TimePoints)
+                                                    + @Scoring.FormatExact(row.MemoryPoints)
+                                                </small>
+                                            }
                                         </td>
                                     }
                                 </tr>
@@ -363,12 +370,12 @@
 
     /// <summary>Which scenarios the zero is made of; the row states only how many.</summary>
     private string MissingTitle =>
-        Report.Benchmarks is { } benchmarks
+        Report.Benchmarks is not null
             ? "Scored nothing here:\n"
               + string.Join(
                   '\n',
                   MatrixScores
-                      .Explain(benchmarks.Features, Library.Id, _ => true)
+                      .Explain(View.RatedFeatures(Report), Library.Id, _ => true)
                       .Where(detail => !detail.Covered)
                       .Select(detail => $"  {detail.Name}"))
             : string.Empty;
@@ -378,10 +385,10 @@
     /// else the same number appears.
     /// </summary>
     private string Hint(bool? metric) =>
-        Report.Benchmarks is { } benchmarks
+        Report.Benchmarks is not null
             ? Scoring.Hint(
                 Report,
-                benchmarks.Features,
+                View.RatedFeatures(Report),
                 SelectedLibraries,
                 Library.Id,
                 metric)
@@ -448,10 +455,12 @@
         }
 
         // The rating, scenario by scenario, from the function the rating itself sums.
-        _scores = Report.Benchmarks is { } benchmarks
+        // Restricted to rated features, or an unrated scenario would show points
+        // here that never entered the total shown beside them.
+        _scores = Report.Benchmarks is not null
             ? MatrixScores
                 .Explain(
-                    benchmarks.Features,
+                    View.RatedFeatures(Report),
                     Library.Id,
                     libraryId => View.IsRated(Report, libraryId)
                                  && View.IsSelected(Report, SelectedLibraries, libraryId))
@@ -496,7 +505,8 @@
             Ratio(row?.Time, View.Best(rows, false)),
             Ratio(row?.Memory, View.Best(rows, true)),
             score?.Time.Points ?? 0,
-            score?.Memory.Points ?? 0);
+            score?.Memory.Points ?? 0,
+            View.FeatureNotRatedReason(Report, featureId));
     }
 
     private void ReadStandings()
@@ -681,7 +691,8 @@
         string TimeRatio,
         string MemoryRatio,
         double TimePoints,
-        double MemoryPoints)
+        double MemoryPoints,
+        string? NotRatedReason)
     {
         public double Points => TimePoints + MemoryPoints;
     }

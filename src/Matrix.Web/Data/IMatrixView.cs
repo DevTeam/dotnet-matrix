@@ -44,9 +44,39 @@ internal interface IMatrixView
     /// </summary>
     bool IsRated(CategoryReport report, string libraryId);
 
+    /// <summary>
+    /// Whether a scenario counts toward the category rating. A named,
+    /// individually justified exception recorded once in the scenario's own
+    /// feature contract — not a computed threshold, and unaffected by which
+    /// libraries currently enter it. See workflows/rating.md.
+    /// </summary>
+    bool IsFeatureRated(CategoryReport report, string featureId);
+
+    /// <summary>
+    /// The report's measured scenarios with the unrated ones removed — the set
+    /// every category-level total is summed over, so a breakdown built from it
+    /// always adds up to the total shown beside it.
+    /// </summary>
+    IReadOnlyList<BenchmarkReportEntry> RatedFeatures(CategoryReport report);
+
     string? Logo(CategoryReport report, string libraryId);
 
     string? FeatureDescription(CategoryReport report, string featureId);
+
+    /// <summary>
+    /// How many of the rated libraries support a scenario, and how many are
+    /// rated in total — the arithmetic behind "supported by N of M", computed
+    /// from the report itself rather than written by hand, so it can never go
+    /// stale the way a number typed into a contract's prose can.
+    /// </summary>
+    (int Supported, int Rated) FeatureCoverage(CategoryReport report, string featureId);
+
+    /// <summary>
+    /// Why the scenario is not rated, or null when it is. The authored reason
+    /// with the current "N of M" support count appended, so the text a "not
+    /// rated" mark shows can never disagree with what the report says today.
+    /// </summary>
+    string? FeatureNotRatedReason(CategoryReport report, string featureId);
 
     /// <summary>
     /// One group of the report, ordered by its score. Libraries outside the rating

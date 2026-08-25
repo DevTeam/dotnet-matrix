@@ -140,11 +140,11 @@
         + " Open the overview for the points of every scenario";
 
     private string? Hint(MatrixMedals item, bool? metric) =>
-        Report.Benchmarks is { } benchmarks
+        Report.Benchmarks is not null
         && item.LibraryId.Equals(_revealed, StringComparison.OrdinalIgnoreCase)
             ? Scoring.Hint(
                 Report,
-                benchmarks.Features,
+                View.RatedFeatures(Report),
                 SelectedLibraries,
                 item.LibraryId,
                 metric)
