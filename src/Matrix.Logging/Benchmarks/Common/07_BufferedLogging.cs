@@ -7,6 +7,10 @@ namespace Matrix.Logging.Benchmarks;
     LibraryCatalog.MicrosoftExtensionsLogging,
     FeatureStatus.Unsupported,
     "Microsoft.Extensions.Logging defines no asynchronous or buffering provider in the core package.")]
+[FeatureUnavailable(
+    LibraryCatalog.ZLogger,
+    FeatureStatus.Unsupported,
+    "ZLogger's processor API delivers synchronously; only its built-in stream, file, and console providers offer a genuine bounded background buffer, and this scenario's in-memory sink does not use one of those.")]
 [MatrixFeature(
     "BufferedLogging",
     7,

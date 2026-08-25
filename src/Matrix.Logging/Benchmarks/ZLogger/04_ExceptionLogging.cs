@@ -3,7 +3,7 @@ using ZLogger;
 // ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
 
-public partial class BufferedLogging
+public partial class ExceptionLogging
 {
     private ZLoggerFixture _zlogger = null!;
     private ILogger _zloggerLogger = null!;
@@ -16,17 +16,13 @@ public partial class BufferedLogging
     }
 
     [GlobalCleanup(Target = nameof(ZLogger))]
-    public void CleanupZLogger()
-    {
-        _zlogger.Dispose();
-        LoggingChecks.Buffered(
-            LibraryCatalog.ZLogger,
-            _zlogger.Sink.Count,
-            _zlogger.Sink.Last);
-    }
+    public void CleanupZLogger() => _zlogger.Dispose();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.ZLogger)]
-    public void ZLogger() =>
-        _zloggerLogger.ZLogInformation($"Buffered event");
+    public void ZLogger()
+    {
+        _zloggerLogger.ZLogError(_exception, $"Order failed");
+        LoggingChecks.Exception(LibraryCatalog.ZLogger, _zlogger.Sink.Last, _exception);
+    }
 }

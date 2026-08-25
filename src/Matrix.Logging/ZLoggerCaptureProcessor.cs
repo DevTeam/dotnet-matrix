@@ -20,6 +20,14 @@ internal sealed class ZLoggerCaptureProcessor : IAsyncLogProcessor
             properties[log.GetParameterKeyAsString(index)] = log.GetParameterValue(index);
         }
 
+        if (log.LogInfo.ScopeState is { IsEmpty: false } scope)
+        {
+            foreach (var property in scope.Properties)
+            {
+                properties[property.Key] = property.Value;
+            }
+        }
+
         Last = new CapturedLogEvent(
             log.LogInfo.LogLevel.ToString(),
             log.ToString(),

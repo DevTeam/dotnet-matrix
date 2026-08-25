@@ -32,8 +32,7 @@ sufficient.
 - The same method, model, and payload are used by feature validation and
   benchmarking.
 - Chart groups compare time and allocation only after validation proves an
-  identical canonical payload size. Source Generation Round Trip is drawn in no
-  group and has only its own chart. A chart group decides where a scenario
+  identical canonical payload size. A chart group decides where a scenario
   appears, never whether it counts: every scenario of the category enters the
   rating.
 
@@ -124,7 +123,8 @@ time and validate the canonical payload and model. Runtime reflection fallback
 does not qualify.
 
 This feature is `NotApplicable` for libraries without a source-generation
-programming model and is excluded from ratings.
+programming model. It is rated like every other scenario and drawn in the
+`advanced` chart group.
 
 ## 14. Prepare Serializer
 

@@ -496,21 +496,6 @@ remains the thing that makes such a row readable, which is why it is not optiona
   category total, and whether the scenario sets should be balanced so the same
   handicap costs the same everywhere. See above; this is a scenario-set decision,
   not a rule change.
-- **Architecture-neutral logging scenarios.** Five of the eight unavailable
-  results in `Logging` carry one sentence: `ZLogger providers deliver through a
-  background queue, while this feature requires synchronous sink delivery`. Five
-  scenarios of nine require synchronous delivery — four of them say so in the
-  contract and `Scope Or Context` inherits it from the category scope — and one
-  requires an asynchronous one, so ZLogger forfeits 1000 points of 1800 and
-  Microsoft.Extensions.Logging forfeits 200, both for an architecture rather
-  than for a missing capability. The contract also applies the requirement
-  unevenly: `Formatted Output` accepts ZLogger's background processor while
-  `Simple Message` does not. A neutral contract would measure the delivery of N
-  events to completion inside the invocation — enqueue and flush, with the flush
-  amortised over N — so that synchronous and asynchronous libraries are compared
-  on the full cost of delivering an event, and buffering stops being a separate
-  feature. This is a scenario-set decision, not a rule change, and it would
-  invalidate comparison with the published Logging reports.
 
 ## Implementation
 

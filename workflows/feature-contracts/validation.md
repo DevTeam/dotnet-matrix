@@ -28,10 +28,9 @@ different path, or performs work outside the stated boundary.
   strongly typed result. A matrix-owned universal validator interface does not
   qualify.
 - The validation and benchmark runners invoke the same method and input.
-- Features 1 through 8 are drawn in the synchronous chart groups and Prepare
-  Validator has its own. Async Validation is drawn in no group and has only its
-  own chart. A chart group decides where a scenario appears, never whether it
-  counts: every scenario of the category enters the rating.
+- Features 1 through 9 are drawn in the synchronous chart groups and Prepare
+  Validator has its own. A chart group decides where a scenario appears, never
+  whether it counts: every scenario of the category enters the rating.
 
 ## 1. Valid Object
 
@@ -90,9 +89,10 @@ in-memory lookup. The rule must use the library's intended asynchronous
 validation API and produce exactly one failure at `UserName`.
 
 The lookup yields once before returning so completion is observably
-asynchronous, but external I/O and timing are absent. This feature is excluded
-from ratings because it primarily measures task scheduling and async pipeline
-overhead. Libraries without asynchronous rules are `Unsupported`.
+asynchronous, but external I/O and timing are absent, so the measurement is
+mostly task-scheduling and async-pipeline overhead rather than the rule itself.
+It is rated like every other scenario and drawn in the `basic` chart group.
+Libraries without asynchronous rules are `Unsupported`.
 
 ## 10. Prepare Validator
 

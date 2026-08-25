@@ -76,14 +76,6 @@ follows [add-library.md](add-library.md), not this document.
   external I/O scheduling, so the scenario measures the cost of the
   asynchronous path itself. It is recorded as a caveat on the scenario; both it
   and `Custom Conversion` count in the rating like every other scenario.
-- **Scenarios drawn in no overview group.** `DependencyInjection /
-  Enumerable`, `JsonSerialization / Source Generation Round Trip` and
-  `Validation / Async Validation` are absent from their `charts.json`, so they
-  are rated and charted individually but appear in no group standing. This was
-  how "feature-only" was actually implemented, and it does not do what that
-  word promised: the rating covers every scenario either way. Decide per
-  scenario whether it belongs in an existing group or whether the category
-  needs another one. `generate-metadata` reports them on every run.
 - **LINQ Queries**: among rated libraries, span-source support is limited to
   ZLinq and Hyperlinq, and the struct-predicate scenario is supported only by
   StructLinq. `GroupJoin`,
