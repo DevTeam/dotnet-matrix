@@ -31,8 +31,11 @@ sufficient.
   qualify.
 - The same method, model, and payload are used by feature validation and
   benchmarking.
-- Rating groups compare time and allocation only after validation proves an
-  identical canonical payload size. Source Generation is feature-only.
+- Chart groups compare time and allocation only after validation proves an
+  identical canonical payload size. Source Generation Round Trip is drawn in no
+  group and has only its own chart. A chart group decides where a scenario
+  appears, never whether it counts: every scenario of the category enters the
+  rating.
 
 ## 1. Serialize Simple Object
 

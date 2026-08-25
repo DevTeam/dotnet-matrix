@@ -444,10 +444,9 @@ should find the case stated, not have to discover it.
   `rating.md` §"Scenarios with one entrant". Two of eighteen (11 %) is at the
   level of JSON Serialization (2 of 14) and Validation (2 of 10).
 - **There is no rating escape hatch.** The rating is computed over *every*
-  scenario regardless of chart-group membership, so a "feature-only" scenario
-  that does not affect the rating does not exist. The wording
-  `Rating: feature-only` in `feature-contracts/csv-processing.md` is a leftover
-  from the previous medal rule.
+  scenario regardless of chart-group membership, so a scenario that is measured
+  but does not affect the rating does not exist. See `rating.md`
+  §"No per-scenario exclusion".
 - Deliberately excluded, and to be recorded as decisions rather than omissions:
   `GroupJoin` (the same entrants as `JoinLookup`), `ToDictionary` (measures
   mostly `Dictionary<K,V>`), `Union`/`Intersect`/`Except`, `Chunk`, `Average`,

@@ -25,7 +25,7 @@ Application category is `Matrix.Logging`.
 - Inside invocation: the direct logging API call, including its level check.
 - Validation: the in-memory sink receives no event.
 - Supported: Information is disabled and the call performs no sink delivery.
-- Rating: `core`.
+- Group: `core`.
 
 ## 2. Simple Message
 
@@ -34,7 +34,7 @@ Application category is `Matrix.Logging`.
 - Validation: exactly one latest event has Information level, the exact
   rendered message, and no exception.
 - Supported: the sink observes the exact event.
-- Rating: `core`.
+- Group: `core`.
 
 ## 3. Structured Properties
 
@@ -47,7 +47,7 @@ Application category is `Matrix.Logging`.
   also checked when the library retains it natively.
 - Supported: both named values remain independently queryable in the received
   event; pre-rendering a plain string is not support.
-- Rating: `structured`.
+- Group: `structured`.
 
 ## 4. Exception
 
@@ -59,7 +59,7 @@ Application category is `Matrix.Logging`.
   the exception.
 - Supported: the exception is retained as exception metadata rather than
   concatenated into the message.
-- Rating: `structured`.
+- Group: `structured`.
 
 ## 5. Scope Or Context
 
@@ -71,7 +71,7 @@ Application category is `Matrix.Logging`.
   the rendered message is exact.
 - Supported: context is captured on the event and does not remain active after
   the invocation.
-- Rating: `structured`.
+- Group: `structured`.
 
 ## 6. Template Rendering
 
@@ -85,7 +85,7 @@ Application category is `Matrix.Logging`.
   it must match the library-appropriate parameterized input.
 - Supported: the logging API receives the unrendered values and produces the
   exact invariant output; matrix-owned pre-rendering is not support.
-- Rating: `structured`.
+- Group: `structured`.
 
 ## 7. Buffered Logging
 
@@ -101,8 +101,10 @@ Application category is `Matrix.Logging`.
   asynchronous queue or explicit event buffer. `Task.Run` around synchronous
   logging is not support.
 - Unsupported: no async/buffering facility is provided.
-- Rating: feature-only because enqueue completion is not equivalent to
-  synchronous sink delivery.
+- Caveat: enqueue completion is not equivalent to synchronous sink delivery.
+  The scenario measures the cost of accepting an event, not of delivering it;
+  the remaining work happens on a background thread and is not measured.
+- Group: `core`.
 
 ## 8. Create Logger
 
@@ -115,7 +117,25 @@ Application category is `Matrix.Logging`.
 - Validation: the method reports that Information is enabled.
 - Supported: a complete usable logger is created and released inside one
   invocation.
-- Rating: `prepare`.
+- Group: `prepare`.
+
+## 9. Formatted Output
+
+- Operation: submit the Information message `Formatted event` through a logger
+  whose sink renders the event to text with a library-provided layout or
+  formatter carrying timestamp, padded level, logger name, and message.
+- Inside invocation: the logging call, layout rendering, and the write of the
+  rendered record into a bounded in-memory sink.
+- Outside invocation: setup builds the formatter and the sink; cleanup disposes
+  the logger, which completes any deferred write, and validates all three
+  validation invocations.
+- Validation: the sink has received three formatted records and the last one
+  ends with `Formatted event`.
+- Supported: the library defines a text layout or formatter that renders a
+  complete event into a caller-provided writer. Composing the record from
+  matrix-owned string concatenation is not support.
+- Unsupported: the library defines no comparable text formatter.
+- Group: `structured`.
 
 ## Availability meanings
 

@@ -65,16 +65,25 @@ follows [add-library.md](add-library.md), not this document.
   baseline and is excluded from the rating through `MatrixRating`.
 - **Object Mapping**: `Queryable Projection` was deliberately not implemented.
   A fair scenario requires a common LINQ provider and would otherwise measure
-  more than the mapper. Implement it as feature-only or in a separate non-rated
-  group.
+  more than the mapper. If it is implemented it enters the rating like every
+  other scenario, so it has to be comparable before it is added.
 - **Validation**: `Validot` was a candidate and remains unimplemented.
 - **JSON Serialization**: `SpanJson` remains unimplemented. Binary formats stay
   out of this category by design. `BenchmarkResult.PayloadSizeBytes` is
   recorded per result in `reports/<ReportDirectory>/benchmarks.json`, but it
   does not participate in charts or ratings yet.
-- **CSV Processing**: `Custom Conversion` and `Async Read` are feature-only.
-  The in-memory source does not model external I/O scheduling, so async read is
-  not comparable as a performance scenario.
+- **CSV Processing**: the in-memory source of `Async Read` does not model
+  external I/O scheduling, so the scenario measures the cost of the
+  asynchronous path itself. It is recorded as a caveat on the scenario; both it
+  and `Custom Conversion` count in the rating like every other scenario.
+- **Scenarios drawn in no overview group.** `DependencyInjection /
+  Enumerable`, `JsonSerialization / Source Generation Round Trip` and
+  `Validation / Async Validation` are absent from their `charts.json`, so they
+  are rated and charted individually but appear in no group standing. This was
+  how "feature-only" was actually implemented, and it does not do what that
+  word promised: the rating covers every scenario either way. Decide per
+  scenario whether it belongs in an existing group or whether the category
+  needs another one. `generate-metadata` reports them on every run.
 - **LINQ Queries**: among rated libraries, span-source support is limited to
   ZLinq and Hyperlinq, and the struct-predicate scenario is supported only by
   StructLinq. `GroupJoin`,

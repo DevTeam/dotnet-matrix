@@ -1799,7 +1799,7 @@ Formats amount 12.5 and customer Ada through the logger template API.
 
 #### 07 · Buffered Logging
 
-Enqueues one event to a library-provided async or buffering wrapper and validates delivery after flush.
+Enqueues one event to a library-provided async or buffering wrapper and validates delivery after flush. Measures the cost of accepting the event; the remaining delivery work happens on a background thread.
 
 ![Logging Buffered Logging benchmark](reports/Logging/charts/07-buffered-logging.png)
 

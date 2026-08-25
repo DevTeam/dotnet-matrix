@@ -126,6 +126,47 @@ read the Memory column on its own.
   reports, see which scenario costs the most, and know that making a result four
   times better doubles the points for it.
 
+### No per-scenario exclusion
+
+The rating is computed over **every** scenario of the category, regardless of
+which chart group the scenario is drawn in. A scenario that is measured and
+published but does not affect the rating does not exist, and no flag creates
+one.
+
+The `Group:` field of a feature contract names the chart group of the scenario
+and nothing else. It was called `Rating:` until the medal rule was replaced,
+and two contracts kept a value of `feature-only` from that era, which read as
+though a scenario could opt out. Nothing implemented it.
+
+The alternatives were considered and rejected:
+
+- **A threshold on the number of implementations** — "a scenario counts only if
+  at least N libraries support it". It fails the author test the same way the
+  medal threshold did: there is no answer to "why three and not two". It is also
+  the wrong instrument. In `Logging`, `Buffered Logging` is supported by five
+  libraries of six, so a threshold of three excludes nothing, and a threshold
+  high enough to exclude it leaves two scenarios of nine.
+- **A per-scenario `Rated` flag with an editorial criterion** — for instance
+  "the scenario is rated if every user of the category pays for it". Applied
+  honestly to `Logging` it also unrates `Structured Properties`, `Scope Or
+  Context`, `Template Rendering` and `Formatted Output`, because plenty of
+  applications never use any of them. It is a judgement in the shape of a rule.
+- Worse, either mechanism destroys the first property listed above: a scenario
+  crossing the boundary because a library was added or withdrawn changes the
+  score of every other library by up to 200 points, retroactively.
+
+If a scenario should not influence the rating, the decision is that the category
+does not measure it. Removing it from the category is honest, needs no
+mechanism, and leaves nothing to argue about. Whether a library supports the
+capability is still published: `FeatureStatus` is reported per library
+independently of the benchmarks and does not enter the rating.
+
+A scenario whose measurement needs a qualification carries a `Caveat:` line in
+its feature contract, and the qualification belongs in the feature description
+so that it reaches `README.md` and the Web application. `Logging / Buffered
+Logging` is the reference case: it measures the cost of accepting an event, not
+of delivering it, and it says so wherever the number is shown.
+
 ### Scope
 
 - Only libraries with `rated: true` in `metadata/<Category>/libraries.json`
@@ -221,9 +262,14 @@ The rule in this document is the decathlon shape with the reference taken from
 the field rather than from a calibration table, which is what benchmark suites
 such as SPEC do when they normalise against a reference and aggregate.
 
-## Effect on the current reports
+## Effect at the time of the change
 
-Computed from the reports committed at the time of writing.
+A historical snapshot, computed from the reports committed when the medal rule
+was replaced. It is deliberately not refreshed: it exists to show what the
+change did, and recomputing it against today's reports would destroy that. The
+numbers below therefore do not match `README.md` — `Logging` has since gained a
+ninth scenario, so its maximum is 1800 rather than the 1600 shown here. The
+current standings are in `README.md`, which is generated from the reports.
 
 | Category | Maximum | Previous leaderboard | Rating, as `total (time + memory)` |
 | --- | ---: | --- | --- |
@@ -406,6 +452,13 @@ the points are stated as though a race was won, and the reader is not told the
 race had one runner. The Scenarios column shows who did not enter; nothing shows
 that the winner ran alone.
 
+The fix is disclosure, not exclusion. A small number of entrants is not grounds
+for dropping a scenario from the rating — see §"No per-scenario exclusion" for
+why a threshold on that number cannot be defended, and for what to do when a
+scenario genuinely should not count. What is missing is a mark on the scenario
+saying how many rated libraries contested it, so that a perfect score earned
+uncontested is readable as such.
+
 ### A narrow library above a broad one (fixed by the curve)
 
 This was the case that produced the square root. With a plain ratio, MvvmCross
@@ -443,6 +496,21 @@ remains the thing that makes such a row readable, which is why it is not optiona
   category total, and whether the scenario sets should be balanced so the same
   handicap costs the same everywhere. See above; this is a scenario-set decision,
   not a rule change.
+- **Architecture-neutral logging scenarios.** Five of the eight unavailable
+  results in `Logging` carry one sentence: `ZLogger providers deliver through a
+  background queue, while this feature requires synchronous sink delivery`. Five
+  scenarios of nine require synchronous delivery — four of them say so in the
+  contract and `Scope Or Context` inherits it from the category scope — and one
+  requires an asynchronous one, so ZLogger forfeits 1000 points of 1800 and
+  Microsoft.Extensions.Logging forfeits 200, both for an architecture rather
+  than for a missing capability. The contract also applies the requirement
+  unevenly: `Formatted Output` accepts ZLogger's background processor while
+  `Simple Message` does not. A neutral contract would measure the delivery of N
+  events to completion inside the invocation — enqueue and flush, with the flush
+  amortised over N — so that synchronous and asynchronous libraries are compared
+  on the full cost of delivering an event, and buffering stops being a separate
+  feature. This is a scenario-set decision, not a rule change, and it would
+  invalidate comparison with the published Logging reports.
 
 ## Implementation
 

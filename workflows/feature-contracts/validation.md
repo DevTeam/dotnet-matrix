@@ -28,8 +28,10 @@ different path, or performs work outside the stated boundary.
   strongly typed result. A matrix-owned universal validator interface does not
   qualify.
 - The validation and benchmark runners invoke the same method and input.
-- Features 1 through 8 participate in the synchronous rating groups. Async
-  Validation is feature-only. Prepare Validator has its own rating group.
+- Features 1 through 8 are drawn in the synchronous chart groups and Prepare
+  Validator has its own. Async Validation is drawn in no group and has only its
+  own chart. A chart group decides where a scenario appears, never whether it
+  counts: every scenario of the category enters the rating.
 
 ## 1. Valid Object
 

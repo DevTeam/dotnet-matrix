@@ -28,7 +28,7 @@ measurement.
   boolean casing from the fixture.
 - Supported: the library parses the fixture through its CSV reader and returns
   the exact rows.
-- Rating: `read`.
+- Group: `read`.
 
 ## 2. Read Typed Records
 
@@ -39,7 +39,7 @@ measurement.
 - Validation: every typed property of every record.
 - Supported: typed field access or the library's record binding produces the
   exact records using invariant culture.
-- Rating: `read`.
+- Group: `read`.
 
 ## 3. Read Large Dataset
 
@@ -50,7 +50,7 @@ measurement.
 - Validation: length, first and last record, ID sum, amount sum, and active
   count.
 - Supported: the complete dataset is materialized with exact values.
-- Rating: `throughput`.
+- Group: `throughput`.
 
 ## 4. Quoted Fields
 
@@ -60,7 +60,7 @@ measurement.
   row construction, and materialization.
 - Validation: exact IDs and text (`Ada "Countess"` and `"quoted"`).
 - Supported: the library's quote/unescape mode returns the exact logical text.
-- Rating: `correctness`.
+- Group: `correctness`.
 
 ## 5. Escaped Delimiters
 
@@ -72,7 +72,7 @@ measurement.
 - Validation: exact IDs and text (`Ada, Lovelace` and `line one\nline two`).
 - Supported: neither the embedded separator nor embedded newline splits a
   logical field or record.
-- Rating: `correctness`.
+- Group: `correctness`.
 
 ## 6. Header Mapping
 
@@ -82,7 +82,7 @@ measurement.
   conversion, record construction, and materialization.
 - Validation: the same typed values as the canonical small corpus.
 - Supported: values are selected by header name, not by the original ordinal.
-- Rating: `correctness`.
+- Group: `correctness`.
 
 ## 7. Custom Conversion
 
@@ -96,7 +96,7 @@ measurement.
   plain string is not sufficient.
 - Unsupported: the CSV package has no conversion extension point capable of
   producing the custom type.
-- Rating: feature-only.
+- Group: `correctness`.
 
 ## 8. Streaming Read
 
@@ -108,7 +108,7 @@ measurement.
 - Validation: the exact deterministic aggregate.
 - Supported: the library exposes row-by-row forward-only consumption and the
   implementation does not materialize the dataset.
-- Rating: `throughput`.
+- Group: `throughput`.
 
 ## 9. Write Rows
 
@@ -120,7 +120,7 @@ measurement.
 - Validation: ordinal equality with the canonical payload, including header,
   column order, LF newline, and final newline.
 - Supported: the library's CSV writer emits the exact payload.
-- Rating: `write`.
+- Group: `write`.
 
 ## 10. Async Read
 
@@ -132,8 +132,9 @@ measurement.
 - Validation: the exact deterministic aggregate.
 - Supported: the library exposes and the scenario invokes a genuine async read
   API; wrapping a synchronous parser in `Task.Run` is not support.
-- Rating: feature-only because the in-memory source does not model external I/O
-  scheduling.
+- Caveat: the in-memory source does not model external I/O scheduling, so the
+  measurement is the cost of the asynchronous path itself, not of real I/O.
+- Group: `throughput`.
 
 ## Availability meanings
 

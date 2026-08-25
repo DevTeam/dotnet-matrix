@@ -11,6 +11,6 @@ namespace Matrix.Logging.Benchmarks;
     "BufferedLogging",
     7,
     "Buffered Logging",
-    "Enqueues one event to a library-provided async or buffering wrapper and validates delivery after flush.")]
+    "Enqueues one event to a library-provided async or buffering wrapper and validates delivery after flush. Measures the cost of accepting the event; the remaining delivery work happens on a background thread.")]
 public partial class BufferedLogging;
 
