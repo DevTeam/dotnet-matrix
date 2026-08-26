@@ -1,0 +1,13 @@
+@* The same crossed-star mark RatingBadge already uses for an unrated library,
+   reused here for an unrated scenario: one visual language for "would place,
+   but is outside the rating" instead of two. Rendered only when there is a
+   reason to show — a scenario with no stated reason is rated by definition,
+   see MatrixMetadata.ReadFeatures. *@
+<span class="not-rated-badge" title="@Reason" aria-label="@Reason" role="img">
+    <RatingIcon Place="unrated"/>
+</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public required string Reason { get; set; }
+}

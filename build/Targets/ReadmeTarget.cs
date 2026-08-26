@@ -1,4 +1,5 @@
 ﻿using Matrix;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 // ReSharper disable UseCollectionExpression
@@ -42,12 +43,21 @@ internal sealed partial class ReadmeTarget(
         const string applicationUrl = "https://matrix.dev-team.org/";
         var model = new ReadmeModel(applicationUrl, categories);
         var path = Path.Combine(buildPaths.SolutionDirectory, "README.md");
-        await using var stream = File.Create(path);
+        using var buffer = new MemoryStream();
         await templateEngine.RenderAsync(
             Template,
             model,
-            stream,
+            buffer,
             cancellationToken);
+        // The encoder still escapes ' and " — the two characters HtmlEncoder
+        // treats as always unsafe regardless of its allowed-character settings,
+        // even though Markdown has no attribute context for them to break out
+        // of. < > & stay escaped: README.md embeds real HTML (<details>) that
+        // an unescaped one would corrupt.
+        var text = Encoding.UTF8.GetString(buffer.ToArray())
+            .Replace("&#x27;", "'")
+            .Replace("&quot;", "\"");
+        await File.WriteAllTextAsync(path, text, new UTF8Encoding(false), cancellationToken);
         Info($"README: {path}");
         return 0;
     }
@@ -63,6 +73,7 @@ internal sealed partial class ReadmeTarget(
             "metadata",
             module.Metadata.ReportDirectory);
         var reportPath = Path.Combine(reportRoot, "benchmarks.json");
+        var featuresPath = Path.Combine(reportRoot, "features.json");
         var chartsPath = Path.Combine(metadataRoot, "charts.json");
         var librariesPath = Path.Combine(metadataRoot, "libraries.json");
         if (!File.Exists(reportPath) || !File.Exists(chartsPath) || !File.Exists(librariesPath))
@@ -73,6 +84,11 @@ internal sealed partial class ReadmeTarget(
         }
 
         var report = Read<BenchmarkReport>(reportPath);
+        // Coverage — "supported by N of M rated libraries" — needs the validation
+        // report, which benchmarks.json does not carry. Missing is not fatal: the
+        // count is only ever appended to a Rated: false reason, and a category
+        // with no not-rated scenario never asks for it.
+        var featureReport = File.Exists(featuresPath) ? Read<FeatureReport>(featuresPath) : null;
         var charts = Read<MatrixChartCatalog>(chartsPath);
         var metadata = Read<MatrixLibraryMetadataCatalog>(librariesPath);
         var moduleLibraries = module.Metadata.Libraries.ToDictionary(
@@ -103,25 +119,33 @@ internal sealed partial class ReadmeTarget(
             .ToArray();
         var features = report.Features
             .OrderBy(feature => feature.Order)
-            .Select(feature => new ReadmeFeature(
-                feature.Id,
-                feature.Order,
-                feature.Name,
-                module.Metadata.FeatureMetadata.Features
+            .Select(feature =>
+            {
+                var featureMetadata = module.Metadata.FeatureMetadata.Features
                     .FirstOrDefault(item =>
-                        item.Id.Equals(feature.Id, StringComparison.OrdinalIgnoreCase))
-                    ?.Description,
-                RelativePath(Path.Combine(
-                    reportRoot,
-                    MatrixChartPaths.DirectoryName,
-                    MatrixChartPaths.Feature(feature)))))
+                        item.Id.Equals(feature.Id, StringComparison.OrdinalIgnoreCase));
+                return new ReadmeFeature(
+                    feature.Id,
+                    feature.Order,
+                    feature.Name,
+                    featureMetadata?.Description,
+                    RelativePath(Path.Combine(
+                        reportRoot,
+                        MatrixChartPaths.DirectoryName,
+                        MatrixChartPaths.Feature(feature))),
+                    NotRatedReason(featureMetadata, featureReport, metadata, feature.Id));
+            })
             .ToArray();
         var rated = module.Metadata.LibraryMetadata.Libraries
             .Where(library => library.Rated)
             .Select(library => library.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var ratedFeatures = module.Metadata.FeatureMetadata.Features
+            .Where(feature => feature.Rated)
+            .Select(feature => feature.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var rating = MatrixRatings
-            .Create(report, charts, rated.Contains)
+            .Create(report, charts, rated.Contains, ratedFeatures.Contains)
             .Select((medals, index) => new ReadmeRating(
                 index + 1,
                 medals.LibraryId,
@@ -137,7 +161,7 @@ internal sealed partial class ReadmeTarget(
                     ", ",
                     medals.Awards.Select(award =>
                         $"{Place(award.Place)} in {award.GroupName}")),
-                Breakdown(report, medals.LibraryId, rated.Contains)))
+                Breakdown(report, medals.LibraryId, rated.Contains, ratedFeatures.Contains)))
             .ToArray();
         return new ReadmeCategory(
             module.Metadata.Id,
@@ -150,6 +174,29 @@ internal sealed partial class ReadmeTarget(
     }
 
     /// <summary>
+    /// The authored reason a scenario is not rated, with the current "N of M"
+    /// support count appended via <see cref="MatrixCoverage"/> — the same call
+    /// the Web application makes, so the two surfaces can never quote different
+    /// numbers for the same scenario.
+    /// </summary>
+    private static string? NotRatedReason(
+        MatrixFeatureMetadata? featureMetadata,
+        FeatureReport? featureReport,
+        MatrixLibraryMetadataCatalog libraries,
+        string featureId)
+    {
+        if (featureMetadata is not { Rated: false, Reason: { Length: > 0 } reason })
+        {
+            return null;
+        }
+
+        var (supported, rated) = MatrixCoverage.Feature(featureReport, libraries, featureId);
+        return rated > 0
+            ? $"{reason} ({supported} of {rated} rated libraries support this.)"
+            : reason;
+    }
+
+    /// <summary>
     /// The arithmetic behind one library's rating, one row per scenario. It comes
     /// from <see cref="MatrixScores.Explain"/>, the same per-cell function the
     /// rating sums, so the breakdown printed here cannot disagree with the total
@@ -158,9 +205,13 @@ internal sealed partial class ReadmeTarget(
     private static ReadmeScore[] Breakdown(
         BenchmarkReport report,
         string libraryId,
-        Func<string, bool> rated) =>
+        Func<string, bool> rated,
+        Func<string, bool> featureRated) =>
         MatrixScores
-            .Explain(report.Features, libraryId, rated)
+            .Explain(
+                report.Features.Where(feature => featureRated(feature.Id)),
+                libraryId,
+                rated)
             .Select(detail => new ReadmeScore(
                 detail.Name,
                 Measurement(detail.Time, false),

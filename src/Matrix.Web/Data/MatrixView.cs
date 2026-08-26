@@ -83,13 +83,40 @@ internal sealed class MatrixView : IMatrixView
     public bool IsRated(CategoryReport report, string libraryId) =>
         Metadata(report, libraryId) is { Rated: true };
 
+    private static MatrixFeatureMetadata? FeatureMetadata(CategoryReport report, string featureId) =>
+        report.FeatureCatalog?.Features.FirstOrDefault(feature =>
+            feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase));
+
+    public bool IsFeatureRated(CategoryReport report, string featureId) =>
+        FeatureMetadata(report, featureId) is not { Rated: false };
+
+    public IReadOnlyList<BenchmarkReportEntry> RatedFeatures(CategoryReport report) =>
+        report.Benchmarks?.Features
+            .Where(feature => IsFeatureRated(report, feature.Id))
+            .ToArray()
+        ?? [];
+
+    public (int Supported, int Rated) FeatureCoverage(CategoryReport report, string featureId) =>
+        MatrixCoverage.Feature(report.Features, report.LibraryCatalog, featureId);
+
+    public string? FeatureNotRatedReason(CategoryReport report, string featureId)
+    {
+        if (FeatureMetadata(report, featureId) is not { Rated: false, Reason: { Length: > 0 } reason })
+        {
+            return null;
+        }
+
+        var (supported, rated) = FeatureCoverage(report, featureId);
+        return rated > 0
+            ? $"{reason} ({supported} of {rated} rated libraries support this.)"
+            : reason;
+    }
+
     public string? Logo(CategoryReport report, string libraryId) =>
         Metadata(report, libraryId)?.Logo is { Length: > 0 } logo ? logo : null;
 
     public string? FeatureDescription(CategoryReport report, string featureId) =>
-        report.FeatureCatalog?.Features
-            .FirstOrDefault(feature =>
-                feature.Id.Equals(featureId, StringComparison.OrdinalIgnoreCase))
+        FeatureMetadata(report, featureId)
             ?.Description is { Length: > 0 } description
             ? description
             : null;

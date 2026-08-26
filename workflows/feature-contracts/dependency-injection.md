@@ -53,6 +53,16 @@ The collection must be genuinely lazy:
 
 Libraries that materialize an array, list, or cached collection before consumer activation are `Unsupported` for this feature even if they can inject `IEnumerable<T>`.
 
+Not rated: too few rated libraries implement genuine lazy enumeration for this
+to be a competitive result, and the scenario was measured and drawn in no
+chart group before it briefly entered one by accident. The current support
+count is not repeated here — it is computed from the report and shown live in
+the feature matrix and `README.md`, so this page cannot fall out of sync with
+it the way `Rating: feature-only` once did. It is still benchmarked and
+validated, and its own chart still shows what supports it; see
+workflows/rating.md, "No per-scenario exclusion by threshold or editorial
+judgment".
+
 ## 10. Array
 
 Register five distinct transient implementations of `IPlugin` and resolve three roots that materialize their injected sequence to an array during activation. Every root must contain exactly five plugins, one of every registered implementation type, and transient instances must be created for each root. Direct `T[]` injection is not required; this scenario measures the materialized collection path observed by the consumer.

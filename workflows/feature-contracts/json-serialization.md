@@ -31,8 +31,10 @@ sufficient.
   qualify.
 - The same method, model, and payload are used by feature validation and
   benchmarking.
-- Rating groups compare time and allocation only after validation proves an
-  identical canonical payload size. Source Generation is feature-only.
+- Chart groups compare time and allocation only after validation proves an
+  identical canonical payload size. A chart group decides where a scenario
+  appears, never whether it counts: every scenario of the category enters the
+  rating.
 
 ## 1. Serialize Simple Object
 
@@ -121,7 +123,15 @@ time and validate the canonical payload and model. Runtime reflection fallback
 does not qualify.
 
 This feature is `NotApplicable` for libraries without a source-generation
-programming model and is excluded from ratings.
+programming model.
+
+Not rated: with this few rated entrants, the reference is a library's own
+result, not a result earned against a competitor, so the full 200 points would
+not reflect a win. The current entrant count is not repeated here — it is
+computed from the report and shown live in the feature matrix and
+`README.md`. See workflows/rating.md, "No per-scenario exclusion by threshold
+or editorial judgment". It is still benchmarked and validated, and its own
+chart still shows the result.
 
 ## 14. Prepare Serializer
 

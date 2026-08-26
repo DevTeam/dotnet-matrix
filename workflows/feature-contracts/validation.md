@@ -28,8 +28,9 @@ different path, or performs work outside the stated boundary.
   strongly typed result. A matrix-owned universal validator interface does not
   qualify.
 - The validation and benchmark runners invoke the same method and input.
-- Features 1 through 8 participate in the synchronous rating groups. Async
-  Validation is feature-only. Prepare Validator has its own rating group.
+- Features 1 through 9 are drawn in the synchronous chart groups and Prepare
+  Validator has its own. A chart group decides where a scenario appears, never
+  whether it counts: every scenario of the category enters the rating.
 
 ## 1. Valid Object
 
@@ -88,9 +89,17 @@ in-memory lookup. The rule must use the library's intended asynchronous
 validation API and produce exactly one failure at `UserName`.
 
 The lookup yields once before returning so completion is observably
-asynchronous, but external I/O and timing are absent. This feature is excluded
-from ratings because it primarily measures task scheduling and async pipeline
-overhead. Libraries without asynchronous rules are `Unsupported`.
+asynchronous, but external I/O and timing are absent, so the measurement is
+mostly task-scheduling and async-pipeline overhead rather than the rule itself.
+Libraries without asynchronous rules are `Unsupported`.
+
+Not rated: with this few rated entrants, the reference is a library's own
+result, not a result earned against a competitor, so the full 200 points would
+not reflect a win. The current entrant count is not repeated here — it is
+computed from the report and shown live in the feature matrix and
+`README.md`. See workflows/rating.md, "No per-scenario exclusion by threshold
+or editorial judgment". It is still benchmarked and validated, and its own
+chart still shows the result.
 
 ## 10. Prepare Validator
 

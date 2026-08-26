@@ -5,4 +5,6 @@ public sealed record MatrixFeatureMetadata(
     string Id,
     int Order,
     string Name,
-    string Description);
+    string Description,
+    bool Rated = true,
+    string? Reason = null);

@@ -400,6 +400,13 @@ select {
     color: var(--muted);
     font-family: 'DM Mono', monospace;
     font-size: 10px;
+    text-align: right;
+}
+
+/* A line break is allowed before this phrase, never inside it — "1 not" on one
+   line and "rated" alone on the next reads worse than the wrap it was meant to
+   fix. */
+.filter-count-note {
     white-space: nowrap;
 }
 
@@ -511,8 +518,16 @@ select {
     gap: 0 18px;
 }
 
-.scenario-filter .check-row {
+.scenario-filter .scenario-row {
+    display: flex;
+    align-items: center;
+    min-width: 0;
     min-height: 32px;
+}
+
+.scenario-filter .check-row {
+    flex: 1;
+    min-width: 0;
 }
 
 .scenario-filter .check-row > span {
@@ -520,6 +535,12 @@ select {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+/* Not an error, so not the failed-state color: the same muted tone the order
+   number already uses elsewhere in this row. */
+.scenario-row.is-not-rated .check-row {
+    color: var(--muted);
 }
 
 .scenario-filter .feature-order {
@@ -946,6 +967,20 @@ select {
 
 .rating-badge.is-unrated {
     cursor: help;
+}
+
+/* Same fixed box and the same crossed-star as .rating-badge.is-unrated, for a
+   scenario instead of a library: one visual language for "outside the rating"
+   wherever it appears. */
+.not-rated-badge {
+    display: inline-grid;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    place-items: center;
+    margin-left: 6px;
+    cursor: help;
+    color: var(--muted);
 }
 
 /* The score and, when it is not the maximum, what the library did not run. The

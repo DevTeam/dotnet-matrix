@@ -19,7 +19,9 @@ namespace Matrix.Validation.Benchmarks;
     "AsyncValidation",
     9,
     "Async Validation",
-    "Runs a deterministic asynchronous availability rule through the library async API.")]
+    "Runs a deterministic asynchronous availability rule through the library async API.",
+    rated: false,
+    reason: "With this few rated entrants, the reference is a library's own result, not a result earned against a competitor, so the full 200 points would not reflect a win.")]
 public partial class AsyncValidation
 {
     private readonly AsyncInput _input = ValidationData.Async();

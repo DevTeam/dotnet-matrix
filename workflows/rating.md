@@ -126,6 +126,87 @@ read the Memory column on its own.
   reports, see which scenario costs the most, and know that making a result four
   times better doubles the points for it.
 
+### No per-scenario exclusion by threshold or editorial judgment
+
+The rating is computed over every scenario of the category by default, and a
+scenario is not removed from it because it turned out to be niche, because it
+is inconvenient for one library, or because a reader thinks few enough
+applications need it. `MatrixScores` still has no concept of "this scenario
+doesn't count" built into the rule; where a scenario is genuinely excluded (see
+below), that is a named, per-scenario fact declared once on the scenario, not a
+computed property of who happens to be entered.
+
+The `Group:` field of a feature contract names the chart group of the scenario
+and nothing else. It was called `Rating:` until the medal rule was replaced,
+and two contracts kept a value of `feature-only` from that era, which read as
+though a scenario could opt out. Nothing implemented it.
+
+Two mechanical shortcuts were considered and rejected, and stay rejected:
+
+- **A threshold on the number of implementations** — "a scenario counts only if
+  at least N libraries support it". It fails the author test the same way the
+  medal threshold did: there is no answer to "why three and not two". It is also
+  the wrong instrument, and not just marginally: in `Logging`, `Buffered
+  Logging` is supported by five libraries of six, so a threshold of three
+  excludes nothing there, and a threshold high enough to exclude it leaves two
+  scenarios of nine. In `DependencyInjection`, a global threshold catches
+  `Enumerable`, `PerResolve` and `Child Container` together — and DryIoc, the
+  category's number two, supports all three. A threshold applied uniformly
+  removes exactly the breadth that separates a complete container from a
+  minimal one, which is the opposite of what the rating is for.
+- **A per-scenario `Rated` flag driven by an editorial criterion** — for
+  instance "the scenario is rated if every user of the category pays for it".
+  Applied honestly to `Logging` it also unrates `Structured Properties`, `Scope
+  Or Context`, `Template Rendering` and `Formatted Output`, because plenty of
+  applications never use any of them. It is a judgement in the shape of a rule,
+  and it fails the same author test as the threshold: nothing distinguishes why
+  scope is out and structured logging is in.
+- Both mechanisms share the same deeper fault: recomputed automatically, either
+  one lets a scenario cross the boundary because a library was added or
+  withdrawn, changing every other library's score by up to 200 points,
+  retroactively. That breaks the property under "Properties this buys" above —
+  a score cannot change because a competitor was added or withdrawn.
+
+### The `Rated` flag that does exist
+
+A `[MatrixFeature]` can carry `rated: false`, mirroring `rated: true` on a
+library. It is a named, individually justified, manually recorded exception —
+never computed from the current field, never re-evaluated automatically, and
+never a blanket rule applied to a whole category. Two distinct, narrow
+situations earn it, and nothing else does:
+
+- **The scenario has so few rated entrants that a library's own result becomes
+  the reference.** `best(s, m)` is the smallest value among rated libraries
+  that completed the scenario; with one entrant, that library's own number is
+  the smallest, so `ratio = 1` and it scores the full 200 points regardless of
+  whether the number is actually good. This is not a coverage problem —
+  §"Scenarios with one entrant" below still exists and is still fixed by
+  disclosure where two or more libraries genuinely compete. It is a
+  mathematical degeneracy specific to exactly one entrant, checkable by
+  counting, not by opinion: `JsonSerialization / Source Generation Round Trip`
+  (System.Text.Json alone) and `Validation / Async Validation`
+  (FluentValidation alone) are the two cases in the current reports.
+- **The scenario was never actually part of any published standing.**
+  `DependencyInjection / Enumerable` was measured and rated in the underlying
+  data but drawn in no chart group — the "feature-only" bug this document
+  already describes, just the version where the bug left a scenario counted
+  instead of excluded. It briefly gained a chart group by a documentation fix
+  that mistook "undrawn" for an oversight to correct rather than a decision to
+  make explicit. `rated: false` here restores what every published chart and
+  standing already showed, rather than changing anything for the first time. It
+  is the weaker of the two justifications — 3 of 22 rated libraries support it,
+  which is thin but not degenerate — and it is recorded as such in
+  `dependency-injection.md` rather than folded into the mathematical case above.
+
+Neither situation generalizes into "exclude scenarios with low coverage": a low
+percentage is necessary to notice a candidate, never sufficient to flag one. A
+scenario reaches `rated: false` only when someone writes the specific reason in
+its own contract, the same way `Caveat:` works for a scenario whose measurement
+needs a qualification rather than an exclusion. Whether a library supports an
+unrated capability is still published: `FeatureStatus` is reported per library
+independently of the benchmarks, the scenario keeps its own chart, and neither
+depends on the flag.
+
 ### Scope
 
 - Only libraries with `rated: true` in `metadata/<Category>/libraries.json`
@@ -221,9 +302,14 @@ The rule in this document is the decathlon shape with the reference taken from
 the field rather than from a calibration table, which is what benchmark suites
 such as SPEC do when they normalise against a reference and aggregate.
 
-## Effect on the current reports
+## Effect at the time of the change
 
-Computed from the reports committed at the time of writing.
+A historical snapshot, computed from the reports committed when the medal rule
+was replaced. It is deliberately not refreshed: it exists to show what the
+change did, and recomputing it against today's reports would destroy that. The
+numbers below therefore do not match `README.md` — `Logging` has since gained a
+ninth scenario, so its maximum is 1800 rather than the 1600 shown here. The
+current standings are in `README.md`, which is generated from the reports.
 
 | Category | Maximum | Previous leaderboard | Rating, as `total (time + memory)` |
 | --- | ---: | --- | --- |
@@ -389,22 +475,33 @@ and 7% of another, purely because of how many scenarios each category happens to
 define — and that is not a property of the rule, it is a property of the scenario
 set. Balancing the scenario sets is the fix; changing the rule is not.
 
-### Scenarios with one entrant
+### Scenarios with few entrants
 
-Four scenarios are contested by fewer than three rated libraries, so the winner
-takes 200 points nobody could have taken from it:
+Four scenarios were contested by fewer than three rated libraries at the time
+of writing:
 
-| Scenario | Entrants |
-| --- | --- |
-| `JsonSerialization / Source Generation Round Trip` | 1 of 3 — 7% of the category |
-| `Validation / Async Validation` | 1 of 4 — 10% of the category |
-| `JsonSerialization / Polymorphic Round Trip` | 2 of 3 |
-| `Validation / Stop On First Failure` | 2 of 4 |
+| Scenario | Entrants | Rated |
+| --- | --- | --- |
+| `JsonSerialization / Source Generation Round Trip` | 1 of 3 | No — see §"The `Rated` flag that does exist" |
+| `Validation / Async Validation` | 1 of 4 | No — see §"The `Rated` flag that does exist" |
+| `JsonSerialization / Polymorphic Round Trip` | 2 of 3 | Yes |
+| `Validation / Stop On First Failure` | 2 of 4 | Yes |
 
-This is coverage working as intended: it says only one library can do this. But
-the points are stated as though a race was won, and the reader is not told the
-race had one runner. The Scenarios column shows who did not enter; nothing shows
-that the winner ran alone.
+The two 1-of-N rows are the degenerate case: with exactly one entrant, that
+library's own result is the reference, so it scores the full 200 points
+regardless of whether the result is good — a race with one runner is not a
+race, and the flag removes it rather than mislabel it as one. This is a
+narrower move than it looks: §"No per-scenario exclusion by threshold or
+editorial judgment" above lists two mechanisms that were tried and rejected for
+this same problem, and the difference between those and the `Rated` flag is
+exactly the line drawn here — one entrant, not few entrants.
+
+The two 2-of-N rows are a real, if small, competition, and stay rated. The fix
+for them is disclosure, not exclusion: the points are stated as though a
+contested race was won, and the reader is not told how few ran it. The
+Scenarios column shows who did not enter; nothing shows how many did. What is
+missing is a mark on the scenario saying how many rated libraries contested it,
+so that a score earned against one other competitor is readable as such.
 
 ### A narrow library above a broad one (fixed by the curve)
 

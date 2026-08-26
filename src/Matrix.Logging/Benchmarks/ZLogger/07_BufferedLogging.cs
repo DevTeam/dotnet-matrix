@@ -5,24 +5,39 @@ namespace Matrix.Logging.Benchmarks;
 
 public partial class BufferedLogging
 {
-    private ZLoggerFixture _zlogger = null!;
+    private ILoggerFactory _zloggerFactory = null!;
+    private ZLoggerBufferedSink _zloggerSink = null!;
     private ILogger _zloggerLogger = null!;
 
     [GlobalSetup(Target = nameof(ZLogger))]
     public void SetupZLogger()
     {
-        _zlogger = new ZLoggerFixture(LogLevel.Information);
-        _zloggerLogger = _zlogger.Logger;
+        _zloggerSink = new ZLoggerBufferedSink();
+        _zloggerFactory = LoggerFactory.Create(builder =>
+        {
+            builder.ClearProviders();
+            builder.SetMinimumLevel(LogLevel.Information);
+            // Only the stream/file/console providers dispatch through ZLogger's
+            // own background buffer; AddZLoggerLogProcessor does not, regardless
+            // of these options.
+            builder.AddZLoggerStream(_zloggerSink, options =>
+            {
+                options.UsePlainTextFormatter();
+                options.BackgroundBufferCapacity = LoggingData.BufferedCapacity;
+                options.FullMode = BackgroundBufferFullMode.Block;
+            });
+        });
+        _zloggerLogger = _zloggerFactory.CreateLogger(LoggingData.Category);
     }
 
     [GlobalCleanup(Target = nameof(ZLogger))]
     public void CleanupZLogger()
     {
-        _zlogger.Dispose();
+        _zloggerFactory.Dispose();
         LoggingChecks.Buffered(
             LibraryCatalog.ZLogger,
-            _zlogger.Sink.Count,
-            _zlogger.Sink.Last);
+            _zloggerSink.Count,
+            _zloggerSink.Last);
     }
 
     [Benchmark]

@@ -12,7 +12,13 @@ internal sealed class ZLoggerFixture : IDisposable
         {
             builder.ClearProviders();
             builder.SetMinimumLevel(minimumLevel);
-            builder.AddZLoggerLogProcessor(Sink);
+            // The direct-instance overload has no access to ZLoggerOptions, and
+            // scope properties are only attached when IncludeScopes is set.
+            builder.AddZLoggerLogProcessor(options =>
+            {
+                options.IncludeScopes = true;
+                return Sink;
+            });
         });
         Logger = Factory.CreateLogger(LoggingData.Category);
     }
