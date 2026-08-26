@@ -439,19 +439,19 @@ should find the case stated, not have to discover it.
   In scenarios 1–13 the struct libraries should report **0 B** where System.Linq
   and LinqAF allocate, so they can take the memory half of scenarios System.Linq
   cannot. The category is not a foregone conclusion.
-- **The known soft spot:** scenario 18 has only one rated entrant (StructLinq)
+- **The known soft spot:** scenario 18 had only one rated entrant (StructLinq)
   and scenario 7 only two rated entrants (ZLinq, Hyperlinq). This is exactly
-  `rating.md` §"Scenarios with one entrant". Two of eighteen (11 %) is at the
+  `rating.md` §"Scenarios with few entrants". Two of eighteen (11 %) is at the
   level of JSON Serialization (2 of 14) and Validation (2 of 10).
 - **There is no rating escape hatch by threshold or editorial judgment.** The
   rating is computed over *every* scenario regardless of chart-group
   membership; a scenario is not dropped from it because it is niche or
   inconvenient for one library. A named, per-scenario `Rated: false` does exist
   for the narrow case of a single rated entrant, where a library's own result
-  is its own reference — scenario 18 here (`StructLinq` alone) is exactly that
-  case and is a candidate for the same treatment, not yet applied as of this
-  writing. See `rating.md` §"No per-scenario exclusion by threshold or
-  editorial judgment" and §"The `Rated` flag that does exist".
+  is its own reference — scenario 18 (`StructLinq` alone) is exactly that case
+  and now carries the flag; scenario 7 (two entrants) is a real, if small,
+  competition and stays rated. See `rating.md` §"No per-scenario exclusion by
+  threshold or editorial judgment" and §"The `Rated` flag that does exist".
 - Deliberately excluded, and to be recorded as decisions rather than omissions:
   `GroupJoin` (the same entrants as `JoinLookup`), `ToDictionary` (measures
   mostly `Dictionary<K,V>`), `Union`/`Intersect`/`Except`, `Chunk`, `Average`,

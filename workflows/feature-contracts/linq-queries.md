@@ -39,7 +39,7 @@ builds.
 - Validation: exact equality with the loop-computed count.
 - Supported: the library executes `Where` and terminal `Count` with a static
   lambda and returns the exact count.
-- Rating group: `core`.
+- Group: `core`.
 
 ## 2. Project To Array
 
@@ -49,7 +49,7 @@ builds.
 - Validation: length, first and last value, and checksum.
 - Supported: the library executes `Select` and `ToArray` and returns the exact
   projection.
-- Rating group: `core`.
+- Group: `core`.
 
 ## 3. Filter, Project, Materialize
 
@@ -60,7 +60,7 @@ builds.
 - Validation: exact count, first and last ID, and checksum.
 - Supported: the library performs `Where`, `Select`, and `ToList` and returns the
   exact ordered list.
-- Rating group: `core`.
+- Group: `core`.
 
 ## 4. Chained Pipeline
 
@@ -70,7 +70,7 @@ builds.
 - Inside invocation: all four query stages and terminal materialization.
 - Validation: length, first and last value, and checksum.
 - Supported: all stages remain one library query and produce the exact array.
-- Rating group: `core`.
+- Group: `core`.
 
 ## 5. List Source
 
@@ -81,7 +81,7 @@ builds.
 - Validation: length, first and last value, and checksum.
 - Supported: the library has an intended list entry point and returns the exact
   materialized result.
-- Rating group: `sources`.
+- Group: `sources`.
 
 ## 6. Opaque Source
 
@@ -92,7 +92,7 @@ builds.
 - Validation: the same result as List Source.
 - Supported: the library accepts a general enumerable without converting or
   copying it during setup and returns the exact result.
-- Rating group: `sources`.
+- Group: `sources`.
 
 ## 7. Span Source
 
@@ -104,7 +104,7 @@ builds.
 - Supported: the library exposes a direct span query surface; converting the
   span to an array or enumerable is not support.
 - Unsupported: no operator entry point accepts `ReadOnlySpan<int>`.
-- Rating group: `sources`.
+- Group: `sources`.
 
 ## 8. Paged Slice
 
@@ -114,7 +114,7 @@ builds.
 - Validation: exact length, first and last value, and checksum.
 - Supported: the library performs the partitioning operations and returns the
   exact slice.
-- Rating group: `partitioning`.
+- Group: `partitioning`.
 
 ## 9. Any Match
 
@@ -123,7 +123,7 @@ builds.
 - Inside invocation: predicate evaluation and short-circuiting `Any`.
 - Validation: result is `true`.
 - Supported: the library's terminal `Any` returns the exact result.
-- Rating group: `partitioning`.
+- Group: `partitioning`.
 
 ## 10. First Match
 
@@ -134,7 +134,7 @@ builds.
 - Validation: `Id == 4_501` and `Amount == 10_000`.
 - Supported: the library returns that exact existing order through `First` or
   an equivalent throwing first-match terminal.
-- Rating group: `partitioning`.
+- Group: `partitioning`.
 
 ## 11. Flatten Nested Sequences
 
@@ -146,7 +146,7 @@ builds.
 - Validation: length, first and last value, and checksum.
 - Supported: the library's flattening operator produces the exact sequence;
   hand-written nested loops in a library adapter are not support.
-- Rating group: `sequences`.
+- Group: `sequences`.
 
 ## 12. Distinct Values
 
@@ -155,7 +155,7 @@ builds.
 - Inside invocation: distinct-set tracking and `ToArray`.
 - Validation: compare an order-insensitively sorted copy with the expected set.
 - Supported: the library's `Distinct` produces every unique value exactly once.
-- Rating group: `sequences`.
+- Group: `sequences`.
 
 ## 13. Zip Pairs
 
@@ -165,7 +165,7 @@ builds.
 - Validation: length, first and last product, and checksum.
 - Supported: the library exposes `Zip` and produces the exact products.
 - Unsupported: no zip operator is present.
-- Rating group: `sequences`.
+- Group: `sequences`.
 
 ## 14. Aggregate
 
@@ -176,7 +176,7 @@ builds.
 - Supported: the library exposes a seeded aggregate/fold accepting the static
   accumulator.
 - Unsupported: no general aggregate operator is present.
-- Rating group: `sequences`.
+- Group: `sequences`.
 
 ## 15. Ordered Top N
 
@@ -191,7 +191,7 @@ builds.
 - Supported: the library exposes descending ordering and produces the exact top
   identifiers.
 - Unsupported: no ordering operator is present.
-- Rating group: `advanced`.
+- Group: `advanced`.
 
 ## 16. Group and Aggregate
 
@@ -203,7 +203,7 @@ builds.
 - Supported: the library exposes grouping and performs the aggregate through
   its query surface.
 - Unsupported: no grouping operator is present.
-- Rating group: `advanced`.
+- Group: `advanced`.
 
 ## 17. Join and Project
 
@@ -217,7 +217,7 @@ builds.
 - Supported: the library exposes an intended join operator and returns every
   exact pair; a matrix-owned lookup or hand-written join is not support.
 - Unsupported: neither join nor group-join is present.
-- Rating group: `advanced`.
+- Group: `advanced`.
 
 ## 18. Struct Predicate Filter
 
@@ -232,7 +232,15 @@ builds.
   and the invocation uses it. Returning struct enumerables while accepting a
   delegate predicate is insufficient.
 - Unsupported: the library exposes only delegate predicate parameters.
-- Rating group: `allocation`.
+
+Not rated: with this few rated entrants, the reference is a library's own
+result, not a result earned against a competitor, so the full 200 points would
+not reflect a win. The current entrant count is not repeated here — it is
+computed from the report and shown live in the feature matrix and
+`README.md`. See workflows/rating.md, "No per-scenario exclusion by threshold
+or editorial judgment". It is still benchmarked and validated, and its own
+chart still shows the result. It was the only scenario in the `allocation`
+chart group; the group is removed rather than left empty.
 
 ## Availability meanings
 

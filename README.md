@@ -1232,17 +1232,17 @@ Creates fresh serializer settings and explicit type metadata without serializing
 
 In every scenario the fastest library scores 100 points and the one allocating
 least scores 100 more; four times slower is half the points, and an unsupported
-scenario is worth nothing. Time and memory reach **1800**
-each here, so the maximum is **3600**.
+scenario is worth nothing. Time and memory reach **1700**
+each here, so the maximum is **3400**.
 See [workflows/rating.md](workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**ZLinq**](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 17/18 | 1579 | 1697 | 3276 | gold in Advanced, gold in Core, gold in Partitioning, gold in Sequences, gold in Sources |
-| 2 | [**System.Linq**](https://matrix.dev-team.org/?category=linq-queries&library=System.Linq) | 16/18 | 1433 | 1373 | 2806 | silver in Advanced, silver in Core, silver in Partitioning, silver in Sequences, bronze in Sources |
-| 3 | [**StructLinq**](https://matrix.dev-team.org/?category=linq-queries&library=StructLinq) | 15/18 | 1013 | 1329 | 2343 | gold in Allocation-Free, bronze in Sequences |
-| 4 | [**LinqAF**](https://matrix.dev-team.org/?category=linq-queries&library=LinqAF) | 16/18 | 1077 | 1072 | 2148 | silver in Allocation-Free, bronze in Advanced, bronze in Partitioning |
-| 5 | [**NetFabric.Hyperlinq**](https://matrix.dev-team.org/?category=linq-queries&library=NetFabric.Hyperlinq) | 12/18 | 924 | 900 | 1824 | silver in Sources, bronze in Allocation-Free, bronze in Core |
+| 1 | [**ZLinq**](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 17/17 | 1579 | 1697 | 3276 | gold in Advanced, gold in Core, gold in Partitioning, gold in Sequences, gold in Sources |
+| 2 | [**System.Linq**](https://matrix.dev-team.org/?category=linq-queries&library=System.Linq) | 16/17 | 1433 | 1373 | 2806 | silver in Advanced, silver in Core, silver in Partitioning, silver in Sequences, bronze in Sources |
+| 3 | [**LinqAF**](https://matrix.dev-team.org/?category=linq-queries&library=LinqAF) | 16/17 | 1077 | 1072 | 2148 | bronze in Advanced, bronze in Partitioning |
+| 4 | [**StructLinq**](https://matrix.dev-team.org/?category=linq-queries&library=StructLinq) | 14/17 | 913 | 1229 | 2143 | bronze in Sequences |
+| 5 | [**NetFabric.Hyperlinq**](https://matrix.dev-team.org/?category=linq-queries&library=NetFabric.Hyperlinq) | 12/17 | 924 | 900 | 1824 | silver in Sources, bronze in Core |
 
 
 <details>
@@ -1256,7 +1256,7 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=linq-queries).
 
-#### 1. ZLinq — 3276 of 3600
+#### 1. ZLinq — 3276 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1277,9 +1277,8 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Ordered Top N | 43.74 μs | 38.9 μs | 94.3 | 264 B | 248 B | 97.2 |
 | Group and Aggregate | 102.01 μs | 102.01 μs | 100 | 130.59 KB | 130.59 KB | 100 |
 | Join and Project | 77.7 μs | 77.7 μs | 100 | 129.19 KB | 129.19 KB | 100 |
-| Struct Predicate Filter | — | 9.49 μs | 0 | — | 40 B | 0 |
 
-#### 2. System.Linq — 2806 of 3600
+#### 2. System.Linq — 2806 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1300,32 +1299,8 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Ordered Top N | 38.9 μs | 38.9 μs | 100 | 78.56 KB | 248 B | 5.814 |
 | Group and Aggregate | 145.52 μs | 102.01 μs | 83.7 | 131.27 KB | 130.59 KB | 99.7 |
 | Join and Project | 132.17 μs | 77.7 μs | 76.7 | 129.45 KB | 129.19 KB | 99.9 |
-| Struct Predicate Filter | — | 9.49 μs | 0 | — | 40 B | 0 |
 
-#### 3. StructLinq — 2343 of 3600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 12.73 μs | 9.8 μs | 87.7 | 64 B | 0 B | 52.2 |
-| Project To Array | 10.54 μs | 4.5 μs | 65.3 | 39.09 KB | 39.09 KB | 100 |
-| Filter, Project, Materialize | 32.34 μs | 6.32 μs | 44.2 | 9.9 KB | 9.83 KB | 99.6 |
-| Chained Pipeline | 12.13 μs | 8.64 μs | 84.4 | 4.06 KB | 3.93 KB | 98.4 |
-| List Source | 21.71 μs | 11.87 μs | 74 | 13.14 KB | 13.07 KB | 99.7 |
-| Opaque Source | 33.92 μs | 26.06 μs | 87.7 | 13.16 KB | 13.1 KB | 99.8 |
-| Span Source | — | 14.07 μs | 0 | — | 13.07 KB | 0 |
-| Paged Slice | 926.09 ns | 271.33 ns | 54.2 | 3.99 KB | 3.93 KB | 99.2 |
-| Any Match | 8.45 μs | 2.98 μs | 59.4 | 32 B | 0 B | 65.5 |
-| First Match | 4.74 μs | 2.36 μs | 70.5 | 32 B | 0 B | 65.5 |
-| Flatten Nested Sequences | 64.1 μs | 6.52 μs | 31.9 | 54.77 KB | 39.09 KB | 84.5 |
-| Distinct Values | 31.31 μs | 31.31 μs | 100 | 4.01 KB | 3.98 KB | 99.7 |
-| Zip Pairs | 47.72 μs | 13.64 μs | 53.5 | 39.19 KB | 39.09 KB | 99.9 |
-| Aggregate | 6.36 μs | 3.41 μs | 73.2 | 32 B | 0 B | 65.5 |
-| Ordered Top N | 517.32 μs | 38.9 μs | 27.4 | 248 B | 248 B | 100 |
-| Group and Aggregate | — | 102.01 μs | 0 | — | 130.59 KB | 0 |
-| Join and Project | — | 77.7 μs | 0 | — | 129.19 KB | 0 |
-| Struct Predicate Filter | 9.49 μs | 9.49 μs | 100 | 40 B | 40 B | 100 |
-
-#### 4. LinqAF — 2148 of 3600
+#### 3. LinqAF — 2148 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1346,9 +1321,30 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Ordered Top N | 291.91 μs | 38.9 μs | 36.5 | 257.14 KB | 248 B | 3.214 |
 | Group and Aggregate | 228.8 μs | 102.01 μs | 66.8 | 194.7 KB | 130.59 KB | 81.9 |
 | Join and Project | 243.66 μs | 77.7 μs | 56.5 | 374.56 KB | 129.19 KB | 58.7 |
-| Struct Predicate Filter | — | 9.49 μs | 0 | — | 40 B | 0 |
 
-#### 5. NetFabric.Hyperlinq — 1824 of 3600
+#### 4. StructLinq — 2143 of 3400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Filter and Count | 12.73 μs | 9.8 μs | 87.7 | 64 B | 0 B | 52.2 |
+| Project To Array | 10.54 μs | 4.5 μs | 65.3 | 39.09 KB | 39.09 KB | 100 |
+| Filter, Project, Materialize | 32.34 μs | 6.32 μs | 44.2 | 9.9 KB | 9.83 KB | 99.6 |
+| Chained Pipeline | 12.13 μs | 8.64 μs | 84.4 | 4.06 KB | 3.93 KB | 98.4 |
+| List Source | 21.71 μs | 11.87 μs | 74 | 13.14 KB | 13.07 KB | 99.7 |
+| Opaque Source | 33.92 μs | 26.06 μs | 87.7 | 13.16 KB | 13.1 KB | 99.8 |
+| Span Source | — | 14.07 μs | 0 | — | 13.07 KB | 0 |
+| Paged Slice | 926.09 ns | 271.33 ns | 54.2 | 3.99 KB | 3.93 KB | 99.2 |
+| Any Match | 8.45 μs | 2.98 μs | 59.4 | 32 B | 0 B | 65.5 |
+| First Match | 4.74 μs | 2.36 μs | 70.5 | 32 B | 0 B | 65.5 |
+| Flatten Nested Sequences | 64.1 μs | 6.52 μs | 31.9 | 54.77 KB | 39.09 KB | 84.5 |
+| Distinct Values | 31.31 μs | 31.31 μs | 100 | 4.01 KB | 3.98 KB | 99.7 |
+| Zip Pairs | 47.72 μs | 13.64 μs | 53.5 | 39.19 KB | 39.09 KB | 99.9 |
+| Aggregate | 6.36 μs | 3.41 μs | 73.2 | 32 B | 0 B | 65.5 |
+| Ordered Top N | 517.32 μs | 38.9 μs | 27.4 | 248 B | 248 B | 100 |
+| Group and Aggregate | — | 102.01 μs | 0 | — | 130.59 KB | 0 |
+| Join and Project | — | 77.7 μs | 0 | — | 129.19 KB | 0 |
+
+#### 5. NetFabric.Hyperlinq — 1824 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
@@ -1369,7 +1365,6 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Ordered Top N | — | 38.9 μs | 0 | — | 248 B | 0 |
 | Group and Aggregate | — | 102.01 μs | 0 | — | 130.59 KB | 0 |
 | Join and Project | — | 77.7 μs | 0 | — | 129.19 KB | 0 |
-| Struct Predicate Filter | — | 9.49 μs | 0 | — | 40 B | 0 |
 
 </details>
 
@@ -1380,7 +1375,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 ![LINQ Queries Core benchmark overview](reports/LinqQueries/charts/overview-core.png)
 
 <details>
-<summary><strong>More overview charts (5)</strong></summary>
+<summary><strong>More overview charts (4)</strong></summary>
 
 #### Sources
 
@@ -1397,10 +1392,6 @@ rating above. The same breakdown appears as a hint on any points value in the
 #### Advanced
 
 ![LINQ Queries Advanced benchmark overview](reports/LinqQueries/charts/overview-advanced.png)
-
-#### Allocation-Free
-
-![LINQ Queries Allocation-Free benchmark overview](reports/LinqQueries/charts/overview-allocation.png)
 
 </details>
 
@@ -1550,6 +1541,8 @@ Joins 5,000 orders to 500 customers on the customer key and projects the pairs.
 #### 18 · Struct Predicate Filter
 
 Filters and counts 10,000 integers with a struct-typed predicate instead of a delegate.
+
+*Not rated: With this few rated entrants, the reference is a library's own result, not a result earned against a competitor, so the full 200 points would not reflect a win. (1 of 5 rated libraries support this.)*
 
 ![LINQ Queries Struct Predicate Filter benchmark](reports/LinqQueries/charts/18-struct-predicate-filter.png)
 

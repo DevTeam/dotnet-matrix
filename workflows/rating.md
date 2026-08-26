@@ -180,12 +180,13 @@ situations earn it, and nothing else does:
   that completed the scenario; with one entrant, that library's own number is
   the smallest, so `ratio = 1` and it scores the full 200 points regardless of
   whether the number is actually good. This is not a coverage problem —
-  §"Scenarios with one entrant" below still exists and is still fixed by
+  §"Scenarios with few entrants" below still exists and is still fixed by
   disclosure where two or more libraries genuinely compete. It is a
   mathematical degeneracy specific to exactly one entrant, checkable by
   counting, not by opinion: `JsonSerialization / Source Generation Round Trip`
-  (System.Text.Json alone) and `Validation / Async Validation`
-  (FluentValidation alone) are the two cases in the current reports.
+  (System.Text.Json alone), `Validation / Async Validation` (FluentValidation
+  alone) and `LinqQueries / Struct Predicate Filter` (StructLinq alone) are the
+  three cases in the current reports.
 - **The scenario was never actually part of any published standing.**
   `DependencyInjection / Enumerable` was measured and rated in the underlying
   data but drawn in no chart group — the "feature-only" bug this document
@@ -477,17 +478,19 @@ set. Balancing the scenario sets is the fix; changing the rule is not.
 
 ### Scenarios with few entrants
 
-Four scenarios were contested by fewer than three rated libraries at the time
+Six scenarios were contested by fewer than three rated libraries at the time
 of writing:
 
 | Scenario | Entrants | Rated |
 | --- | --- | --- |
 | `JsonSerialization / Source Generation Round Trip` | 1 of 3 | No — see §"The `Rated` flag that does exist" |
 | `Validation / Async Validation` | 1 of 4 | No — see §"The `Rated` flag that does exist" |
+| `LinqQueries / Struct Predicate Filter` | 1 of 5 | No — see §"The `Rated` flag that does exist" |
 | `JsonSerialization / Polymorphic Round Trip` | 2 of 3 | Yes |
 | `Validation / Stop On First Failure` | 2 of 4 | Yes |
+| `LinqQueries / Span Source` | 2 of 5 | Yes |
 
-The two 1-of-N rows are the degenerate case: with exactly one entrant, that
+The three 1-of-N rows are the degenerate case: with exactly one entrant, that
 library's own result is the reference, so it scores the full 200 points
 regardless of whether the result is good — a race with one runner is not a
 race, and the flag removes it rather than mislabel it as one. This is a
@@ -496,7 +499,7 @@ editorial judgment" above lists two mechanisms that were tried and rejected for
 this same problem, and the difference between those and the `Rated` flag is
 exactly the line drawn here — one entrant, not few entrants.
 
-The two 2-of-N rows are a real, if small, competition, and stay rated. The fix
+The three 2-of-N rows are a real, if small, competition, and stay rated. The fix
 for them is disclosure, not exclusion: the points are stated as though a
 contested race was won, and the reader is not told how few ran it. The
 Scenarios column shows who did not enter; nothing shows how many did. What is
