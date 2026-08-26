@@ -40,33 +40,6 @@ public sealed class MatrixBenchmarkRunner(
         var evidenceBaseId = CreateEvidenceId(module.Id);
         var measuredEvidenceId = $"{evidenceBaseId}-measured";
         var reportedEvidenceId = $"{evidenceBaseId}-reported";
-        var environment = environmentProvider.Capture(
-            "BenchmarkDotNet",
-            typeof(BenchmarkSwitcher).Assembly,
-            jobId);
-        var isPartial = runLibraries.Count != module.Libraries.Count;
-        BenchmarkReport? existing = null;
-        if (isPartial)
-        {
-            existing = reportStore.Read<BenchmarkReport>(outputPath);
-            if (existing is not null)
-            {
-                if (existing.ModuleId is not null
-                    && !existing.ModuleId.Equals(module.Id, StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.Error.WriteLine(
-                        $"WARNING: Existing benchmark report belongs to module '{existing.ModuleId}', "
-                        + $"not '{module.Id}'. It will be replaced by the partial result.");
-                    existing = null;
-                }
-                else
-                {
-                    reportStore.WarnEnvironmentMismatch(
-                        existing.Environments ?? [],
-                        environment);
-                }
-            }
-        }
 
         var job = Job.Default
             .WithId(jobId)
@@ -102,9 +75,12 @@ public sealed class MatrixBenchmarkRunner(
                 .Run(["--filter", "*"], config)
                 .ToList();
 
-            var resolvedJobIds = summaries
+            var resolvedJobs = summaries
                 .SelectMany(summary => summary.BenchmarksCases)
-                .Select(benchmarkCase => benchmarkCase.Job.ResolvedId)
+                .Select(benchmarkCase => benchmarkCase.Job)
+                .ToArray();
+            var resolvedJobIds = resolvedJobs
+                .Select(resolvedJob => resolvedJob.ResolvedId)
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
 
@@ -116,6 +92,35 @@ public sealed class MatrixBenchmarkRunner(
                     + "(feature, library) only and cannot represent more than one job. "
                     + "Refusing to write a report.");
                 return 1;
+            }
+
+            var environment = environmentProvider.Capture(
+                "BenchmarkDotNet",
+                typeof(BenchmarkSwitcher).Assembly,
+                jobId,
+                resolvedJobs.FirstOrDefault() ?? job);
+            var isPartial = runLibraries.Count != module.Libraries.Count;
+            BenchmarkReport? existing = null;
+            if (isPartial)
+            {
+                existing = reportStore.Read<BenchmarkReport>(outputPath);
+                if (existing is not null)
+                {
+                    if (existing.ModuleId is not null
+                        && !existing.ModuleId.Equals(module.Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.Error.WriteLine(
+                            $"WARNING: Existing benchmark report belongs to module '{existing.ModuleId}', "
+                            + $"not '{module.Id}'. It will be replaced by the partial result.");
+                        existing = null;
+                    }
+                    else
+                    {
+                        reportStore.WarnEnvironmentMismatch(
+                            existing.Environments ?? [],
+                            environment);
+                    }
+                }
             }
 
             var measuredResults = summaries
