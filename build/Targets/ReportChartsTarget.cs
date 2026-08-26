@@ -7,7 +7,9 @@ namespace Build.Targets;
 
 internal sealed class ReportChartsTarget(
     IBuildPaths buildPaths,
-    IJsonSerializer jsonSerializer) : IReportChartsTarget
+    IJsonSerializer jsonSerializer,
+    IMatrixOverviews overviews,
+    IMatrixScores scores) : IReportChartsTarget
 {
     private const int ImageWidth = 1400;
     private const float LabelWidth = 404;
@@ -187,7 +189,7 @@ internal sealed class ReportChartsTarget(
         Save(surface, outputPath);
     }
 
-    private static void RenderOverview(
+    private void RenderOverview(
         BenchmarkReport report,
         MatrixChartGroup group,
         BenchmarkReportEntry[] features,
@@ -195,7 +197,7 @@ internal sealed class ReportChartsTarget(
         IReadOnlySet<string> rated,
         string outputPath)
     {
-        var overview = MatrixOverviews.Create(report, group, null, rated.Contains);
+        var overview = overviews.Create(report, group, null, rated.Contains);
         if (overview is null)
         {
             return;
@@ -289,7 +291,7 @@ internal sealed class ReportChartsTarget(
                 // A rated row can never pass the maximum (see workflows/rating.md),
                 // so this only ever blanks a reference row that outscored the
                 // whole rated field — see the same choice in OverviewChart.razor.
-                MatrixScores.FormatWithinMax(row.Points, overview.Maximum),
+                scores.FormatWithinMax(row.Points, overview.Maximum),
                 pointsX,
                 y + 5,
                 row.Rated ? points : hint);

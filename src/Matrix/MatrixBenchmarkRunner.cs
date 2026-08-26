@@ -15,7 +15,8 @@ public sealed class MatrixBenchmarkRunner(
     MatrixModuleAssembly moduleAssembly,
     IMatrixReportStore reportStore,
     IBenchmarkEnvironmentProvider environmentProvider,
-    IJsonSerializer jsonSerializer) : IMatrixRunner
+    IJsonSerializer jsonSerializer,
+    IMatrixReportInvariants reportInvariants) : IMatrixRunner
 {
     private static readonly JsonSerializerOptions EvidenceJsonOptions = new(JsonSerializerDefaults.Web)
     {
@@ -88,8 +89,9 @@ public sealed class MatrixBenchmarkRunner(
             {
                 Console.Error.WriteLine(
                     $"ERROR: the benchmark configuration resolved to {resolvedJobIds.Length} jobs "
-                    + $"({string.Join(", ", resolvedJobIds)}). Benchmark results are keyed by "
-                    + "(feature, library) only and cannot represent more than one job. "
+                    + $"({string.Join(", ", resolvedJobIds)}). Environment capture below records "
+                    + "one BenchmarkEnvironment per run, taken from the first resolved job, so "
+                    + "results from the other job(s) would be tagged with the wrong environment. "
                     + "Refusing to write a report.");
                 return 1;
             }
@@ -168,6 +170,7 @@ public sealed class MatrixBenchmarkRunner(
                         .ToArray()))
                 .OrderBy(feature => feature.Order)
                 .ToArray();
+            reportInvariants.EnsureUniqueResultPerLibrary(features);
             var benchmarkLibraries = runLibraries
                 .Select(library => new BenchmarkLibrary(
                     library.Id,

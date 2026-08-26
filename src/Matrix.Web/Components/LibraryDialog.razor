@@ -4,6 +4,7 @@
 @inject IMatrixScoring Scoring
 @inject IMatrixMeasures Measures
 @inject IMatrixPalette Palette
+@inject IMatrixScores Scores
 
 @* Dimming overlay. Clicking it closes; the panel stops the click from reaching it. *@
 <div class="modal-backdrop" @onclick="CloseAsync">
@@ -374,7 +375,7 @@
             ? "Scored nothing here:\n"
               + string.Join(
                   '\n',
-                  MatrixScores
+                  Scores
                       .Explain(View.RatedFeatures(Report), Library.Id, _ => true)
                       .Where(detail => !detail.Covered)
                       .Select(detail => $"  {detail.Name}"))
@@ -458,7 +459,7 @@
         // Restricted to rated features, or an unrated scenario would show points
         // here that never entered the total shown beside them.
         _scores = Report.Benchmarks is not null
-            ? MatrixScores
+            ? Scores
                 .Explain(
                     View.RatedFeatures(Report),
                     Library.Id,

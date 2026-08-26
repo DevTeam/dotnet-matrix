@@ -2,14 +2,13 @@
 // ReSharper disable UseCollectionExpression
 namespace Matrix;
 
-/// <summary>
-/// The category rating: <see cref="MatrixScores"/> applied to every scenario of
-/// the report. An overview group applies the same rule to its own scenarios, so
-/// a group standing and the category standing differ only in what they cover.
-/// Group places are still recorded here for the stars on the chart rows.
-/// The rule and the reasoning are owned by workflows/rating.md.
-/// </summary>
-public static class MatrixRatings
+/// <inheritdoc cref="IMatrixRatings"/>
+/// <remarks>
+/// An overview group applies the same rule to its own scenarios, so a group
+/// standing and the category standing differ only in what they cover. Group
+/// places are still recorded here for the stars on the chart rows.
+/// </remarks>
+public sealed class MatrixRatings(IMatrixScores scores, IMatrixOverviews overviews) : IMatrixRatings
 {
     /// <summary>Medalled places of a standing.</summary>
     public const int Places = 3;
@@ -20,7 +19,7 @@ public static class MatrixRatings
     /// <inheritdoc cref="MatrixScores.Metrics"/>
     public const int Metrics = MatrixScores.Metrics;
 
-    public static IReadOnlyList<MatrixMedals> Create(
+    public IReadOnlyList<MatrixMedals> Create(
         BenchmarkReport report,
         MatrixChartCatalog charts,
         Func<string, bool> isRated,
@@ -44,7 +43,7 @@ public static class MatrixRatings
             .ToArray();
 
         var awards = ReadAwards(report, charts, Competes);
-        var score = MatrixScores.Create(
+        var score = scores.Create(
             ratedFeatures,
             libraries.Select(library => library.Id),
             Competes);
@@ -73,7 +72,7 @@ public static class MatrixRatings
     /// First three places of every overview group, by the points scored in that
     /// group. The rows of a group are already in that order.
     /// </summary>
-    private static Dictionary<string, List<MatrixMedal>> ReadAwards(
+    private Dictionary<string, List<MatrixMedal>> ReadAwards(
         BenchmarkReport report,
         MatrixChartCatalog charts,
         Func<string, bool> competes)
@@ -81,7 +80,7 @@ public static class MatrixRatings
         var awards = new Dictionary<string, List<MatrixMedal>>(StringComparer.OrdinalIgnoreCase);
         foreach (var group in charts.Groups)
         {
-            var overview = MatrixOverviews.Create(report, group, competes);
+            var overview = overviews.Create(report, group, competes);
             if (overview is null)
             {
                 continue;

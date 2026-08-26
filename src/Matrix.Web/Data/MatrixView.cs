@@ -2,7 +2,7 @@
 namespace Matrix.Web;
 
 /// <inheritdoc cref="IMatrixView"/>
-internal sealed class MatrixView : IMatrixView
+internal sealed class MatrixView(IMatrixOverviews overviews) : IMatrixView
 {
     public bool IsSelected(
         CategoryReport report,
@@ -127,7 +127,7 @@ internal sealed class MatrixView : IMatrixView
         IReadOnlySet<string> selectedLibraries) =>
         report.Benchmarks is not { } benchmarks
             ? null
-            : MatrixOverviews.Create(
+            : overviews.Create(
                 benchmarks,
                 group,
                 libraryId => IsSelected(report, selectedLibraries, libraryId),
@@ -139,7 +139,7 @@ internal sealed class MatrixView : IMatrixView
         IReadOnlySet<string> selectedLibraries) =>
         report.Benchmarks is not { } benchmarks
             ? null
-            : MatrixOverviews.Create(
+            : overviews.Create(
                 benchmarks,
                 group,
                 libraryId => IsRated(report, libraryId)
