@@ -99,7 +99,24 @@ public sealed class MatrixBenchmarkRunner(
         {
             var summaries = BenchmarkSwitcher
                 .FromAssembly(moduleAssembly.Value)
-                .Run(["--filter", "*"], config);
+                .Run(["--filter", "*"], config)
+                .ToList();
+
+            var resolvedJobIds = summaries
+                .SelectMany(summary => summary.BenchmarksCases)
+                .Select(benchmarkCase => benchmarkCase.Job.ResolvedId)
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+
+            if (resolvedJobIds.Length > 1)
+            {
+                Console.Error.WriteLine(
+                    $"ERROR: the benchmark configuration resolved to {resolvedJobIds.Length} jobs "
+                    + $"({string.Join(", ", resolvedJobIds)}). Benchmark results are keyed by "
+                    + "(feature, library) only and cannot represent more than one job. "
+                    + "Refusing to write a report.");
+                return 1;
+            }
 
             var measuredResults = summaries
                 .SelectMany(summary => summary.Reports)
