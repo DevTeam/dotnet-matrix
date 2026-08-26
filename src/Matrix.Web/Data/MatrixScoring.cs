@@ -7,7 +7,11 @@ namespace Matrix.Web;
 /// of the rule, which the chart renderer and the readme generator also call. A
 /// breakdown shown beside a total therefore cannot disagree with it.
 /// </remarks>
-internal sealed class MatrixScoring(IMatrixView view, IMatrixMeasures measures) : IMatrixScoring
+internal sealed class MatrixScoring(
+    IMatrixView view,
+    IMatrixMeasures measures,
+    IMatrixScores scores,
+    IMatrixRatings ratings) : IMatrixScoring
 {
     public int Places => MatrixRatings.Places;
 
@@ -15,20 +19,20 @@ internal sealed class MatrixScoring(IMatrixView view, IMatrixMeasures measures) 
 
     public int MaximumPoints => MatrixRatings.MaximumPoints;
 
-    public int Maximum(int scenarios) => MatrixScores.Maximum(scenarios);
+    public int Maximum(int scenarios) => scores.Maximum(scenarios);
 
-    public string Format(double points) => MatrixScores.Format(points);
+    public string Format(double points) => scores.Format(points);
 
-    public string FormatExact(double points) => MatrixScores.FormatExact(points);
+    public string FormatExact(double points) => scores.FormatExact(points);
 
-    public string FormatWithinMax(double points, double maximum) => MatrixScores.FormatWithinMax(points, maximum);
+    public string FormatWithinMax(double points, double maximum) => scores.FormatWithinMax(points, maximum);
 
     public IReadOnlyList<MatrixMedals> Rating(
         CategoryReport report,
         IReadOnlySet<string> selectedLibraries) =>
         report.Benchmarks is null || report.ChartCatalog is null
             ? []
-            : MatrixRatings.Create(
+            : ratings.Create(
                 report.Benchmarks,
                 report.ChartCatalog,
                 libraryId => view.IsRated(report, libraryId),
@@ -57,7 +61,7 @@ internal sealed class MatrixScoring(IMatrixView view, IMatrixMeasures measures) 
         IReadOnlyList<BenchmarkReportEntry> features,
         IReadOnlySet<string> selectedLibraries,
         string libraryId) =>
-        MatrixScores.Explain(
+        scores.Explain(
             features,
             libraryId,
             candidate => view.IsRated(report, candidate)

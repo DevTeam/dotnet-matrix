@@ -3,15 +3,14 @@ using System.Globalization;
 
 namespace Matrix;
 
-/// <summary>
-/// The one scoring rule of the project, applied to whatever set of scenarios it
-/// is given. In every scenario the fastest library earns
-/// <see cref="MaximumPoints"/> and the one allocating least earns another
-/// <see cref="MaximumPoints"/>; four times slower is half the points, and a
-/// scenario the library did not complete is worth nothing.
-/// See workflows/rating.md.
-/// </summary>
-public static class MatrixScores
+/// <inheritdoc cref="IMatrixScores"/>
+/// <remarks>
+/// In every scenario the fastest library earns <see cref="MaximumPoints"/> and
+/// the one allocating least earns another <see cref="MaximumPoints"/>; four
+/// times slower is half the points, and a scenario the library did not
+/// complete is worth nothing. See workflows/rating.md.
+/// </remarks>
+public sealed class MatrixScores(IMatrixReportInvariants reportInvariants) : IMatrixScores
 {
     /// <summary>What the best result of one scenario on one metric is worth.</summary>
     public const int MaximumPoints = 100;
@@ -54,7 +53,7 @@ public static class MatrixScores
     private const double Curve = 0.5;
 
     /// <summary>The most a library can earn over <paramref name="scenarios"/>.</summary>
-    public static int Maximum(int scenarios) => scenarios * MaximumPoints * Metrics;
+    public int Maximum(int scenarios) => scenarios * MaximumPoints * Metrics;
 
     /// <summary>
     /// A score is only ever read against the maximum, so whole points are enough
@@ -65,7 +64,7 @@ public static class MatrixScores
     /// Invariant, because a decimal comma would turn 5.983 points into something a
     /// reader takes for five thousand, and because a chart must not depend on the
     /// locale of the machine that rendered it.
-    public static string Format(double points) =>
+    public string Format(double points) =>
         points >= 10
             ? points.ToString("0", CultureInfo.InvariantCulture)
             : points.ToString("0.###", CultureInfo.InvariantCulture);
@@ -77,7 +76,7 @@ public static class MatrixScores
     /// beside them says 399. One decimal is enough to make the arithmetic close,
     /// and a result far behind keeps the fraction that distinguishes it from zero.
     /// </summary>
-    public static string FormatExact(double points) =>
+    public string FormatExact(double points) =>
         points >= 10
             ? points.ToString("0.#", CultureInfo.InvariantCulture)
             : points.ToString("0.###", CultureInfo.InvariantCulture);
@@ -89,19 +88,21 @@ public static class MatrixScores
     /// row's own score once it outscores the whole rated field; there is no
     /// number on that scale left to show it against.
     /// </summary>
-    public static string FormatWithinMax(double points, double maximum) =>
+    public string FormatWithinMax(double points, double maximum) =>
         points > maximum ? string.Empty : Format(points);
 
-    public static IReadOnlyDictionary<string, MatrixScore> Create(
+    public IReadOnlyDictionary<string, MatrixScore> Create(
         IEnumerable<BenchmarkReportEntry> features,
         IEnumerable<string> libraryIds,
         Func<string, bool>? includeLibrary = null)
     {
+        var featureList = features as IReadOnlyList<BenchmarkReportEntry> ?? features.ToArray();
+        reportInvariants.EnsureUniqueResultPerLibrary(featureList);
         var score = libraryIds.ToDictionary(
             id => id,
             _ => (Time: 0d, Memory: 0d, Covered: 0),
             StringComparer.OrdinalIgnoreCase);
-        foreach (var feature in features)
+        foreach (var feature in featureList)
         {
             var results = feature.Results
                 .Where(result =>
@@ -139,11 +140,14 @@ public static class MatrixScores
     /// from. It goes through <see cref="Award(double,double,double)"/> like the
     /// rating itself, so a breakdown cannot disagree with the total it explains.
     /// </summary>
-    public static IReadOnlyList<MatrixScoreDetail> Explain(
+    public IReadOnlyList<MatrixScoreDetail> Explain(
         IEnumerable<BenchmarkReportEntry> features,
         string libraryId,
-        Func<string, bool>? includeLibrary = null) =>
-        features
+        Func<string, bool>? includeLibrary = null)
+    {
+        var featureList = features as IReadOnlyList<BenchmarkReportEntry> ?? features.ToArray();
+        reportInvariants.EnsureUniqueResultPerLibrary(featureList);
+        return featureList
             .Select(feature =>
             {
                 var results = feature.Results.Where(result => result.Successful).ToArray();
@@ -159,6 +163,7 @@ public static class MatrixScores
                         includeLibrary));
             })
             .ToArray();
+    }
 
     /// <summary>
     /// <paramref name="includeLibrary"/> decides who defines <c>best</c> — the
@@ -167,7 +172,7 @@ public static class MatrixScores
     /// baseline, still gets its own measurement scored against the field's best;
     /// it simply never becomes the best itself. See workflows/rating.md.
     /// </summary>
-    private static MatrixScoreCell Cell(
+    private MatrixScoreCell Cell(
         IReadOnlyList<BenchmarkResult> results,
         string libraryId,
         Func<BenchmarkResult, double?> metric,
@@ -199,7 +204,7 @@ public static class MatrixScores
     /// One metric of one scenario. A metric nobody reported is skipped rather
     /// than scored as zero: it is not a competition.
     /// </summary>
-    private static void Award(
+    private void Award(
         Dictionary<string, (double Time, double Memory, int Covered)> score,
         IReadOnlyList<BenchmarkResult> results,
         Func<BenchmarkResult, double?> metric,
@@ -231,6 +236,6 @@ public static class MatrixScores
     /// The scale itself, and the only place it exists. Both sides carry the same
     /// step, so two results that measure zero are equally best.
     /// </summary>
-    private static double Award(double best, double value, double resolution) =>
+    private double Award(double best, double value, double resolution) =>
         MaximumPoints * Math.Pow((best + resolution) / (value + resolution), Curve);
 }

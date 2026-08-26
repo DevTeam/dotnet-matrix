@@ -1,26 +1,9 @@
 namespace Matrix;
 
-public static class MatrixOverviews
+/// <inheritdoc cref="IMatrixOverviews"/>
+public sealed class MatrixOverviews(IMatrixScores scores) : IMatrixOverviews
 {
-    /// <summary>
-    /// Returns null when the group names no feature present in the report.
-    /// Rows come back ordered by the points they scored inside the group, using
-    /// <see cref="MatrixScores"/> — the rule the category standings use — so the
-    /// two ratings are read and computed the same way.
-    /// </summary>
-    /// <param name="report"></param>
-    /// <param name="group"></param>
-    /// <param name="includeLibrary">
-    /// Optional library filter; the web application passes the current selection.
-    /// </param>
-    /// <param name="isRated">
-    /// Which libraries take part in the rating. A library outside it is still
-    /// drawn — a hand-written baseline is the most useful row on the chart — and
-    /// still earns a real score against the field's best, so its row is exactly
-    /// as informative as any other. It only never defines that best itself and
-    /// never takes a place: see <see cref="MatrixOverviewRow.Rated"/>.
-    /// </param>
-    public static MatrixOverview? Create(
+    public MatrixOverview? Create(
         BenchmarkReport report,
         MatrixChartGroup group,
         Func<string, bool>? includeLibrary = null,
@@ -41,7 +24,7 @@ public static class MatrixOverviews
             .Where(library => includeLibrary?.Invoke(library.Id) ?? true)
             .ToArray();
         var competitors = libraries.Where(library => Rated(library.Id)).ToArray();
-        var score = MatrixScores.Create(
+        var score = scores.Create(
             features,
             competitors.Select(library => library.Id),
             CompetesForBest);
@@ -59,7 +42,8 @@ public static class MatrixOverviews
             features,
             rows,
             rows.Select(row => MatrixMetrics.Total(row.PerformanceValues)).DefaultIfEmpty().Max(),
-            rows.Select(row => MatrixMetrics.Total(row.MemoryValues)).DefaultIfEmpty().Max());
+            rows.Select(row => MatrixMetrics.Total(row.MemoryValues)).DefaultIfEmpty().Max(),
+            scores.Maximum(features.Length));
 
         bool Rated(string libraryId) => isRated?.Invoke(libraryId) ?? true;
 
@@ -67,7 +51,7 @@ public static class MatrixOverviews
             (includeLibrary?.Invoke(libraryId) ?? true) && Rated(libraryId);
     }
 
-    private static MatrixOverviewRow CreateRow(
+    private MatrixOverviewRow CreateRow(
         BenchmarkLibrary library,
         IReadOnlyList<BenchmarkReportEntry> features,
         IReadOnlyDictionary<string, MatrixScore> score,
@@ -95,18 +79,18 @@ public static class MatrixOverviews
 
     /// <summary>
     /// What a library outside the rating would have scored against the field it
-    /// is compared with. Runs through <see cref="MatrixScores.Explain"/> rather
-    /// than the bulk <see cref="MatrixScores.Create"/> above, because such a
+    /// is compared with. Runs through <see cref="IMatrixScores.Explain"/> rather
+    /// than the bulk <see cref="IMatrixScores.Create"/> above, because such a
     /// library must never enter that bulk pass — doing so would let it help
     /// define <c>best</c>, which is exactly what keeping it out of the rating
     /// forbids. See workflows/rating.md.
     /// </summary>
-    private static MatrixScore Reference(
+    private MatrixScore Reference(
         IReadOnlyList<BenchmarkReportEntry> features,
         string libraryId,
         Func<string, bool> competesForBest)
     {
-        var details = MatrixScores.Explain(features, libraryId, competesForBest);
+        var details = scores.Explain(features, libraryId, competesForBest);
         return new MatrixScore(
             details.Sum(detail => detail.Time.Points),
             details.Sum(detail => detail.Memory.Points),

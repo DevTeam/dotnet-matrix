@@ -19,6 +19,8 @@ internal partial class Composition : ServiceProviderFactory<Composition>
             .Root<IMatrixScoring>()
             .Root<IMatrixMeasures>()
             .Root<IMatrixPalette>()
+            .Root<IMatrixScores>()
 
-            .Singleton<JsonSerializerWrapper, GitHubMatrixDataSource, MatrixView, MatrixScoring, MatrixMeasures, MatrixPalette>();
+            .Singleton<JsonSerializerWrapper, GitHubMatrixDataSource, MatrixView, MatrixScoring, MatrixMeasures, MatrixPalette,
+                MatrixReportInvariants, MatrixScores, MatrixOverviews, MatrixRatings>();
 }

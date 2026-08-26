@@ -9,16 +9,15 @@ namespace Matrix;
 /// same order the category standings use. The bars keep showing measured totals,
 /// so a shorter bar can sit below a longer one.
 /// </summary>
+/// <param name="Maximum">The most a library can score in this group.</param>
 public sealed record MatrixOverview(
     MatrixChartGroup Group,
     IReadOnlyList<BenchmarkReportEntry> Features,
     IReadOnlyList<MatrixOverviewRow> Rows,
     double MaximumTime,
-    double MaximumMemory)
+    double MaximumMemory,
+    int Maximum)
 {
-    /// <summary>The most a library can score in this group.</summary>
-    public int Maximum => MatrixScores.Maximum(Features.Count);
-
     /// <summary>
     /// A library's 1-based rank among rated rows only, or null when it is not
     /// rated. <see cref="Rows"/> is ordered by score for every row alike, so a

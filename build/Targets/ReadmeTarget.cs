@@ -11,7 +11,9 @@ internal sealed partial class ReadmeTarget(
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
     ITemplateEngine templateEngine,
-    IJsonSerializer jsonSerializer) : IReadmeTarget
+    IJsonSerializer jsonSerializer,
+    IMatrixScores scores,
+    IMatrixRatings ratings) : IReadmeTarget
 {
     private const string Template = "/Templates/Readme.cshtml";
     private static readonly JsonSerializerOptions JsonOptions =
@@ -144,15 +146,15 @@ internal sealed partial class ReadmeTarget(
             .Where(feature => feature.Rated)
             .Select(feature => feature.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var rating = MatrixRatings
+        var rating = ratings
             .Create(report, charts, rated.Contains, ratedFeatures.Contains)
             .Select((medals, index) => new ReadmeRating(
                 index + 1,
                 medals.LibraryId,
                 medals.Name,
-                MatrixScores.Format(medals.Points),
-                MatrixScores.Format(medals.TimePoints),
-                MatrixScores.Format(medals.MemoryPoints),
+                scores.Format(medals.Points),
+                scores.Format(medals.TimePoints),
+                scores.Format(medals.MemoryPoints),
                 medals.Maximum,
                 medals.MetricMaximum,
                 medals.Covered,
@@ -202,12 +204,12 @@ internal sealed partial class ReadmeTarget(
     /// rating sums, so the breakdown printed here cannot disagree with the total
     /// printed above it.
     /// </summary>
-    private static ReadmeScore[] Breakdown(
+    private ReadmeScore[] Breakdown(
         BenchmarkReport report,
         string libraryId,
         Func<string, bool> rated,
         Func<string, bool> featureRated) =>
-        MatrixScores
+        scores
             .Explain(
                 report.Features.Where(feature => featureRated(feature.Id)),
                 libraryId,
@@ -233,8 +235,8 @@ internal sealed partial class ReadmeTarget(
     /// A metric nobody measured was never scored, and saying `0` there would
     /// invite the reader to look for points the library never had a chance at.
     /// </summary>
-    private static string Points(MatrixScoreCell cell) =>
-        cell.Contested ? MatrixScores.FormatExact(cell.Points) : "—";
+    private string Points(MatrixScoreCell cell) =>
+        cell.Contested ? scores.FormatExact(cell.Points) : "—";
 
     private static string Anchor(string value) =>
         AnchorRegex().Replace(value.ToLowerInvariant(), "-").Trim('-');

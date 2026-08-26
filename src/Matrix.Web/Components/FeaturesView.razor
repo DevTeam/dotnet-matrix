@@ -1,5 +1,6 @@
 @inject IMatrixView View
 @inject IMatrixScoring Scoring
+@inject IMatrixScores Scores
 
 @foreach (var report in Reports)
 {
@@ -251,12 +252,12 @@
             .ToDictionary(entry => entry.Id, entry => entry.Place, StringComparer.OrdinalIgnoreCase);
     }
 
-    private static double ScenarioPoints(
+    private double ScenarioPoints(
         BenchmarkReportEntry benchmark,
         string libraryId,
         Func<string, bool> includeLibrary)
     {
-        var detail = MatrixScores.Explain([benchmark], libraryId, includeLibrary).FirstOrDefault();
+        var detail = Scores.Explain([benchmark], libraryId, includeLibrary).FirstOrDefault();
         return detail is null ? 0 : detail.Time.Points + detail.Memory.Points;
     }
 

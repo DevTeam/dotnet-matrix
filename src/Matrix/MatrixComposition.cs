@@ -23,5 +23,6 @@ internal partial class MatrixComposition
                 return MatrixMetadata.Read(moduleAssembly);
             })
             .Singleton((Assembly moduleAssembly) => new MatrixModuleAssembly(moduleAssembly))
-            .Singleton<JsonSerializerWrapper, RunnerOptionsParser, MatrixLibraryCatalog, MatrixReportStore, BenchmarkEnvironmentProvider, MatrixRunnerSelector>();
+            .Singleton<JsonSerializerWrapper, RunnerOptionsParser, MatrixLibraryCatalog, MatrixReportStore, BenchmarkEnvironmentProvider, MatrixRunnerSelector,
+                MatrixReportInvariants>();
 }
