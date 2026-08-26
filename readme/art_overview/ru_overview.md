@@ -9,7 +9,7 @@
 - Интерактивная матрица: [matrix.dev-team.org](https://matrix.dev-team.org/)
 - Репозиторий: [github.com/DevTeam/dotnet-matrix](https://github.com/DevTeam/dotnet-matrix) (MIT)
 
-Сейчас в матрице **6 категорий, 40 библиотек и 67 сценариев**.
+Сейчас в матрице **8 категорий, 53 библиотеки и 99 сценариев**.
 
 Статья рассчитана на .NET-разработчиков, которым:
 
@@ -84,16 +84,18 @@
 
 | Категория | Лидер рейтинга | Библиотек | Сценариев |
 |---|---|---:|---:|
-| CSV Processing | Sep | 3 | 10 |
+| CSV Processing | Sep | 4 | 10 |
 | Dependency Injection | Pure.DI | 23 | 15 |
 | JSON Serialization | System.Text.Json | 3 | 14 |
-| Logging | Microsoft.Extensions.Logging | 5 | 8 |
+| LINQ Queries | ZLinq | 6 | 18 |
+| Logging | Microsoft.Extensions.Logging | 6 | 9 |
 | Object Mapping | Mapperly | 4 | 10 |
-| Validation | DataAnnotations | 3 | 10 |
+| Validation | Microsoft.Extensions.Validation | 4 | 10 |
+| ZIP Archives | SharpZipLib | 3 | 13 |
 
 Цифры статистики намеренно не приводятся: они привязаны к версиям пакетов и к окружению, в котором проходили тесты, и быстро устареют. Актуальные числа, графики и матрицу возможностей смотрите в приложении: [matrix.dev-team.org](https://matrix.dev-team.org/).
 
-Отдельно стоит сказать про **эталонные реализации** (baseline). В нескольких категориях помимо библиотек участвует «нулевой вариант»: `HandCoded` — код, написанный руками, в Dependency Injection и Object Mapping; `System.Text.Json`, `DataAnnotations` и `Microsoft.Extensions.Logging` — то, что уже есть в платформе. Это довольно полезный показатель, он отвечает на вопрос, **сколько вы «платите» за библиотеку**, и стоит ли её использовать. И иногда ответ неожиданный: в Validation и JSON Serialization рейтинг сейчас возглавляют именно платформенные варианты — `DataAnnotations` и `System.Text.Json`.
+Отдельно стоит сказать про **эталонные реализации** (baseline). В нескольких категориях помимо библиотек участвует «нулевой вариант»: `HandCoded` — код, написанный руками, в Dependency Injection, LINQ Queries и Object Mapping; `System.Linq`, `System.Text.Json`, `DataAnnotations`, `System.IO.Compression` и `Microsoft.Extensions.Logging` — то, что уже есть в платформе. Это довольно полезный показатель, он отвечает на вопрос, **сколько вы «платите» за библиотеку**, и стоит ли её использовать. И иногда ответ неожиданный: в Validation и JSON Serialization рейтинг сейчас возглавляют именно платформенные варианты — `Microsoft.Extensions.Validation` и `System.Text.Json`.
 
 ---
 

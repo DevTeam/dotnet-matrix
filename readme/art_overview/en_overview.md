@@ -9,7 +9,7 @@ The principle behind the project is *Evidence, not faith*.
 - Interactive matrix: [matrix.dev-team.org](https://matrix.dev-team.org/)
 - Repository: [github.com/DevTeam/dotnet-matrix](https://github.com/DevTeam/dotnet-matrix) (MIT)
 
-The matrix currently holds **6 categories, 40 libraries and 67 scenarios**.
+The matrix currently holds **8 categories, 53 libraries and 99 scenarios**.
 
 This article is for .NET developers who:
 
@@ -84,16 +84,18 @@ Results add up into an overall rating: scenarios are collected into groups (for 
 
 | Category | Rating leader | Libraries | Scenarios |
 |---|---|---:|---:|
-| CSV Processing | Sep | 3 | 10 |
+| CSV Processing | Sep | 4 | 10 |
 | Dependency Injection | Pure.DI | 23 | 15 |
 | JSON Serialization | System.Text.Json | 3 | 14 |
-| Logging | Microsoft.Extensions.Logging | 5 | 8 |
+| LINQ Queries | ZLinq | 6 | 18 |
+| Logging | Microsoft.Extensions.Logging | 6 | 9 |
 | Object Mapping | Mapperly | 4 | 10 |
-| Validation | DataAnnotations | 3 | 10 |
+| Validation | Microsoft.Extensions.Validation | 4 | 10 |
+| ZIP Archives | SharpZipLib | 3 | 13 |
 
 The measured numbers are deliberately left out of this article: they are tied to specific package versions and to the environment the tests ran in, and they go stale quickly. For current figures, charts and the feature matrix, use the application: [matrix.dev-team.org](https://matrix.dev-team.org/).
 
-The **baselines** deserve a separate word. Several categories include a "zero option" alongside the libraries: `HandCoded` — code written by hand — in Dependency Injection and Object Mapping, and `System.Text.Json`, `DataAnnotations` and `Microsoft.Extensions.Logging`, which the platform already ships. It is a genuinely useful data point, because it answers the question of **how much you are paying for the library** and whether it is worth taking at all. And sometimes the answer is a surprise: in Validation and JSON Serialization the rating is currently led by the platform options — `DataAnnotations` and `System.Text.Json`.
+The **baselines** deserve a separate word. Several categories include a "zero option" alongside the libraries: `HandCoded` — code written by hand — in Dependency Injection, LINQ Queries and Object Mapping, and `System.Linq`, `System.Text.Json`, `DataAnnotations`, `System.IO.Compression` and `Microsoft.Extensions.Logging`, which the platform already ships. It is a genuinely useful data point, because it answers the question of **how much you are paying for the library** and whether it is worth taking at all. And sometimes the answer is a surprise: in Validation and JSON Serialization the rating is currently led by the platform options — `Microsoft.Extensions.Validation` and `System.Text.Json`.
 
 ---
 
