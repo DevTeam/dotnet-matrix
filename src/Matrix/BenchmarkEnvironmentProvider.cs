@@ -4,6 +4,7 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using BenchmarkDotNet.Jobs;
 using Microsoft.Win32;
 
 namespace Matrix;
@@ -16,24 +17,40 @@ public sealed class BenchmarkEnvironmentProvider : IBenchmarkEnvironmentProvider
     public BenchmarkEnvironment Capture(
         string benchmarkTool,
         Assembly benchmarkToolAssembly,
-        string job)
+        string jobLabel,
+        Job job)
     {
+        // Job.Environment characteristics reflect the job actually resolved by
+        // BenchmarkDotNet (e.g. a Native AOT runtime), which can differ from this
+        // orchestrating host process. BenchmarkDotNet does not back-fill unset
+        // characteristics from the host, so fall back to host values ourselves.
+        var runtime = job.Environment.HasValue(EnvironmentMode.RuntimeCharacteristic)
+            ? job.Environment.Runtime
+            : null;
+        var framework = runtime?.Name ?? RuntimeInformation.FrameworkDescription;
+        var processArchitecture = job.Environment.HasValue(EnvironmentMode.PlatformCharacteristic)
+            ? job.Environment.Platform.ToString()
+            : RuntimeInformation.ProcessArchitecture.ToString();
+        var serverGarbageCollector = job.Environment.Gc.HasValue(GcMode.ServerCharacteristic)
+            ? job.Environment.Gc.Server
+            : GCSettings.IsServerGC;
+
         var values = new[]
         {
             RuntimeInformation.OSDescription,
             RuntimeInformation.OSArchitecture.ToString(),
-            RuntimeInformation.ProcessArchitecture.ToString(),
-            RuntimeInformation.FrameworkDescription,
+            processArchitecture,
+            framework,
             Environment.Version.ToString(),
             RuntimeInformation.RuntimeIdentifier,
             _dotNetSdkVersion.Value,
             _processor.Value,
             Environment.ProcessorCount.ToString(),
-            GCSettings.IsServerGC.ToString(),
+            serverGarbageCollector.ToString(),
             Stopwatch.Frequency.ToString(),
             benchmarkTool,
             benchmarkToolAssembly.GetName().Version?.ToString() ?? "unknown",
-            job
+            jobLabel
         };
         var id = Convert.ToHexString(
                 SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', values))))
@@ -50,11 +67,11 @@ public sealed class BenchmarkEnvironmentProvider : IBenchmarkEnvironmentProvider
             values[6],
             values[7],
             Environment.ProcessorCount,
-            GCSettings.IsServerGC,
+            serverGarbageCollector,
             Stopwatch.Frequency,
             benchmarkTool,
             values[12],
-            job);
+            jobLabel);
     }
 
     private static string GetDotNetSdkVersion()
