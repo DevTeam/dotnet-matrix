@@ -7,6 +7,7 @@ namespace Build.Targets;
 internal sealed class CiReportsTarget(
     IBuildPaths buildPaths,
     IMatrixTarget matrixTarget,
+    IAotProbesTarget aotProbesTarget,
     IMatrixReportStore reportStore) : ICiReportsTarget
 {
     private const string FeaturesFileName = "features.json";
@@ -51,6 +52,17 @@ internal sealed class CiReportsTarget(
                 false,
                 cancellationToken);
             validationFailed |= result != 0;
+
+            // Validation rewrites features.json and drops the Native AOT entry with it, so the
+            // probe runs here: after this module's validation, and before the summary and the
+            // staged artifact read the report back. A module whose validation failed is not
+            // probed, because its report is already not worth publishing.
+            if (result == 0)
+            {
+                var probes = await aotProbesTarget.RunAsync([module], cancellationToken);
+                exitCode = Combine(exitCode, probes);
+            }
+
             exitCode = Combine(exitCode, result);
             AppendFeatures(summary, module, result);
         }
