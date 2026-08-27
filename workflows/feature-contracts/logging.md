@@ -134,26 +134,10 @@ Application category is `Matrix.Logging`.
 - Supported: the library defines a text layout or formatter that renders a
   complete event into a caller-provided writer. Composing the record from
   matrix-owned string concatenation is not support.
-- Unsupported: the library defines no comparable text formatter.
+- Unsupported: the library defines no comparable text formatter. This is the
+  case for Microsoft.Extensions.Logging, whose core package ships none, and
+  for OpenTelemetry, which exports log records instead.
 - Group: `structured`.
-
-## 9. Formatted Output
-
-- Operation: submit the Information message `Formatted event` through the
-  library's own output formatter into a bounded in-memory sink.
-- Inside invocation: event creation, layout/template formatting, and
-  synchronous delivery of the formatted text or UTF-8 bytes to the sink.
-- Outside invocation: setup builds the formatter with a library-appropriate
-  timestamp/level/logger/message layout; cleanup validates all three
-  validation invocations.
-- Validation: the sink has received three formatted records and the last one
-  ends with `Formatted event`.
-- Supported: the library defines a text output formatter that the matrix can
-  drive synchronously; matrix-owned formatting is not support.
-- Unsupported: the library defines no comparable output formatter. This is
-  the case for Microsoft.Extensions.Logging, whose core package ships none,
-  and for OpenTelemetry, which exports log records instead.
-- Rating: `structured`.
 
 ## Availability meanings
 
