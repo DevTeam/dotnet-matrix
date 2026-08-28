@@ -1,0 +1,164 @@
+@inject IMatrixView View
+
+@* A deployment capability is validated rather than measured and never reaches a benchmark
+   report, so it lives in its own tab instead of the scenario grid. Unlike the feature and
+   benchmark tabs it does not depend on the scenario selection: Native AOT compatibility is a
+   property of the library, not of which scenario a visitor happens to be comparing. *@
+@foreach (var report in Reports)
+{
+    var libraries = report.Features?.Libraries
+        .Where(library => View.IsSelected(report, SelectedLibraries, library.Id))
+        .ToArray() ?? [];
+    var capabilities = report.Features?.Features
+        .Where(feature => feature.IsDeployment)
+        .OrderBy(feature => feature.Order)
+        .ToArray() ?? [];
+    if (libraries.Length == 0 || capabilities.Length == 0)
+    {
+        continue;
+    }
+
+    <section class="panel report-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">@report.Category.Name</p>
+                <h2>Deployment compatibility</h2>
+            </div>
+            <span class="section-meta">Validated, not measured &middot; never rated &middot; @libraries.Length libraries</span>
+        </div>
+        <ul class="feature-legend">
+            @foreach (var (status, label) in Legend)
+            {
+                <li>
+                    <span class="feature-status @StatusClass(status)">
+                        <StatusIcon Kind="@StatusClass(status)"/>
+                    </span>
+                    @label
+                </li>
+            }
+            <li>
+                <span class="feature-status supported has-reason">
+                    <StatusIcon Kind="supported"/>
+                </span>
+                Has a note
+            </li>
+        </ul>
+        @* Rows are libraries and columns are capabilities: today that is one column, but the
+           table stays readable if a second deployment capability is ever added, and a library
+           list is the axis worth scanning top to bottom when there are dozens of them. *@
+        <div class="table-scroll">
+            <table class="feature-table">
+                <thead>
+                <tr>
+                    <th>Library</th>
+                    @foreach (var capability in capabilities)
+                    {
+                        <th>@capability.Name</th>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var library in libraries)
+                {
+                    <tr>
+                        <th>
+                            <span class="rating-name">
+                                <LibraryLogo Source="@View.Logo(report, library.Id)"
+                                             Name="@library.Name"
+                                             Size="sm"/>
+                                <button class="library-open"
+                                        type="button"
+                                        @onclick="() => OnOpenLibrary.InvokeAsync(library.Id)">
+                                    @library.Name
+                                </button>
+                                <small>@library.Version</small>
+                            </span>
+                        </th>
+                        @foreach (var capability in capabilities)
+                        {
+                            var value = capability.Results.FirstOrDefault(result =>
+                                result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase));
+                            <td>
+                                @if (value is not null)
+                                {
+                                    <span class="feature-status @StatusClass(value.Status) @ReasonClass(value)"
+                                          title="@Tooltip(capability, library, value)">
+                                        <StatusIcon Kind="@StatusClass(value.Status)"/>
+                                    </span>
+                                    @if (value.Note is { } note)
+                                    {
+                                        <small class="feature-note">@note</small>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="feature-status missing"
+                                          title="@Tooltip(capability, library, null)">
+                                        <StatusIcon Kind="missing"/>
+                                    </span>
+                                }
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+
+@code {
+    private static readonly (string Status, string Label)[] Legend =
+    [
+        ("Supported", "Supported"),
+        ("Unsupported", "Unsupported"),
+        ("NotApplicable", "Not applicable"),
+        ("Failed", "Failed"),
+        ("", "No data")
+    ];
+
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<CategoryReport> Reports { get; set; }
+
+    [Parameter, EditorRequired]
+    public required IReadOnlySet<string> SelectedLibraries { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnOpenLibrary { get; set; }
+
+    private static string Tooltip(
+        FeatureReportEntry capability,
+        MatrixLibrary library,
+        FeatureResult? result)
+    {
+        var head = result is null
+            ? $"{library.Name} · {capability.Name}: no data"
+            : $"{library.Name} · {capability.Name}: {StatusLabel(result.Status)}";
+        if (result?.Reason is { } reason)
+        {
+            head = $"{head}\n{reason}";
+        }
+
+        if (result?.Note is { } note)
+        {
+            head = $"{head}\n{note}";
+        }
+
+        return head;
+    }
+
+    private static string ReasonClass(FeatureResult result) =>
+        result.Reason is null && result.Note is null ? string.Empty : "has-reason";
+
+    private static string StatusClass(string status) => status switch
+    {
+        "Supported" => "supported",
+        "Unsupported" => "unsupported",
+        "NotApplicable" => "not-applicable",
+        "Failed" => "failed",
+        _ => "missing"
+    };
+
+    private static string StatusLabel(string status) =>
+        status == "NotApplicable" ? "N/A" : status;
+}

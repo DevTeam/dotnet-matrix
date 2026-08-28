@@ -443,7 +443,7 @@
                         <EmptyState Title="No libraries selected"
                                     Text="Pick at least one library in the filter panel to compare."/>
                     }
-                    else if (SelectedFeatureCount == 0 && ComparesSelection)
+                    else if (SelectedFeatureCount == 0 && ComparesFeatureSelection)
                     {
                         <EmptyState Title="No scenarios selected"
                                     Text="Pick at least one scenario in the filter panel to compare."/>
@@ -456,6 +456,14 @@
                             <FeaturesView Reports="@ComparedReports"
                                           SelectedLibraries="@_selectedLibraries"
                                           OnOpenLibrary="@OpenLibrary"/>
+                            break;
+                        case "deployment":
+                            @* Unlike Features and Benchmarks, Native AOT compatibility is a
+                               property of the library, not of which scenario is being compared,
+                               so this reads the unrestricted reports rather than ComparedReports. *@
+                            <DeploymentView Reports="@VisibleReports.ToArray()"
+                                            SelectedLibraries="@_selectedLibraries"
+                                            OnOpenLibrary="@OpenLibrary"/>
                             break;
                         case "benchmarks":
                             <BenchmarksView Reports="@ComparedReports"
@@ -506,6 +514,7 @@
     [
         ("overview", "Overview"),
         ("features", "Features"),
+        ("deployment", "Deployment"),
         ("benchmarks", "Benchmarks"),
         ("environment", "Environment"),
         ("evidence", "Evidence")
@@ -616,6 +625,12 @@
     /// what is being compared, so neither selection applies to them.
     /// </summary>
     private bool ComparesSelection => _view != "environment" && _view != "evidence";
+
+    /// <summary>
+    /// Deployment compatibility is a property of the library, not of which scenario a visitor
+    /// happens to be comparing, so an empty scenario selection must not blank this tab out.
+    /// </summary>
+    private bool ComparesFeatureSelection => ComparesSelection && _view != "deployment";
 
     private IEnumerable<(CategoryReport Report, (int Order, string Id, string Name) Feature)>
         CategoryFeatures => VisibleReports
@@ -823,6 +838,7 @@
     /// </summary>
     private int FeatureCount => ComparedReports
         .SelectMany(report => report.Features?.Features ?? [])
+        .Where(feature => !feature.IsDeployment)
         .Select(feature => $"{feature.Order}:{feature.Id}")
         .Distinct(StringComparer.Ordinal)
         .Count();
