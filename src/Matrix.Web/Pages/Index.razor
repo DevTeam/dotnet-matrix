@@ -299,6 +299,48 @@
                     }
                 </section>
 
+                @if (CapabilityCount > 0)
+                {
+                    <section class="filter-section">
+                        <div class="filter-section-head">
+                            <SelectAllToggle Selected="@SelectedCapabilityCount"
+                                             Total="@CapabilityCount"
+                                             OnToggle="ToggleAllCapabilities"/>
+                            <h3>Deployment</h3>
+                            <span class="filter-count">
+                                @SelectedCapabilityCount / @CapabilityCount
+                            </span>
+                        </div>
+                        @foreach (var report in VisibleReports)
+                        {
+                            var capabilities = DeploymentCapabilities(report).ToArray();
+                            if (capabilities.Length == 0)
+                            {
+                                continue;
+                            }
+
+                            <div class="scenario-group">
+                                <div class="group-label">@report.Category.Name</div>
+                                <div class="scenario-filter">
+                                    @foreach (var capability in capabilities)
+                                    {
+                                        var key = CapabilityKey(report.Category.Id, capability.Id);
+                                        <div class="scenario-row">
+                                            <label class="check-row"
+                                                   title="Require Supported or Not applicable for this capability">
+                                                <input type="checkbox"
+                                                       checked="@_selectedCapabilities.Contains(key)"
+                                                       @onchange="eventArgs => ToggleCapability(key, eventArgs)"/>
+                                                <span>@capability.Name</span>
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </section>
+                }
+
                 <section class="filter-section filter-section-wide">
                     <div class="filter-section-head">
                         <SelectAllToggle Selected="@SelectedShownCount"
@@ -318,11 +360,15 @@
                            @onkeydown="ClearSearchOnEscape"/>
                     @if (ShownLibraryCount == 0)
                     {
-                        <p class="muted">Nothing matches “@_librarySearch”.</p>
+                        <p class="muted">
+                            @(_librarySearch.Length == 0
+                                ? "No libraries match the current filters."
+                                : $"Nothing matches “{_librarySearch}”.")
+                        </p>
                     }
                     @foreach (var report in VisibleReports)
                     {
-                        var libraries = Libraries(report).Where(Matches).ToArray();
+                        var libraries = Libraries(report).Where(library => Matches(report, library)).ToArray();
                         if (libraries.Length == 0)
                         {
                             continue;
@@ -594,6 +640,13 @@
     private string? _selectedCategoryId;
     private readonly HashSet<string> _selectedLibraries = new(StringComparer.OrdinalIgnoreCase);
     private readonly HashSet<string> _selectedFeatures = new(StringComparer.OrdinalIgnoreCase);
+    /// <summary>
+    /// Deployment capabilities required of a shown library, unlike <see cref="_selectedFeatures"/>
+    /// and <see cref="_selectedLibraries"/>: those default to everything, because unchecking one
+    /// removes it from the comparison. A capability defaults to unchecked — nothing is required —
+    /// so a first-time visitor never sees the library list narrowed by a filter they never touched.
+    /// </summary>
+    private readonly HashSet<string> _selectedCapabilities = new(StringComparer.OrdinalIgnoreCase);
     private string? _selectedVersion;
     private string _view = "overview";
     private bool _loadingCatalog = true;
@@ -753,7 +806,7 @@
     /// </summary>
     private IEnumerable<string> ShownLibraryKeys => VisibleReports
         .SelectMany(report => Libraries(report)
-            .Where(Matches)
+            .Where(library => Matches(report, library))
             .Select(library => LibraryKey(report.Category.Id, library.Id)));
 
     private int ShownLibraryCount => ShownLibraryKeys.Count();
@@ -766,11 +819,109 @@
             StringComparison.OrdinalIgnoreCase))
         ?.Name ?? "No category";
 
-    private bool Matches(MatrixLibrary library) =>
-        _librarySearch.Length == 0
-        || library.Name.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase)
-        // Reports may omit the package, the hand-coded baseline has none.
-        || library.Package?.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase) == true;
+    private bool Matches(CategoryReport report, MatrixLibrary library) =>
+        (_librarySearch.Length == 0
+         || library.Name.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase)
+         // Reports may omit the package, the hand-coded baseline has none.
+         || library.Package?.Contains(_librarySearch, StringComparison.OrdinalIgnoreCase) == true)
+        && RequiredCapabilities(report).All(capability => IsCompatible(capability, library));
+
+    /// <summary>
+    /// Every deployment capability of the category — Native AOT today, and whatever else the
+    /// matrix probes for later — read straight from the report rather than named here, so a
+    /// second capability shows up as a second checkbox without a code change.
+    /// </summary>
+    private static IEnumerable<FeatureReportEntry> DeploymentCapabilities(CategoryReport report) =>
+        (report.Features?.Features ?? [])
+            .Where(feature => feature.IsDeployment)
+            .OrderBy(feature => feature.Order);
+
+    private IEnumerable<FeatureReportEntry> RequiredCapabilities(CategoryReport report) =>
+        DeploymentCapabilities(report)
+            .Where(capability => _selectedCapabilities.Contains(
+                CapabilityKey(report.Category.Id, capability.Id)));
+
+    /// <summary>
+    /// True when this capability reports the library as Supported or Not applicable. A
+    /// capability with no result for the library never disqualifies it — a probe that never ran
+    /// for this library is not evidence it fails.
+    /// </summary>
+    private static bool IsCompatible(FeatureReportEntry capability, MatrixLibrary library) =>
+        capability.Results
+            .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
+            .All(result => result.Status is "Supported" or "NotApplicable");
+
+    private IEnumerable<(string CategoryId, FeatureReportEntry Capability)> CategoryCapabilities =>
+        VisibleReports.SelectMany(report => DeploymentCapabilities(report)
+            .Select(capability => (report.Category.Id, capability)));
+
+    private int CapabilityCount => CategoryCapabilities.Count();
+
+    private int SelectedCapabilityCount => CategoryCapabilities
+        .Count(entry => _selectedCapabilities.Contains(CapabilityKey(entry.CategoryId, entry.Capability.Id)));
+
+    private void ToggleAllCapabilities()
+    {
+        var keys = CategoryCapabilities
+            .Select(entry => CapabilityKey(entry.CategoryId, entry.Capability.Id))
+            .ToArray();
+        if (keys.Length > 0 && keys.All(_selectedCapabilities.Contains))
+        {
+            _selectedCapabilities.ExceptWith(keys);
+        }
+        else
+        {
+            _selectedCapabilities.UnionWith(keys);
+        }
+
+        ApplyCapabilityRequirement();
+    }
+
+    private void ToggleCapability(string key, ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value is true)
+        {
+            _selectedCapabilities.Add(key);
+        }
+        else
+        {
+            _selectedCapabilities.Remove(key);
+        }
+
+        ApplyCapabilityRequirement();
+    }
+
+    /// <summary>
+    /// Deployment compatibility is a requirement on which libraries take part in the
+    /// comparison, not merely on which rows the Libraries list shows — so a change here updates
+    /// <see cref="_selectedLibraries"/> directly, the same way checking a library there changes
+    /// what Overview, Benchmarks and Deployment show. The name search is deliberately left out
+    /// of the requirement checked here: it stays what it has always been, a way to find a row in
+    /// a long list, not a second thing that can silently narrow the comparison.
+    /// </summary>
+    private void ApplyCapabilityRequirement()
+    {
+        foreach (var report in VisibleReports)
+        {
+            foreach (var library in Libraries(report))
+            {
+                var key = LibraryKey(report.Category.Id, library.Id);
+                if (RequiredCapabilities(report).All(capability => IsCompatible(capability, library)))
+                {
+                    _selectedLibraries.Add(key);
+                }
+                else
+                {
+                    _selectedLibraries.Remove(key);
+                }
+            }
+        }
+
+        RememberSelection();
+    }
+
+    private static string CapabilityKey(string categoryId, string capabilityId) =>
+        $"{categoryId}{capabilityId}";
 
     private void ToggleShownLibraries()
     {
