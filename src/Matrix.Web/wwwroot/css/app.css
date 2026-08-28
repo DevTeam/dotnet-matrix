@@ -1332,16 +1332,18 @@ select {
     margin-bottom: 22px;
 }
 
-/* Only sideways: the matrix is far wider than any display once every library
-   is selected, but its height is the page's to scroll, not a box within it.
-   `overflow-y: visible` would look right but the spec forces a `visible` paired
-   with a non-`visible` overflow-x to compute as `auto`, turning this into a
-   vertical scroll container that traps the wheel instead of scrolling the
-   page; `clip` sidesteps that coercion, and `overscroll-behavior-x` alone
-   keeps the containment to the axis that actually scrolls. */
+/* The vertical scroll has to happen inside this box rather than on the page.
+   `overflow-x: auto` already makes it the nearest scroll container, so a sticky
+   header inside it had no vertical range to travel and the column of library
+   names scrolled off while the body stayed: exactly what the sticky header was
+   added to prevent. Bounding the box to what is left of the viewport under the
+   top bar gives the header that range; the first column keeps sticking on the
+   axis it always did. Chaining is contained on the horizontal axis only, so the
+   wheel still hands the page back once the table is scrolled to its end. */
 .table-scroll {
-    overflow-x: auto;
-    overflow-y: clip;
+    max-height: calc(100vh - var(--topbar-height) - 32px);
+    max-height: calc(100dvh - var(--topbar-height) - 32px);
+    overflow: auto;
     overscroll-behavior-x: contain;
     scrollbar-color: var(--line) var(--surface-2);
     scrollbar-width: thin;
