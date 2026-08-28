@@ -1,7 +1,7 @@
 {
   "SchemaVersion": 1,
   "ModuleId": "json-serialization",
-  "GeneratedAtUtc": "2026-08-27T14:04:50.0591682+00:00",
+  "GeneratedAtUtc": "2026-08-28T09:39:11.8159685+00:00",
   "Framework": ".NET 10.0.11",
   "OperatingSystem": "Ubuntu 24.04.4 LTS",
   "Libraries": [
@@ -10,19 +10,22 @@
       "Name": "Newtonsoft.Json",
       "Package": "Newtonsoft.Json",
       "Version": "13.0.4",
-      "Baseline": false
+      "Baseline": false,
+      "Companions": []
     },
     {
       "Id": "ServiceStack.Text",
       "Name": "ServiceStack.Text",
       "Package": "ServiceStack.Text",
       "Version": "10.1.4",
-      "Baseline": false
+      "Baseline": false,
+      "Companions": []
     },
     {
       "Id": "System.Text.Json",
       "Name": "System.Text.Json",
-      "Baseline": true
+      "Baseline": true,
+      "Companions": []
     }
   ],
   "Features": [
@@ -34,19 +37,49 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 57.4084
+          "DurationMilliseconds": 56.3487
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 43.2895
+          "DurationMilliseconds": 39.9636
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 19.4215
+          "DurationMilliseconds": 18.498
         }
-      ]
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 1,
+      "Id": "NativeAot",
+      "Name": "Native AOT",
+      "Results": [
+        {
+          "LibraryId": "Newtonsoft.Json",
+          "Status": "Failed",
+          "Reason": "Native AOT probe failed: FAIL JsonSerializationException: Unable to find a constructor to use for type Matrix.JsonSerialization.Aot.AotProbe\u002BProbeModel. A class should either have a default constructor, one constructor with arguments or a constructor marked with the JsonConstructor attribute. Path \u0027\u0027, line 1, position 2.",
+          "DurationMilliseconds": 0,
+          "Note": "10 trim warnings (probe 0f4d08e0, linux-x64)"
+        },
+        {
+          "LibraryId": "ServiceStack.Text",
+          "Status": "Failed",
+          "Reason": "Native AOT probe failed: FAIL delivered 0, expected 1",
+          "DurationMilliseconds": 0,
+          "Note": "0 trim warnings (probe 0444ce35, linux-x64)"
+        },
+        {
+          "LibraryId": "System.Text.Json",
+          "Status": "Failed",
+          "Reason": "Native AOT probe failed: FAIL InvalidOperationException: Reflection-based serialization has been disabled for this application. Either use the source generator APIs or explicitly configure the \u0027JsonSerializerOptions.TypeInfoResolver\u0027 property.",
+          "DurationMilliseconds": 0,
+          "Note": "0 trim warnings (probe ed01f22a, linux-x64)"
+        }
+      ],
+      "IsDeployment": true
     },
     {
       "Order": 2,
@@ -56,19 +89,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 16.9615
+          "DurationMilliseconds": 16.7196
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 21.1514
+          "DurationMilliseconds": 18.5714
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 4.4972
+          "DurationMilliseconds": 4.3199
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 3,
@@ -78,19 +112,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 2.7261
+          "DurationMilliseconds": 2.5658
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 9.6492
+          "DurationMilliseconds": 9.473
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.7188
+          "DurationMilliseconds": 1.5395
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 4,
@@ -100,19 +135,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.082
+          "DurationMilliseconds": 1.0902
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 1.6192
+          "DurationMilliseconds": 1.3994
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.1917
+          "DurationMilliseconds": 1.1643
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 5,
@@ -122,19 +158,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 2.8885
+          "DurationMilliseconds": 3.0021
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 1.8895
+          "DurationMilliseconds": 1.7406
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 2.9349
+          "DurationMilliseconds": 2.9234
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 6,
@@ -144,19 +181,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 2.4468
+          "DurationMilliseconds": 2.296
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 2.8379
+          "DurationMilliseconds": 2.8493
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 0.3377
+          "DurationMilliseconds": 0.327
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 7,
@@ -166,19 +204,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 11.0756
+          "DurationMilliseconds": 10.3476
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 3.4581
+          "DurationMilliseconds": 3.1698
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.663
+          "DurationMilliseconds": 1.5968
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 8,
@@ -188,19 +227,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.7799
+          "DurationMilliseconds": 1.7086
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 6.5026
+          "DurationMilliseconds": 6.4225
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 1.8458
+          "DurationMilliseconds": 1.8209
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 9,
@@ -210,19 +250,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 4.5214
+          "DurationMilliseconds": 4.1536
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 5.3854
+          "DurationMilliseconds": 5.0342
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 11.4724
+          "DurationMilliseconds": 11.3506
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 10,
@@ -232,19 +273,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 4.5724
+          "DurationMilliseconds": 5.0374
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 6.3215
+          "DurationMilliseconds": 5.9861
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 5.4926
+          "DurationMilliseconds": 5.2105
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 11,
@@ -254,7 +296,7 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 11.7679
+          "DurationMilliseconds": 12.002
         },
         {
           "LibraryId": "ServiceStack.Text",
@@ -265,9 +307,10 @@
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 6.6776
+          "DurationMilliseconds": 6.5556
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 12,
@@ -277,19 +320,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 0.9113
+          "DurationMilliseconds": 0.9635
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 2.0311
+          "DurationMilliseconds": 2.0024
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 0.4999
+          "DurationMilliseconds": 0.4965
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 13,
@@ -311,9 +355,10 @@
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 4.1335
+          "DurationMilliseconds": 3.8822
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 14,
@@ -323,19 +368,20 @@
         {
           "LibraryId": "Newtonsoft.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 0.6738
+          "DurationMilliseconds": 0.6695
         },
         {
           "LibraryId": "ServiceStack.Text",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1317
+          "DurationMilliseconds": 0.1184
         },
         {
           "LibraryId": "System.Text.Json",
           "Status": "Supported",
-          "DurationMilliseconds": 0.9056
+          "DurationMilliseconds": 0.88
         }
-      ]
+      ],
+      "IsDeployment": false
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "SchemaVersion": 1,
   "ModuleId": "object-mapping",
-  "GeneratedAtUtc": "2026-08-27T14:04:50.2809664+00:00",
+  "GeneratedAtUtc": "2026-08-28T09:39:19.5139529+00:00",
   "Framework": ".NET 10.0.11",
   "OperatingSystem": "Ubuntu 24.04.4 LTS",
   "Libraries": [
@@ -10,26 +10,35 @@
       "Name": "AutoMapper",
       "Package": "AutoMapper",
       "Version": "16.2.0",
-      "Baseline": false
+      "Baseline": false,
+      "Companions": [
+        {
+          "Id": "Microsoft.Extensions.Logging.Abstractions",
+          "Version": "10.0.11"
+        }
+      ]
     },
     {
       "Id": "HandCoded",
       "Name": "Hand-coded",
-      "Baseline": true
+      "Baseline": true,
+      "Companions": []
     },
     {
       "Id": "Mapperly",
       "Name": "Mapperly",
       "Package": "Riok.Mapperly",
       "Version": "4.3.1",
-      "Baseline": false
+      "Baseline": false,
+      "Companions": []
     },
     {
       "Id": "Mapster",
       "Name": "Mapster",
       "Package": "Mapster",
       "Version": "10.0.12",
-      "Baseline": false
+      "Baseline": false,
+      "Companions": []
     }
   ],
   "Features": [
@@ -41,24 +50,59 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 143.0095
+          "DurationMilliseconds": 157.3874
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.3459
+          "DurationMilliseconds": 0.3028
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.2591
+          "DurationMilliseconds": 0.2223
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 109.1209
+          "DurationMilliseconds": 101.9836
         }
-      ]
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 1,
+      "Id": "NativeAot",
+      "Name": "Native AOT",
+      "Results": [
+        {
+          "LibraryId": "AutoMapper",
+          "Status": "Failed",
+          "Reason": "Native AOT probe failed: FAIL TypeInitializationException: A type initializer threw an exception. To determine which type, inspect the InnerException\u0027s StackTrace property.",
+          "DurationMilliseconds": 0,
+          "Note": "95 trim warnings (probe 28dd2740, linux-x64)"
+        },
+        {
+          "LibraryId": "HandCoded",
+          "Status": "NotApplicable",
+          "Reason": "No Native AOT probe exists for HandCoded.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "Mapperly",
+          "Status": "Supported",
+          "DurationMilliseconds": 0,
+          "Note": "0 trim warnings (probe c8da6197, linux-x64)"
+        },
+        {
+          "LibraryId": "Mapster",
+          "Status": "Failed",
+          "Reason": "Native AOT probe failed: FAIL MissingMethodException: No parameterless constructor defined for type \u0027Mapster.NameMatchingStrategy\u0027.",
+          "DurationMilliseconds": 0,
+          "Note": "177 trim warnings (probe f5118460, linux-x64)"
+        }
+      ],
+      "IsDeployment": true
     },
     {
       "Order": 2,
@@ -68,24 +112,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 17.2646
+          "DurationMilliseconds": 16.6358
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.441
+          "DurationMilliseconds": 0.3815
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.2843
+          "DurationMilliseconds": 0.225
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 33.4016
+          "DurationMilliseconds": 30.9629
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 3,
@@ -95,24 +140,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 19.4483
+          "DurationMilliseconds": 18.726
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.4873
+          "DurationMilliseconds": 0.4894
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.4746
+          "DurationMilliseconds": 0.4424
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 24.4914
+          "DurationMilliseconds": 22.8163
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 4,
@@ -122,24 +168,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 15.2355
+          "DurationMilliseconds": 15.5135
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.298
+          "DurationMilliseconds": 0.2473
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1961
+          "DurationMilliseconds": 0.1775
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 23.3072
+          "DurationMilliseconds": 21.5678
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 5,
@@ -149,24 +196,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 14.9283
+          "DurationMilliseconds": 14.7169
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1921
+          "DurationMilliseconds": 0.2486
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1894
+          "DurationMilliseconds": 0.2649
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 27.098
+          "DurationMilliseconds": 21.1297
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 6,
@@ -176,24 +224,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 16.1533
+          "DurationMilliseconds": 16.2551
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.2481
+          "DurationMilliseconds": 0.2544
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.239
+          "DurationMilliseconds": 0.3885
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 23.5816
+          "DurationMilliseconds": 22.4374
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 7,
@@ -203,24 +252,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 16.4224
+          "DurationMilliseconds": 15.807
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.3476
+          "DurationMilliseconds": 0.3373
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.2519
+          "DurationMilliseconds": 0.2958
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 34.0299
+          "DurationMilliseconds": 32.4896
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 8,
@@ -230,24 +280,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 17.3942
+          "DurationMilliseconds": 17.1356
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.4113
+          "DurationMilliseconds": 0.4159
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.5287
+          "DurationMilliseconds": 0.5847
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 27.4835
+          "DurationMilliseconds": 25.8232
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 9,
@@ -257,24 +308,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 43.963
+          "DurationMilliseconds": 43.241
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1051
+          "DurationMilliseconds": 0.0943
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1261
+          "DurationMilliseconds": 0.1268
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 65.15
+          "DurationMilliseconds": 64.6908
         }
-      ]
+      ],
+      "IsDeployment": false
     },
     {
       "Order": 10,
@@ -284,24 +336,25 @@
         {
           "LibraryId": "AutoMapper",
           "Status": "Supported",
-          "DurationMilliseconds": 43.037
+          "DurationMilliseconds": 42.5905
         },
         {
           "LibraryId": "HandCoded",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1577
+          "DurationMilliseconds": 0.116
         },
         {
           "LibraryId": "Mapperly",
           "Status": "Supported",
-          "DurationMilliseconds": 0.1726
+          "DurationMilliseconds": 0.1758
         },
         {
           "LibraryId": "Mapster",
           "Status": "Supported",
-          "DurationMilliseconds": 69.4416
+          "DurationMilliseconds": 65.8779
         }
-      ]
+      ],
+      "IsDeployment": false
     }
   ]
 }
