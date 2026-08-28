@@ -12,7 +12,14 @@
         continue;
     }
 
+    // A deployment capability is validated rather than measured and never reaches a benchmark
+    // report, so it is shown apart from the scenario grid instead of posing as the next scenario.
     var features = report.Features!.Features
+        .Where(feature => feature.Order < MatrixFeatureOrders.Deployment)
+        .OrderBy(feature => feature.Order)
+        .ToArray();
+    var deployment = report.Features!.Features
+        .Where(feature => feature.Order >= MatrixFeatureOrders.Deployment)
         .OrderBy(feature => feature.Order)
         .ToArray();
     <section class="panel report-section">
@@ -155,6 +162,76 @@
             </table>
         </div>
     </section>
+    @if (deployment.Length > 0)
+    {
+        <section class="panel report-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">@report.Category.Name</p>
+                    <h2>Deployment compatibility</h2>
+                </div>
+                <span class="section-meta">Validated, not measured &middot; never rated</span>
+            </div>
+            <div class="table-scroll">
+                <table class="feature-table">
+                    <thead>
+                    <tr>
+                        <th>Capability</th>
+                        @foreach (var library in libraries)
+                        {
+                            <th title="@($"{library.Name} {library.Version}")">
+                                <span class="column-library">
+                                    <LibraryLogo Source="@View.Logo(report, library.Id)"
+                                                 Name="@library.Name"
+                                                 Size="sm"/>
+                                    <button class="library-open column-library-name"
+                                            type="button"
+                                            @onclick="() => OnOpenLibrary.InvokeAsync(library.Id)">
+                                        @library.Name
+                                    </button>
+                                    <small>@library.Version</small>
+                                </span>
+                            </th>
+                        }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var feature in deployment)
+                    {
+                        <tr>
+                            <th>@feature.Name</th>
+                            @foreach (var library in libraries)
+                            {
+                                var value = feature.Results.FirstOrDefault(result =>
+                                    result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase));
+                                <td>
+                                    @if (value is not null)
+                                    {
+                                        <span class="feature-status @StatusClass(value.Status) @ReasonClass(value)"
+                                              title="@Tooltip(feature, library, value, null)">
+                                            <StatusIcon Kind="@StatusClass(value.Status)"/>
+                                        </span>
+                                        @if (value.Note is { } note)
+                                        {
+                                            <small class="feature-note">@note</small>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="feature-status missing"
+                                              title="@Tooltip(feature, library, null, null)">
+                                            <StatusIcon Kind="missing"/>
+                                        </span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    }
 }
 
 @code {
@@ -200,11 +277,16 @@
             head = $"{head}\n{reason}";
         }
 
+        if (result?.Note is { } note)
+        {
+            head = $"{head}\n{note}";
+        }
+
         return medal is null ? head : $"{head}\n{Ordinal(medal)} here on time and memory combined";
     }
 
     private static string ReasonClass(FeatureResult result) =>
-        result.Reason is null ? string.Empty : "has-reason";
+        result.Reason is null && result.Note is null ? string.Empty : "has-reason";
 
     private static string StatusClass(string status) => status switch
     {

@@ -5,6 +5,7 @@ public static class MatrixNames
     public const string RunConfigurationsCommand = "generate-run-configurations";
     public const string MetadataCommand = "generate-metadata";
     public const string RenderReportsCommand = "render-reports";
+    public const string AotProbesCommand = "aot-probes";
     public const string ReadmeCommand = "readme";
     public const string PrepareCommitCommand = "prepare-commit";
     public const string FinalizeCommitCommand = "finalize-commit";

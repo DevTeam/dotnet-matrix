@@ -4,6 +4,7 @@ namespace Build.Targets;
 
 internal sealed class PrepareCommitTarget(
     IMatrixTarget matrixTarget,
+    IAotProbesTarget aotProbesTarget,
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebManifestTarget webManifestTarget,
     IReadmeTarget readmeTarget) : IPrepareCommitTarget
@@ -35,6 +36,18 @@ internal sealed class PrepareCommitTarget(
         else
         {
             Info("Using the reports already present in 'reports'.");
+        }
+
+        // Feature validation rewrites features.json from the scenarios it discovers, which drops
+        // any entry it did not produce. The Native AOT feature therefore has to be probed again
+        // after every validation pass, and before the artifacts below read the reports.
+        if (runMatrix)
+        {
+            var probes = await aotProbesTarget.RunAsync(modules, cancellationToken);
+            if (probes != 0)
+            {
+                return probes;
+            }
         }
 
         var result = runConfigurationsTarget.Run(modules);

@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!--
+      One Native AOT probe host, published once per library.
+
+      The library under probe is selected by MatrixAotLibrary, which names both the probe source
+      file and the package to reference. Publishing one library at a time is what makes a result
+      attributable: a publish failure, a run failure and a trim warning all belong to exactly one
+      library, because nothing else is compiled in.
+
+      MatrixAotProbeVersion is part of every published result. Trim warning counts depend on what
+      the host compiles, so a count is only reproducible when the probe that produced it is
+      identified. Bump it whenever a probe's source or this file changes in a way that could move
+      a warning count.
+    -->
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Matrix.Logging.Aot</RootNamespace>
+        <MatrixAotProbeVersion>1</MatrixAotProbeVersion>
+
+        <!-- Native AOT is the point of this project. -->
+        <PublishAot>true</PublishAot>
+        <InvariantGlobalization>true</InvariantGlobalization>
+
+        <!-- Report every trim warning instead of collapsing them into a single IL2104 per assembly. -->
+        <TrimmerSingleWarn>false</TrimmerSingleWarn>
+
+        <!-- A trim warning is data this project publishes, not a build failure. -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+        <!-- Not a library of the matrix: never discovered as a module, never packed. -->
+        <IsPackable>false</IsPackable>
+        <MatrixModule>false</MatrixModule>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(MatrixAotLibrary)' == ''">
+        <MatrixAotLibrary>Log4Net</MatrixAotLibrary>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AssemblyName>Matrix.Logging.Aot.$(MatrixAotLibrary)</AssemblyName>
+        <DefineConstants>$(DefineConstants);MATRIX_AOT_PROBE</DefineConstants>
+    </PropertyGroup>
+
+    <!--
+      Exactly one probe compiles. The package id and version are supplied by the build target from
+      the module csproj, so the probe can never drift from the version the matrix measures.
+    -->
+    <ItemGroup>
+        <Compile Remove="Probes/**/*.cs"/>
+        <Compile Include="Probes/$(MatrixAotLibrary).cs"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MatrixAotPackage)' != ''">
+        <PackageReference Include="$(MatrixAotPackage)" Version="$(MatrixAotPackageVersion)"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MatrixAotCompanionPackage)' != ''">
+        <PackageReference Include="$(MatrixAotCompanionPackage)" Version="$(MatrixAotCompanionPackageVersion)"/>
+    </ItemGroup>
+
+</Project>

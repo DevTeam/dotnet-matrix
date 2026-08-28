@@ -22,7 +22,8 @@ internal sealed class BuildApplication(
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebTarget webTarget,
     IReproduceTarget reproduceTarget,
-    IBuildSolutionTarget buildSolutionTarget)
+    IBuildSolutionTarget buildSolutionTarget,
+    IAotProbesTarget aotProbesTarget)
 {
     public Task<int> RunAsync()
     {
@@ -38,6 +39,7 @@ internal sealed class BuildApplication(
         RegisterRunConfigurations(root, modules);
         RegisterMetadata(root, modules);
         RegisterReportCharts(root, modules, reportChartsTarget);
+        RegisterAotProbes(root, modules);
         RegisterReadme(root, modules, readmeTarget);
         RegisterPrepareCommit(root, modules, prepareCommitTarget);
         RegisterCiMatrix(root, modules);
@@ -66,6 +68,17 @@ internal sealed class BuildApplication(
             MatrixNames.MetadataCommand,
             "Generate library presentation metadata from matrix projects");
         command.SetAction(_ => metadataTarget.Run(modules));
+        root.Subcommands.Add(command);
+    }
+
+    private void RegisterAotProbes(
+        RootCommand root,
+        IReadOnlyList<DiscoveredMatrixModule> modules)
+    {
+        var command = new Command(
+            MatrixNames.AotProbesCommand,
+            "Probe Native AOT compatibility and record it in the feature reports");
+        command.SetAction(_ => aotProbesTarget.RunAsync(modules, cancellationToken));
         root.Subcommands.Add(command);
     }
 
