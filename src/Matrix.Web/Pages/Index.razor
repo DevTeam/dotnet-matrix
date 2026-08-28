@@ -1345,6 +1345,13 @@
                 _selectedLibraries.Add(LibraryKey(categoryId, library.Id));
             }
 
+            // Reselecting everything would otherwise silently drop a deployment
+            // requirement checked earlier for this category: the checkbox stays
+            // checked, because _selectedCapabilities was never touched, but every
+            // library it had narrowed out would quietly reappear. Re-narrowing here
+            // is what a category switch away and back, or a version change, needs
+            // to leave the checkbox and the comparison agreeing again.
+            ApplyCapabilityRequirement();
             return;
         }
 
