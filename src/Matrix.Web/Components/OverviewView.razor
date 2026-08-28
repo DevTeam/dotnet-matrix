@@ -57,6 +57,11 @@
                 .SelectMany(feature => feature.Results)
                 .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
                 .ToArray();
+            var deploymentResults = (report.Features?.Features ?? [])
+                .Where(feature => feature.IsDeployment)
+                .SelectMany(feature => feature.Results.Select(result => (Capability: feature, Result: result)))
+                .Where(entry => entry.Result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
             <article class="library-card">
                 <div class="card-heading">
                     <span class="category-chip">@report.Category.Name</span>
@@ -65,6 +70,7 @@
                                      Rated="@(metadata?.Rated ?? false)"
                                      Standing="@Scoring.Standing(cardMedals, library.Id)"
                                      Place="@Scoring.Place(cardMedals, library.Id)"/>
+                        <DeploymentBadge Results="@deploymentResults"/>
                         @if (LibraryLink is { } link)
                         {
                             <CopyLinkButton Url="@link(library.Id)"/>

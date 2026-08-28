@@ -1172,6 +1172,42 @@ select {
     background: var(--danger);
 }
 
+/* Sized to sit beside .rating-badge and .status-dot in the same heading row, unlike
+   .feature-status which carries its own 28px background box for the table grids. */
+.deployment-badge {
+    display: grid;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    place-items: center;
+    cursor: help;
+}
+
+.deployment-badge .status-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.deployment-badge.supported {
+    color: rgba(183, 243, 74, .85);
+}
+
+.deployment-badge.unsupported {
+    color: #aab3c1;
+}
+
+.deployment-badge.not-applicable {
+    color: rgba(104, 216, 239, .8);
+}
+
+.deployment-badge.failed {
+    color: var(--danger);
+}
+
+.deployment-badge.missing {
+    color: #4a515f;
+}
+
 .library-card h2 {
     font-size: 25px;
     letter-spacing: -.04em;

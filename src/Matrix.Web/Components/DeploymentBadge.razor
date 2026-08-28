@@ -1,0 +1,59 @@
+@* A compact glyph beside the rating badge: does this library survive the category's deployment
+   probes (Native AOT today), at a glance, without opening the Deployment tab. Always rendered
+   when the category has a deployment capability at all, so silence never has to be read as
+   "checked and fine" — a card with nothing here simply belongs to a category with no probe. When
+   a category ever grows a second deployment capability, the glyph shows the most concerning of
+   the two and the tooltip lists both by name. *@
+@if (Worst is { } worst)
+{
+    <span class="deployment-badge @StatusClass(worst.Result.Status)" title="@Title">
+        <StatusIcon Kind="@StatusClass(worst.Result.Status)"/>
+    </span>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<(FeatureReportEntry Capability, FeatureResult Result)> Results { get; set; }
+
+    /// <summary>
+    /// Lower is more concerning. A library that fails one deployment capability out of several
+    /// should never read as fine because the others passed.
+    /// </summary>
+    private static int Severity(string status) => status switch
+    {
+        "Failed" => 0,
+        "Unsupported" => 1,
+        "NotApplicable" => 2,
+        _ => 3
+    };
+
+    private (FeatureReportEntry Capability, FeatureResult Result)? Worst =>
+        Results.Count == 0
+            ? null
+            : Results.MinBy(entry => Severity(entry.Result.Status));
+
+    private string Title => string.Join(
+        "\n\n",
+        Results.Select(entry =>
+        {
+            var head = $"{entry.Capability.Name}: {StatusLabel(entry.Result.Status)}";
+            if (entry.Result.Reason is { } reason)
+            {
+                head = $"{head}\n{reason}";
+            }
+
+            return entry.Result.Note is { } note ? $"{head}\n{note}" : head;
+        }));
+
+    private static string StatusLabel(string status) =>
+        status == "NotApplicable" ? "N/A" : status;
+
+    private static string StatusClass(string status) => status switch
+    {
+        "Supported" => "supported",
+        "Unsupported" => "unsupported",
+        "NotApplicable" => "not-applicable",
+        "Failed" => "failed",
+        _ => "missing"
+    };
+}
