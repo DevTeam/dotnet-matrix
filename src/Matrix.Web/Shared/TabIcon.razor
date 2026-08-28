@@ -1,0 +1,55 @@
+@* One glyph per report view, so a tab is recognisable before its label is read.
+   Drawn on the same 16x16 stroke grid as the other icons in the application. *@
+<svg class="tab-icon"
+     viewBox="0 0 16 16"
+     fill="none"
+     stroke="currentColor"
+     stroke-width="1.5"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     aria-hidden="true"
+     focusable="false">
+    @switch (View)
+    {
+        case "overview":
+            @* A dashboard of panes: the view that shows every library at once. *@
+            <rect x="2.2" y="2.2" width="5" height="5" rx="1"/>
+            <rect x="8.8" y="2.2" width="5" height="5" rx="1"/>
+            <rect x="2.2" y="8.8" width="5" height="5" rx="1"/>
+            <rect x="8.8" y="8.8" width="5" height="5" rx="1"/>
+            break;
+        case "features":
+            @* A checklist: what each library supports, line by line. *@
+            <path d="M2.3 4.3l1.4 1.4 2.3-2.6"/>
+            <path d="M2.3 11.3l1.4 1.4 2.3-2.6"/>
+            <path d="M8.4 4.4h5.3M8.4 10.9h5.3"/>
+            break;
+        case "deployment":
+            @* A package: where the library can be shipped. *@
+            <path d="M8 2.1l5.4 2.8v6.2L8 13.9 2.6 11.1V4.9z"/>
+            <path d="M2.6 4.9L8 7.7l5.4-2.8M8 7.7v6.2"/>
+            break;
+        case "benchmarks":
+            @* Columns of a chart: measured time and allocations. *@
+            <path d="M2.4 13.6h11.2"/>
+            <path d="M4.6 13.6V9.2M8 13.6V4.6M11.4 13.6V7"/>
+            break;
+        case "environment":
+            @* The machine the numbers were produced on. *@
+            <rect x="2.2" y="3" width="11.6" height="7.6" rx="1.2"/>
+            <path d="M6 13.4h4M8 10.6v2.8"/>
+            break;
+        case "evidence":
+            @* A verified document: the raw artefacts behind every result. *@
+            <path d="M12.6 7.6V3.4a1.2 1.2 0 0 0-1.2-1.2H4.6a1.2 1.2 0 0 0-1.2 1.2v9.2a1.2 1.2 0 0 0 1.2 1.2h3"/>
+            <path d="M5.9 5.2h4.2M5.9 7.8h2.6"/>
+            <path d="M9.4 11.4l1.5 1.5 2.7-3"/>
+            break;
+    }
+</svg>
+
+@code {
+    /// <summary>The view identifier the tab selects.</summary>
+    [Parameter, EditorRequired]
+    public required string View { get; set; }
+}

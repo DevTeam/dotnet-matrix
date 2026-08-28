@@ -632,8 +632,12 @@ select {
    summary; flex-basis 0 spreads that space evenly instead. The automatic minimum
    size still applies, so a label is never squeezed narrower than its text. */
 .tab {
+    display: inline-flex;
     min-height: 40px;
     flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     /* Side padding only decides the smallest a tab may become, since the width comes
        from the share. Keeping it modest widens the range where the shares are all
        reachable and the boxes come out exactly equal. */
@@ -648,6 +652,14 @@ select {
 
 .tab:hover {
     color: var(--text);
+}
+
+/* The glyph never shrinks with the share the tab was given: a squeezed icon reads
+   as a different shape, whereas the label can wrap into its own line. */
+.tab-icon {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
 }
 
 .tab.active {
@@ -3423,7 +3435,8 @@ tbody th {
 
     .tab {
         min-height: 36px;
-        padding: 0 12px;
+        padding: 0 10px;
+        gap: 6px;
     }
 
     /* Out of the strip and onto its own line, where it stops stealing 167 px. */

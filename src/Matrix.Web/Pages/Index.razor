@@ -435,7 +435,8 @@
                     @foreach (var view in Views)
                     {
                         <button class="@TabClass(view.Id)" @onclick="() => _view = view.Id">
-                            @view.Name
+                            <TabIcon View="@view.Id"/>
+                            <span>@view.Name</span>
                         </button>
                     }
                     <div class="tabs-summary" aria-label="Report summary">
