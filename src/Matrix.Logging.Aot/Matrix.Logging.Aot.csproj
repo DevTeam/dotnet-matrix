@@ -8,10 +8,9 @@
       attributable: a publish failure, a run failure and a trim warning all belong to exactly one
       library, because nothing else is compiled in.
 
-      MatrixAotProbeVersion is part of every published result. Trim warning counts depend on what
-      the host compiles, so a count is only reproducible when the probe that produced it is
-      identified. Bump it whenever a probe's source or this file changes in a way that could move
-      a warning count.
+      The probe version recorded beside every result is a hash of this project's Probes/<name>.cs,
+      Program.cs and AotProbeHost.cs, computed by AotProbesTarget itself rather than kept as a
+      property here - it can never go stale and never needs remembering to bump.
     -->
 
     <PropertyGroup>
@@ -20,7 +19,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>Matrix.Logging.Aot</RootNamespace>
-        <MatrixAotProbeVersion>1</MatrixAotProbeVersion>
 
         <!-- Native AOT is the point of this project. -->
         <PublishAot>true</PublishAot>
@@ -37,8 +35,14 @@
         <MatrixModule>false</MatrixModule>
     </PropertyGroup>
 
+    <!--
+      Only used for a design-time build (opening this project directly, or a bare "dotnet build"
+      of it) - AotProbesTarget always passes MatrixAotLibrary explicitly. Must name a file that
+      actually exists in Probes/, exactly as it is cased on disk: this project stays out of
+      dotnet-matrix.slnx specifically so a mismatch here never breaks an automated build.
+    -->
     <PropertyGroup Condition="'$(MatrixAotLibrary)' == ''">
-        <MatrixAotLibrary>Log4Net</MatrixAotLibrary>
+        <MatrixAotLibrary>log4net</MatrixAotLibrary>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -59,8 +63,26 @@
         <PackageReference Include="$(MatrixAotPackage)" Version="$(MatrixAotPackageVersion)"/>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(MatrixAotCompanionPackage)' != ''">
-        <PackageReference Include="$(MatrixAotCompanionPackage)" Version="$(MatrixAotCompanionPackageVersion)"/>
-    </ItemGroup>
+    <!--
+      A library that cannot be published from its primary package alone (its module csproj tags
+      the extra package with MatrixAotCompanion) arrives here as "id|version" pairs, one per
+      package, joined with "#" - AotProbesTarget builds this from MatrixLibrary.Companions. "#" and
+      not ";": the dotnet/MSBuild command line splits a -p: switch on both ";" and "," before the
+      value ever reaches the project, so only "#" survives intact. Added inside a target,
+      immediately before NuGet collects PackageReference items for restore: item batching that
+      creates a new item type from another item type's metadata is the well-supported form inside a
+      target, unlike the same pattern in a static, target-less ItemGroup.
+    -->
+    <Target Name="AddMatrixAotCompanions" BeforeTargets="CollectPackageReferences"
+            Condition="'$(MatrixAotCompanions)' != ''">
+        <ItemGroup>
+            <_MatrixAotCompanion Include="$(MatrixAotCompanions.Split('#'))"/>
+        </ItemGroup>
+        <ItemGroup>
+            <PackageReference
+                Include="$([System.String]::Copy('%(_MatrixAotCompanion.Identity)').Split('|')[0])"
+                Version="$([System.String]::Copy('%(_MatrixAotCompanion.Identity)').Split('|')[1])"/>
+        </ItemGroup>
+    </Target>
 
 </Project>

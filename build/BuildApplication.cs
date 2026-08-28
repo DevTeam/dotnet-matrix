@@ -75,10 +75,24 @@ internal sealed class BuildApplication(
         RootCommand root,
         IReadOnlyList<DiscoveredMatrixModule> modules)
     {
+        var category = new Option<string?>("--category")
+        {
+            Description = "Exact case-insensitive matrix category id. Empty = all categories."
+        };
+        var libraries = new Option<string?>("--libraries")
+        {
+            Description = "Case-insensitive, comma-separated library id filter. Empty = every library."
+        };
         var command = new Command(
             MatrixNames.AotProbesCommand,
             "Probe Native AOT compatibility and record it in the feature reports");
-        command.SetAction(_ => aotProbesTarget.RunAsync(modules, cancellationToken));
+        command.Options.Add(category);
+        command.Options.Add(libraries);
+        command.SetAction(parseResult => aotProbesTarget.RunAsync(
+            modules,
+            cancellationToken,
+            parseResult.GetValue(category),
+            parseResult.GetValue(libraries)));
         root.Subcommands.Add(command);
     }
 
@@ -145,6 +159,11 @@ internal sealed class BuildApplication(
         {
             Description = "Validate features only."
         };
+        var skipAotProbes = new Option<bool>("--skip-aot-probes")
+        {
+            Description = "Skip Native AOT probing. Each publish takes real time, so a per-push "
+                + "CI job should skip it and leave the full probe set to a scheduled run."
+        };
         var output = new Option<string?>("--output")
         {
             Description = "Directory to stage the report artifact in. Default: artifacts/ci-reports."
@@ -156,6 +175,7 @@ internal sealed class BuildApplication(
         command.Options.Add(libraries);
         command.Options.Add(smoke);
         command.Options.Add(skipBenchmarks);
+        command.Options.Add(skipAotProbes);
         command.Options.Add(output);
         command.SetAction(async parseResult => await ciReportsTarget.RunAsync(
             modules,
@@ -164,6 +184,7 @@ internal sealed class BuildApplication(
                 parseResult.GetValue(libraries),
                 parseResult.GetValue(smoke),
                 parseResult.GetValue(skipBenchmarks),
+                parseResult.GetValue(skipAotProbes),
                 parseResult.GetValue(output)),
             cancellationToken));
         root.Subcommands.Add(command);

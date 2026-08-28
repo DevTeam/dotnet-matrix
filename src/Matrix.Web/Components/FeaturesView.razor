@@ -15,11 +15,11 @@
     // A deployment capability is validated rather than measured and never reaches a benchmark
     // report, so it is shown apart from the scenario grid instead of posing as the next scenario.
     var features = report.Features!.Features
-        .Where(feature => feature.Order < MatrixFeatureOrders.Deployment)
+        .Where(feature => !feature.IsDeployment)
         .OrderBy(feature => feature.Order)
         .ToArray();
     var deployment = report.Features!.Features
-        .Where(feature => feature.Order >= MatrixFeatureOrders.Deployment)
+        .Where(feature => feature.IsDeployment)
         .OrderBy(feature => feature.Order)
         .ToArray();
     <section class="panel report-section">

@@ -5,4 +5,5 @@ internal sealed record CiReportsOptions(
     string? Libraries,
     bool Smoke,
     bool SkipBenchmarks,
+    bool SkipAotProbes,
     string? OutputDirectory);

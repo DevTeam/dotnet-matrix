@@ -73,3 +73,12 @@ substitute. Compressed archive size is intentionally not part of the initial
 rating.
 Compressed writing needs a first-class output-size metric; disk and async tests
 need controlled external I/O rather than an in-memory substitute.
+
+## Native AOT probe
+
+`src/Matrix.ZipArchives.Aot/Probes/<ProbeName>.cs`: write one stored (no
+compression) entry to an in-memory archive and read it back through the
+library's own API, mirroring `CreateStoredArchive`/`ReadStoredEntry`, and check
+the round-tripped bytes. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating.

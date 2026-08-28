@@ -24,6 +24,7 @@ internal sealed class MatrixView(IMatrixOverviews overviews) : IMatrixView
 
     public IReadOnlyList<(int Order, string Id, string Name)> Features(CategoryReport report) =>
         (report.Features?.Features ?? [])
+        .Where(feature => !feature.IsDeployment)
         .Select(feature => (feature.Order, feature.Id, feature.Name))
         .Concat((report.Benchmarks?.Features ?? [])
             .Select(feature => (feature.Order, feature.Id, feature.Name)))

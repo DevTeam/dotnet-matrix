@@ -21,7 +21,12 @@
     <ItemGroup>
         <ProjectReference Include="..\Matrix\Matrix.csproj"/>
         <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+        <!-- MicrosoftExtensionsValidationConfiguration builds a ServiceCollection to get
+             ValidationOptions; the Aot probe needs this too, so it is tagged as that library's
+             companion. -->
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11">
+            <MatrixAotCompanion>Microsoft.Extensions.Validation</MatrixAotCompanion>
+        </PackageReference>
         <PackageReference Include="FluentValidation" Version="12.1.1">
             <MatrixLibraryId>FluentValidation</MatrixLibraryId>
             <MatrixLibraryName>FluentValidation</MatrixLibraryName>

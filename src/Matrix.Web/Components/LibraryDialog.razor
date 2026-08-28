@@ -449,8 +449,10 @@
             order[feature.Id] = (feature.Order, feature.Name);
         }
 
-        // The feature report wins the name: it is the one the matrix shows.
-        foreach (var feature in Report.Features?.Features ?? [])
+        // The feature report wins the name: it is the one the matrix shows. A deployment
+        // capability is validated rather than measured and is shown in its own section, not as a
+        // scenario row here.
+        foreach (var feature in Report.Features?.Features.Where(feature => !feature.IsDeployment) ?? [])
         {
             order[feature.Id] = (feature.Order, feature.Name);
         }

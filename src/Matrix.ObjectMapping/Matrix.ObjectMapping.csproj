@@ -48,7 +48,11 @@
             <MatrixRepositoryUrl>https://github.com/riok/mapperly</MatrixRepositoryUrl>
             <MatrixLogo>logos/mapperly.svg</MatrixLogo>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
+        <!-- AutoMapper 16's MapperConfiguration constructor requires an ILoggerFactory; the Aot
+             probe needs this too, so it is tagged as AutoMapper's companion. -->
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11">
+            <MatrixAotCompanion>AutoMapper</MatrixAotCompanion>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>

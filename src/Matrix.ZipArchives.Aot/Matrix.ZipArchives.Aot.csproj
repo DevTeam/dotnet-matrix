@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <!--
+      One Native AOT probe host, published once per library.
+
+      The library under probe is selected by MatrixAotLibrary, which names both the probe source
+      file and the package to reference. Publishing one library at a time is what makes a result
+      attributable: a publish failure, a run failure and a trim warning all belong to exactly one
+      library, because nothing else is compiled in.
+
+      The probe version recorded beside every result is a hash of this project's Probes/<name>.cs,
+      Program.cs and AotProbeHost.cs, computed by AotProbesTarget itself rather than kept as a
+      property here - it can never go stale and never needs remembering to bump.
+    -->
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Matrix.ZipArchives.Aot</RootNamespace>
+
+        <!-- Native AOT is the point of this project. -->
+        <PublishAot>true</PublishAot>
+        <InvariantGlobalization>true</InvariantGlobalization>
+
+        <!-- Report every trim warning instead of collapsing them into a single IL2104 per assembly. -->
+        <TrimmerSingleWarn>false</TrimmerSingleWarn>
+
+        <!-- A trim warning is data this project publishes, not a build failure. -->
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+        <!-- Not a library of the matrix: never discovered as a module, never packed. -->
+        <IsPackable>false</IsPackable>
+        <MatrixModule>false</MatrixModule>
+    </PropertyGroup>
+
+    <!--
+      Only used for a design-time build (opening this project directly, or a bare "dotnet build"
+      of it) - AotProbesTarget always passes MatrixAotLibrary explicitly. Must name a file that
+      actually exists in Probes/, exactly as it is cased on disk: this project stays out of
+      dotnet-matrix.slnx specifically so a mismatch here never breaks an automated build.
+    -->
+    <PropertyGroup Condition="'$(MatrixAotLibrary)' == ''">
+        <MatrixAotLibrary>SystemIOCompression</MatrixAotLibrary>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <AssemblyName>Matrix.ZipArchives.Aot.$(MatrixAotLibrary)</AssemblyName>
+        <DefineConstants>$(DefineConstants);MATRIX_AOT_PROBE</DefineConstants>
+    </PropertyGroup>
+
+    <!--
+      Exactly one probe compiles. The package id and version are supplied by the build target from
+      the module csproj, so the probe can never drift from the version the matrix measures.
+    -->
+    <ItemGroup>
+        <Compile Remove="Probes/**/*.cs"/>
+        <Compile Include="Probes/$(MatrixAotLibrary).cs"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(MatrixAotPackage)' != ''">
+        <PackageReference Include="$(MatrixAotPackage)" Version="$(MatrixAotPackageVersion)"/>
+    </ItemGroup>
+
+    <!--
+      A library that cannot be published from its primary package alone (its module csproj tags
+      the extra package with MatrixAotCompanion) arrives here as "id|version" pairs, one per
+      package, joined with "#" - AotProbesTarget builds this from MatrixLibrary.Companions. "#" and
+      not ";": the dotnet/MSBuild command line splits a -p: switch on both ";" and "," before the
+      value ever reaches the project, so only "#" survives intact. Added inside a target,
+      immediately before NuGet collects PackageReference items for restore: item batching that
+      creates a new item type from another item type's metadata is the well-supported form inside a
+      target, unlike the same pattern in a static, target-less ItemGroup.
+    -->
+    <Target Name="AddMatrixAotCompanions" BeforeTargets="CollectPackageReferences"
+            Condition="'$(MatrixAotCompanions)' != ''">
+        <ItemGroup>
+            <_MatrixAotCompanion Include="$(MatrixAotCompanions.Split('#'))"/>
+        </ItemGroup>
+        <ItemGroup>
+            <PackageReference
+                Include="$([System.String]::Copy('%(_MatrixAotCompanion.Identity)').Split('|')[0])"
+                Version="$([System.String]::Copy('%(_MatrixAotCompanion.Identity)').Split('|')[1])"/>
+        </ItemGroup>
+    </Target>
+
+</Project>

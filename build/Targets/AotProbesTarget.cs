@@ -1,4 +1,6 @@
 using Matrix;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using HostCommandLine = HostApi.CommandLine;
@@ -28,23 +30,46 @@ internal sealed partial class AotProbesTarget(
     private const string FeatureName = "Native AOT";
 
     /// <summary>
-    /// Native AOT is a deployment capability, not a scenario. See
-    /// <see cref="MatrixFeatureOrders.Deployment"/> for what that order separates.
+    /// Native AOT has its own order sequence, independent of scenario order: see
+    /// <see cref="FeatureReportEntry.IsDeployment"/> for what separates the two. It is currently
+    /// the only deployment capability the matrix records.
     /// </summary>
-    private const int FeatureOrder = MatrixFeatureOrders.Deployment;
+    private const int FeatureOrder = 1;
 
     private const string ProbeProjectSuffix = ".Aot";
 
-    private const string RuntimeIdentifier = "linux-x64";
-
     private const string TargetFramework = "net10.0";
+
+    /// <summary>
+    /// Native AOT has no cross-OS publish, so the probe always targets the machine it runs on.
+    /// </summary>
+    private static string RuntimeIdentifier => RuntimeInformation.RuntimeIdentifier;
+
+    private static string ExecutableSuffix => OperatingSystem.IsWindows() ? ".exe" : string.Empty;
 
     public async Task<int> RunAsync(
         IReadOnlyList<DiscoveredMatrixModule> modules,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? category = null,
+        string? libraries = null)
     {
+        var selectedModules = string.IsNullOrWhiteSpace(category)
+            ? modules
+            : modules
+                .Where(module => module.Metadata.Id.Equals(category, StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+        if (selectedModules.Count == 0)
+        {
+            Console.Error.WriteLine(
+                $"Unknown matrix category '{category}'. "
+                + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.");
+            return 1;
+        }
+
+        var libraryFilter = ParseLibraryFilter(libraries);
+
         var probed = 0;
-        foreach (var module in modules)
+        foreach (var module in selectedModules)
         {
             var projectPath = ProbeProjectPath(module);
             if (projectPath is null)
@@ -52,7 +77,7 @@ internal sealed partial class AotProbesTarget(
                 continue;
             }
 
-            var result = await ProbeModuleAsync(module, projectPath, cancellationToken);
+            var result = await ProbeModuleAsync(module, projectPath, libraryFilter, cancellationToken);
             if (result != 0)
             {
                 return result;
@@ -70,6 +95,7 @@ internal sealed partial class AotProbesTarget(
     private async Task<int> ProbeModuleAsync(
         DiscoveredMatrixModule module,
         string projectPath,
+        IReadOnlySet<string>? libraryFilter,
         CancellationToken cancellationToken)
     {
         var reportPath = Path.Combine(
@@ -87,27 +113,43 @@ internal sealed partial class AotProbesTarget(
             return 1;
         }
 
-        var probeVersion = ProbeVersion(projectPath);
-        var results = new List<FeatureResult>(module.Metadata.Libraries.Count);
-        foreach (var library in module.Metadata.Libraries)
+        var librariesToProbe = libraryFilter is null
+            ? module.Metadata.Libraries
+            : module.Metadata.Libraries.Where(library => libraryFilter.Contains(library.Id)).ToArray();
+        if (librariesToProbe.Count == 0)
         {
-            results.Add(await ProbeLibraryAsync(
-                projectPath,
-                library,
-                probeVersion,
-                cancellationToken));
+            Console.Error.WriteLine(
+                $"ERROR: no library in {module.Metadata.Name} matches the --libraries filter.");
+            return 1;
         }
+
+        var results = new List<FeatureResult>(librariesToProbe.Count);
+        foreach (var library in librariesToProbe)
+        {
+            results.Add(await ProbeLibraryAsync(module, projectPath, library, cancellationToken));
+        }
+
+        // A --libraries filter probes a subset, so the rest of the module's existing results are
+        // kept rather than dropped - the same partial-merge behavior feature validation and
+        // benchmarking already give every other report.
+        var existing = report.Features
+            .FirstOrDefault(feature => feature.Id.Equals(FeatureId, StringComparison.Ordinal));
+        var mergedResults = (existing?.Results ?? [])
+            .Where(result => results.All(updated =>
+                !updated.LibraryId.Equals(result.LibraryId, StringComparison.OrdinalIgnoreCase)))
+            .Concat(results)
+            .OrderBy(result => result.LibraryId, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
 
         var entry = new FeatureReportEntry(
             FeatureOrder,
             FeatureId,
             FeatureName,
-            results
-                .OrderBy(result => result.LibraryId, StringComparer.OrdinalIgnoreCase)
-                .ToArray());
+            mergedResults,
+            IsDeployment: true);
 
         var features = report.Features
-            .Where(existing => !existing.Id.Equals(FeatureId, StringComparison.Ordinal))
+            .Where(existingEntry => !existingEntry.Id.Equals(FeatureId, StringComparison.Ordinal))
             .Append(entry)
             .OrderBy(feature => feature.Order)
             .ToArray();
@@ -118,16 +160,15 @@ internal sealed partial class AotProbesTarget(
     }
 
     private async Task<FeatureResult> ProbeLibraryAsync(
+        DiscoveredMatrixModule module,
         string projectPath,
         MatrixLibrary library,
-        string probeVersion,
         CancellationToken cancellationToken)
     {
+        var projectDirectory = Path.GetDirectoryName(projectPath)!;
         var probeName = ProbeName(library.Id);
-        if (!File.Exists(Path.Combine(
-                Path.GetDirectoryName(projectPath)!,
-                "Probes",
-                $"{probeName}.cs")))
+        var probeFile = Path.Combine(projectDirectory, "Probes", $"{probeName}.cs");
+        if (!File.Exists(probeFile))
         {
             return new FeatureResult(
                 library.Id,
@@ -136,34 +177,46 @@ internal sealed partial class AotProbesTarget(
                 0);
         }
 
-        if (library.Package is null || library.Version is null)
+        var probeVersion = ProbeVersion(projectDirectory, probeFile);
+        var arguments = new List<string>
         {
-            return new FeatureResult(
-                library.Id,
-                nameof(FeatureStatus.NotApplicable),
-                $"{library.Id} declares no package, so there is nothing to publish.",
-                0);
+            "publish",
+            projectPath,
+            "--configuration",
+            "Release",
+            "--runtime",
+            RuntimeIdentifier,
+            $"-p:MatrixAotLibrary={probeName}"
+        };
+
+        // A baseline with no package of its own (System.Text.Json, System.Linq, ...) publishes
+        // straight from the BCL: nothing to add here.
+        if (library.Package is not null && library.Version is not null)
+        {
+            arguments.Add($"-p:MatrixAotPackage={library.Package}");
+            arguments.Add($"-p:MatrixAotPackageVersion={library.Version}");
+        }
+
+        if (library.Companions.Count > 0)
+        {
+            // "#" joins companions, not ";": the dotnet/MSBuild command line splits a -p: switch
+            // on both ";" and "," before the value ever reaches the project, no escaping survives
+            // that split, and only "#" does not collide with either.
+            arguments.Add(
+                "-p:MatrixAotCompanions="
+                + string.Join('#', library.Companions.Select(package => $"{package.Id}|{package.Version}")));
         }
 
         var output = new StringBuilder();
+        var publishOperation = $"{module.Metadata.Id} AOT publish {library.Id}";
         var publish = await processRunner.RunAsync(
             new HostCommandLine(
                 "dotnet",
                 buildPaths.SolutionDirectory,
-                [
-                    "publish",
-                    projectPath,
-                    "--configuration",
-                    "Release",
-                    "--runtime",
-                    RuntimeIdentifier,
-                    $"-p:MatrixAotLibrary={probeName}",
-                    $"-p:MatrixAotPackage={library.Package}",
-                    $"-p:MatrixAotPackageVersion={library.Version}"
-                ],
+                arguments,
                 [],
-                $"AOT publish {library.Id}"),
-            $"AOT publish {library.Id}",
+                publishOperation),
+            publishOperation,
             cancellationToken,
             outputHandler: line => output.AppendLine(line.Line));
 
@@ -180,23 +233,24 @@ internal sealed partial class AotProbesTarget(
         }
 
         var executable = Path.Combine(
-            Path.GetDirectoryName(projectPath)!,
+            projectDirectory,
             "bin",
             "Release",
             TargetFramework,
             RuntimeIdentifier,
             "publish",
-            $"{Path.GetFileNameWithoutExtension(projectPath)}.{probeName}");
+            $"{Path.GetFileNameWithoutExtension(projectPath)}.{probeName}{ExecutableSuffix}");
 
         var run = new StringBuilder();
+        var runOperation = $"{module.Metadata.Id} AOT probe {library.Id}";
         var exitCode = await processRunner.RunAsync(
             new HostCommandLine(
                 executable,
                 buildPaths.SolutionDirectory,
                 [],
                 [],
-                $"AOT probe {library.Id}"),
-            $"AOT probe {library.Id}",
+                runOperation),
+            runOperation,
             cancellationToken,
             outputHandler: line => run.AppendLine(line.Line));
 
@@ -216,8 +270,8 @@ internal sealed partial class AotProbesTarget(
     /// </summary>
     private static string? Note(int warnings, string probeVersion) =>
         warnings == 0
-            ? $"0 trim warnings (probe v{probeVersion})"
-            : $"{warnings} trim warning{(warnings == 1 ? string.Empty : "s")} (probe v{probeVersion})";
+            ? $"0 trim warnings (probe {probeVersion}, {RuntimeIdentifier})"
+            : $"{warnings} trim warning{(warnings == 1 ? string.Empty : "s")} (probe {probeVersion}, {RuntimeIdentifier})";
 
     /// <summary>
     /// Counts ILC diagnostics. The count depends on what the probe compiles, which is why it is
@@ -254,15 +308,27 @@ internal sealed partial class AotProbesTarget(
         return File.Exists(path) ? path : null;
     }
 
-    private static string ProbeVersion(string projectPath)
+    /// <summary>
+    /// Derives the probe version from the content that actually determines a trim-warning count:
+    /// the probe file itself plus the shared host. A short hash, computed here rather than kept as
+    /// a hand-maintained project property, so it can never go stale and never needs remembering.
+    /// </summary>
+    private static string ProbeVersion(string projectDirectory, string probeFile)
     {
-        var match = ProbeVersionElement().Match(File.ReadAllText(projectPath));
-        return match.Success ? match.Groups[1].Value : "unknown";
+        var content = string.Concat(
+            File.ReadAllText(probeFile),
+            File.ReadAllText(Path.Combine(projectDirectory, "Program.cs")),
+            File.ReadAllText(Path.Combine(projectDirectory, "AotProbeHost.cs")));
+        return Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(content)))[..8];
     }
+
+    private static HashSet<string>? ParseLibraryFilter(string? libraries) =>
+        string.IsNullOrWhiteSpace(libraries)
+            ? null
+            : libraries
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
     [GeneratedRegex(@"^ILC : ", RegexOptions.Multiline)]
     private static partial Regex IlcWarning();
-
-    [GeneratedRegex(@"<MatrixAotProbeVersion>([^<]+)</MatrixAotProbeVersion>")]
-    private static partial Regex ProbeVersionElement();
 }

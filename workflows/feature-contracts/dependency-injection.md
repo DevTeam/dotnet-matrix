@@ -86,3 +86,18 @@ During the measured operation, create the container and register the prescribed 
 ## 15. Prepare And Register And Simple Resolve
 
 During the measured operation, perform the same setup as `Prepare And Register`, then resolve one singleton service exactly once and dispose the container when applicable. For a compile-time DI library, configuration and code generation are excluded; construct the generated composition and resolve one singleton root. A hand-coded approach measures its direct object construction without container setup.
+
+## Native AOT probe
+
+`src/Matrix.DependencyInjection.Aot/Probes/<ProbeName>.cs`: register one
+singleton service and one transient service with the library's own container
+API, resolve each twice, and check that the singleton resolves to the same
+instance both times and the transient to two different instances — the
+smallest slice of `01_Singleton`/`02_Transient` that still distinguishes a
+container's lifetime handling. `HandCoded` has no probe: it exercises no
+container. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating. Several containers here lean on `Reflection.Emit` or
+expression-tree compilation for fast resolution; expect genuine `Failed`
+results from those under Native AOT rather than treating a failure as a probe
+bug.

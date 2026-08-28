@@ -140,3 +140,16 @@ These features are intentionally outside the first category version:
 
 Add a deferred feature only after defining an equivalent observable contract,
 setup boundary, and rating group for all intended participants.
+
+## Native AOT probe
+
+`src/Matrix.ObjectMapping.Aot/Probes/<ProbeName>.cs`: map one small source
+object to one destination object through the library's own configured
+mapper, mirroring `SimpleObject`, and check the mapped fields. `Mapperly`'s
+`[Mapper]` partial is declared right in its probe file, since its source
+generator only sees the one file that compiles for that probe; `AutoMapper`'s
+probe needs its own `NullLoggerFactory`, tagged as an `MatrixAotCompanion`
+package on the module csproj (see `add-library.md` §3). `HandCoded` has no
+probe: it exercises no library. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating.

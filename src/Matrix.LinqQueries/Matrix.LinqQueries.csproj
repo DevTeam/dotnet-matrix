@@ -54,8 +54,11 @@
             <MatrixLogo>logos/hyperlinq.png</MatrixLogo>
         </PackageReference>
         <!-- NetFabric.Hyperlinq 3.0.0-beta9 references Microsoft.Bcl.AsyncInterfaces
-             without declaring it as a package dependency. -->
-        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.11" />
+             without declaring it as a package dependency; the Aot probe needs this too, so it is
+             tagged as that library's companion. -->
+        <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="10.0.11">
+            <MatrixAotCompanion>NetFabric.Hyperlinq</MatrixAotCompanion>
+        </PackageReference>
         <PackageReference Include="LinqAF" Version="3.0.0">
             <MatrixLibraryId>LinqAF</MatrixLibraryId>
             <MatrixLibraryName>LinqAF</MatrixLibraryName>

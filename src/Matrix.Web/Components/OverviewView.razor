@@ -46,6 +46,7 @@
         {
             var metadata = View.Metadata(report, library.Id);
             var featureResults = (report.Features?.Features ?? [])
+                .Where(feature => !feature.IsDeployment)
                 .SelectMany(feature => feature.Results)
                 .Where(result => result.LibraryId.Equals(library.Id, StringComparison.OrdinalIgnoreCase))
                 .ToArray();

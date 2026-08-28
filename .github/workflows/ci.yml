@@ -52,6 +52,7 @@ jobs:
     name: Validate features (${{ matrix.category }})
     needs: discover
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -66,8 +67,11 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      # Native AOT probing is a real publish per library and DependencyInjection alone has 22 of
+      # them, so it is skipped here to keep per-push feedback fast. The full probe set still runs
+      # in reports.yml and in a local prepare-commit.
       - name: Validate library features
-        run: dotnet run --project ./build -- ci-reports --category "${{ matrix.category }}" --skip-benchmarks
+        run: dotnet run --project ./build -- ci-reports --category "${{ matrix.category }}" --skip-benchmarks --skip-aot-probes
 
       - name: Upload feature reports
         if: failure()

@@ -246,6 +246,25 @@ Add the project to the `/src/` folder in `dotnet-matrix.slnx`:
 The build project should not need a direct project reference or a hardcoded
 category registration.
 
+### Native AOT probing (optional)
+
+A category can also ship `src/Matrix.<Category>.Aot/`, one Native AOT probe
+host published once per library, discovered by convention
+(`AotProbesTarget.ProbeProjectPath`: `src/<Module>.Aot/<Module>.Aot.csproj`
+next to `src/<Module>`) — no registration anywhere else. Clone an existing one,
+for example `src/Matrix.Logging.Aot`, and add one
+`Probes/<ProbeName>.cs` per library (see `add-library.md` §11 for the naming
+rule and what a missing one does). It is entirely optional: a category with no
+`.Aot` project is simply skipped by `aot-probes`, with no error and no gap
+anywhere else.
+
+**This project must stay out of `dotnet-matrix.slnx`.** `MatrixModuleDiscovery`
+builds and reflection-loads every project the slnx lists, and `build-solution`
+builds the slnx directly; an `.Aot` project is not a matrix module (it sets
+`MatrixModule=false` for documentation, but nothing filters on that property)
+and is not meant to build stand-alone without `-p:MatrixAotLibrary` supplied by
+`AotProbesTarget`. Keeping it out of the slnx is what makes that safe.
+
 ## 3. Configure module discovery
 
 The category project must be an executable and reference the shared project:

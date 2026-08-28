@@ -57,6 +57,7 @@ public static class MatrixMetadata
             item => item.Library.Package!,
             "primary package");
         EnsureUnique(libraries, item => item.CodeName, "library code name");
+        libraries = AttachCompanions(project, libraries);
 
         metadata = new MatrixModule(
             moduleId,
@@ -117,6 +118,61 @@ public static class MatrixMetadata
                 $"Duplicate matrix feature order '{duplicateOrder.Key}'.");
     }
 
+    /// <summary>
+    /// Attaches every <c>MatrixAotCompanion</c>-tagged <c>PackageReference</c> to the library it
+    /// names. A companion is an ordinary, unannotated package the module already references for
+    /// its own reasons; the tag only records which library cannot be published without it.
+    /// </summary>
+    private static MatrixLibraryDefinition[] AttachCompanions(
+        XDocument project,
+        MatrixLibraryDefinition[] libraries)
+    {
+        var companions = project
+            .Descendants()
+            .Where(element => element.Name.LocalName == "PackageReference")
+            .Select(element => (Element: element, LibraryId: Value(element, "MatrixAotCompanion")))
+            .Where(item => item.LibraryId is not null)
+            .Select(item =>
+            {
+                var package = RequiredAttribute(item.Element, "Include");
+                var version = RequiredAttribute(item.Element, "Version");
+                EnsureLiteralVersion(package, version);
+                return (LibraryId: item.LibraryId!, Package: new MatrixPackage(package, version));
+            })
+            .ToLookup(item => item.LibraryId, item => item.Package, StringComparer.OrdinalIgnoreCase);
+        if (companions.Count == 0)
+        {
+            return libraries;
+        }
+
+        var byId = libraries.ToDictionary(item => item.Library.Id, StringComparer.OrdinalIgnoreCase);
+        foreach (var group in companions)
+        {
+            if (!byId.TryGetValue(group.Key, out var target))
+            {
+                throw new InvalidOperationException(
+                    $"MatrixAotCompanion '{group.Key}' does not name a declared matrix library.");
+            }
+
+            byId[group.Key] = target with
+            {
+                Library = target.Library with { Companions = [.. group] }
+            };
+        }
+
+        return [.. libraries.Select(item => byId[item.Library.Id])];
+    }
+
+    private static void EnsureLiteralVersion(string package, string version)
+    {
+        if (version.Contains("$(", StringComparison.Ordinal)
+            || version.IndexOfAny(['*', '[', ']', '(', ')', ',']) >= 0)
+        {
+            throw new InvalidOperationException(
+                $"Matrix library package '{package}' must use an exact literal version.");
+        }
+    }
+
     private static MatrixLibraryDefinition ReadPackageLibrary(XElement packageReference)
     {
         if (packageReference.Attribute("Condition") is not null)
@@ -127,12 +183,7 @@ public static class MatrixMetadata
 
         var package = RequiredAttribute(packageReference, "Include");
         var version = RequiredAttribute(packageReference, "Version");
-        if (version.Contains("$(", StringComparison.Ordinal)
-            || version.IndexOfAny(['*', '[', ']', '(', ')', ',']) >= 0)
-        {
-            throw new InvalidOperationException(
-                $"Matrix library package '{package}' must use an exact literal version.");
-        }
+        EnsureLiteralVersion(package, version);
 
         var id = Required(packageReference, "MatrixLibraryId");
         return ReadLibrary(

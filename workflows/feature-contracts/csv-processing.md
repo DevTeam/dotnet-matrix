@@ -144,3 +144,13 @@ measurement.
   no initial feature is expected to use it.
 - `Failed`: an implementation claims support but validation fails.
 
+## Native AOT probe
+
+`src/Matrix.CsvProcessing.Aot/Probes/<ProbeName>.cs`: parse a two-line,
+two-column in-memory CSV (`Name,Value` header, one `probe,7` row) with the
+library's own reader API and check the parsed field values. Writing is out of
+scope for the probe — reading alone already exercises the library's parsing
+and type-conversion path under Native AOT. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating.
+

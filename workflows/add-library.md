@@ -51,7 +51,13 @@ An LLM may:
 - generate metadata and Rider run configurations;
 - run feature validation only for the new library;
 - inspect existing reports without changing benchmark measurements;
-- build the WebAssembly project directly as a compile check.
+- build the WebAssembly project directly as a compile check;
+- when the category has a `src/<Module>.Aot` project and the environment has
+  the Native AOT prerequisites, run
+  `aot-probes --category <module-id> --libraries <LibraryId>` for the new
+  library only. It carries no timing and is not a benchmark, but a real
+  publish still takes real minutes per library — never omit `--libraries` and
+  probe the whole category.
 
 An LLM must not execute:
 
@@ -178,6 +184,22 @@ Requirements:
 
 Add packages required for optional integrations as ordinary, unannotated
 references. Only one primary package receives `MatrixLibraryId`.
+
+If the library cannot be published from its primary package alone — for
+example an abstractions or hosting package the primary package references
+without declaring as a dependency — tag that extra `PackageReference` with
+`MatrixAotCompanion`, naming the library id it belongs to:
+
+```xml
+<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11">
+    <MatrixAotCompanion>Mapper.One</MatrixAotCompanion>
+</PackageReference>
+```
+
+This is read by the Native AOT probe (see §11 below), not by the ordinary
+metadata or catalog pipeline. Only tag a package the probe genuinely cannot
+run without; an unannotated `PackageReference` is still on the classpath for
+everything else the category does.
 
 The category project is embedded as `Matrix.Project.csproj`. Shared discovery
 reads versions and metadata directly from that resource.
@@ -443,7 +465,19 @@ Source-controlled inputs are:
 workflows/feature-contracts/<module-id>.md
 metadata/<ReportDirectory>/charts.json
 metadata/<ReportDirectory>/logos/*
+src/<Module>.Aot/Probes/<ProbeName>.cs
 ```
+
+The last one is easy to miss because nothing fails loudly without it: a
+category with a `src/<Module>.Aot` project probes every library the category
+declares, and a library with no matching `Probes/<ProbeName>.cs` — the id with
+every non-letter, non-digit character removed, so `Sylvan.Data.Csv` needs
+`SylvanDataCsv.cs` and `log4net` needs `log4net.cs` — is simply recorded
+`NotApplicable`, "No Native AOT probe exists", forever, until someone adds one.
+Not every category has a `.Aot` project yet; when the one you are extending
+does, add the probe alongside the library. Derive its one scenario from the
+library's own core benchmark, stripped of everything the matrix owns — the
+same relationship every existing `Probes/*.cs` file has to its benchmark.
 
 Adding a library normally does not require changes to:
 

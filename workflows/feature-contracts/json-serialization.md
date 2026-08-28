@@ -141,3 +141,19 @@ Preparation performed lazily by a library with no explicit public preparation
 operation is represented by a zero reported benchmark; its cache lookup remains
 part of ordinary steady-state serialization.
 
+## Native AOT probe
+
+`src/Matrix.JsonSerialization.Aot/Probes/<ProbeName>.cs`: serialize one small
+object and deserialize the result back, then check the round trip, through the
+library's ordinary reflection-based API — the same path
+`JsonConfiguration.SystemTextDefault`-equivalent settings use in the
+benchmarks, never a source-generated `JsonTypeInfo`/`JsonSerializerContext`.
+This is deliberate: source generation exists specifically to avoid the
+reflection path, so probing anything else would not test what a library does
+by default. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating. `System.Text.Json`'s reflection serializer is
+genuinely disabled under `PublishAot=true`
+(`JsonSerializerIsReflectionEnabledByDefault`); a `Failed` result for it is
+real, not a probe defect.
+

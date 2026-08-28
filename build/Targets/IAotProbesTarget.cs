@@ -4,5 +4,7 @@ internal interface IAotProbesTarget
 {
     Task<int> RunAsync(
         IReadOnlyList<DiscoveredMatrixModule> modules,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken,
+        string? category = null,
+        string? libraries = null);
 }

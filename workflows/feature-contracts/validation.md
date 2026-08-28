@@ -111,3 +111,17 @@ invocation. Attribute-driven libraries with no explicit preparation API report
 zero time and allocation: their internal metadata lookup and lazy-cache access
 remain part of ordinary validation because the libraries expose no separate
 preparation operation.
+
+## Native AOT probe
+
+`src/Matrix.Validation.Aot/Probes/<ProbeName>.cs`: validate one valid object
+and one invalid object through the library's own API, mirroring
+`ValidObject`/`SingleFailure`, and check that the valid object reports no
+errors and the invalid one reports exactly one. `Microsoft.Extensions.Validation`
+needs its source generator to see a type carrying `[ValidatableType]` — declared
+right in the probe file, public, exactly like
+`Matrix.Validation.Models.BasicInput` — and its `ServiceCollection`
+construction is tagged as its `MatrixAotCompanion` package on the module
+csproj (see `add-library.md` §3). This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating.

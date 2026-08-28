@@ -39,7 +39,11 @@ internal sealed class CiReportsTarget(
             .AppendLine(
                 options.Smoke
                     ? "- Benchmark job: `Smoke` - one iteration only, the numbers are not trustworthy"
-                    : "- Benchmark job: `Quick`");
+                    : "- Benchmark job: `Quick`")
+            .AppendLine(
+                options.SkipAotProbes
+                    ? "- Native AOT probes: skipped (`--skip-aot-probes`)"
+                    : "- Native AOT probes: run after each module's validation");
 
         var exitCode = 0;
         var validationFailed = false;
@@ -56,8 +60,9 @@ internal sealed class CiReportsTarget(
             // Validation rewrites features.json and drops the Native AOT entry with it, so the
             // probe runs here: after this module's validation, and before the summary and the
             // staged artifact read the report back. A module whose validation failed is not
-            // probed, because its report is already not worth publishing.
-            if (result == 0)
+            // probed, because its report is already not worth publishing. Each publish takes real
+            // time, so a per-push job can skip it and leave the full probe set to a scheduled run.
+            if (result == 0 && !options.SkipAotProbes)
             {
                 var probes = await aotProbesTarget.RunAsync([module], cancellationToken);
                 exitCode = Combine(exitCode, probes);

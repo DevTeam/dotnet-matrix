@@ -269,3 +269,12 @@ Deliberately excluded are `GroupJoin`, `ToDictionary`, set-combination
 operators, `Chunk`, `Average`, and asynchronous variants. They either duplicate
 the same support boundary, primarily measure a BCL collection, or require a
 separate workload model.
+
+## Native AOT probe
+
+`src/Matrix.LinqQueries.Aot/Probes/<ProbeName>.cs`: filter and count a small
+`int[]` (`{1,2,3,4,5,6}`, divisible-by-3 predicate, expected count 2) through
+the library's own operator surface, mirroring `FilterCount`. `HandCoded` has no
+probe: it exercises no library. This is a deployment capability
+(`FeatureReportEntry.IsDeployment`), not a scenario: it carries no timing and
+never enters the rating.

@@ -147,3 +147,11 @@ Application category is `Matrix.Logging`.
 - `NotApplicable`: reserved for features with no meaningful equivalent; no
   initial feature is expected to use it.
 - `Failed`: an implementation claims support but semantic validation fails.
+
+## Native AOT probe
+
+`src/Matrix.Logging.Aot/Probes/<ProbeName>.cs`: configure the library in code
+and deliver one Information event to an in-memory sink, mirroring
+`Simple Message`, and check the sink received it. This is a deployment
+capability (`FeatureReportEntry.IsDeployment`), not a scenario: it carries no
+timing and never enters the rating.
