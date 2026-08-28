@@ -70,7 +70,8 @@
                                      Rated="@(metadata?.Rated ?? false)"
                                      Standing="@Scoring.Standing(cardMedals, library.Id)"
                                      Place="@Scoring.Place(cardMedals, library.Id)"/>
-                        <DeploymentBadge Results="@deploymentResults"/>
+                        <DeploymentBadge Results="@deploymentResults"
+                                          OnOpenLibrary="() => OnOpenLibrary.InvokeAsync(library.Id)"/>
                         @if (LibraryLink is { } link)
                         {
                             <CopyLinkButton Url="@link(library.Id)"/>

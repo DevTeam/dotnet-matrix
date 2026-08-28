@@ -319,6 +319,34 @@
                     </div>
                 </section>
             }
+
+            @* Validated rather than measured, so it stands apart from the scenario table
+               above rather than posing as one more row in it — the same reason the
+               Deployment tab keeps this out of Features. *@
+            @if (_deployment.Length > 0)
+            {
+                <section class="modal-section">
+                    <div class="modal-section-head">
+                        <h3>Deployment compatibility</h3>
+                        <span class="section-meta">Validated, not measured &middot; never rated</span>
+                    </div>
+                    <ul class="modal-deployment">
+                        @foreach (var row in _deployment)
+                        {
+                            <li>
+                                <span class="feature-status @row.StatusClass" title="@row.StatusLabel">
+                                    <StatusIcon Kind="@row.StatusClass"/>
+                                </span>
+                                <span class="modal-deployment-name">@row.Name</span>
+                                @if (row.Detail is { } detail)
+                                {
+                                    <span class="modal-deployment-detail">@detail</span>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </section>
+            }
         </div>
     </div>
 </div>
@@ -339,6 +367,7 @@
     private Standing[] _standings = [];
     private (string Name, string Title)[] _legend = [];
     private Row[] _rows = [];
+    private DeploymentRow[] _deployment = [];
     private IReadOnlyDictionary<string, MatrixScoreDetail> _scores =
         new Dictionary<string, MatrixScoreDetail>();
 
@@ -411,6 +440,7 @@
         _hasRatingTotal = View.IsRated(Report, Library.Id) && _medals is not null;
         ReadStandings();
         ReadRows();
+        ReadDeployment();
     }
 
     /// <summary>
@@ -510,6 +540,39 @@
             score?.Time.Points ?? 0,
             score?.Memory.Points ?? 0,
             View.FeatureNotRatedReason(Report, featureId));
+    }
+
+    /// <summary>
+    /// One row per deployment capability of the category (Native AOT today), read the same way
+    /// <see cref="DeploymentBadge"/> reads them for the card, so the dialog it opens into shows
+    /// exactly what the badge summarised.
+    /// </summary>
+    private void ReadDeployment() =>
+        _deployment = (Report.Features?.Features ?? [])
+            .Where(feature => feature.IsDeployment)
+            .OrderBy(feature => feature.Order)
+            .Select(feature => new DeploymentRow(
+                feature.Name,
+                StatusClass(Status(feature)?.Status),
+                StatusLabel(Status(feature)?.Status),
+                Detail(Status(feature))))
+            .ToArray();
+
+    private FeatureResult? Status(FeatureReportEntry feature) =>
+        feature.Results.FirstOrDefault(result =>
+            result.LibraryId.Equals(Library.Id, StringComparison.OrdinalIgnoreCase));
+
+    private static string? Detail(FeatureResult? result)
+    {
+        if (result is null)
+        {
+            return null;
+        }
+
+        var parts = new[] { result.Reason, result.Note }
+            .Where(part => !string.IsNullOrEmpty(part))
+            .ToArray();
+        return parts.Length == 0 ? null : string.Join(" · ", parts);
     }
 
     private void ReadStandings()
@@ -699,4 +762,6 @@
     {
         public double Points => TimePoints + MemoryPoints;
     }
+
+    private sealed record DeploymentRow(string Name, string StatusClass, string StatusLabel, string? Detail);
 }

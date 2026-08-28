@@ -1173,14 +1173,26 @@ select {
 }
 
 /* Sized to sit beside .rating-badge and .status-dot in the same heading row, unlike
-   .feature-status which carries its own 28px background box for the table grids. */
+   .feature-status which carries its own 28px background box for the table grids. A
+   button rather than a span: the tooltip alone never reaches a touch screen or a
+   keyboard, so the same click that opens the dialog elsewhere on the card opens it
+   here too, landing on the detail the tooltip only summarises. */
 .deployment-badge {
     display: grid;
     width: 14px;
     height: 14px;
     flex: 0 0 14px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-chip);
+    background: none;
     place-items: center;
-    cursor: help;
+    cursor: pointer;
+}
+
+.deployment-badge:hover,
+.deployment-badge:focus-visible {
+    background: var(--surface-2);
 }
 
 .deployment-badge .status-icon {
@@ -2655,6 +2667,43 @@ tbody th {
     color: var(--muted);
     font-size: 12px;
     line-height: 1.5;
+}
+
+/* One row per deployment capability — one today, Native AOT — so a bordered list reads
+   better here than the fixed-width scenario table built for two numeric columns. */
+.modal-deployment {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    list-style: none;
+    overflow: hidden;
+}
+
+.modal-deployment li {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 16px;
+    font-size: 13px;
+}
+
+.modal-deployment li + li {
+    border-top: 1px solid var(--line-soft);
+}
+
+.modal-deployment-name {
+    flex: 0 0 auto;
+    font-weight: 600;
+}
+
+.modal-deployment-detail {
+    flex: 1;
+    min-width: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .modal-scenario-metric {

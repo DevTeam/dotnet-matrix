@@ -3,17 +3,25 @@
    when the category has a deployment capability at all, so silence never has to be read as
    "checked and fine" — a card with nothing here simply belongs to a category with no probe. When
    a category ever grows a second deployment capability, the glyph shows the most concerning of
-   the two and the tooltip lists both by name. *@
+   the two and the tooltip lists both by name. It is a button rather than a span so the same click
+   that opens the library dialog elsewhere on the card works here too — the tooltip never reaches
+   a touch screen. *@
 @if (Worst is { } worst)
 {
-    <span class="deployment-badge @StatusClass(worst.Result.Status)" title="@Title">
+    <button type="button"
+            class="deployment-badge @StatusClass(worst.Result.Status)"
+            title="@Title"
+            @onclick="() => OnOpenLibrary.InvokeAsync()">
         <StatusIcon Kind="@StatusClass(worst.Result.Status)"/>
-    </span>
+    </button>
 }
 
 @code {
     [Parameter, EditorRequired]
     public required IReadOnlyList<(FeatureReportEntry Capability, FeatureResult Result)> Results { get; set; }
+
+    [Parameter]
+    public EventCallback OnOpenLibrary { get; set; }
 
     /// <summary>
     /// Lower is more concerning. A library that fails one deployment capability out of several
