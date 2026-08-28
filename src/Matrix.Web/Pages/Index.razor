@@ -266,11 +266,7 @@
                             continue;
                         }
 
-                        @* Named here as it is above the libraries: both lists belong to
-                           the category, and the radio that says which one scrolls out
-                           of a panel this long. *@
                         <div class="scenario-group">
-                            <div class="group-label">@report.Category.Name</div>
                             <div class="scenario-filter">
                                 @foreach (var feature in features)
                                 {
@@ -320,7 +316,6 @@
                             }
 
                             <div class="scenario-group">
-                                <div class="group-label">@report.Category.Name</div>
                                 <div class="scenario-filter">
                                     @foreach (var capability in capabilities)
                                     {
@@ -376,7 +371,6 @@
 
                         var medals = Scoring.Rating(report, _selectedLibraries);
                         <div class="library-group">
-                            <div class="group-label">@report.Category.Name</div>
                             @foreach (var library in libraries)
                             {
                                 var key = LibraryKey(report.Category.Id, library.Id);
