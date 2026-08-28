@@ -18,13 +18,28 @@
         continue;
     }
 
+    // Every library in one probe run publishes on the same host, so the runtime identifier is
+    // stated once here rather than repeated in every row's note.
+    var runtimeIdentifier = capabilities
+        .SelectMany(capability => capability.Results)
+        .Select(result => result.Note)
+        .OfType<string>()
+        .Select(NoteRuntimeIdentifier)
+        .FirstOrDefault(rid => rid is not null);
+
     <section class="panel report-section">
         <div class="section-heading">
             <div>
                 <p class="eyebrow">@report.Category.Name</p>
                 <h2>Deployment compatibility</h2>
             </div>
-            <span class="section-meta">Validated, not measured &middot; never rated &middot; @libraries.Length libraries</span>
+            <span class="section-meta">
+                Validated, not measured &middot; never rated &middot; @libraries.Length libraries
+                @if (runtimeIdentifier is not null)
+                {
+                    <text>&middot; probed on @runtimeIdentifier</text>
+                }
+            </span>
         </div>
         <ul class="feature-legend">
             @foreach (var (status, label) in Legend)
@@ -87,7 +102,7 @@
                                     </span>
                                     @if (value.Note is { } note)
                                     {
-                                        <small class="feature-note">@note</small>
+                                        <small class="feature-note">@NoteSummary(note)</small>
                                     }
                                 }
                                 else
@@ -145,6 +160,41 @@
         }
 
         return head;
+    }
+
+    /// <summary>
+    /// <see cref="FeatureResult.Note"/> reads like <c>"26 trim warnings (probe 5e352e4c,
+    /// linux-x64)"</c>: a headline count, then a parenthetical carrying the reproducibility
+    /// details — probe hash and runtime identifier. Squeezed into one line under a status icon
+    /// that pair reads as clutter, so only the headline shows there; the full note still reaches
+    /// the tooltip through <see cref="Tooltip"/>, and the runtime identifier is pulled out once
+    /// per section by <see cref="NoteRuntimeIdentifier"/> instead of repeating per row. A note
+    /// without a parenthetical — the shape the build target has always produced — passes through
+    /// unchanged.
+    /// </summary>
+    private static string NoteSummary(string note)
+    {
+        var parenIndex = note.IndexOf(" (", StringComparison.Ordinal);
+        return parenIndex < 0 ? note : note[..parenIndex];
+    }
+
+    /// <summary>
+    /// The last comma-separated token inside the note's parenthetical, which is always the
+    /// runtime identifier the probe published for. <see langword="null"/> when the note carries
+    /// no parenthetical to read one from.
+    /// </summary>
+    private static string? NoteRuntimeIdentifier(string note)
+    {
+        var openIndex = note.IndexOf('(');
+        var closeIndex = note.IndexOf(')');
+        if (openIndex < 0 || closeIndex < openIndex)
+        {
+            return null;
+        }
+
+        var detail = note[(openIndex + 1)..closeIndex];
+        var commaIndex = detail.LastIndexOf(',');
+        return commaIndex < 0 ? null : detail[(commaIndex + 1)..].Trim();
     }
 
     private static string ReasonClass(FeatureResult result) =>
