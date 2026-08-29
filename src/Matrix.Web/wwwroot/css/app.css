@@ -2973,6 +2973,14 @@ tbody th {
 }
 
 @media (max-width: 680px) {
+    /* The top bar goes static below, so --topbar-height no longer names a height
+       anything is pinned under; a sticky strip here would float over Categories
+       at whatever the top bar's wrapped height happens to be instead of stopping
+       under it. */
+    .tabs {
+        position: static;
+    }
+
     /* The mobile bar belongs to the document rather than to the viewport: it leaves
        the screen with Categories and the rest of the page, without changing its
        contents halfway through the gesture. */
