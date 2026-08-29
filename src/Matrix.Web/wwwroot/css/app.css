@@ -1,5 +1,3 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
-
 :root {
     color-scheme: dark;
     --bg: #0b0d12;
@@ -55,6 +53,11 @@ button, select, input {
 
 button, a, select, input {
     outline-color: var(--accent);
+    /* One rule for every hover/focus/active state swap in the file, so a control
+       answers a pointer instead of snapping between colors. Properties that never
+       change on a given element cost nothing by being listed here. */
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease,
+        box-shadow .15s ease;
 }
 
 a {
@@ -599,7 +602,8 @@ select {
 
 .tabs-summary span {
     color: var(--muted);
-    font-size: 11px;
+    font-size: 12px;
+    letter-spacing: .02em;
     text-align: center;
     text-transform: uppercase;
 }
@@ -616,7 +620,13 @@ select {
    the summary do not fit on one line, the summary drops to a line of its own and
    the tabs keep the strip to themselves, so they stay equal. A scrollbar here would
    hide the last tabs the way it used to hide them on a phone. */
+/* Pinned under the top bar rather than scrolling away with the hero: switching
+   views is something a visitor reaches for from anywhere on a report, not only
+   at the top of the page. */
 .tabs {
+    position: sticky;
+    top: var(--topbar-height);
+    z-index: 10;
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
@@ -3553,14 +3563,18 @@ tbody th {
     .help-button,
     .library-info,
     .copy-link,
-    .modal-close {
+    .modal-close,
+    .deployment-badge,
+    .select-all {
         position: relative;
     }
 
     .help-button::after,
     .library-info::after,
     .copy-link::after,
-    .modal-close::after {
+    .modal-close::after,
+    .deployment-badge::after,
+    .select-all::after {
         content: '';
         position: absolute;
         top: 50%;
@@ -3569,5 +3583,20 @@ tbody th {
         min-width: 40px;
         height: 40px;
         transform: translate(-50%, -50%);
+    }
+}
+
+/* A visitor who asked the OS for less motion gets none, the loading ring included:
+   a still ring still reads as "loading" next to its own text, and forcing every
+   transition and animation to near-zero here is simpler than tracking down each
+   one this file gains. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
     }
 }

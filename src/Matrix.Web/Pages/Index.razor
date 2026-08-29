@@ -431,10 +431,15 @@
                     </div>
                 </section>
 
-                <nav class="tabs" aria-label="Report views">
+                <nav class="tabs" role="tablist" aria-label="Report views">
                     @foreach (var view in Views)
                     {
-                        <button class="@TabClass(view.Id)" @onclick="() => _view = view.Id">
+                        <button class="@TabClass(view.Id)"
+                                role="tab"
+                                id="@TabId(view.Id)"
+                                aria-selected="@(view.Id == _view ? "true" : "false")"
+                                aria-controls="view-panel"
+                                @onclick="() => SelectView(view.Id)">
                             <TabIcon View="@view.Id"/>
                             <span>@view.Name</span>
                         </button>
@@ -445,6 +450,7 @@
                     </div>
                 </nav>
 
+                <div id="view-panel" role="tabpanel" aria-labelledby="@TabId(_view)">
                 @if (_loadingReports)
                 {
                     <section class="panel loading-panel">
@@ -530,6 +536,7 @@
                     }
                     }
                 }
+                </div>
             </main>
         </div>
 
@@ -561,6 +568,7 @@
         ("evidence", "Evidence")
     ];
 
+    private const string ViewParameter = "view";
     private const string CategoryParameter = "category";
     private const string LibraryParameter = "library";
     private const string LibrariesParameter = "libraries";
@@ -579,6 +587,16 @@
     /// rather than what to keep, as in <c>?libraries=-MvvmCross,Catel</c>.
     /// </summary>
     private const string Without = "-";
+
+    /// <summary>
+    /// Names the open tab, as in <c>?view=benchmarks</c>, so a link copied from any
+    /// tab reopens on that tab rather than always landing on the overview. Absent, or
+    /// unrecognised, means the overview, which is why the default view carries no
+    /// parameter.
+    /// </summary>
+    [Parameter]
+    [SupplyParameterFromQuery(Name = ViewParameter)]
+    public string? Tab { get; set; }
 
     /// <summary>
     /// A link published elsewhere can name the category to open, as in
@@ -1068,6 +1086,46 @@
             [FeaturesParameter] = null
         });
 
+    /// <summary>
+    /// An unrecognised or absent value falls back to the overview rather than the
+    /// last tab shown: a stale or hand-edited <c>?view=</c> should not strand a
+    /// visitor on a blank comparison.
+    /// </summary>
+    private static string? ResolveView(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        var wanted = value.Trim();
+        foreach (var candidate in Views)
+        {
+            if (candidate.Id.Equals(wanted, StringComparison.OrdinalIgnoreCase))
+            {
+                return candidate.Id;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// The tab strip only writes the address; <see cref="OnParametersSetAsync"/>
+    /// is what actually moves <see cref="_view"/>, so the selection has one source
+    /// whether it came from a click or from a shared link.
+    /// </summary>
+    private void SelectView(string viewId)
+    {
+        _view = viewId;
+        Navigation.NavigateTo(
+            Navigation.GetUriWithQueryParameters(new Dictionary<string, object?>
+            {
+                [ViewParameter] = viewId == Views[0].Id ? null : viewId
+            }),
+            replace: true);
+    }
+
     private void SelectCategory(string categoryId)
     {
         _selectedCategoryId = categoryId;
@@ -1209,6 +1267,13 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        // Independent of the catalog, unlike everything below: the tab a link
+        // points at is worth honouring even while the reports are still loading.
+        if (ResolveView(Tab) is { } view)
+        {
+            _view = view;
+        }
+
         if (_catalog is null)
         {
             return;
@@ -1601,6 +1666,8 @@
         $"{categoryId}\u001f{featureId}";
 
     private string TabClass(string view) => view == _view ? "tab active" : "tab";
+
+    private static string TabId(string view) => $"tab-{view}";
 
     private const string AuthorUrl = "https://github.com/NikolayPianikov";
 
