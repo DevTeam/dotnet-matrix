@@ -2108,6 +2108,32 @@ tbody th {
     animation: spin .8s linear infinite;
 }
 
+/* A filter or category change recomputes and redraws the whole comparison on the
+   same synchronous handler that reacted to the click, so the freeze already owns
+   the frame by the time it would show anything. The overlay is a sibling of the
+   content rather than a wrapper around it, so dimming the content cannot dim the
+   overlay along with it. */
+#view-panel {
+    position: relative;
+}
+
+#view-panel.is-recomputing > :not(.recompute-overlay) {
+    opacity: .45;
+    pointer-events: none;
+}
+
+#view-panel > :not(.recompute-overlay) {
+    transition: opacity .15s ease;
+}
+
+.recompute-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+}
+
 .boot {
     min-height: 100vh;
     gap: 10px;
