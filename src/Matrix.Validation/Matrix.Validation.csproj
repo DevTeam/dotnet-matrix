@@ -16,6 +16,8 @@
         <MatrixRunConfigurationPrefix>Validation</MatrixRunConfigurationPrefix>
         <MatrixReportDirectory>Validation</MatrixReportDirectory>
         <MatrixLibraryCatalogNamespace>Matrix.Validation.Infrastructure</MatrixLibraryCatalogNamespace>
+        <ValidationModules_DataAnnotations>Ignore</ValidationModules_DataAnnotations>
+        <ValidationModules_FieldNaming>AsDeclared</ValidationModules_FieldNaming>
     </PropertyGroup>
 
     <ItemGroup>
@@ -43,6 +45,18 @@
             <MatrixDescription>A minimal DataAnnotations-based validator with recursive object graph traversal and cycle detection.</MatrixDescription>
             <MatrixRepositoryUrl>https://github.com/DamianEdwards/MiniValidation</MatrixRepositoryUrl>
             <MatrixLogo>logos/mini-validation.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ValidationModules.SourceGenerator" Version="1.0.0" PrivateAssets="all">
+            <MatrixAotCompanion>ValidationModules</MatrixAotCompanion>
+        </PackageReference>
+        <PackageReference Include="ValidationModules.Runtime" Version="1.0.0">
+            <MatrixLibraryId>ValidationModules</MatrixLibraryId>
+            <MatrixLibraryName>ValidationModules</MatrixLibraryName>
+            <MatrixCodeName>ValidationModules</MatrixCodeName>
+            <MatrixDescription>A build-time validation library whose source generator compiles constraint attributes and rules classes into straight-line validators that use no runtime reflection.</MatrixDescription>
+            <MatrixDocumentationUrl>https://ipjohnson.github.io/ValidationModules/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ipjohnson/ValidationModules</MatrixRepositoryUrl>
+            <MatrixLogo>logos/validation-modules.svg</MatrixLogo>
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Validation" Version="10.0.11">
             <MatrixLibraryId>Microsoft.Extensions.Validation</MatrixLibraryId>
