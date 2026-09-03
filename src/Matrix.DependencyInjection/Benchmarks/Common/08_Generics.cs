@@ -13,10 +13,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "ZenIoc cannot register an open generic service mapping.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "The Catel service locator cannot close an open generic registration.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "The MvvmCross IoC provider cannot close an open generic registration.")]

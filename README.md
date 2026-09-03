@@ -25,7 +25,7 @@
 <table align="center">
 <tr>
 <td width="180" align="center"><strong>8</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>51</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>50</strong><br><sub>LIBRARIES</sub></td>
 <td width="180" align="center"><strong>99</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
@@ -35,7 +35,7 @@
 | Category | Leader | Libraries | Scenarios |
 |---|---|---:|---:|
 | [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 | 10 |
-| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 |
+| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 22 | 15 |
 | [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 |
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 6 | 9 |
@@ -271,7 +271,7 @@ Asynchronously aggregates 10,000 typed CSV rows through the library async API.
 ## Dependency Injection
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 23 libraries · 15 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 22 libraries · 15 scenarios
 </blockquote>
 
 <p><a href="https://matrix.dev-team.org/?category=dependency-injection"><strong>Explore interactively →</strong></a></p>
@@ -308,7 +308,6 @@ See [workflows/rating.md](workflows/rating.md).
 | 19 | [**MvvmCross**](https://matrix.dev-team.org/?category=dependency-injection&library=MvvmCross) | 6/14 | 85 | 245 | 329 | silver in Prepare |
 | 20 | [**Ninject**](https://matrix.dev-team.org/?category=dependency-injection&library=Ninject) | 12/14 | 54 | 134 | 189 |  |
 | 21 | [**Visual Studio MEF**](https://matrix.dev-team.org/?category=dependency-injection&library=VS.MEF) | 9/14 | 40 | 99 | 139 |  |
-| 22 | [**Catel**](https://matrix.dev-team.org/?category=dependency-injection&library=Catel) | 8/14 | 47 | 89 | 136 |  |
 
 
 <details>
@@ -721,25 +720,6 @@ rating above. The same breakdown appears as a hint on any points value in the
 | Prepare And Register | 594.36 μs | 0 ns | 0.13 | 180.37 KB | 0 B | 1.14 |
 | Prepare And Register And Simple Resolve | 588.18 μs | 6.23 ns | 0.351 | 183.95 KB | 24 B | 1.596 |
 
-#### 22. Catel — 136 of 2800
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Singleton | 200.96 ns | 1.49 ns | 11.1 | 304 B | 0 B | 27.1 |
-| Transient | 3.55 μs | 17.78 ns | 7.268 | 5.62 KB | 72 B | 12.9 |
-| PerResolve | — | 14.94 ns | 0 | — | 56 B | 0 |
-| Scoped | — | 48.01 ns | 0 | — | 160 B | 0 |
-| Combined | 8.02 μs | 46.29 ns | 7.678 | 12.18 KB | 168 B | 12.4 |
-| Complex | 17.59 μs | 105.51 ns | 7.781 | 26.02 KB | 360 B | 12 |
-| Property | — | 75.63 ns | 0 | — | 336 B | 0 |
-| Generics | — | 35.22 ns | 0 | — | 144 B | 0 |
-| Array | — | 138.74 ns | 0 | — | 624 B | 0 |
-| Conditional | 4.64 μs | 39.21 ns | 9.31 | 7.01 KB | 144 B | 15.3 |
-| Child Container | 2.06 ms | 735.66 ns | 1.889 | 2.27 MB | 1.59 KB | 2.629 |
-| Interception With Proxy | — | 76.28 ns | 0 | — | 248 B | 0 |
-| Prepare And Register | 3.04 μs | 0 ns | 1.813 | 6.8 KB | 0 B | 5.859 |
-| Prepare And Register And Simple Resolve | 971.67 μs | 6.23 ns | 0.273 | 1.14 MB | 24 B | 0.634 |
-
 </details>
 
 ### Benchmark overview
@@ -762,7 +742,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </details>
 
 <details>
-<summary><strong>Compared libraries (23)</strong></summary>
+<summary><strong>Compared libraries (22)</strong></summary>
 
 <table>
 <tr>
@@ -774,11 +754,6 @@ rating above. The same breakdown appears as a hint on any points value in the
 <td width="64"><img src="metadata/DependencyInjection/logos/windsor.png" width="48" height="48" alt="Castle Windsor logo"></td>
 <td><strong><a href="https://github.com/castleproject/Windsor/blob/master/docs/README.md">Castle Windsor</a></strong> 6.0.0<br>The Castle Project container, with bound lifestyles and Castle DynamicProxy interception.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Windsor">Compare →</a></td>
-</tr>
-<tr>
-<td width="64"><img src="metadata/DependencyInjection/logos/catel.png" width="48" height="48" alt="Catel logo"></td>
-<td><strong><a href="https://www.catelproject.com/">Catel</a></strong> 6.2.0<br>An MVVM application framework whose service locator and type factory perform constructor injection.</td>
-<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Catel">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="metadata/DependencyInjection/logos/dry-ioc.png" width="48" height="48" alt="DryIoc logo"></td>
@@ -939,7 +914,7 @@ Registers one open generic service mapping and resolves roots closed over int, f
 
 Injects a sequence of five plugin implementations and requires it to be genuinely lazy: nothing is created until enumeration, and every enumeration yields new transients.
 
-*Not rated: Too few rated libraries implement genuine lazy enumeration for this to be a competitive result; the scenario was measured and drawn in no chart group before it briefly entered one by accident. (3 of 22 rated libraries support this.)*
+*Not rated: Too few rated libraries implement genuine lazy enumeration for this to be a competitive result; the scenario was measured and drawn in no chart group before it briefly entered one by accident. (3 of 21 rated libraries support this.)*
 
 ![Dependency Injection IEnumerable benchmark](reports/DependencyInjection/charts/09-ienumerable.png)
 

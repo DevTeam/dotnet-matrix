@@ -25,10 +25,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc does not provide property injection.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "The Catel type factory injects constructor arguments only.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "MvvmCross property injection only targets interface-typed properties.")]

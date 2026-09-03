@@ -29,10 +29,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc has no interception or activation extension point.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "Catel.Core has no interception or activation extension point.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "The MvvmCross IoC provider has no interception or activation extension point.")]

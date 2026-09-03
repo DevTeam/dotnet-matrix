@@ -13,10 +13,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "ZenIoc has no explicit resolution scope.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "The Catel service locator has no explicit resolution scope.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "The MvvmCross IoC provider has no explicit resolution scope.")]

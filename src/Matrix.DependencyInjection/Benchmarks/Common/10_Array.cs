@@ -17,10 +17,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc does not resolve collections of registered implementations.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "Catel resolves collections only through an explicit ResolveTypes call, never as an injected dependency.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "The MvvmCross IoC provider does not resolve collections of registered implementations.")]

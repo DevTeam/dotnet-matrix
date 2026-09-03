@@ -14,14 +14,6 @@
       "Companions": []
     },
     {
-      "Id": "Catel",
-      "Name": "Catel",
-      "Package": "Catel.Core",
-      "Version": "6.2.0",
-      "Baseline": false,
-      "Companions": []
-    },
-    {
       "Id": "DryIoc",
       "Name": "DryIoc",
       "Package": "DryIoc.dll",
@@ -200,11 +192,6 @@
           "DurationMilliseconds": 71.3392
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 194.5531
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 28.3921
@@ -324,30 +311,23 @@
           "Note": "0 trim warnings (probe 4d5bc76f, linux-x64)"
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL TypeNotRegisteredException: The specified type \u0027Matrix.DependencyInjection.Aot.AotProbe\u002BIProbeSingleton, Matrix.DependencyInjection.Aot.Catel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\u0027 is not registered or could not be constructed. Please register type before using it. Type \u0027Matrix.DependencyInjection.Aot.AotProbe\u002BIProbeSingleton, Matrix.DependencyInjection.Aot.Catel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null\u0027 is not registered",
-          "DurationMilliseconds": 0,
-          "Note": "26 trim warnings (probe 5e352e4c, linux-x64)"
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: message: Unable to select a single public constructor from the implementation type \u0027Matrix.DependencyInjection.Aot.AotProbe.ProbeSingleton\u0027 because the type does not have public constructors.",
+          "Reason": "Native AOT probe failed: message: Unable to select a single public constructor from the implementation type 'Matrix.DependencyInjection.Aot.AotProbe.ProbeSingleton' because the type does not have public constructors.",
           "DurationMilliseconds": 0,
           "Note": "0 trim warnings (probe 7173f938, linux-x64)"
         },
         {
           "LibraryId": "Faster.Ioc",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL InvalidOperationException: No public constructors found of type Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton",
+          "Reason": "Native AOT probe failed: FAIL InvalidOperationException: No public constructors found of type Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton",
           "DurationMilliseconds": 0,
           "Note": "9 trim warnings (probe 829bf8a0, linux-x64)"
         },
         {
           "LibraryId": "Grace",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL Exception: Could not find public constructor on type Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton",
+          "Reason": "Native AOT probe failed: FAIL Exception: Could not find public constructor on type Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton",
           "DurationMilliseconds": 0,
           "Note": "125 trim warnings (probe a3f9e1ed, linux-x64)"
         },
@@ -374,14 +354,14 @@
         {
           "LibraryId": "Maestro",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: -\u003E service type: Matrix.DependencyInjection.Aot.AotProbe\u002BIProbeSingleton",
+          "Reason": "Native AOT probe failed: -> service type: Matrix.DependencyInjection.Aot.AotProbe+IProbeSingleton",
           "DurationMilliseconds": 0,
           "Note": "55 trim warnings (probe 5ce1668f, linux-x64)"
         },
         {
           "LibraryId": "MEF2",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL CompositionFailedException: No importing constructor was found on type \u0027Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton\u0027.",
+          "Reason": "Native AOT probe failed: FAIL CompositionFailedException: No importing constructor was found on type 'Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton'.",
           "DurationMilliseconds": 0,
           "Note": "49 trim warnings (probe 8c07aab1, linux-x64)"
         },
@@ -413,21 +393,21 @@
         {
           "LibraryId": "SimpleInjector",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL ArgumentException: For the container to be able to create AotProbe.ProbeSingleton it should have only one public constructor: it has none. (Parameter \u0027TImplementation\u0027)",
+          "Reason": "Native AOT probe failed: FAIL ArgumentException: For the container to be able to create AotProbe.ProbeSingleton it should have only one public constructor: it has none. (Parameter 'TImplementation')",
           "DurationMilliseconds": 0,
           "Note": "52 trim warnings (probe 904764de, linux-x64)"
         },
         {
           "LibraryId": "Singularity",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL NoConstructorException: Type Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton did not contain any public constructor.",
+          "Reason": "Native AOT probe failed: FAIL NoConstructorException: Type Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton did not contain any public constructor.",
           "DurationMilliseconds": 0,
           "Note": "140 trim warnings (probe 2249e84e, linux-x64)"
         },
         {
           "LibraryId": "Spring",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL MissingMethodException: No parameterless constructor defined for type \u0027Spring.Collections.HybridSet\u0027.",
+          "Reason": "Native AOT probe failed: FAIL MissingMethodException: No parameterless constructor defined for type 'Spring.Collections.HybridSet'.",
           "DurationMilliseconds": 0,
           "Note": "53 trim warnings (probe 1141d4d9, linux-x64)"
         },
@@ -441,7 +421,7 @@
         {
           "LibraryId": "StructureMap",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter \u0027Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton must have at least one public constructor to be plugged in by StructureMap\u0027)",
+          "Reason": "Native AOT probe failed: FAIL ArgumentOutOfRangeException: Specified argument was out of the range of valid values. (Parameter 'Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton must have at least one public constructor to be plugged in by StructureMap')",
           "DurationMilliseconds": 0,
           "Note": "129 trim warnings (probe 545c1459, linux-x64)"
         },
@@ -462,14 +442,14 @@
         {
           "LibraryId": "Windsor",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL ComponentActivatorException: ComponentActivator: could not instantiate Matrix.DependencyInjection.Aot.AotProbe\u002BProbeSingleton",
+          "Reason": "Native AOT probe failed: FAIL ComponentActivatorException: ComponentActivator: could not instantiate Matrix.DependencyInjection.Aot.AotProbe+ProbeSingleton",
           "DurationMilliseconds": 0,
           "Note": "94 trim warnings (probe 5beb72bd, linux-x64)"
         },
         {
           "LibraryId": "ZenIoc",
           "Status": "Failed",
-          "Reason": "Native AOT probe failed: FAIL RegisterException: ProbeSingleton won\u0027t be resolved as it has no constructors.",
+          "Reason": "Native AOT probe failed: FAIL RegisterException: ProbeSingleton won't be resolved as it has no constructors.",
           "DurationMilliseconds": 0,
           "Note": "16 trim warnings (probe e08ab2a3, linux-x64)"
         }
@@ -485,11 +465,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 2.011
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 1.0725
         },
         {
           "LibraryId": "DryIoc",
@@ -608,12 +583,6 @@
           "LibraryId": "Autofac",
           "Status": "Unsupported",
           "Reason": "Autofac has no native lifetime shared only within one top-level resolve graph.",
-          "DurationMilliseconds": 0
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "The Catel service locator supports only singleton and transient registrations.",
           "DurationMilliseconds": 0
         },
         {
@@ -749,12 +718,6 @@
           "DurationMilliseconds": 5.316
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "The Catel service locator has no explicit resolution scope.",
-          "DurationMilliseconds": 0
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 6.424
@@ -792,7 +755,7 @@
         {
           "LibraryId": "MEF2",
           "Status": "Unsupported",
-          "Reason": "MEF sharing boundaries are entered only through ExportFactory\u003CT\u003E and cannot be resolved from repeatedly.",
+          "Reason": "MEF sharing boundaries are entered only through ExportFactory<T> and cannot be resolved from repeatedly.",
           "DurationMilliseconds": 0
         },
         {
@@ -850,7 +813,7 @@
         {
           "LibraryId": "VS.MEF",
           "Status": "Unsupported",
-          "Reason": "MEF sharing boundaries are entered only through ExportFactory\u003CT\u003E and cannot be resolved from repeatedly.",
+          "Reason": "MEF sharing boundaries are entered only through ExportFactory<T> and cannot be resolved from repeatedly.",
           "DurationMilliseconds": 0
         },
         {
@@ -876,11 +839,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 2.6414
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 1.6584
         },
         {
           "LibraryId": "DryIoc",
@@ -1001,11 +959,6 @@
           "DurationMilliseconds": 3.6346
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 2.3509
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 3.3042
@@ -1122,12 +1075,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 8.7393
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "The Catel type factory injects constructor arguments only.",
-          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "DryIoc",
@@ -1253,12 +1200,6 @@
           "DurationMilliseconds": 8.9349
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "The Catel service locator cannot close an open generic registration.",
-          "DurationMilliseconds": 0
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 5.3736
@@ -1378,13 +1319,7 @@
         {
           "LibraryId": "Autofac",
           "Status": "Unsupported",
-          "Reason": "Autofac materializes IEnumerable\u003CT\u003E before activating the consumer.",
-          "DurationMilliseconds": 0
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "Catel resolves collections only through an explicit ResolveTypes call, never as an injected dependency.",
+          "Reason": "Autofac materializes IEnumerable<T> before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1401,7 +1336,7 @@
         {
           "LibraryId": "Grace",
           "Status": "Unsupported",
-          "Reason": "Grace materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Grace materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1412,19 +1347,19 @@
         {
           "LibraryId": "Lamar",
           "Status": "Unsupported",
-          "Reason": "Lamar materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Lamar materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
           "LibraryId": "LightInject",
           "Status": "Unsupported",
-          "Reason": "LightInject materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "LightInject materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Maestro",
           "Status": "Unsupported",
-          "Reason": "Maestro materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Maestro materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1436,7 +1371,7 @@
         {
           "LibraryId": "Microsoft.DI",
           "Status": "Unsupported",
-          "Reason": "Microsoft DI materializes IEnumerable\u003CT\u003E before activating the consumer.",
+          "Reason": "Microsoft DI materializes IEnumerable<T> before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1448,7 +1383,7 @@
         {
           "LibraryId": "Ninject",
           "Status": "Unsupported",
-          "Reason": "Ninject materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Ninject materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1464,7 +1399,7 @@
         {
           "LibraryId": "Singularity",
           "Status": "Unsupported",
-          "Reason": "Singularity materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Singularity materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1476,19 +1411,19 @@
         {
           "LibraryId": "Stashbox",
           "Status": "Unsupported",
-          "Reason": "Stashbox materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Stashbox materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
           "LibraryId": "StructureMap",
           "Status": "Unsupported",
-          "Reason": "StructureMap materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "StructureMap materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Unity",
           "Status": "Unsupported",
-          "Reason": "Unity materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Unity materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1500,7 +1435,7 @@
         {
           "LibraryId": "Windsor",
           "Status": "Unsupported",
-          "Reason": "Castle Windsor materializes IEnumerable\u003CT\u003E into an array before activating the consumer.",
+          "Reason": "Castle Windsor materializes IEnumerable<T> into an array before activating the consumer.",
           "DurationMilliseconds": 0
         },
         {
@@ -1521,12 +1456,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 13.9699
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "Catel resolves collections only through an explicit ResolveTypes call, never as an injected dependency.",
-          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "DryIoc",
@@ -1573,7 +1502,7 @@
         {
           "LibraryId": "Microsoft.DI",
           "Status": "Unsupported",
-          "Reason": "Microsoft.Extensions.DependencyInjection resolves multiple registrations as IEnumerable\u003CT\u003E, not as T[].",
+          "Reason": "Microsoft.Extensions.DependencyInjection resolves multiple registrations as IEnumerable<T>, not as T[].",
           "DurationMilliseconds": 0
         },
         {
@@ -1595,7 +1524,7 @@
         {
           "LibraryId": "SimpleInjector",
           "Status": "Unsupported",
-          "Reason": "Simple Injector injects registered collections as IEnumerable\u003CT\u003E, not as T[].",
+          "Reason": "Simple Injector injects registered collections as IEnumerable<T>, not as T[].",
           "DurationMilliseconds": 0
         },
         {
@@ -1651,11 +1580,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 4.2323
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 1.5585
         },
         {
           "LibraryId": "DryIoc",
@@ -1777,11 +1701,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 6.5254
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 1.5121
         },
         {
           "LibraryId": "DryIoc",
@@ -1918,12 +1837,6 @@
           "DurationMilliseconds": 64.2401
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Unsupported",
-          "Reason": "Catel.Core has no interception or activation extension point.",
-          "DurationMilliseconds": 0
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 12.1405
@@ -2050,11 +1963,6 @@
           "DurationMilliseconds": 1.1582
         },
         {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 0.3082
-        },
-        {
           "LibraryId": "DryIoc",
           "Status": "Supported",
           "DurationMilliseconds": 0.371
@@ -2171,11 +2079,6 @@
           "LibraryId": "Autofac",
           "Status": "Supported",
           "DurationMilliseconds": 1.0827
-        },
-        {
-          "LibraryId": "Catel",
-          "Status": "Supported",
-          "DurationMilliseconds": 0.5133
         },
         {
           "LibraryId": "DryIoc",

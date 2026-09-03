@@ -53,10 +53,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc supports only singleton, scoped and transient lifetimes.")]
 [FeatureUnavailable(
-    LibraryCatalog.Catel,
-    FeatureStatus.Unsupported,
-    "The Catel service locator supports only singleton and transient registrations.")]
-[FeatureUnavailable(
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "The MvvmCross IoC provider supports only singleton and per-resolution-call registrations.")]

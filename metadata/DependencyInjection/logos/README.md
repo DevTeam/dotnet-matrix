@@ -6,7 +6,6 @@ declares (`<icon>` for an embedded file, `<iconUrl>` when the package only links
 | File | Package | Source |
 |---|---|---|
 | `autofac.png` | `Autofac` 9.3.1 | embedded icon |
-| `catel.png` | `Catel.Core` 6.2.0 | embedded icon |
 | `dry-ioc.png` | `DryIoc.dll` 5.4.3 | embedded icon |
 | `grace.png` | `Grace` 7.2.1 | linked icon |
 | `lamar.png` | `Lamar` 16.0.0 | linked icon, downscaled to 128x128 |
