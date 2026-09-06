@@ -1,8 +1,3 @@
-using BenchmarkDotNet.Configs;
-using BenchmarkDotNet.Exporters.Json;
-using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
-using Perfolizer.Horology;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.Text.Json;
@@ -14,7 +9,7 @@ public sealed class MatrixBenchmarkRunner(
     MatrixModule module,
     MatrixModuleAssembly moduleAssembly,
     IMatrixReportStore reportStore,
-    IBenchmarkEnvironmentProvider environmentProvider,
+    IBenchmarkExecutor benchmarkExecutor,
     IJsonSerializer jsonSerializer,
     IMatrixReportInvariants reportInvariants) : IMatrixRunner
 {
@@ -42,65 +37,11 @@ public sealed class MatrixBenchmarkRunner(
         var measuredEvidenceId = $"{evidenceBaseId}-measured";
         var reportedEvidenceId = $"{evidenceBaseId}-reported";
 
-        var job = Job.Default
-            .WithId(jobId)
-            .WithArguments([new MsBuildArgument("/p:MatrixMode=Benchmark")]);
-        // Preserve roughly the old 2 + 5 iterations at 500 ms time budget,
-        // but collect more samples and let BenchmarkDotNet adapt to noisy cases.
-        job = options.Smoke
-            ? job
-                .WithWarmupCount(1)
-                .WithIterationCount(1)
-                .WithInvocationCount(1)
-                .WithUnrollFactor(1)
-            : job
-                .WithMinWarmupCount(3)
-                .WithMaxWarmupCount(5)
-                .WithIterationTime(TimeInterval.Millisecond * 250)
-                .WithMinIterationCount(8)
-                .WithMaxIterationCount(12)
-                .WithMaxRelativeError(0.05);
-
-        var ids = runLibraries
-            .Select(library => library.Id)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var config = ManualConfig.Create(DefaultConfig.Instance)
-            .AddFilter(new MatrixBenchmarkFilter(ids))
-            .AddJob(job)
-            .AddExporter(JsonExporter.Full)
-            .WithArtifactsPath(artifactsDirectory);
+        var ids = runLibraries.Select(library => library.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
         try
         {
-            var summaries = BenchmarkSwitcher
-                .FromAssembly(moduleAssembly.Value)
-                .Run(["--filter", "*"], config)
-                .ToList();
-
-            var resolvedJobs = summaries
-                .SelectMany(summary => summary.BenchmarksCases)
-                .Select(benchmarkCase => benchmarkCase.Job)
-                .ToArray();
-            var resolvedJobIds = resolvedJobs
-                .Select(resolvedJob => resolvedJob.ResolvedId)
-                .Distinct(StringComparer.Ordinal)
-                .ToArray();
-
-            if (resolvedJobIds.Length > 1)
-            {
-                Console.Error.WriteLine(
-                    $"ERROR: the benchmark configuration resolved to {resolvedJobIds.Length} jobs "
-                    + $"({string.Join(", ", resolvedJobIds)}). Environment capture below records "
-                    + "one BenchmarkEnvironment per run, taken from the first resolved job, so "
-                    + "results from the other job(s) would be tagged with the wrong environment. "
-                    + "Refusing to write a report.");
-                return 1;
-            }
-
-            var environment = environmentProvider.Capture(
-                "BenchmarkDotNet",
-                typeof(BenchmarkSwitcher).Assembly,
-                jobId,
-                resolvedJobs.FirstOrDefault() ?? job);
+            var execution = benchmarkExecutor.Execute(moduleAssembly.Value, ids, options.Smoke, artifactsDirectory);
+            var environment = execution.Environment;
             var isPartial = runLibraries.Count != module.Libraries.Count;
             BenchmarkReport? existing = null;
             if (isPartial)
@@ -125,30 +66,10 @@ public sealed class MatrixBenchmarkRunner(
                 }
             }
 
-            var measuredResults = summaries
-                .SelectMany(summary => summary.Reports)
-                .Select(report =>
+            var measuredResults = execution.Results
+                .Select(result => result with
                 {
-                    var method = report.BenchmarkCase.Descriptor.WorkloadMethod;
-                    var library = method.GetCustomAttribute<LibraryBenchmarkAttribute>()!;
-                    var feature = method.DeclaringType!.GetCustomAttribute<MatrixFeatureAttribute>()!;
-                    var payloadSize = method.GetCustomAttribute<PayloadSizeAttribute>();
-                    var allocatedBytes = report.Metrics.TryGetValue("Allocated Memory", out var allocated)
-                        ? allocated.Value
-                        : (double?)null;
-                    return new CapturedBenchmarkResult(
-                        feature.Order,
-                        feature.Id,
-                        feature.Name,
-                        new BenchmarkResult(
-                            library.LibraryId,
-                            report.Success,
-                            report.ResultStatistics?.Mean,
-                            report.ResultStatistics?.StandardError,
-                            allocatedBytes,
-                            environment.Id,
-                            payloadSize?.Bytes,
-                            measuredEvidenceId));
+                    Result = result.Result with { EnvironmentId = environment.Id, EvidenceId = measuredEvidenceId }
                 })
                 .ToArray();
             var reportedResults = CaptureReportedResults(

@@ -7,7 +7,7 @@ namespace Build.Targets;
 
 internal sealed class ReportChartsTarget(
     IBuildPaths buildPaths,
-    IJsonSerializer jsonSerializer,
+    IMatrixReportReader reportReader,
     IMatrixOverviews overviews,
     IMatrixScores scores) : IReportChartsTarget
 {
@@ -61,7 +61,7 @@ internal sealed class ReportChartsTarget(
             "metadata",
             module.Metadata.ReportDirectory);
         var catalogPath = Path.Combine(metadataDirectory, "charts.json");
-        if (!File.Exists(reportPath) || !File.Exists(catalogPath))
+        if (!reportReader.Exists(reportPath) || !reportReader.Exists(catalogPath))
         {
             Console.Error.WriteLine(
                 $"WARNING: Cannot render charts for {module.Metadata.Name}: "
@@ -112,7 +112,7 @@ internal sealed class ReportChartsTarget(
     }
 
     private T Read<T>(string path) =>
-        jsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
+        reportReader.Read<T>(path, JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
 
     private static void RenderFeature(

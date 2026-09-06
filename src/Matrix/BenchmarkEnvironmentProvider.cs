@@ -4,7 +4,6 @@ using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
-using BenchmarkDotNet.Jobs;
 using Microsoft.Win32;
 
 namespace Matrix;
@@ -18,22 +17,12 @@ public sealed class BenchmarkEnvironmentProvider : IBenchmarkEnvironmentProvider
         string benchmarkTool,
         Assembly benchmarkToolAssembly,
         string jobLabel,
-        Job job)
+        BenchmarkJobEnvironment job)
     {
-        // Job.Environment characteristics reflect the job actually resolved by
-        // BenchmarkDotNet (e.g. a Native AOT runtime), which can differ from this
-        // orchestrating host process. BenchmarkDotNet does not back-fill unset
-        // characteristics from the host, so fall back to host values ourselves.
-        var runtime = job.Environment.HasValue(EnvironmentMode.RuntimeCharacteristic)
-            ? job.Environment.Runtime
-            : null;
-        var framework = runtime?.Name ?? RuntimeInformation.FrameworkDescription;
-        var processArchitecture = job.Environment.HasValue(EnvironmentMode.PlatformCharacteristic)
-            ? job.Environment.Platform.ToString()
-            : RuntimeInformation.ProcessArchitecture.ToString();
-        var serverGarbageCollector = job.Environment.Gc.HasValue(GcMode.ServerCharacteristic)
-            ? job.Environment.Gc.Server
-            : GCSettings.IsServerGC;
+        // Unspecified job characteristics use the orchestrating host's values.
+        var framework = job.Framework ?? RuntimeInformation.FrameworkDescription;
+        var processArchitecture = job.ProcessArchitecture ?? RuntimeInformation.ProcessArchitecture.ToString();
+        var serverGarbageCollector = job.ServerGarbageCollector ?? GCSettings.IsServerGC;
 
         var values = new[]
         {

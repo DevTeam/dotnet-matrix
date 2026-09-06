@@ -1,9 +1,7 @@
 namespace Matrix;
 
-public interface IMatrixReportStore
+public interface IMatrixReportStore : IMatrixReportReader
 {
-    T? Read<T>(string fileName);
-
     void Write<T>(string fileName, T value);
 
     void WarnEnvironmentMismatch(

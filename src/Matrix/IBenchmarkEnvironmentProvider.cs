@@ -1,5 +1,4 @@
 using System.Reflection;
-using BenchmarkDotNet.Jobs;
 
 namespace Matrix;
 
@@ -9,5 +8,5 @@ public interface IBenchmarkEnvironmentProvider
         string benchmarkTool,
         Assembly benchmarkToolAssembly,
         string jobLabel,
-        Job job);
+        BenchmarkJobEnvironment job);
 }

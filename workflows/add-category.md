@@ -69,18 +69,30 @@ repository-relative command that runs the category benchmarks.
 
 ## Architecture
 
-The repository has three layers:
+The repository separates shared data from execution infrastructure:
 
-1. `src/Matrix` contains category-neutral contracts, report models, module
-   metadata discovery, filtering, rating, chart, and Web catalog models.
-2. Each `src/Matrix.<Category>` executable owns its feature contracts,
+1. `src/Matrix.Core` contains category-neutral contracts, report models,
+   rating calculations, chart and Web catalog models, and JSON utilities.
+   It has no package dependencies and does not reference BenchmarkDotNet.
+2. `src/Matrix` contains module discovery, filtering, report file storage,
+   application composition, runners, and the BenchmarkDotNet adapter.
+3. Each `src/Matrix.<Category>` executable owns its feature contracts,
    scenarios, adapters, validation rules, and benchmark hot paths.
-3. `build` discovers category assemblies and creates category-specific targets,
-   reports, run configurations, charts, README sections, and the production Web
-   catalog.
+4. `build` discovers category assemblies and creates reports, run
+   configurations, charts, README sections, and the production Web catalog.
+5. `src/Matrix.Web` references only `Matrix.Core`; it loads reports through
+   `IMatrixDataSource` and reuses the same rating calculations as the build.
 
-Apply these source architecture rules in every assembly, including `Matrix`,
-category modules, `Matrix.Web`, and `build`:
+`MatrixBenchmarkRunner` receives an `IBenchmarkExecutor`. The
+`BenchmarkDotNetExecutor` owns job configuration, execution, and conversion
+of BenchmarkDotNet results into Matrix records. Only the adapter handles
+BenchmarkDotNet job types; the environment provider receives a
+`BenchmarkJobEnvironment` description. README and chart targets receive
+`IMatrixReportReader`, implemented by the same `MatrixReportStore` used by
+the runners, and retain their Web JSON reader settings.
+
+Apply these source architecture rules in every assembly, including
+`Matrix.Core`, `Matrix`, category modules, `Matrix.Web`, and `build`:
 
 - Put every named type in its own source file. This includes classes,
   interfaces, records, structs, enums, delegates, and attributes. Name the file
@@ -130,13 +142,13 @@ Read these files before changing shared behavior:
 | Module project contract and generated library catalog | `src/Matrix/Matrix.Module.targets` |
 | Embedded project metadata parsing | `src/Matrix/MatrixMetadata.cs` |
 | Library filtering | `src/Matrix/MatrixLibraryCatalog.cs` |
-| Feature declaration | `src/Matrix/MatrixFeatureAttribute.cs`, `src/Matrix/MatrixFeatureCatalog.cs`, `src/Matrix/MatrixFeatureMetadata.cs` |
-| Report schema and storage | `src/Matrix/FeatureReport.cs`, `src/Matrix/BenchmarkReport.cs`, related one-type report files, `src/Matrix/MatrixReportStore.cs` |
+| Feature declaration | `src/Matrix.Core/MatrixFeatureAttribute.cs`, `src/Matrix.Core/MatrixFeatureCatalog.cs`, `src/Matrix.Core/MatrixFeatureMetadata.cs` |
+| Report schema and storage | `src/Matrix.Core/FeatureReport.cs`, `src/Matrix.Core/BenchmarkReport.cs`, related one-type report files, `src/Matrix/MatrixReportStore.cs` |
 | Shared application and runners | `src/Matrix/MatrixApplicationHost.cs`, `src/Matrix/MatrixComposition.cs`, `src/Matrix/MatrixApplication.cs`, `src/Matrix/MatrixRunnerSelector.cs`, `src/Matrix/MatrixFeatureValidationRunner.cs`, `src/Matrix/MatrixBenchmarkRunner.cs` |
-| Benchmark and availability declarations | `src/Matrix/LibraryBenchmarkAttribute.cs`, `src/Matrix/ReportedBenchmarkAttribute.cs`, `src/Matrix/FeatureUnavailableAttribute.cs`, `src/Matrix/FeatureStatus.cs` |
-| Environment identity | `src/Matrix/BenchmarkEnvironment.cs`, `src/Matrix/BenchmarkEnvironmentProvider.cs`, `src/Matrix/BenchmarkEnvironmentComparer.cs` |
-| Charts, metrics, overviews, and ratings | `src/Matrix/MatrixChartCatalog.cs`, `src/Matrix/MatrixMetrics.cs`, `src/Matrix/MatrixOverviews.cs`, `src/Matrix/MatrixRating.cs` |
-| Command names | `src/Matrix/MatrixNames.cs` |
+| Benchmark and availability declarations | `src/Matrix.Core/LibraryBenchmarkAttribute.cs`, `src/Matrix.Core/ReportedBenchmarkAttribute.cs`, `src/Matrix.Core/FeatureUnavailableAttribute.cs`, `src/Matrix.Core/FeatureStatus.cs` |
+| Environment identity | `src/Matrix.Core/BenchmarkEnvironment.cs`, `src/Matrix/BenchmarkEnvironmentProvider.cs`, `src/Matrix.Core/BenchmarkEnvironmentComparer.cs` |
+| Charts, metrics, overviews, and ratings | `src/Matrix.Core/MatrixChartCatalog.cs`, `src/Matrix.Core/MatrixMetrics.cs`, `src/Matrix.Core/MatrixOverviews.cs`, `src/Matrix.Core/MatrixRating.cs` |
+| Command names | `src/Matrix.Core/MatrixNames.cs` |
 | Build discovery | `build/Targets/MatrixModuleDiscovery.cs` |
 | Validation and benchmark process launch | `build/Targets/MatrixTarget.cs` |
 | Per-library update | `build/Targets/LibraryTarget.cs` |

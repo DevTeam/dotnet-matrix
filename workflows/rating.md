@@ -548,11 +548,11 @@ remains the thing that makes such a row readable, which is why it is not optiona
 
 | Step | Where | Notes |
 | --- | --- | --- |
-| 0 | `src/Matrix/MatrixScores.cs` | The rule itself, applied to whatever set of scenarios it is given. Both standings call it, so they cannot drift apart in method. |
-| 1 | `src/Matrix/MatrixRating.cs` | Replace the group-and-place algorithm with a call to `MatrixScores` over every scenario. `MatrixMedals` gains `TimePoints`, `MemoryPoints` and `Covered`; `Awards` stays for the per-group stars, now taken from the group standing. |
-| 1a | `src/Matrix/MatrixOverviews.cs` | One list of rows ordered by the group score; `Ranked`/`Unranked` and the divider are gone. `MatrixOverviewRow` gains `TimePoints` and `MemoryPoints`. |
+| 0 | `src/Matrix.Core/MatrixScores.cs` | The rule itself, applied to whatever set of scenarios it is given. Both standings call it, so they cannot drift apart in method. |
+| 1 | `src/Matrix.Core/MatrixRating.cs` | Replace the group-and-place algorithm with a call to `MatrixScores` over every scenario. `MatrixMedals` gains `TimePoints`, `MemoryPoints` and `Covered`; `Awards` stays for the per-group stars, now taken from the group standing. |
+| 1a | `src/Matrix.Core/MatrixOverviews.cs` | One list of rows ordered by the group score; `Ranked`/`Unranked` and the divider are gone. `MatrixOverviewRow` gains `TimePoints` and `MemoryPoints`. |
 | 1b | `build/Targets/ReportChartsTarget.cs` | One row loop, a `POINTS` column, coverage under every name, no divider. Rewrites all overview PNGs. |
-| 2 | `src/Matrix/MatrixMedals.cs` | `Gold`, `Silver`, `Bronze` and `Total` keep counting per-group awards for the chart stars. Category medals are derived from the points order, not from these. |
+| 2 | `src/Matrix.Core/MatrixMedals.cs` | `Gold`, `Silver`, `Bronze` and `Total` keep counting per-group awards for the chart stars. Category medals are derived from the points order, not from these. |
 | 3 | `src/Matrix.Web/Components/RatingBoard.razor` | A fixed-layout table: place, library, scenarios, time, memory, points; ordering by points. |
 | 4 | `src/Matrix.Web/Components/LibraryDialog.razor` | Points in the metric strip beside the rating place, with the split in its tooltip. |
 | 5 | `src/Matrix.Web/Shared/HelpDialog.razor` (new) | Generic explanation dialog reusing the `.modal-*` styles and the `inert` handling of the library dialog. |

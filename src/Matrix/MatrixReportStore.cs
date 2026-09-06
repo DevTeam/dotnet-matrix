@@ -11,11 +11,13 @@ public sealed class MatrixReportStore(IJsonSerializer jsonSerializer) : IMatrixR
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
-    public T? Read<T>(string fileName)
+    public bool Exists(string fileName) => File.Exists(Path.GetFullPath(fileName));
+
+    public T? Read<T>(string fileName, JsonSerializerOptions? options = null)
     {
         var path = Path.GetFullPath(fileName);
         return File.Exists(path)
-            ? jsonSerializer.Deserialize<T>(File.ReadAllText(path), Options)
+            ? jsonSerializer.Deserialize<T>(File.ReadAllText(path), options ?? Options)
             : default;
     }
 

@@ -1,4 +1,4 @@
-﻿using Matrix;
+using Matrix;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -11,7 +11,7 @@ internal sealed partial class ReadmeTarget(
     IMetadataTarget metadataTarget,
     IReportChartsTarget reportChartsTarget,
     ITemplateEngine templateEngine,
-    IJsonSerializer jsonSerializer,
+    IMatrixReportReader reportReader,
     IMatrixScores scores,
     IMatrixRatings ratings) : IReadmeTarget
 {
@@ -78,7 +78,7 @@ internal sealed partial class ReadmeTarget(
         var featuresPath = Path.Combine(reportRoot, "features.json");
         var chartsPath = Path.Combine(metadataRoot, "charts.json");
         var librariesPath = Path.Combine(metadataRoot, "libraries.json");
-        if (!File.Exists(reportPath) || !File.Exists(chartsPath) || !File.Exists(librariesPath))
+        if (!reportReader.Exists(reportPath) || !reportReader.Exists(chartsPath) || !reportReader.Exists(librariesPath))
         {
             Console.Error.WriteLine(
                 $"WARNING: README data for {module.Metadata.Name} is incomplete.");
@@ -90,7 +90,7 @@ internal sealed partial class ReadmeTarget(
         // report, which benchmarks.json does not carry. Missing is not fatal: the
         // count is only ever appended to a Rated: false reason, and a category
         // with no not-rated scenario never asks for it.
-        var featureReport = File.Exists(featuresPath) ? Read<FeatureReport>(featuresPath) : null;
+        var featureReport = reportReader.Exists(featuresPath) ? Read<FeatureReport>(featuresPath) : null;
         var charts = Read<MatrixChartCatalog>(chartsPath);
         var metadata = Read<MatrixLibraryMetadataCatalog>(librariesPath);
         var moduleLibraries = module.Metadata.Libraries.ToDictionary(
@@ -252,7 +252,7 @@ internal sealed partial class ReadmeTarget(
         Path.GetRelativePath(buildPaths.SolutionDirectory, path).Replace('\\', '/');
 
     private T Read<T>(string path) =>
-        jsonSerializer.Deserialize<T>(File.ReadAllText(path), JsonOptions)
+        reportReader.Read<T>(path, JsonOptions)
         ?? throw new InvalidOperationException($"Cannot read '{path}'.");
     [GeneratedRegex("[^a-z0-9]+")]
     private static partial Regex AnchorRegex();
