@@ -12,7 +12,7 @@ public sealed record MatrixLibrary(
     string? Package,
     string? Version,
     bool Baseline,
-    IReadOnlyList<MatrixPackage> Companions = default!)
+    IReadOnlyList<MatrixPackage> Companions = null!)
 {
     public IReadOnlyList<MatrixPackage> Companions { get; init; } = Companions ?? [];
 }

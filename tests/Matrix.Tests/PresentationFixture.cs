@@ -18,6 +18,6 @@ internal sealed class PresentationFixture(string directory) :
         CancellationToken cancellationToken)
     {
         Model = (ReadmeModel)(object)model!;
-        await stream.WriteAsync(Encoding.UTF8.GetBytes("Generated from injected reports"), cancellationToken);
+        await stream.WriteAsync("Generated from injected reports"u8.ToArray(), cancellationToken);
     }
 }

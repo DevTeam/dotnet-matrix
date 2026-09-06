@@ -1,5 +1,6 @@
 using LinqAF;
 // ReSharper disable CheckNamespace
+// ReSharper disable InconsistentNaming
 namespace Matrix.LinqQueries.Benchmarks;
 
 public partial class FilterCount

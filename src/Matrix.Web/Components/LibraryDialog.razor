@@ -502,6 +502,7 @@
         _rows = order
             .OrderBy(entry => entry.Value.Order)
             .Select(entry => ReadRow(entry.Key, entry.Value.Order, entry.Value.Name))
+            // ReSharper disable once UseCollectionExpression
             .ToArray();
         _supported = _rows.Count(row => row.StatusClass == "supported");
     }
@@ -556,6 +557,7 @@
                 StatusClass(Status(feature)?.Status),
                 StatusLabel(Status(feature)?.Status),
                 Detail(Status(feature))))
+            // ReSharper disable once UseCollectionExpression
             .ToArray();
 
     private FeatureResult? Status(FeatureReportEntry feature) =>
@@ -589,6 +591,7 @@
         foreach (var group in charts.Groups)
         {
             var overview = View.Overview(Report, group, SelectedLibraries);
+            // ReSharper disable once UseNullPropagation
             if (overview is null)
             {
                 continue;
@@ -614,6 +617,7 @@
                     .Select(feature => View.FeatureDescription(Report, feature.Id) is { } text
                         ? $"{feature.Name} — {text}"
                         : feature.Name)
+                    // ReSharper disable once UseCollectionExpression
                     .ToArray(),
                 // A rated row can never pass the maximum (see workflows/rating.md),
                 // so FormatWithinMax only ever blanks a reference row here.
@@ -646,6 +650,7 @@
             .Select(feature => (
                 feature.Name,
                 View.FeatureDescription(Report, feature.Id) ?? feature.Name))
+            // ReSharper disable once UseCollectionExpression
             .ToArray();
     }
 
@@ -685,7 +690,7 @@
                   + $": {Measures.Format(Measures.Total(memory ? leader.MemoryValues : leader.PerformanceValues), memory)}";
 
     private static string Width(double percent) =>
-        $"width: {percent.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)}%";
+        $"width: {percent.ToString("0.##", CultureInfo.InvariantCulture)}%";
 
     /// <summary>What one scenario is worth on both metrics, the denominator every row's fill shares.</summary>
     private int ScenarioMaximum => Scoring.MaximumPoints * Scoring.Metrics;

@@ -172,7 +172,7 @@ public sealed class MatrixScores(IMatrixReportInvariants reportInvariants) : IMa
     /// baseline, still gets its own measurement scored against the field's best;
     /// it simply never becomes the best itself. See workflows/rating.md.
     /// </summary>
-    private MatrixScoreCell Cell(
+    private static MatrixScoreCell Cell(
         IReadOnlyList<BenchmarkResult> results,
         string libraryId,
         Func<BenchmarkResult, double?> metric,
@@ -204,7 +204,7 @@ public sealed class MatrixScores(IMatrixReportInvariants reportInvariants) : IMa
     /// One metric of one scenario. A metric nobody reported is skipped rather
     /// than scored as zero: it is not a competition.
     /// </summary>
-    private void Award(
+    private static void Award(
         Dictionary<string, (double Time, double Memory, int Covered)> score,
         IReadOnlyList<BenchmarkResult> results,
         Func<BenchmarkResult, double?> metric,
@@ -236,6 +236,6 @@ public sealed class MatrixScores(IMatrixReportInvariants reportInvariants) : IMa
     /// The scale itself, and the only place it exists. Both sides carry the same
     /// step, so two results that measure zero are equally best.
     /// </summary>
-    private double Award(double best, double value, double resolution) =>
+    private static double Award(double best, double value, double resolution) =>
         MaximumPoints * Math.Pow((best + resolution) / (value + resolution), Curve);
 }

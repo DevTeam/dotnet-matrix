@@ -1,4 +1,7 @@
 // ReSharper disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace Matrix.LinqQueries.Benchmarks;
 
 [MemoryDiagnoser]
@@ -13,6 +16,8 @@ public partial class AnyMatch
     private readonly int[] _source = QueryData.ScanNumbers;
 
     [Conditional("MATRIX_VALIDATION")]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private void Validate(string library, bool result) =>
         QueryChecks.AnyMatch(library, result);
 }

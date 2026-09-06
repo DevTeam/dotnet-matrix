@@ -1,4 +1,5 @@
 // ReSharper disable CheckNamespace
+// ReSharper disable ForCanBeConvertedToForeach
 namespace Matrix.LinqQueries.Benchmarks;
 
 public partial class FlattenSelectMany

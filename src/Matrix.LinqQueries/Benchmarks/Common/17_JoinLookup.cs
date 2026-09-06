@@ -1,4 +1,7 @@
 // ReSharper disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace Matrix.LinqQueries.Benchmarks;
 
 [MemoryDiagnoser]
@@ -14,6 +17,8 @@ public partial class JoinLookup
     private readonly Customer[] _customers = QueryData.Customers;
 
     [Conditional("MATRIX_VALIDATION")]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private void Validate(string library, CustomerOrder[] result) =>
         QueryChecks.JoinLookup(library, result);
 }

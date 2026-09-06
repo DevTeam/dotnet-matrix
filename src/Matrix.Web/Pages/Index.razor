@@ -751,15 +751,16 @@
 
     private bool HasFeatureFilter => SelectedFeatureCount < CategoryFeatureCount;
 
-    private IReadOnlyList<string> CategoryFeatureNameItems => CategoryFeatures
-        .Select(entry => entry.Feature.Name)
-        .ToArray();
+    private IReadOnlyList<string> CategoryFeatureNameItems =>
+        [.. CategoryFeatures.Select(entry => entry.Feature.Name)];
 
-    private IReadOnlyList<string> SelectedFeatureNameItems => CategoryFeatures
-        .Where(entry => _selectedFeatures.Contains(
-            FeatureKey(entry.Report.Category.Id, entry.Feature.Id)))
-        .Select(entry => entry.Feature.Name)
-        .ToArray();
+    private IReadOnlyList<string> SelectedFeatureNameItems =>
+    [
+        .. CategoryFeatures
+            .Where(entry => _selectedFeatures.Contains(
+                FeatureKey(entry.Report.Category.Id, entry.Feature.Id)))
+            .Select(entry => entry.Feature.Name)
+    ];
 
     private string SelectedFeatureNames => SelectionNames(SelectedFeatureNameItems);
 
@@ -785,16 +786,17 @@
 
     private bool HasLibraryFilter => SelectedLibraryCount < CategoryLibraryCount;
 
-    private IReadOnlyList<string> CategoryLibraryNameItems => VisibleReports
-        .SelectMany(report => Libraries(report).Select(library => library.Name))
-        .ToArray();
+    private IReadOnlyList<string> CategoryLibraryNameItems =>
+        [ .. VisibleReports.SelectMany(report => Libraries(report).Select(library => library.Name))];
 
-    private IReadOnlyList<string> SelectedLibraryNameItems => VisibleReports
-        .SelectMany(report => Libraries(report)
-            .Where(library => _selectedLibraries.Contains(
-                LibraryKey(report.Category.Id, library.Id)))
-            .Select(library => library.Name))
-        .ToArray();
+    private IReadOnlyList<string> SelectedLibraryNameItems =>
+    [
+        .. VisibleReports
+            .SelectMany(report => Libraries(report)
+                .Where(library => _selectedLibraries.Contains(
+                    LibraryKey(report.Category.Id, library.Id)))
+                .Select(library => library.Name))
+    ];
 
     private string SelectedLibraryNames => SelectionNames(SelectedLibraryNameItems);
 
@@ -809,14 +811,12 @@
         IReadOnlyList<string> all,
         IReadOnlyList<string> selected)
     {
-        if (selected.Count == 0)
+        switch (selected.Count)
         {
-            return "None";
-        }
-
-        if (selected.Count <= 3)
-        {
-            return string.Join(", ", selected);
+            case 0:
+                return "None";
+            case <= 3:
+                return string.Join(", ", selected);
         }
 
         var selectedNames = selected.ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -1112,15 +1112,11 @@
         }
 
         var wanted = value.Trim();
-        foreach (var candidate in Views)
-        {
-            if (candidate.Id.Equals(wanted, StringComparison.OrdinalIgnoreCase))
-            {
-                return candidate.Id;
-            }
-        }
-
-        return null;
+        return (
+            from candidate in Views
+            where candidate.Id.Equals(wanted, StringComparison.OrdinalIgnoreCase)
+            select candidate.Id)
+            .FirstOrDefault();
     }
 
     /// <summary>

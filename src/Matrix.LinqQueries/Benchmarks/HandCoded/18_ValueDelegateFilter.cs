@@ -16,6 +16,8 @@ public partial class ValueDelegateFilter
         where TPredicate : struct, INumberPredicate
     {
         var count = 0;
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < source.Length; i++)
         {
             if (predicate.Match(source[i]))

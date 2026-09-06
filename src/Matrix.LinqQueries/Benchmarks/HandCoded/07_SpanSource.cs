@@ -9,6 +9,8 @@ public partial class SpanSource
     {
         ReadOnlySpan<int> source = _source;
         var values = new List<int>();
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < source.Length; i++)
         {
             var value = source[i];

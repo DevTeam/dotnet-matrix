@@ -8,8 +8,11 @@ public partial class FirstMatch
     public Order HandCoded()
     {
         Order? result = null;
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
+            // ReSharper disable once InvertIf
             if (_source[i].Amount >= 10_000)
             {
                 result = _source[i];

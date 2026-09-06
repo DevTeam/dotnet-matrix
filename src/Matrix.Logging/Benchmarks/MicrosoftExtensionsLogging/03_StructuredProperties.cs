@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 // ReSharper disable CheckNamespace
 namespace Matrix.Logging.Benchmarks;
@@ -19,6 +20,7 @@ public partial class StructuredProperties
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsLogging)]
+    [SuppressMessage("Performance", "CA1873:Avoid potentially expensive logging")]
     public void MicrosoftExtensionsLogging()
     {
         _microsoftLogger.LogInformation(

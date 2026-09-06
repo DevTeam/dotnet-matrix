@@ -8,6 +8,8 @@ public partial class JoinLookup
     public CustomerOrder[] HandCoded()
     {
         var customers = new Dictionary<int, string>(_customers.Length);
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _customers.Length; i++)
         {
             customers.Add(_customers[i].Id, _customers[i].Name);

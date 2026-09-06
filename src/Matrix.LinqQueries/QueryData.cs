@@ -25,7 +25,7 @@ internal static class QueryData
         }
 
         ScanNumbers[9_500] = 777;
-        NumberList = new List<int>(Numbers);
+        NumberList = [.. Numbers];
 
         Batches = new int[500][];
         for (var batch = 0; batch < Batches.Length; batch++)

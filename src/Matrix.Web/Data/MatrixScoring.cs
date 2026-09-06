@@ -56,7 +56,7 @@ internal sealed class MatrixScoring(
         rating.FirstOrDefault(item =>
             item.LibraryId.Equals(libraryId, StringComparison.OrdinalIgnoreCase));
 
-    public IReadOnlyList<MatrixScoreDetail> Explain(
+    private IReadOnlyList<MatrixScoreDetail> Explain(
         CategoryReport report,
         IReadOnlyList<BenchmarkReportEntry> features,
         IReadOnlySet<string> selectedLibraries,

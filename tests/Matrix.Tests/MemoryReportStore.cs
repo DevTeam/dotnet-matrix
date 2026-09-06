@@ -5,9 +5,12 @@ namespace Matrix.Tests;
 internal sealed class MemoryReportStore : IMatrixReportStore
 {
     private readonly Dictionary<string, object> _values = new(StringComparer.OrdinalIgnoreCase);
+
     public int Writes { get; private set; }
+
     public int Reads { get; private set; }
-    public bool RequireWebOptions { get; set; }
+
+    public bool RequireWebOptions { get; init; }
 
     public bool Exists(string fileName) => _values.ContainsKey(Path.GetFullPath(fileName));
 

@@ -247,9 +247,6 @@
             return NoMedals;
         }
 
-        bool Include(string libraryId) =>
-            View.IsRated(report, libraryId) && View.IsSelected(report, SelectedLibraries, libraryId);
-
         return libraries
             .Where(library => Include(library.Id))
             .Select(library => (library.Id, Points: ScenarioPoints(benchmark, library.Id, Include)))
@@ -258,6 +255,9 @@
             .Take(Scoring.Places)
             .Select((entry, index) => (entry.Id, Place: Medal(index)))
             .ToDictionary(entry => entry.Id, entry => entry.Place, StringComparer.OrdinalIgnoreCase);
+
+        bool Include(string libraryId) =>
+            View.IsRated(report, libraryId) && View.IsSelected(report, SelectedLibraries, libraryId);
     }
 
     private double ScenarioPoints(

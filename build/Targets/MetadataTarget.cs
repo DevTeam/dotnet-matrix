@@ -112,6 +112,7 @@ internal sealed partial class MetadataTarget(
             }
         }
 
+        // ReSharper disable once LoopCanBeConvertedToQuery
         foreach (var placement in placements.Where(item => item.Value > 1))
         {
             errors.Add(
@@ -130,6 +131,7 @@ internal sealed partial class MetadataTarget(
             // contract for, which is the failure that happened, without imposing a
             // single layout on contracts that do not share one.
             var contract = File.ReadAllText(contractPath);
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var feature in features)
             {
                 if (!contract.Contains(feature.Name, StringComparison.Ordinal))
@@ -143,6 +145,7 @@ internal sealed partial class MetadataTarget(
             // else. It was called `Rating:` under the medal rule, and values such
             // as `feature-only` outlived it, reading as though a scenario could
             // opt out of the rating. See workflows/rating.md.
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var match in GroupFieldRegex().Matches(contract).Cast<Match>())
             {
                 var id = match.Groups[1].Value;

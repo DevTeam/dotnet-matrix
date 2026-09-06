@@ -1,4 +1,7 @@
 // ReSharper disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace Matrix.LinqQueries.Benchmarks;
 
 [MemoryDiagnoser]
@@ -14,6 +17,8 @@ public partial class ZipPairs
     private readonly int[] _second = QueryData.Numbers;
 
     [Conditional("MATRIX_VALIDATION")]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private void Validate(string library, int[] result) =>
         QueryChecks.ZipPairs(library, result);
 }

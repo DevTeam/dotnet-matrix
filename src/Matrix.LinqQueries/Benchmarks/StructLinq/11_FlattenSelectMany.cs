@@ -8,7 +8,7 @@ public partial class FlattenSelectMany
     [LibraryBenchmark(LibraryCatalog.StructLinq)]
     public int[] StructLinq()
     {
-        var result = _source.ToStructEnumerable().SelectMany(static batch => (IEnumerable<int>)batch).ToArray();
+        var result = _source.ToStructEnumerable().SelectMany(static batch => batch).ToArray();
         Validate(LibraryCatalog.StructLinq, result);
         return result;
     }

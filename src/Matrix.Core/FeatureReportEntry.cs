@@ -29,5 +29,5 @@ public sealed record FeatureReportEntry(
     /// </summary>
     private const int LegacyDeploymentOrder = 1000;
 
-    public bool IsDeployment { get; init; } = IsDeployment || Order >= LegacyDeploymentOrder;
+    public bool IsDeployment { get; } = IsDeployment || Order >= LegacyDeploymentOrder;
 }

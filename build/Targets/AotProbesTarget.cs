@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using HostCommandLine = HostApi.CommandLine;
+// ReSharper disable UseCollectionExpression
 
 namespace Build.Targets;
 
@@ -60,7 +61,7 @@ internal sealed partial class AotProbesTarget(
                 .ToArray();
         if (selectedModules.Count == 0)
         {
-            Console.Error.WriteLine(
+            await Console.Error.WriteLineAsync(
                 $"Unknown matrix category '{category}'. "
                 + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.");
             return 1;
@@ -106,7 +107,7 @@ internal sealed partial class AotProbesTarget(
         var report = reportStore.Read<FeatureReport>(reportPath);
         if (report is null)
         {
-            Console.Error.WriteLine(
+            await Console.Error.WriteLineAsync(
                 $"ERROR: {reportPath} does not exist. Run feature validation for "
                 + $"{module.Metadata.Name} before probing Native AOT, because validation rewrites "
                 + "the report this target enriches.");
@@ -118,7 +119,7 @@ internal sealed partial class AotProbesTarget(
             : module.Metadata.Libraries.Where(library => libraryFilter.Contains(library.Id)).ToArray();
         if (librariesToProbe.Count == 0)
         {
-            Console.Error.WriteLine(
+            await Console.Error.WriteLineAsync(
                 $"ERROR: no library in {module.Metadata.Name} matches the --libraries filter.");
             return 1;
         }
@@ -268,7 +269,7 @@ internal sealed partial class AotProbesTarget(
     /// A trim warning never decides support: a library can warn and still publish and run. It is
     /// recorded as a note so a reader can see the asymmetry between libraries.
     /// </summary>
-    private static string? Note(int warnings, string probeVersion) =>
+    private static string Note(int warnings, string probeVersion) =>
         warnings == 0
             ? $"0 trim warnings (probe {probeVersion}, {RuntimeIdentifier})"
             : $"{warnings} trim warning{(warnings == 1 ? string.Empty : "s")} (probe {probeVersion}, {RuntimeIdentifier})";
@@ -297,7 +298,7 @@ internal sealed partial class AotProbesTarget(
     private static string ProbeName(string libraryId) =>
         new(libraryId.Where(char.IsLetterOrDigit).ToArray());
 
-    private string? ProbeProjectPath(DiscoveredMatrixModule module)
+    private static string? ProbeProjectPath(DiscoveredMatrixModule module)
     {
         var directory = Path.GetDirectoryName(module.ProjectPath)!;
         var name = Path.GetFileNameWithoutExtension(module.ProjectPath) + ProbeProjectSuffix;
@@ -329,6 +330,6 @@ internal sealed partial class AotProbesTarget(
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-    [GeneratedRegex(@"^ILC : ", RegexOptions.Multiline)]
+    [GeneratedRegex("^ILC : ", RegexOptions.Multiline)]
     private static partial Regex IlcWarning();
 }

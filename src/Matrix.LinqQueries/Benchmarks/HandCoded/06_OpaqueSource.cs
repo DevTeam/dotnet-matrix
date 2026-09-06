@@ -8,6 +8,7 @@ public partial class OpaqueSource
     public int[] HandCoded()
     {
         var values = new List<int>();
+        // ReSharper disable once LoopCanBeConvertedToQuery
         foreach (var value in _source())
         {
             if (value % 3 == 0)

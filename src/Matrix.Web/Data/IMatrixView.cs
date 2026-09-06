@@ -64,14 +64,6 @@ internal interface IMatrixView
     string? FeatureDescription(CategoryReport report, string featureId);
 
     /// <summary>
-    /// How many of the rated libraries support a scenario, and how many are
-    /// rated in total — the arithmetic behind "supported by N of M", computed
-    /// from the report itself rather than written by hand, so it can never go
-    /// stale the way a number typed into a contract's prose can.
-    /// </summary>
-    (int Supported, int Rated) FeatureCoverage(CategoryReport report, string featureId);
-
-    /// <summary>
     /// Why the scenario is not rated, or null when it is. The authored reason
     /// with the current "N of M" support count appended, so the text a "not
     /// rated" mark shows can never disagree with what the report says today.

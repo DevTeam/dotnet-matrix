@@ -52,7 +52,7 @@
                rather than for every row in advance: see Reveal below. Bound to the
                row, so moving along one costs nothing. *@
             <div class="overview-chart-row @(index % 2 == 0 ? "is-striped" : null)"
-                 style="--points-time: @Share(overview, row, row.TimePoints); --points: @Share(overview, row, row.Points)"
+                 style="--points-time: @Share(overview, row.TimePoints); --points: @Share(overview, row.Points)"
                  @onmouseenter="() => Reveal(row.LibraryId)">
                 <div class="overview-chart-label">
                     @* A library outside the rating holds no place in it — its rank
@@ -247,7 +247,7 @@
     /// A reference row scores the same way as any other and fills exactly as
     /// much, even though it never defines the maximum and never takes a place.
     /// </summary>
-    private static string Share(MatrixOverview overview, MatrixOverviewRow row, double points) =>
+    private static string Share(MatrixOverview overview, double points) =>
         overview.Maximum > 0
             ? (100d * points / overview.Maximum).ToString("0.##", CultureInfo.InvariantCulture) + "%"
             : "0%";

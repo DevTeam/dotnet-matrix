@@ -1,4 +1,7 @@
 // ReSharper disable CheckNamespace
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace Matrix.LinqQueries.Benchmarks;
 
 [MemoryDiagnoser]
@@ -13,6 +16,8 @@ public partial class FlattenSelectMany
     private readonly int[][] _source = QueryData.Batches;
 
     [Conditional("MATRIX_VALIDATION")]
+    [SuppressMessage("Performance", "CA1822:Mark members as static")]
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private void Validate(string library, int[] result) =>
         QueryChecks.FlattenSelectMany(library, result);
 }

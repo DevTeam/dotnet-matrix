@@ -1,4 +1,5 @@
 // ReSharper disable CheckNamespace
+// ReSharper disable UseCollectionExpression
 namespace Matrix.Web;
 
 /// <inheritdoc cref="IMatrixView"/>

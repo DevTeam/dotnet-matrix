@@ -1,3 +1,4 @@
+// ReSharper disable ForCanBeConvertedToForeach
 namespace Matrix.LinqQueries;
 
 internal static class QueryExpectations
@@ -43,6 +44,8 @@ internal static class QueryExpectations
             }
         }
 
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < QueryData.Orders.Length; i++)
         {
             var order = QueryData.Orders[i];
@@ -55,8 +58,8 @@ internal static class QueryExpectations
         FilterCount = filterCount;
         ProjectToArray = projected;
         FilterProjectToList = filteredOrders;
-        ChainedPipeline = chained.ToArray();
-        CanonicalPipeline = canonical.ToArray();
+        ChainedPipeline = [.. chained];
+        CanonicalPipeline = [.. canonical];
         Aggregate = aggregate;
 
         PagedSlice = new int[1000];
@@ -88,7 +91,7 @@ internal static class QueryExpectations
             }
         }
 
-        DistinctValues = distinct.ToArray();
+        DistinctValues = [.. distinct];
 
         ZipPairs = new int[QueryData.Numbers.Length];
         for (var i = 0; i < ZipPairs.Length; i++)
@@ -142,11 +145,13 @@ internal static class QueryExpectations
     private static RegionTotal[] BuildRegionTotals()
     {
         var totals = new int[QueryData.Regions.Length];
+        // ReSharper disable once ForCanBeConvertedToForeach
         for (var orderIndex = 0; orderIndex < QueryData.Orders.Length; orderIndex++)
         {
             var order = QueryData.Orders[orderIndex];
             for (var regionIndex = 0; regionIndex < QueryData.Regions.Length; regionIndex++)
             {
+                // ReSharper disable once InvertIf
                 if (string.Equals(order.Region, QueryData.Regions[regionIndex], StringComparison.Ordinal))
                 {
                     totals[regionIndex] += order.Amount;
@@ -170,9 +175,11 @@ internal static class QueryExpectations
         for (var orderIndex = 0; orderIndex < QueryData.Orders.Length; orderIndex++)
         {
             var order = QueryData.Orders[orderIndex];
+            // ReSharper disable once ForCanBeConvertedToForeach
             for (var customerIndex = 0; customerIndex < QueryData.Customers.Length; customerIndex++)
             {
                 var customer = QueryData.Customers[customerIndex];
+                // ReSharper disable once InvertIf
                 if (order.CustomerId == customer.Id)
                 {
                     result[orderIndex] = new CustomerOrder(order.Id, customer.Name);

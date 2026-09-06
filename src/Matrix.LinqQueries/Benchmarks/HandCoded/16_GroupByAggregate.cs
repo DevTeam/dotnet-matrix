@@ -8,6 +8,8 @@ public partial class GroupByAggregate
     public RegionTotal[] HandCoded()
     {
         var totals = new Dictionary<string, int>(StringComparer.Ordinal);
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
             var order = _source[i];

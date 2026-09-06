@@ -24,7 +24,7 @@ internal partial class MapperlyMapper
 
     [MapDerivedType<CatSource, CatDestination>]
     [MapDerivedType<DogSource, DogDestination>]
-    public partial AnimalDestination MapAnimal(AnimalSource source);
+    private partial AnimalDestination MapAnimal(AnimalSource source);
 
     public partial AnimalDestination[] MapAnimals(AnimalSource[] source);
 

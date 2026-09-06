@@ -19,11 +19,6 @@ internal sealed class StubBenchmarkExecutor(BenchmarkExecution execution) : IBen
         LibraryIds = libraryIds;
         Smoke = smoke;
         File.WriteAllText(Path.Combine(artifactsDirectory, "execution.log"), "stub execution");
-        if (Error is not null)
-        {
-            throw Error;
-        }
-
-        return execution;
+        return Error is null ? execution : throw Error;
     }
 }

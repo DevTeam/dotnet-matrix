@@ -34,7 +34,7 @@ internal static class QueryChecks
     public static void FirstMatch(string library, Order actual) =>
         MatrixValidation.Require(
             library,
-            actual.Id == 4_501 && actual.Amount == 10_000,
+            actual is { Id: 4_501, Amount: 10_000 },
             "First matching order differs.");
 
     [Conditional("MATRIX_VALIDATION")]

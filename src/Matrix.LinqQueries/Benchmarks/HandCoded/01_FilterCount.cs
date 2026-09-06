@@ -8,6 +8,8 @@ public partial class FilterCount
     public int HandCoded()
     {
         var count = 0;
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
             if (_source[i] % 3 == 0)

@@ -1,5 +1,6 @@
 using Build.Targets;
 using System.Text.Json;
+// ReSharper disable UseCollectionExpression
 
 namespace Matrix.Tests;
 
@@ -32,7 +33,7 @@ internal static class RegressionTests
             catch (Exception error)
             {
                 failed++;
-                Console.Error.WriteLine($"FAIL: {name}: {error}");
+                await Console.Error.WriteLineAsync($"FAIL: {name}: {error}");
             }
         }
 
@@ -129,7 +130,7 @@ internal static class RegressionTests
         var module = Module();
         Check(Runner(module, store, executor).Run(module.Libraries,
             new RunnerOptions("unused-report.json", [], true, null)) == 1, "Failed measurements must fail the run.");
-        Check(store.Read<BenchmarkReport>("unused-report.json")!.Features.Single().Results.Single().Successful == false,
+        Check(!store.Read<BenchmarkReport>("unused-report.json")!.Features.Single().Results.Single().Successful,
             "The report must record unsuccessful measurements.");
     }
 
@@ -163,8 +164,8 @@ internal static class RegressionTests
     }
 
     private static MatrixModule Module() => new("test", "Test", "Test", "Test",
-        [new("baseline", "Baseline", null, null, true), new("selected", "Selected", null, null, false),
-            new("other", "Other", null, null, false)], new(1, []), new(1, []));
+        [new MatrixLibrary("baseline", "Baseline", null, null, true), new MatrixLibrary("selected", "Selected", null, null, false),
+            new MatrixLibrary("other", "Other", null, null, false)], new MatrixLibraryMetadataCatalog(1, []), new MatrixFeatureCatalog(1, []));
 
     private static BenchmarkResult Result(string id, double mean) => new(id, true, mean, 0, 0, Environment.Id);
 
@@ -172,7 +173,7 @@ internal static class RegressionTests
         new BenchmarkExecution(Environment, results.Select(result => new CapturedBenchmarkResult(1, "feature", "Feature", result)).ToArray()));
 
     private static MatrixBenchmarkRunner Runner(MatrixModule module, IMatrixReportStore store, IBenchmarkExecutor executor) =>
-        new(module, new(typeof(RegressionTests).Assembly), store, executor, new JsonSerializerWrapper(), new MatrixReportInvariants());
+        new(module, new MatrixModuleAssembly(typeof(RegressionTests).Assembly), store, executor, new JsonSerializerWrapper(), new MatrixReportInvariants());
 
     private static string TemporaryDirectory() => Directory.CreateTempSubdirectory("matrix-tests-").FullName;
 

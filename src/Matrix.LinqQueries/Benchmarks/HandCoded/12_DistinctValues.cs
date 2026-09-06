@@ -9,6 +9,8 @@ public partial class DistinctValues
     {
         var seen = new HashSet<int>();
         var values = new List<int>();
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
             if (seen.Add(_source[i]))

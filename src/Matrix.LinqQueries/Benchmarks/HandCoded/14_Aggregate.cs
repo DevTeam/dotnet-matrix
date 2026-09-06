@@ -8,6 +8,8 @@ public partial class Aggregate
     public int HandCoded()
     {
         var result = 0;
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
             result += _source[i];

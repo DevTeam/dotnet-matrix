@@ -8,6 +8,8 @@ public partial class ListSource
     public int[] HandCoded()
     {
         var values = new List<int>();
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Count; i++)
         {
             var value = _source[i];

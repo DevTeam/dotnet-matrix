@@ -10,8 +10,8 @@ public partial class FlattenSelectMany
     {
         var result = _source.SelectMany<
                 int[],
-                NetFabric.Hyperlinq.ReadOnlyList.ValueEnumerableWrapper<int>,
-                NetFabric.Hyperlinq.ReadOnlyList.ValueEnumerableWrapper<int>.Enumerator,
+                ReadOnlyList.ValueEnumerableWrapper<int>,
+                ReadOnlyList.ValueEnumerableWrapper<int>.Enumerator,
                 int>(static batch => batch.AsValueEnumerable())
             .ToArray();
         Validate(LibraryCatalog.Hyperlinq, result);

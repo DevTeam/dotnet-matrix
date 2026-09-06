@@ -40,8 +40,7 @@ public sealed class MatrixBenchmarkRunner(
         var ids = runLibraries.Select(library => library.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
         try
         {
-            var execution = benchmarkExecutor.Execute(moduleAssembly.Value, ids, options.Smoke, artifactsDirectory);
-            var environment = execution.Environment;
+            var (environment, capturedBenchmarkResults) = benchmarkExecutor.Execute(moduleAssembly.Value, ids, options.Smoke, artifactsDirectory);
             var isPartial = runLibraries.Count != module.Libraries.Count;
             BenchmarkReport? existing = null;
             if (isPartial)
@@ -66,7 +65,7 @@ public sealed class MatrixBenchmarkRunner(
                 }
             }
 
-            var measuredResults = execution.Results
+            var measuredResults = capturedBenchmarkResults
                 .Select(result => result with
                 {
                     Result = result.Result with { EnvironmentId = environment.Id, EvidenceId = measuredEvidenceId }

@@ -8,6 +8,8 @@ public partial class FilterProjectToList
     public List<int> HandCoded()
     {
         var result = new List<int>();
+        // ReSharper disable once ForCanBeConvertedToForeach
+        // ReSharper disable once LoopCanBeConvertedToQuery
         for (var i = 0; i < _source.Length; i++)
         {
             var order = _source[i];
