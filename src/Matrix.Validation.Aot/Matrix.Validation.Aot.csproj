@@ -24,6 +24,15 @@
              suppresses the same diagnostic for the same reason. -->
         <NoWarn>$(NoWarn);ASP0029</NoWarn>
 
+        <!-- Matrix.Validation.csproj sets these for the same generator, for the same reason: the
+             probe's ProbeInputValidator must be generated under the identical configuration as the
+             benchmarked validators, or an AOT/trim result here would say nothing about the
+             configuration the benchmarks actually measure. Kept in sync by hand because these are
+             project-wide generator properties, not per-library PackageReference metadata that
+             AotProbesTarget could forward automatically. -->
+        <ValidationModules_DataAnnotations>Ignore</ValidationModules_DataAnnotations>
+        <ValidationModules_FieldNaming>AsDeclared</ValidationModules_FieldNaming>
+
         <!-- Native AOT is the point of this project. -->
         <PublishAot>true</PublishAot>
         <InvariantGlobalization>true</InvariantGlobalization>
