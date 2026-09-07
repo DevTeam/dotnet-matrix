@@ -19,6 +19,34 @@ public sealed class MatrixRatings(IMatrixScores scores, IMatrixOverviews overvie
     /// <inheritdoc cref="MatrixScores.Metrics"/>
     public const int Metrics = MatrixScores.Metrics;
 
+    /// <summary>
+    /// Standard competition ranking over items already sorted best-first: a tie
+    /// shares one place, and the next distinct score is placed after however many
+    /// items shared it — 1, 1, 1, 4, never 1, 1, 1, 2. Stops as soon as a place
+    /// would land past <see cref="Places"/>, since nothing beyond the medals is
+    /// ever awarded, tied or not.
+    /// </summary>
+    public static IEnumerable<(T Item, int Place)> Ranked<T>(
+        IReadOnlyList<T> rankedDescending,
+        Func<T, double> points)
+    {
+        var place = 0;
+        for (var index = 0; index < rankedDescending.Count; index++)
+        {
+            if (index == 0 || points(rankedDescending[index]) < points(rankedDescending[index - 1]))
+            {
+                place = index + 1;
+            }
+
+            if (place > Places)
+            {
+                yield break;
+            }
+
+            yield return (rankedDescending[index], place);
+        }
+    }
+
     public IReadOnlyList<MatrixMedals> Create(
         BenchmarkReport report,
         MatrixChartCatalog charts,
@@ -86,16 +114,15 @@ public sealed class MatrixRatings(IMatrixScores scores, IMatrixOverviews overvie
                 continue;
             }
 
-            for (var place = 0; place < Places && place < overview.Rows.Count; place++)
+            foreach (var (row, place) in Ranked(overview.Rows, row => row.Points))
             {
-                var row = overview.Rows[place];
                 if (!awards.TryGetValue(row.LibraryId, out var won))
                 {
                     won = [];
                     awards[row.LibraryId] = won;
                 }
 
-                won.Add(new MatrixMedal(group.Id, group.Name, place + 1));
+                won.Add(new MatrixMedal(group.Id, group.Name, place));
             }
         }
 

@@ -1,5 +1,4 @@
 @inject IMatrixView View
-@inject IMatrixScoring Scoring
 @inject IMatrixScores Scores
 
 @foreach (var report in Reports)
@@ -247,13 +246,14 @@
             return NoMedals;
         }
 
-        return libraries
+        var scored = libraries
             .Where(library => Include(library.Id))
             .Select(library => (library.Id, Points: ScenarioPoints(benchmark, library.Id, Include)))
             .Where(entry => entry.Points > 0)
             .OrderByDescending(entry => entry.Points)
-            .Take(Scoring.Places)
-            .Select((entry, index) => (entry.Id, Place: Medal(index)))
+            .ToArray();
+        return MatrixRatings.Ranked(scored, entry => entry.Points)
+            .Select(item => (item.Item.Id, Place: Medal(item.Place)))
             .ToDictionary(entry => entry.Id, entry => entry.Place, StringComparer.OrdinalIgnoreCase);
 
         bool Include(string libraryId) =>
@@ -269,10 +269,10 @@
         return detail is null ? 0 : detail.Time.Points + detail.Memory.Points;
     }
 
-    private static string Medal(int index) => index switch
+    private static string Medal(int place) => place switch
     {
-        0 => "gold",
-        1 => "silver",
+        1 => "gold",
+        2 => "silver",
         _ => "bronze"
     };
 

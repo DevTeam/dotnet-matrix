@@ -37,6 +37,7 @@
                 {
                     var item = Medals[index];
                     var place = index + 1;
+                    var podium = Place(item.LibraryId);
                     @* Bound to the row rather than to the three cells that carry a
                        breakdown, so moving along a row costs no render. *@
                     <tr style="--points-time: @Share(item.TimePoints, item.Maximum); --points: @Share(item.Points, item.Maximum)"
@@ -86,7 +87,7 @@
                         </td>
                         <td class="rating-column-badge">
                             <RatingBadge Standing="@item"
-                                         Place="@place"
+                                         Place="@podium"
                                          Category="@Report.Category.Name"/>
                         </td>
                     </tr>
@@ -113,11 +114,25 @@
     [Parameter]
     public EventCallback<string> OnHelp { get; set; }
 
+    private Dictionary<string, int> _places = new(StringComparer.OrdinalIgnoreCase);
+
     /// <summary>
     /// Which row's breakdown has been asked for, if any. Not part of the comparison
     /// and not worth a parameter: it lives and dies with the pointer.
     /// </summary>
     private string? _revealed;
+
+    /// <summary>
+    /// A tie shares a place — see MatrixRatings.Ranked — so the badge a row wins
+    /// does not always match its row number: the "#" column keeps counting one by
+    /// one while two rows with the same points can both stand on the same step.
+    /// </summary>
+    protected override void OnParametersSet() =>
+        _places = MatrixRatings.Ranked(Medals, medals => medals.Points)
+            .ToDictionary(item => item.Item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase);
+
+    private int? Place(string libraryId) =>
+        _places.TryGetValue(libraryId, out var place) ? place : null;
 
     /// <summary>
     /// A breakdown is one line of arithmetic per scenario per metric, and the

@@ -150,21 +150,21 @@
         _overview = View.Overview(Report, Group, SelectedLibraries);
 
         // Medals ignore libraries that are out of the rating, so a place here does
-        // not have to match the row number of the chart.
+        // not have to match the row number of the chart. A tie shares a place —
+        // see MatrixRatings.Ranked — so more than one row can hold the same medal.
         _places = _overview is null
             ? []
-            : View.RatedOverview(Report, Group, SelectedLibraries)
-                ?.Rows
-                .Take(Scoring.Places)
-                .Select((row, index) => (row.LibraryId, Place: PlaceName(index)))
-                .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
-            ?? [];
+            : View.RatedOverview(Report, Group, SelectedLibraries) is { } rated
+                ? MatrixRatings.Ranked(rated.Rows, row => row.Points)
+                    .Select(item => (item.Item.LibraryId, Place: PlaceName(item.Place)))
+                    .ToDictionary(item => item.LibraryId, item => item.Place, StringComparer.OrdinalIgnoreCase)
+                : [];
     }
 
-    private static string PlaceName(int index) => index switch
+    private static string PlaceName(int place) => place switch
     {
-        0 => "gold",
-        1 => "silver",
+        1 => "gold",
+        2 => "silver",
         _ => "bronze"
     };
 
