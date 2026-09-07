@@ -702,6 +702,7 @@ select {
 /* Live counterpart of the readme charts: same layout and palette, but driven by
    the current library selection and rendered as text rather than a scaled image. */
 .overview-chart {
+    container: overview-chart / inline-size;
     margin: 0 0 16px;
     padding: var(--pad-inner);
     border: 1px solid var(--line-soft);
@@ -926,6 +927,45 @@ select {
     height: 14px;
     flex: 0 0 14px;
     border-radius: 3px;
+}
+
+/* The three-column row also runs out of room well above the phone width the
+   media query below targets: the sidebar or the filter panel can leave this
+   card the width of a phone screen on an otherwise wide window. Bound to the
+   card's own width rather than the viewport, so it stacks whenever it — not
+   the window — is squeezed. */
+@container overview-chart (max-width: 760px) {
+    .overview-chart-row {
+        gap: 10px;
+        grid-template-columns: minmax(0, 1fr);
+        padding: 12px 10px;
+    }
+
+    .overview-chart-row + .overview-chart-row {
+        border-top: 1px solid var(--line-soft);
+        border-radius: 0;
+    }
+
+    .overview-chart-columns {
+        display: none;
+    }
+
+    .overview-chart-points {
+        text-align: left;
+    }
+
+    .overview-metric {
+        grid-template-columns: 52px minmax(0, 1fr) 78px;
+        gap: 10px;
+    }
+
+    .overview-metric-label {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
 }
 
 .library-card {
