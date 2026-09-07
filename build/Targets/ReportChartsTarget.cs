@@ -9,7 +9,8 @@ internal sealed class ReportChartsTarget(
     IBuildPaths buildPaths,
     IMatrixReportReader reportReader,
     IMatrixOverviews overviews,
-    IMatrixScores scores) : IReportChartsTarget
+    IMatrixScores scores,
+    IMatrixRatings ratings) : IReportChartsTarget
 {
     private const int ImageWidth = 1400;
     private const float LabelWidth = 404;
@@ -81,6 +82,10 @@ internal sealed class ReportChartsTarget(
             .Where(library => library.Rated)
             .Select(library => library.Id)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var ratedFeatures = module.Metadata.FeatureMetadata.Features
+            .Where(feature => feature.Rated)
+            .Select(feature => feature.Id)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var chartCount = 0;
 
         foreach (var feature in report.Features.OrderBy(feature => feature.Order))
@@ -105,6 +110,14 @@ internal sealed class ReportChartsTarget(
 
             var path = Path.Combine(chartsDirectory, MatrixChartPaths.Overview(group));
             RenderOverview(report, group, features, logos, rated, path);
+            chartCount++;
+        }
+
+        var medals = ratings.Create(report, catalog, rated.Contains, ratedFeatures.Contains);
+        if (medals.Count > 0)
+        {
+            var path = Path.Combine(chartsDirectory, MatrixChartPaths.Rating());
+            RenderRating(module.Metadata.Name, medals, logos, path);
             chartCount++;
         }
 
@@ -299,6 +312,76 @@ internal sealed class ReportChartsTarget(
         }
 
         DrawLegend(canvas, features, y + 20, hint);
+        Save(surface, outputPath);
+    }
+
+    /// <summary>
+    /// The category-wide standings, the same numbers as the "Rating" table, drawn
+    /// as one row per rated library instead of set as Markdown — a category with
+    /// 20-odd libraries reads as a picture far more easily than as a wide table.
+    /// </summary>
+    private void RenderRating(
+        string category,
+        IReadOnlyList<MatrixMedals> medals,
+        LibraryLogos logos,
+        string outputPath)
+    {
+        var height = Math.Max(420, 176 + (int)(medals.Count * RowHeight));
+        using var surface = CreateSurface(height);
+        var canvas = surface.Canvas;
+        canvas.Clear(Background);
+
+        using var title = TextStyle.Create(Text, 29, true);
+        using var subtitle = TextStyle.Create(Muted, 15);
+        using var label = TextStyle.Create(Text, 15, true);
+        using var value = TextStyle.Create(Text, 14, true);
+        using var hint = TextStyle.Create(Muted, 13);
+        using var points = TextStyle.Create(Text, 16, true);
+        using var performance = Fill(Performance);
+        using var memory = Fill(Memory);
+        using var track = Fill(Surface2);
+
+        var maximum = medals[0].Maximum;
+        var metricMaximum = medals[0].MetricMaximum;
+        DrawText(canvas, $"{category} rating", OuterPadding, 47, title);
+        DrawText(
+            canvas,
+            $"{medals.Count} librar{(medals.Count == 1 ? "y" : "ies")}"
+            + $" · points out of {maximum} · higher is better",
+            OuterPadding,
+            74,
+            subtitle);
+
+        const float contentWidth =
+            ImageWidth - OuterPadding * 2 - LabelWidth - PanelGap * 2 - PointsWidth;
+        const float panelWidth = contentWidth / 2;
+        const float timeX = OuterPadding + LabelWidth;
+        const float memoryX = timeX + panelWidth + PanelGap;
+        const float pointsX = memoryX + panelWidth + PanelGap;
+        DrawPanelHeading(canvas, "TIME", "points earned", timeX, panelWidth, subtitle, hint);
+        DrawPanelHeading(canvas, "MEMORY", "points earned", memoryX, panelWidth, subtitle, hint);
+        DrawPanelHeading(canvas, "POINTS", "time + memory", pointsX, PointsWidth, subtitle, hint);
+
+        var y = 132f;
+        for (var index = 0; index < medals.Count; index++)
+        {
+            var row = medals[index];
+            DrawStripe(canvas, index, y, RowHeight - 10);
+            DrawLogo(canvas, logos.Find(row.LibraryId), row.Name, y + 6);
+            DrawFittedText(canvas, $"{index + 1}. {row.Name}", LabelTextX, y - 3, LabelTextWidth, label);
+            DrawFittedText(
+                canvas,
+                $"{row.Covered}/{row.Scenarios} scenarios",
+                LabelTextX,
+                y + 18,
+                LabelTextWidth,
+                hint);
+            DrawMetric(canvas, timeX, y, panelWidth, row.TimePoints, metricMaximum, scores.Format, performance, track, value);
+            DrawMetric(canvas, memoryX, y, panelWidth, row.MemoryPoints, metricMaximum, scores.Format, memory, track, value);
+            DrawText(canvas, scores.Format(row.Points), pointsX, y + 5, points);
+            y += RowHeight;
+        }
+
         Save(surface, outputPath);
     }
 

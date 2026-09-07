@@ -14,6 +14,9 @@ public static class MatrixChartPaths
     public static string Overview(MatrixChartGroup group) =>
         $"overview-{Slug(group.Id)}.png";
 
+    /// <summary>The category-wide standings chart, one row per rated library.</summary>
+    public static string Rating() => "rating.png";
+
     private static string Slug(string value)
     {
         var result = new StringBuilder(value.Length);

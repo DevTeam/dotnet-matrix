@@ -150,7 +150,7 @@ internal static class RegressionTests
             var overviews = new MatrixOverviews(scores);
             var ratings = new MatrixRatings(scores, overviews);
             DiscoveredMatrixModule[] modules = [new(module, "unused.csproj", "unused.dll")];
-            var charts = new ReportChartsTarget(fixture, store, overviews, scores);
+            var charts = new ReportChartsTarget(fixture, store, overviews, scores, ratings);
             Check(charts.Run(modules) == 0 && store.Reads == 2, "Charts must read reports from the injected reader.");
             var readme = new ReadmeTarget(fixture, fixture, fixture, fixture, store, scores, ratings);
             Check(await readme.RunAsync(modules, CancellationToken.None) == 0, "README generation must succeed.");

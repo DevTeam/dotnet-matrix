@@ -16,6 +16,9 @@ internal sealed partial class ReadmeTarget(
     IMatrixRatings ratings) : IReadmeTarget
 {
     private const string Template = "/Templates/Readme.cshtml";
+    private const string CategoryReportTemplate = "/Templates/CategoryReport.cshtml";
+    private const string ReproduceTemplate = "/Templates/Reproduce.cshtml";
+    private const string DeepLinkingTemplate = "/Templates/DeepLinking.cshtml";
     private static readonly JsonSerializerOptions JsonOptions =
         new(JsonSerializerDefaults.Web);
 
@@ -44,24 +47,95 @@ internal sealed partial class ReadmeTarget(
         // var applicationUrl = $"https://{catalog.Repository.Owner.ToLowerInvariant()}.github.io/{catalog.Repository.Name}/";
         const string applicationUrl = "https://matrix.dev-team.org/";
         var model = new ReadmeModel(applicationUrl, categories);
-        var path = Path.Combine(buildPaths.SolutionDirectory, "README.md");
-        using var buffer = new MemoryStream();
-        await templateEngine.RenderAsync(
+        await RenderToFileAsync(
             Template,
             model,
-            buffer,
+            Path.Combine(buildPaths.SolutionDirectory, "README.md"),
             cancellationToken);
+        await RenderToFileAsync(
+            ReproduceTemplate,
+            model,
+            Path.Combine(buildPaths.SolutionDirectory, "docs", "reproduce.md"),
+            cancellationToken);
+        await RenderToFileAsync(
+            DeepLinkingTemplate,
+            model,
+            Path.Combine(buildPaths.SolutionDirectory, "docs", "deep-linking.md"),
+            cancellationToken);
+        foreach (var category in categories)
+        {
+            var reportModel = new CategoryReportModel(applicationUrl, RerootToReport(category));
+            await RenderToFileAsync(
+                CategoryReportTemplate,
+                reportModel,
+                Path.Combine(buildPaths.SolutionDirectory, category.ReportPath),
+                cancellationToken);
+        }
+
+        return 0;
+    }
+
+    /// <summary>
+    /// Renders a template and writes it to <paramref name="path"/>, creating the
+    /// containing directory when a new documentation area (such as `docs/`) does
+    /// not exist yet.
+    /// </summary>
+    private async Task RenderToFileAsync<TModel>(
+        string template,
+        TModel model,
+        string path,
+        CancellationToken cancellationToken)
+    {
+        using var buffer = new MemoryStream();
+        await templateEngine.RenderAsync(template, model, buffer, cancellationToken);
         // The encoder still escapes ' and " — the two characters HtmlEncoder
         // treats as always unsafe regardless of its allowed-character settings,
         // even though Markdown has no attribute context for them to break out
-        // of. < > & stay escaped: README.md embeds real HTML (<details>) that
-        // an unescaped one would corrupt.
+        // of. < > & stay escaped: generated pages embed real HTML (<details>)
+        // that an unescaped one would corrupt.
         var text = Encoding.UTF8.GetString(buffer.ToArray())
             .Replace("&#x27;", "'")
             .Replace("&quot;", "\"");
+        var directory = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
         await File.WriteAllTextAsync(path, text, new UTF8Encoding(false), cancellationToken);
-        Info($"README: {path}");
-        return 0;
+        Info($"Generated: {path}");
+    }
+
+    /// <summary>
+    /// The top-level README links every image and logo relative to the solution
+    /// root. A category's own report lives inside its report directory instead,
+    /// so every one of those paths is rewritten relative to that directory —
+    /// otherwise `reports/CsvProcessing/README.md` would look for its own charts
+    /// under `reports/CsvProcessing/reports/CsvProcessing/charts/...`.
+    /// </summary>
+    private ReadmeCategory RerootToReport(ReadmeCategory category)
+    {
+        var reportRoot = Path.Combine(buildPaths.SolutionDirectory, category.ReportPath, "..");
+        string Reroot(string solutionRelativePath) =>
+            Path.GetRelativePath(
+                    reportRoot,
+                    Path.Combine(buildPaths.SolutionDirectory, solutionRelativePath))
+                .Replace('\\', '/');
+        return category with
+        {
+            Libraries = category.Libraries
+                .Select(library => library with { Logo = Reroot(library.Logo) })
+                .ToArray(),
+            Overviews = category.Overviews
+                .Select(overview => overview with { Path = Reroot(overview.Path) })
+                .ToArray(),
+            Features = category.Features
+                .Select(feature => feature with { ChartPath = Reroot(feature.ChartPath) })
+                .ToArray(),
+            RatingChart = category.RatingChart is null
+                ? null
+                : category.RatingChart with { Path = Reroot(category.RatingChart.Path) }
+        };
     }
 
     private ReadmeCategory? CreateCategory(DiscoveredMatrixModule module)
@@ -165,6 +239,14 @@ internal sealed partial class ReadmeTarget(
                         $"{Place(award.Place)} in {award.GroupName}")),
                 Breakdown(report, medals.LibraryId, rated.Contains, ratedFeatures.Contains)))
             .ToArray();
+        var ratingChart = rating.Length == 0
+            ? null
+            : new ReadmeChart(
+                module.Metadata.Name,
+                RelativePath(Path.Combine(
+                    reportRoot,
+                    MatrixChartPaths.DirectoryName,
+                    MatrixChartPaths.Rating())));
         return new ReadmeCategory(
             module.Metadata.Id,
             Anchor(module.Metadata.Name),
@@ -172,7 +254,9 @@ internal sealed partial class ReadmeTarget(
             libraries,
             overviews,
             features,
-            rating);
+            rating,
+            RelativePath(Path.Combine(reportRoot, "README.md")),
+            ratingChart);
     }
 
     /// <summary>
