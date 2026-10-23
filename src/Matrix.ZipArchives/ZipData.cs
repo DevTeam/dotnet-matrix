@@ -1,5 +1,6 @@
 using System.IO.Compression;
 using System.Text;
+using ICSharpCode.SharpZipLib.Checksum;
 using ICSharpCode.SharpZipLib.Zip;
 // ReSharper disable UseCollectionExpression
 
@@ -169,10 +170,17 @@ internal static class ZipData
             zip.IsStreamOwner = false;
             zip.Password = Password;
             zip.SetLevel(6);
+            var crc = new Crc32();
+            crc.Update(EncryptedContent);
             var entry = new ZipEntry(EncryptedEntryName)
             {
                 AESKeySize = 256,
-                DateTime = DateTime.UnixEpoch
+                DateTime = DateTime.UnixEpoch,
+                // Supplying CRC and size keeps the local header complete, so SharpZipLib
+                // writes no trailing data descriptor. SharpCompress cannot read WinZip AES
+                // entries that rely on a data descriptor.
+                Crc = crc.Value,
+                Size = EncryptedContent.Length
             };
             zip.PutNextEntry(entry);
             zip.Write(EncryptedContent);
