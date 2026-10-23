@@ -1,19 +1,21 @@
 using System.Globalization;
-using CsvHelper.Configuration;
+using CsvHelper;
 
 namespace Matrix.CsvProcessing;
 
 internal static class CsvHelperConfiguration
 {
-    public static CsvConfiguration Reader { get; } = new(CultureInfo.InvariantCulture)
+    public static CsvReaderOptions Reader { get; } = new()
     {
-        HasHeaderRecord = true
+        HasHeader = true,
+        FormatProvider = CultureInfo.InvariantCulture
     };
 
-    public static CsvConfiguration Writer { get; } = new(CultureInfo.InvariantCulture)
+    public static CsvWriterOptions Writer { get; } = new()
     {
-        HasHeaderRecord = true,
-        NewLine = "\n"
+        HasHeader = true,
+        NewLine = "\n",
+        FormatProvider = CultureInfo.InvariantCulture
     };
 }
 

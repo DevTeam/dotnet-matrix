@@ -17,11 +17,14 @@ internal static class AotProbe
     /// </summary>
     public static int Run()
     {
-        using var source = new StringReader(Csv);
-        using var csv = new CsvReader(source, CultureInfo.InvariantCulture);
+        var options = new CsvReaderOptions
+        {
+            HasHeader = true,
+            FormatProvider = CultureInfo.InvariantCulture
+        };
+        using var csv = CsvReader.Create(new StringReader(Csv), options);
         csv.Read();
-        csv.ReadHeader();
-        csv.Read();
-        return csv.GetField(0) == "probe" && csv.GetField(1) == "7" ? 1 : 0;
+        return csv.GetString(0) == "probe" && csv.GetString(1) == "7" ? 1 : 0;
     }
 }
+

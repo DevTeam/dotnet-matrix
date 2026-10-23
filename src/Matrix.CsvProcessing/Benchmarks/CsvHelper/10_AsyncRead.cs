@@ -8,10 +8,7 @@ public partial class AsyncRead
     [LibraryBenchmark(LibraryCatalog.CsvHelper)]
     public async Task<CsvAggregate> CsvHelper()
     {
-        using var source = new StringReader(_csv);
-        using var csv = new CsvReader(source, CsvHelperConfiguration.Reader);
-        await csv.ReadAsync();
-        csv.ReadHeader();
+        using var csv = CsvReader.Create(new StringReader(_csv), CsvHelperConfiguration.Reader);
         var count = 0;
         long idSum = 0;
         decimal amountSum = 0;
@@ -19,9 +16,9 @@ public partial class AsyncRead
         while (await csv.ReadAsync())
         {
             count++;
-            idSum += csv.GetField<int>(0);
-            amountSum += csv.GetField<decimal>(2);
-            if (csv.GetField<bool>(3))
+            idSum += csv.GetInt32(0);
+            amountSum += csv.GetDecimal(2);
+            if (csv.GetBoolean(3))
             {
                 activeCount++;
             }

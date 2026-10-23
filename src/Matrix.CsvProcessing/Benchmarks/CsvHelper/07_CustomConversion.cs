@@ -8,15 +8,11 @@ public partial class CustomConversion
     [LibraryBenchmark(LibraryCatalog.CsvHelper)]
     public ProductCode[] CsvHelper()
     {
-        using var source = new StringReader(_csv);
-        using var csv = new CsvReader(source, CsvHelperConfiguration.Reader);
-        csv.Context.TypeConverterCache.AddConverter<ProductCode>(new ProductCodeConverter());
-        csv.Read();
-        csv.ReadHeader();
+        using var csv = CsvReader.Create(new StringReader(_csv), CsvHelperConfiguration.Reader);
         var codes = new List<ProductCode>(2);
         while (csv.Read())
         {
-            codes.Add(csv.GetField<ProductCode>("Code"));
+            codes.Add(csv.Parse<ProductCode>("Code"));
         }
 
         var result = codes.ToArray();

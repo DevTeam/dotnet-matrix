@@ -8,9 +8,14 @@ public partial class EscapedDelimiters
     [LibraryBenchmark(LibraryCatalog.CsvHelper)]
     public TextCsvRow[] CsvHelper()
     {
-        using var source = new StringReader(_csv);
-        using var csv = new CsvReader(source, CsvHelperConfiguration.Reader);
-        var result = csv.GetRecords<TextCsvRow>().ToArray();
+        using var csv = CsvReader.Create(new StringReader(_csv), CsvHelperConfiguration.Reader);
+        var rows = new List<TextCsvRow>(2);
+        while (csv.Read())
+        {
+            rows.Add(new TextCsvRow(csv.GetInt32(0), csv.GetString(1)));
+        }
+
+        var result = rows.ToArray();
         CsvChecks.EscapedDelimiters(LibraryCatalog.CsvHelper, result);
         return result;
     }

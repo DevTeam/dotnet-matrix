@@ -8,18 +8,15 @@ public partial class ReadSimpleRows
     [LibraryBenchmark(LibraryCatalog.CsvHelper)]
     public RawCsvRow[] CsvHelper()
     {
-        using var source = new StringReader(_csv);
-        using var csv = new CsvReader(source, CsvHelperConfiguration.Reader);
-        csv.Read();
-        csv.ReadHeader();
+        using var csv = CsvReader.Create(new StringReader(_csv), CsvHelperConfiguration.Reader);
         var rows = new List<RawCsvRow>(3);
         while (csv.Read())
         {
             rows.Add(new RawCsvRow(
-                csv.GetField(0)!,
-                csv.GetField(1)!,
-                csv.GetField(2)!,
-                csv.GetField(3)!));
+                csv.GetString(0),
+                csv.GetString(1),
+                csv.GetString(2),
+                csv.GetString(3)));
         }
 
         var result = rows.ToArray();

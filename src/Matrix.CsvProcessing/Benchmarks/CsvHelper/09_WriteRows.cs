@@ -9,15 +9,22 @@ public partial class WriteRows
     [PayloadSize(CsvData.WriteCsv)]
     public string CsvHelper()
     {
+        var buffer = new System.Text.StringBuilder(64);
         using var destination = new StringWriter(
-            new System.Text.StringBuilder(64),
-            CsvHelperConfiguration.Writer.CultureInfo);
-        using (var csv = new CsvWriter(destination, CsvHelperConfiguration.Writer))
+            buffer,
+            CsvHelperConfiguration.Writer.FormatProvider);
+        using (var csv = CsvWriter.Create(destination, CsvHelperConfiguration.Writer, true))
         {
-            csv.WriteRecords(_records);
+            csv.WriteHeader("Id", "Name");
+            foreach (var record in _records)
+            {
+                csv.WriteField(record.Id);
+                csv.WriteField(record.Name);
+                csv.EndRecord();
+            }
         }
 
-        var result = destination.ToString();
+        var result = buffer.ToString();
         CsvChecks.WrittenCsv(LibraryCatalog.CsvHelper, result);
         return result;
     }
