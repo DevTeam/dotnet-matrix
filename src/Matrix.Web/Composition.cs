@@ -13,14 +13,12 @@ internal partial class Composition : ServiceProviderFactory<Composition>
         DI.Setup()
             .Hint(Hint.ThreadSafe, "Off")
             .Arg<HttpClient>("httpClient")
-
             .Root<IMatrixDataSource>()
             .Root<IMatrixView>()
             .Root<IMatrixScoring>()
             .Root<IMatrixMeasures>()
             .Root<IMatrixPalette>()
             .Root<IMatrixScores>()
-
-            .Singleton<JsonSerializerWrapper, GitHubMatrixDataSource, MatrixView, MatrixScoring, MatrixMeasures, MatrixPalette,
-                MatrixReportInvariants, MatrixScores, MatrixOverviews, MatrixRatings>();
+            .Singleton<JsonSerializerWrapper, GitHubMatrixDataSource, MatrixView, MatrixScoring, MatrixMeasures, MatrixPalette, MatrixReportInvariants,
+                MatrixScores, MatrixOverviews, MatrixRatings>();
 }

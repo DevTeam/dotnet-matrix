@@ -20,7 +20,8 @@ internal partial class Composition
             .Arg<string[]>("args")
             .Arg<CancellationToken>("cancellationToken")
             .Bind().To(_ => GetService<ICommandLineRunner>())
-            .Singleton<JsonSerializerWrapper, BuildPaths, MatrixModuleDiscovery, RazorTemplateEngine, MatrixReportStore, QuietProcessRunner, MatrixTarget, MetadataTarget,
+            .Bind<IMatrixReportStore, IMatrixReportReader, MatrixReportStore>().As(Lifetime.Singleton).To<MatrixReportStore>()
+            .Singleton<JsonSerializerWrapper, BuildPaths, MatrixModuleDiscovery, RazorTemplateEngine, QuietProcessRunner, MatrixTarget, MetadataTarget,
                 LibraryTarget, ReportChartsTarget, ReadmeTarget, PrepareCommitTarget, CiMatrixTarget, CiReportsTarget, ImportReportsTarget, WebManifestTarget,
                 WebTarget, LocalWebTarget, ReproduceTarget, RunConfigurationsTarget, BuildSolutionTarget, AotProbesTarget,
                 MatrixReportInvariants, MatrixScores, MatrixOverviews, MatrixRatings>();
