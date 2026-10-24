@@ -22,18 +22,13 @@
         </a>
 
         <div class="topbar-end">
-        @if (_catalog is not null)
+        @if (_catalog is not null && _catalog.Versions.Count > 0)
         {
             <div class="release-picker">
-                <label for="release">Release</label>
-                <select id="release" value="@_selectedVersion" @onchange="ChangeVersion">
-                    @foreach (var version in _catalog.Versions)
-                    {
-                        <option value="@version.Version">
-                            @VersionLabel(version)
-                        </option>
-                    }
-                </select>
+                <ReleasePicker Versions="_catalog.Versions"
+                               Selected="SelectedVersion"
+                               OnSelect="SelectVersionAsync"
+                               OnOpen="LoadVersionDatesAsync"/>
                 @if (SelectedVersion is { Released: true, Commit.Length: > 0 })
                 {
                     <a class="commit-link"
@@ -676,6 +671,7 @@
     private string _view = "overview";
     private bool _loadingCatalog = true;
     private bool _loadingReports;
+    private bool _datingVersions;
     private bool _recomputing;
     private string? _fatalError;
     private string? _catalogWarning;
@@ -1050,13 +1046,8 @@
     /// The picker only writes the address; loading is driven from there, so the
     /// selection has one source whether it came from a link or from this control.
     /// </summary>
-    private void ChangeVersion(ChangeEventArgs eventArgs)
-    {
-        if (eventArgs.Value?.ToString() is { Length: > 0 } version)
-        {
-            Navigation.NavigateTo(VersionLink(version), replace: true);
-        }
-    }
+    private void SelectVersionAsync(MatrixVersion version) =>
+        Navigation.NavigateTo(VersionLink(version.Version), replace: true);
 
     private string? LatestVersionId => _catalog?.Versions.FirstOrDefault()?.Version;
 
@@ -1645,16 +1636,61 @@
     }
 
     /// <summary>
-    /// Dates are fetched one version at a time, only for the version being viewed.
+    /// Dates the whole list, one release at a time, for the list that is about to show
+    /// them. The published application bakes the dates into the catalog, so this runs
+    /// only where the releases were read live from the repository API — the development
+    /// mode — and it is paid for when a visitor opens the list rather than on every
+    /// page load. Requests go one by one: the unauthenticated API allows 60 an hour per
+    /// address, and a burst of parallel requests from one page is exactly what the limit
+    /// is there to stop. Each date appears as soon as it arrives, so a long list fills
+    /// in visibly instead of showing version numbers until the last one lands.
     /// </summary>
-    private async Task LoadVersionDateAsync()
+    private async Task LoadVersionDatesAsync()
     {
-        if (_catalog is null || SelectedVersion is not { DateUtc: null } version)
+        if (_catalog is null || _datingVersions)
         {
             return;
         }
 
-        var date = await DataSource.LoadVersionDateAsync(_catalog, version);
+        _datingVersions = true;
+        try
+        {
+            foreach (var version in _catalog.Versions)
+            {
+                if (version is { DateUtc: null, Commit.Length: > 0 })
+                {
+                    await LoadVersionDateAsync(version.Version);
+                }
+            }
+        }
+        finally
+        {
+            _datingVersions = false;
+        }
+    }
+
+    /// <summary>
+    /// Dates are fetched one version at a time, only for the version being viewed.
+    /// </summary>
+    private Task LoadVersionDateAsync() =>
+        SelectedVersion is { } version
+            ? LoadVersionDateAsync(version.Version)
+            : Task.CompletedTask;
+
+    /// <summary>
+    /// A release keeps whatever date it already has: the catalog is immutable records,
+    /// so a fetched date survives every later render, and asking twice for the same
+    /// release would only spend rate limit on an answer already known.
+    /// </summary>
+    private async Task LoadVersionDateAsync(string version)
+    {
+        if (_catalog is null || _catalog.Versions.FirstOrDefault(item =>
+                item.Version == version) is not { DateUtc: null } known)
+        {
+            return;
+        }
+
+        var date = await DataSource.LoadVersionDateAsync(_catalog, known);
         if (date is null)
         {
             return;
@@ -1663,7 +1699,7 @@
         _catalog = _catalog with
         {
             Versions = [.. _catalog.Versions.Select(item =>
-                item.Version == version.Version ? item with { DateUtc = date } : item)]
+                item.Version == version ? item with { DateUtc = date } : item)]
         };
         StateHasChanged();
     }
@@ -1712,17 +1748,4 @@
 
     private static string ShortCommit(string commit) =>
         commit[..Math.Min(7, commit.Length)];
-
-    /// <summary>
-    /// Every label reads as name · qualifier and stays about as long as the others,
-    /// so the picker is one steady box rather than one that resizes on each choice.
-    /// </summary>
-    private static string VersionLabel(MatrixVersion version) =>
-        version switch
-        {
-            { Version: "local" } => "Local · workspace",
-            { DateUtc: { } date } => $"{version.Version} · {date:dd MMM yyyy}",
-            _ => version.Version
-        };
-
 }

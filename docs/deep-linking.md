@@ -63,9 +63,10 @@ scenario of the category — that is the default view.
 
 ## `version`
 
-Pins the reports to one release. It takes a release name exactly as the picker shows
-it, for example `?version=1.2.0`, or the word `latest`. Unlike the other two, the
-value is matched exactly: dropping punctuation would make `1.2.3` and `12.3`
+Pins the reports to one release. It takes the release number, for example
+`?version=1.2.0`, or the word `latest` — not the date the picker shows, which names a
+release to a reader but is not its identifier. Unlike the other two, the value is
+matched exactly: dropping punctuation would make `1.2.3` and `12.3`
 indistinguishable.
 
 Leave it out to follow every new release — a link without it always shows the newest

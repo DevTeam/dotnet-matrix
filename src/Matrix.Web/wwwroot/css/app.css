@@ -254,11 +254,11 @@ a {
     gap: 10px 18px;
 }
 
-/* A fixed box rather than a cap. A native select is as wide as the option currently
-   shown in it, so without this the picker — and the links beside it — move on every
-   change of release. 210px covers the longest label the list can produce, a
-   two-digit version with a full date. */
-.topbar-end select {
+/* A fixed box rather than a cap. A date label changes width from one release to the
+   next, so without this the picker — and the links beside it — shift on every choice.
+   210px covers the longest label the list can produce, a two-digit day with a long
+   month name. */
+.release-trigger {
     width: 210px;
     max-width: 100%;
 }
@@ -295,27 +295,162 @@ a {
     gap: 10px;
 }
 
-/* The native select centers the font box, whose visible glyphs sit slightly low. */
-.release-picker select {
-    padding-bottom: 2px;
+/* Holds the list: the trigger alone would make the list as wide as one date. The
+   z-index keeps the trigger and the list above the backdrop below. */
+.release-switch {
+    position: relative;
+    z-index: 26;
+    min-width: 0;
 }
 
-.release-picker label,
+/* An open choice closes on the next click anywhere else, and that click must not also
+   land on whatever the visitor aimed at — a row of the report would open a library
+   dialog instead of the release they wanted. This layer catches it.
+   Fixed rather than absolute only because it has to cover the whole viewport, while the
+   bar itself creates a containing block for fixed children through its blur; the bar is
+   sticky at the top and spans the full width, so its origin is the top-left of the
+   viewport and an explicit viewport-sized box covers exactly what inset:0 would have.
+   Transparent rather than dimmed: nothing is being confirmed here, so the page should
+   not look blocked. */
+.release-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 25;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+}
+
+/* The trigger stays above the backdrop, so a click on it reaches the button that
+   closes the list rather than the transparent layer behind it. */
+.release-trigger {
+    position: relative;
+    z-index: 26;
+    display: flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 11px 0 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    background: var(--surface-2);
+    cursor: pointer;
+    font-size: 13px;
+    list-style: none;
+}
+
+.release-trigger::-webkit-details-marker,
+.release-trigger::marker {
+    display: none;
+    content: '';
+}
+
+.release-trigger:hover,
+.release-switch[open] > .release-trigger {
+    border-color: var(--muted);
+}
+
+.release-chevron {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+    color: var(--muted);
+    transition: transform .15s ease;
+}
+
+.release-switch[open] .release-chevron {
+    transform: rotate(180deg);
+}
+
+/* Five rows, then a scroll. A release list grows by one tag at a time and soon runs
+   past a screen; a fixed window keeps the choice at two rows of eye movement while
+   the older releases stay one wheel away. The height is computed from the row and
+   gap below rather than measured, so changing those cannot silently change this.
+   Border-box counts the padding and the border inside the limit, hence the 14px: the
+   6px above and below the rows plus the 1px frame on each side. Without it the fifth
+   row would be clipped by exactly the frame. */
+.release-list {
+    --release-row: 34px;
+    --release-gap: 2px;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 30;
+    display: grid;
+    width: max-content;
+    min-width: 100%;
+    max-width: min(280px, calc(100vw - 32px));
+    max-height: calc(5 * var(--release-row) + 4 * var(--release-gap) + 14px);
+    gap: var(--release-gap);
+    margin: 0;
+    padding: 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    background: var(--surface-2);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .36);
+    list-style: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-color: var(--line) var(--surface-2);
+    scrollbar-width: thin;
+}
+
+.release-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.release-list::-webkit-scrollbar-track {
+    background: var(--surface-2);
+}
+
+.release-list::-webkit-scrollbar-thumb {
+    border: 3px solid var(--surface-2);
+    border-radius: 999px;
+    background: var(--line);
+}
+
+.release-option {
+    display: flex;
+    height: var(--release-row);
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: var(--radius-chip);
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 13px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.release-option:hover,
+.release-option:focus-visible {
+    background: var(--surface-3);
+}
+
+.release-option.is-selected {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.release-option svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 14px;
+}
+
+.release-caption,
 .scenario-heading {
     color: var(--muted);
     font-size: 12px;
     font-weight: 700;
     letter-spacing: .08em;
     text-transform: uppercase;
-}
-
-select {
-    min-height: 40px;
-    padding: 0 34px 0 13px;
-    border: 1px solid var(--line);
-    border-radius: var(--radius-control);
-    background: var(--surface-2);
-    color: var(--text);
 }
 
 .commit-link {
@@ -3163,7 +3298,9 @@ tbody th {
         width: 100%;
     }
 
-    .release-picker select {
+    /* The caption sits in front of the picker, so the picker itself takes what the
+       row has left instead of overflowing it. */
+    .release-switch {
         flex: 1;
         min-width: 0;
     }
@@ -3595,9 +3732,9 @@ tbody th {
         flex: 0 1 auto;
     }
 
-    /* Hidden from the eye, kept for the accessible name: a select of releases needs
+    /* Hidden from the eye, kept for the accessible name: a picker of releases needs
        no caption beside it, and the caption costs a row. */
-    .release-picker > label {
+    .release-picker > .release-caption {
         position: absolute;
         width: 1px;
         height: 1px;
@@ -3605,7 +3742,8 @@ tbody th {
         clip-path: inset(50%);
     }
 
-    .topbar-end select {
+    .release-trigger {
+        width: auto;
         min-width: 0;
         max-width: 160px;
         flex: 0 1 160px;

@@ -1,0 +1,172 @@
+@using System.Globalization
+
+@* A release is recognised by its date, not by its number: the question a reader puts to
+   the picker is "does this report predate the version I use", and 31 Jul 2026 answers it
+   where 1.0.0 does not. The number stays one tooltip away, on the trigger and on every
+   row, so a release can still be named exactly when it has to be. That is why this is a
+   list of buttons rather than a native <select>: a select carries no per-row tooltip and
+   always opens as tall as the platform decides, while this list shows five rows and
+   scrolls for the rest — a repository collects dozens of tags over time.
+
+   The two roots below are the children of the page's release row, not a box of their
+   own, so the commit link beside the picker keeps its place and its gap. *@
+<span class="release-caption" id="release-caption">Release</span>
+<div class="release-switch" @onkeydown="OnKeyDown">
+    <button type="button"
+            class="release-trigger"
+            title="@Hint(Selected)"
+            aria-haspopup="true"
+            aria-expanded="@(IsOpen ? "true" : "false")"
+            aria-controls="release-list"
+            aria-labelledby="release-caption release-value"
+            @ref="_trigger"
+            @onclick="Toggle">
+        <span id="release-value">@Label(Selected)</span>
+        <svg class="release-chevron"
+             viewBox="0 0 16 16"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true"
+             focusable="false">
+            <path d="M4.6 6.4 8 9.8l3.4-3.4"/>
+        </svg>
+    </button>
+    @if (IsOpen)
+    {
+        @* An open choice closes on the next click anywhere else, and that click must not
+           also land on whatever the visitor aimed at: a row of the report would open a
+           library dialog instead of the release they wanted. This layer catches it. *@
+        <div class="release-backdrop" @onclick="CloseAsync"></div>
+        <ul class="release-list" id="release-list" aria-labelledby="release-caption">
+            @foreach (var version in Versions)
+            {
+                var isSelected = version.Version == Selected?.Version;
+                <li>
+                    <button type="button"
+                            class="@(isSelected ? "release-option is-selected" : "release-option")"
+                            aria-current="@(isSelected ? "true" : null)"
+                            title="@Hint(version)"
+                            @onclick="() => SelectAsync(version)">
+                        <span>@Label(version)</span>
+                        @if (isSelected)
+                        {
+                            <svg viewBox="0 0 16 16"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.9"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 aria-hidden="true"
+                                 focusable="false">
+                                <path d="M3.5 8.4 6.6 11.5 12.5 4.9"/>
+                            </svg>
+                        }
+                    </button>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    private ElementReference _trigger;
+    private bool _open;
+
+    /// <summary>Newest first, in the order the catalog hands them over.</summary>
+    [Parameter, EditorRequired]
+    public required IReadOnlyList<MatrixVersion> Versions { get; set; }
+
+    [Parameter]
+    public MatrixVersion? Selected { get; set; }
+
+    [Parameter]
+    public EventCallback<MatrixVersion> OnSelect { get; set; }
+
+    /// <summary>
+    /// Raised once the list is open. The page dates the releases here rather than on
+    /// load: in development the catalog lists tags from the repository API, which
+    /// carries no date, and every release costs one request to date. Opening the list
+    /// is the moment those dates are about to be read, and with the baked catalog — the
+    /// published application — there is nothing left to fetch and nothing is raised.
+    /// </summary>
+    [Parameter]
+    public EventCallback OnOpen { get; set; }
+
+    /// <summary>
+    /// Open only while there is something to choose: an empty catalog already says so
+    /// on the page, and an empty box under the trigger would read as a load failure.
+    /// </summary>
+    private bool IsOpen => _open && Versions.Count > 0;
+
+    private void Toggle()
+    {
+        if (Versions.Count == 0)
+        {
+            return;
+        }
+
+        _open = !IsOpen;
+        if (IsOpen)
+        {
+            _ = OnOpen.InvokeAsync();
+        }
+    }
+
+    private Task CloseAsync() => IsOpen ? CloseAndFocusAsync() : Task.CompletedTask;
+
+    /// <summary>
+    /// Closing takes away the row that had focus, so focus returns to the trigger; left
+    /// alone the browser drops it to the body and the next Tab starts at the top of the
+    /// page again.
+    /// </summary>
+    private async Task CloseAndFocusAsync()
+    {
+        _open = false;
+        await _trigger.FocusAsync();
+    }
+
+    private async Task SelectAsync(MatrixVersion version)
+    {
+        // The page navigates from here and the address decides what is shown, so the
+        // list closes first: a failure in that path must not leave it hanging over
+        // reports that did not change.
+        await CloseAndFocusAsync();
+        await OnSelect.InvokeAsync(version);
+    }
+
+    /// <summary>
+    /// A button already opens on Enter and Space and the rows are buttons too, so the
+    /// only key left to this component is Escape, which the rest of the application
+    /// answers wherever something opens over the page. Handled on the wrapper, so it
+    /// works from the trigger and from any row alike.
+    /// </summary>
+    private Task OnKeyDown(KeyboardEventArgs eventArgs) =>
+        IsOpen && eventArgs.Key == "Escape" ? CloseAndFocusAsync() : Task.CompletedTask;
+
+    /// <summary>
+    /// The date is the label; the number is the tooltip. The workspace is named instead
+    /// of dated, because it has no release date and is not a release. A release whose
+    /// date never arrived — the repository API path dates tags one at a time, so a list
+    /// fetched live has none — falls back to its number: the number is then the only
+    /// thing telling one row from another, and a list of identical placeholders could
+    /// not be chosen from. The baked catalog always carries dates, so this covers only
+    /// that fallback.
+    /// </summary>
+    private static string Label(MatrixVersion? version) => version switch
+    {
+        null => string.Empty,
+        { Version: "local" } => "Local · workspace",
+        { DateUtc: { } date } => date.ToString("dd MMM yyyy", CultureInfo.InvariantCulture),
+        _ => version.Version
+    };
+
+    private static string? Hint(MatrixVersion? version) => version switch
+    {
+        null => null,
+        { Version: "local" } => "Local workspace",
+        _ => $"Version {version.Version}"
+    };
+}
