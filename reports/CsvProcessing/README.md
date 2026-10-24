@@ -21,10 +21,10 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 999 | 1000 | 1999 | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
-| 2 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 572 | 392 | 965 | silver in Correctness, silver in Read, bronze in Throughput |
-| 3 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 638 | 270 | 908 | silver in Throughput, silver in Write, bronze in Correctness, bronze in Read |
-| 4 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 236 | 213 | 449 | bronze in Write |
+| 1 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 1000 | 1000 | 2000 | gold in Correctness, gold in Read, gold in Throughput, gold in Write |
+| 2 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 767 | 841 | 1608 | silver in Correctness, silver in Read, silver in Throughput, bronze in Write |
+| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 557 | 392 | 949 | bronze in Correctness, bronze in Read |
+| 4 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 635 | 270 | 905 | silver in Write, bronze in Throughput |
 
 
 <details>
@@ -38,65 +38,65 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=csv-processing).
 
-#### 1. Sep — 1999 of 2000
+#### 1. Sep — 2000 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 719.89 ns | 719.89 ns | 100 | 1.89 KB | 1.89 KB | 100 |
-| Read Typed Records | 865.65 ns | 865.65 ns | 100 | 1.7 KB | 1.7 KB | 100 |
-| Read Large Dataset | 1.13 ms | 1.11 ms | 99.2 | 1016.97 KB | 1016.97 KB | 100 |
-| Quoted Fields | 618.89 ns | 618.89 ns | 100 | 1.34 KB | 1.34 KB | 100 |
-| Escaped Delimiters | 560.69 ns | 560.69 ns | 100 | 1.35 KB | 1.35 KB | 100 |
-| Header Mapping | 973.88 ns | 973.88 ns | 100 | 1.7 KB | 1.7 KB | 100 |
-| Custom Conversion | 461.69 ns | 461.69 ns | 100 | 1.11 KB | 1.11 KB | 100 |
-| Streaming Read | 842.96 μs | 831.17 μs | 99.3 | 1.34 KB | 1.34 KB | 100 |
-| Write Rows | 520.05 ns | 520.05 ns | 100 | 1.89 KB | 1.89 KB | 100 |
-| Async Read | 824.99 μs | 824.99 μs | 100 | 1.44 KB | 1.44 KB | 100 |
+| Read Simple Rows | 681.53 ns | 681.53 ns | 100 | 1.89 KB | 1.89 KB | 100 |
+| Read Typed Records | 853.58 ns | 853.58 ns | 100 | 1.7 KB | 1.7 KB | 100 |
+| Read Large Dataset | 1.02 ms | 1.02 ms | 100 | 1016.97 KB | 1016.97 KB | 100 |
+| Quoted Fields | 612.23 ns | 612.23 ns | 100 | 1.34 KB | 1.34 KB | 100 |
+| Escaped Delimiters | 571.56 ns | 571.56 ns | 100 | 1.35 KB | 1.35 KB | 100 |
+| Header Mapping | 901.22 ns | 901.22 ns | 100 | 1.7 KB | 1.7 KB | 100 |
+| Custom Conversion | 445.73 ns | 445.73 ns | 100 | 1.11 KB | 1.11 KB | 100 |
+| Streaming Read | 848.24 μs | 847.29 μs | 99.9 | 1.34 KB | 1.34 KB | 100 |
+| Write Rows | 535.61 ns | 535.61 ns | 100 | 1.89 KB | 1.89 KB | 100 |
+| Async Read | 824.35 μs | 824.35 μs | 100 | 1.44 KB | 1.44 KB | 100 |
 
-#### 2. TinyCsvParser — 965 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 1.53 μs | 719.89 ns | 68.7 | 5.56 KB | 1.89 KB | 58.5 |
-| Read Typed Records | 1.85 μs | 865.65 ns | 68.3 | 5.3 KB | 1.7 KB | 56.8 |
-| Read Large Dataset | 2.97 ms | 1.11 ms | 61.2 | 2.91 MB | 1016.97 KB | 58.5 |
-| Quoted Fields | 1.36 μs | 618.89 ns | 67.6 | 4.87 KB | 1.34 KB | 52.9 |
-| Escaped Delimiters | 1.35 μs | 560.69 ns | 64.5 | 4.98 KB | 1.35 KB | 52.4 |
-| Header Mapping | 1.77 μs | 973.88 ns | 74.2 | 5.3 KB | 1.7 KB | 56.8 |
-| Custom Conversion | 935.49 ns | 461.69 ns | 70.3 | 4.32 KB | 1.11 KB | 51.1 |
-| Streaming Read | 3.2 ms | 831.17 μs | 51 | 2.75 MB | 1.34 KB | 2.196 |
-| Write Rows | — | 520.05 ns | 0 | — | 1.89 KB | 0 |
-| Async Read | 3.85 ms | 824.99 μs | 46.3 | 1.39 MB | 1.44 KB | 3.209 |
-
-#### 3. Sylvan.Data.Csv — 908 of 2000
+#### 2. CsvHelper — 1608 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 2.24 μs | 719.89 ns | 56.8 | 35.38 KB | 1.89 KB | 23.3 |
-| Read Typed Records | 2.19 μs | 865.65 ns | 62.9 | 35.11 KB | 1.7 KB | 22.1 |
-| Read Large Dataset | 1.11 ms | 1.11 ms | 100 | 1.03 MB | 1016.97 KB | 98.4 |
-| Quoted Fields | 2.01 μs | 618.89 ns | 55.5 | 34.34 KB | 1.34 KB | 19.9 |
-| Escaped Delimiters | 1.82 μs | 560.69 ns | 55.5 | 34.3 KB | 1.35 KB | 20 |
-| Header Mapping | 2.53 μs | 973.88 ns | 62.1 | 35.11 KB | 1.7 KB | 22.1 |
-| Custom Conversion | — | 461.69 ns | 0 | — | 1.11 KB | 0 |
-| Streaming Read | 831.17 μs | 831.17 μs | 100 | 34.75 KB | 1.34 KB | 19.8 |
-| Write Rows | 1.47 μs | 520.05 ns | 59.5 | 32.78 KB | 1.89 KB | 24.2 |
-| Async Read | 1.13 ms | 824.99 μs | 85.3 | 36.05 KB | 1.44 KB | 20.1 |
+| Read Simple Rows | 1.41 μs | 681.53 ns | 69.5 | 2.18 KB | 1.89 KB | 93.2 |
+| Read Typed Records | 1.53 μs | 853.58 ns | 74.7 | 1.98 KB | 1.7 KB | 92.5 |
+| Read Large Dataset | 1.07 ms | 1.02 ms | 97.3 | 1017.26 KB | 1016.97 KB | 100 |
+| Quoted Fields | 966.72 ns | 612.23 ns | 79.6 | 1.85 KB | 1.34 KB | 85.4 |
+| Escaped Delimiters | 888.67 ns | 571.56 ns | 80.2 | 1.59 KB | 1.35 KB | 92.4 |
+| Header Mapping | 1.69 μs | 901.22 ns | 73 | 1.98 KB | 1.7 KB | 92.5 |
+| Custom Conversion | 759.51 ns | 445.73 ns | 76.6 | 1.37 KB | 1.11 KB | 90.3 |
+| Streaming Read | 847.29 μs | 847.29 μs | 100 | 1.63 KB | 1.34 KB | 90.8 |
+| Write Rows | 13.01 μs | 535.61 ns | 20.3 | 128.78 KB | 1.89 KB | 12.2 |
+| Async Read | 900.66 μs | 824.35 μs | 95.7 | 1.73 KB | 1.44 KB | 91.4 |
 
-#### 4. CsvHelper — 449 of 2000
+#### 3. TinyCsvParser — 949 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 3.31 μs | 719.89 ns | 46.7 | 21.95 KB | 1.89 KB | 29.5 |
-| Read Typed Records | 893.42 μs | 865.65 ns | 3.115 | 53.56 KB | 1.7 KB | 17.9 |
-| Read Large Dataset | 4.84 ms | 1.11 ms | 48 | 2.65 MB | 1016.97 KB | 61.3 |
-| Quoted Fields | 587.75 μs | 618.89 ns | 3.248 | 40.91 KB | 1.34 KB | 18.3 |
-| Escaped Delimiters | 605.37 μs | 560.69 ns | 3.046 | 40.93 KB | 1.35 KB | 18.3 |
-| Header Mapping | 867.33 μs | 973.88 ns | 3.353 | 53.56 KB | 1.7 KB | 17.9 |
-| Custom Conversion | 3.15 μs | 461.69 ns | 38.3 | 21.95 KB | 1.11 KB | 22.7 |
-| Streaming Read | 4.19 ms | 831.17 μs | 44.6 | 2.16 MB | 1.34 KB | 2.48 |
-| Write Rows | 777.86 μs | 520.05 ns | 2.588 | 40.5 KB | 1.89 KB | 21.7 |
-| Async Read | 4.42 ms | 824.99 μs | 43.2 | 2.39 MB | 1.44 KB | 2.442 |
+| Read Simple Rows | 1.59 μs | 681.53 ns | 65.5 | 5.56 KB | 1.89 KB | 58.5 |
+| Read Typed Records | 1.9 μs | 853.58 ns | 67 | 5.3 KB | 1.7 KB | 56.8 |
+| Read Large Dataset | 3.05 ms | 1.02 ms | 57.8 | 2.91 MB | 1016.97 KB | 58.5 |
+| Quoted Fields | 1.42 μs | 612.23 ns | 65.7 | 4.87 KB | 1.34 KB | 52.9 |
+| Escaped Delimiters | 1.3 μs | 571.56 ns | 66.3 | 4.98 KB | 1.35 KB | 52.4 |
+| Header Mapping | 1.93 μs | 901.22 ns | 68.3 | 5.3 KB | 1.7 KB | 56.8 |
+| Custom Conversion | 916.95 ns | 445.73 ns | 69.8 | 4.32 KB | 1.11 KB | 51.1 |
+| Streaming Read | 3.13 ms | 847.29 μs | 52.1 | 2.75 MB | 1.34 KB | 2.196 |
+| Write Rows | — | 535.61 ns | 0 | — | 1.89 KB | 0 |
+| Async Read | 4.2 ms | 824.35 μs | 44.3 | 1.39 MB | 1.44 KB | 3.209 |
+
+#### 4. Sylvan.Data.Csv — 905 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Read Simple Rows | 2.04 μs | 681.53 ns | 57.8 | 35.38 KB | 1.89 KB | 23.3 |
+| Read Typed Records | 2.43 μs | 853.58 ns | 59.3 | 35.11 KB | 1.7 KB | 22.1 |
+| Read Large Dataset | 1.13 ms | 1.02 ms | 94.7 | 1.03 MB | 1016.97 KB | 98.4 |
+| Quoted Fields | 1.83 μs | 612.23 ns | 57.9 | 34.34 KB | 1.34 KB | 19.9 |
+| Escaped Delimiters | 1.64 μs | 571.56 ns | 59.1 | 34.3 KB | 1.35 KB | 20 |
+| Header Mapping | 2.42 μs | 901.22 ns | 61.1 | 35.11 KB | 1.7 KB | 22.1 |
+| Custom Conversion | — | 445.73 ns | 0 | — | 1.11 KB | 0 |
+| Streaming Read | 864.75 μs | 847.29 μs | 99 | 34.75 KB | 1.34 KB | 19.8 |
+| Write Rows | 1.55 μs | 535.61 ns | 58.9 | 32.78 KB | 1.89 KB | 24.2 |
+| Async Read | 1.08 ms | 824.35 μs | 87.5 | 36.05 KB | 1.44 KB | 20.1 |
 
 </details>
 
@@ -128,12 +128,12 @@ rating above. The same breakdown appears as a hint on any points value in the
 <table>
 <tr>
 <td width="64"><img src="../../metadata/CsvProcessing/logos/csv-helper.svg" width="48" height="48" alt="CsvHelper logo"></td>
-<td><strong><a href="https://joshclose.github.io/CsvHelper/">CsvHelper</a></strong> 33.1.0<br>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</td>
+<td><strong><a href="https://joshclose.github.io/CsvHelper/">CsvHelper</a></strong> 34.0.0-rc.2<br>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/CsvProcessing/logos/sep.svg" width="48" height="48" alt="Sep logo"></td>
-<td><strong><a href="https://github.com/nietras/Sep">Sep</a></strong> 0.17.0<br>A modern SIMD-accelerated separated-values reader and writer with span-based conversion and async enumeration.</td>
+<td><strong><a href="https://github.com/nietras/Sep">Sep</a></strong> 0.17.1<br>A modern SIMD-accelerated separated-values reader and writer with span-based conversion and async enumeration.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sep">Compare →</a></td>
 </tr>
 <tr>
