@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>hashing</MatrixModuleId>
+        <MatrixModuleName>Hashing</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Hash</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>Hashing</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.Hashing.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="System.IO.Hashing" Version="10.0.14">
+            <MatrixLibraryId>System.IO.Hashing</MatrixLibraryId>
+            <MatrixLibraryName>System.IO.Hashing</MatrixLibraryName>
+            <MatrixCodeName>SystemIOHashing</MatrixCodeName>
+            <MatrixDescription>The non-cryptographic hash algorithms shipped with .NET: XxHash32, XxHash64, XxHash3, CRC32, and CRC64.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.io.hashing</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-io-hashing.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="K4os.Hash.xxHash" Version="1.0.8">
+            <MatrixLibraryId>K4os.Hash.xxHash</MatrixLibraryId>
+            <MatrixLibraryName>K4os Hash xxHash</MatrixLibraryName>
+            <MatrixCodeName>K4osHashXxHash</MatrixCodeName>
+            <MatrixDescription>A managed xxHash implementation with one-shot and incremental XxHash32 and XxHash64 APIs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MiloszKrajewski/K4os.Hash.xxHash</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MiloszKrajewski/K4os.Hash.xxHash</MatrixRepositoryUrl>
+            <MatrixLogo>logos/k4os-hash-xxhash.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Standart.Hash.xxHash" Version="4.0.5">
+            <MatrixLibraryId>Standart.Hash.xxHash</MatrixLibraryId>
+            <MatrixLibraryName>Standart.Hash.xxHash</MatrixLibraryName>
+            <MatrixCodeName>StandartHashXxHash</MatrixCodeName>
+            <MatrixDescription>A focused xxHash library exposing seeded one-shot XxHash32, XxHash64, XxHash3, and XxHash128 functions plus stream overloads.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/uranium62/xxHash</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/uranium62/xxHash</MatrixRepositoryUrl>
+            <MatrixLogo>logos/standart-hash-xxhash.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="HashDepot" Version="3.2.0">
+            <MatrixLibraryId>HashDepot</MatrixLibraryId>
+            <MatrixLibraryName>HashDepot</MatrixLibraryName>
+            <MatrixCodeName>HashDepot</MatrixCodeName>
+            <MatrixDescription>A collection of non-cryptographic hash functions including xxHash32, xxHash64, MurmurHash3, FNV-1a, and SipHash-2-4.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ssg/HashDepot</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ssg/HashDepot</MatrixRepositoryUrl>
+            <MatrixLogo>logos/hashdepot.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Crc32.NET" Version="2.1.0">
+            <MatrixLibraryId>Crc32.NET</MatrixLibraryId>
+            <MatrixLibraryName>Crc32.NET</MatrixLibraryName>
+            <MatrixCodeName>Crc32NET</MatrixCodeName>
+            <MatrixDescription>A managed CRC-32 implementation with table, slicing-by-8, and hardware-accelerated backends.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/force-net/Crc32.NET</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/force-net/Crc32.NET</MatrixRepositoryUrl>
+            <MatrixLogo>logos/crc32-net.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Blake3" Version="3.0.2">
+            <MatrixLibraryId>Blake3</MatrixLibraryId>
+            <MatrixLibraryName>Blake3</MatrixLibraryName>
+            <MatrixCodeName>Blake3</MatrixCodeName>
+            <MatrixDescription>A managed BLAKE3 implementation offering one-shot hashing and an incremental hasher.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/xoofx/Blake3.NET</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/xoofx/Blake3.NET</MatrixRepositoryUrl>
+            <MatrixLogo>logos/blake3.svg</MatrixLogo>
+            <MatrixRating>false</MatrixRating>
+        </PackageReference>
+        <PackageReference Include="Isopoh.Cryptography.Blake2b" Version="2.0.0">
+            <MatrixLibraryId>Isopoh.Cryptography.Blake2b</MatrixLibraryId>
+            <MatrixLibraryName>Isopoh.Cryptography.Blake2b</MatrixLibraryName>
+            <MatrixCodeName>IsopohBlake2b</MatrixCodeName>
+            <MatrixDescription>A managed BLAKE2b implementation with keyed, salted, and configurable digest lengths.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/mheyman/Isopoh.Cryptography.Argon2</MatrixRepositoryUrl>
+            <MatrixLogo>logos/isopoh-blake2b.svg</MatrixLogo>
+            <MatrixRating>false</MatrixRating>
+        </PackageReference>
+        <PackageReference Include="FarmHash.Sharp" Version="0.9.0">
+            <MatrixLibraryId>FarmHash.Sharp</MatrixLibraryId>
+            <MatrixLibraryName>FarmHash.Sharp</MatrixLibraryName>
+            <MatrixCodeName>FarmHashSharp</MatrixCodeName>
+            <MatrixDescription>A managed port of Google FarmHash, exposing 32-bit and 64-bit fingerprints.</MatrixDescription>
+            <MatrixDocumentationUrl>https://nickbabcock.github.io/Farmhash.Sharp/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/nickbabcock/Farmhash.Sharp</MatrixRepositoryUrl>
+            <MatrixLogo>logos/farmhash-sharp.svg</MatrixLogo>
+            <MatrixRating>false</MatrixRating>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
