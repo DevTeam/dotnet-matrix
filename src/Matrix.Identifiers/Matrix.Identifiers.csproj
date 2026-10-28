@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>identifiers</MatrixModuleId>
+        <MatrixModuleName>Identifiers</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Id</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>Identifiers</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.Identifiers.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Ulid" Version="1.4.1">
+            <MatrixLibraryId>Ulid</MatrixLibraryId>
+            <MatrixLibraryName>Ulid</MatrixLibraryName>
+            <MatrixCodeName>Ulid</MatrixCodeName>
+            <MatrixDescription>A fast, allocation-conscious Cysharp implementation of Universally Unique Lexicographically Sortable Identifiers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cysharp/Ulid</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cysharp/Ulid</MatrixRepositoryUrl>
+            <MatrixLogo>logos/ulid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="NUlid" Version="1.7.3">
+            <MatrixLibraryId>NUlid</MatrixLibraryId>
+            <MatrixLibraryName>NUlid</MatrixLibraryName>
+            <MatrixCodeName>NUlid</MatrixCodeName>
+            <MatrixDescription>A ULID implementation derived from the original specification with parsing and monotonic generation support.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ulid/spec</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/RobThree/NUlid</MatrixRepositoryUrl>
+            <MatrixLogo>logos/nulid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="UUIDNext" Version="4.2.4">
+            <MatrixLibraryId>UUIDNext</MatrixLibraryId>
+            <MatrixLibraryName>UUIDNext</MatrixLibraryName>
+            <MatrixCodeName>UUIDNext</MatrixCodeName>
+            <MatrixDescription>A UUID generator for .NET providing time-ordered version 7 and database-friendly sequential GUIDs.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/mareek/UUIDNext</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/mareek/UUIDNext</MatrixRepositoryUrl>
+            <MatrixLogo>logos/uuid-next.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Medo.Uuid7" Version="3.2.0">
+            <MatrixLibraryId>Medo.Uuid7</MatrixLibraryId>
+            <MatrixLibraryName>Medo.Uuid7</MatrixLibraryName>
+            <MatrixCodeName>MedoUuid7</MatrixCodeName>
+            <MatrixDescription>A small RFC 9562 UUID version 7 implementation with timestamp extraction and monotonic generation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Medo64/Medo.Uuid7</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Medo64/Medo.Uuid7</MatrixRepositoryUrl>
+            <MatrixLogo>logos/medo-uuid7.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="IdGen" Version="3.0.7">
+            <MatrixLibraryId>IdGen</MatrixLibraryId>
+            <MatrixLibraryName>IdGen</MatrixLibraryName>
+            <MatrixCodeName>IdGen</MatrixCodeName>
+            <MatrixDescription>A Twitter Snowflake style generator producing 64-bit time-ordered identifiers with configurable structure.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/RobThree/IdGen</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/RobThree/IdGen</MatrixRepositoryUrl>
+            <MatrixLogo>logos/id-gen.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="FlakeId" Version="1.3.2">
+            <MatrixLibraryId>FlakeId</MatrixLibraryId>
+            <MatrixLibraryName>FlakeId</MatrixLibraryName>
+            <MatrixCodeName>FlakeId</MatrixCodeName>
+            <MatrixDescription>A Snowflake-like 64-bit identifier generator with an embedded timestamp, datacenter and worker identity.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/martindevans/FlakeId</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/martindevans/FlakeId</MatrixRepositoryUrl>
+            <MatrixLogo>logos/flake-id.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Ksuid" Version="1.0.0">
+            <MatrixLibraryId>Ksuid</MatrixLibraryId>
+            <MatrixLibraryName>KSUID</MatrixLibraryName>
+            <MatrixCodeName>Ksuid</MatrixCodeName>
+            <MatrixDescription>A .NET implementation of K-Sortable Unique Identifiers with a 32-bit timestamp and 128-bit payload.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/segmentio/ksuid</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/svix/ksuid-dotnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/ksuid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Nanoid" Version="3.1.0">
+            <MatrixLibraryId>Nanoid</MatrixLibraryId>
+            <MatrixLibraryName>Nanoid</MatrixLibraryName>
+            <MatrixCodeName>Nanoid</MatrixCodeName>
+            <MatrixDescription>A compact URL-safe random string identifier generator using a configurable alphabet.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/codeyu/nanoid-net</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/codeyu/nanoid-net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/nanoid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Sqids" Version="3.2.1">
+            <MatrixLibraryId>Sqids</MatrixLibraryId>
+            <MatrixLibraryName>Sqids</MatrixLibraryName>
+            <MatrixCodeName>Sqids</MatrixCodeName>
+            <MatrixDescription>A library that encodes one or more numbers into short URL-safe strings and decodes them back.</MatrixDescription>
+            <MatrixDocumentationUrl>https://sqids.org/dotnet</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/sqids/sqids-dotnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/sqids.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Hashids.net" Version="1.7.0">
+            <MatrixLibraryId>Hashids.net</MatrixLibraryId>
+            <MatrixLibraryName>Hashids.net</MatrixLibraryName>
+            <MatrixCodeName>HashidsNet</MatrixCodeName>
+            <MatrixDescription>An obfuscating encoder that turns integer sequences into short unique strings and back.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ullmark/hashids.net</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ullmark/hashids.net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/hashids.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>

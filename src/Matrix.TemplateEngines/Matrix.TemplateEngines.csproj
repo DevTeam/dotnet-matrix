@@ -1,0 +1,122 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>template-engines</MatrixModuleId>
+        <MatrixModuleName>Template Engines</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Template</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>TemplateEngines</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.TemplateEngines.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Handlebars.Net" Version="2.4.3">
+            <MatrixLibraryId>Handlebars.Net</MatrixLibraryId>
+            <MatrixLibraryName>Handlebars.Net</MatrixLibraryName>
+            <MatrixCodeName>Handlebars</MatrixCodeName>
+            <MatrixDescription>A Mustache-compatible Handlebars implementation with a compiled template delegate and HTML escaping by default.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Handlebars-Net/Handlebars.Net</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Handlebars-Net/Handlebars.Net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/handlebars.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Scriban" Version="7.5.3">
+            <MatrixLibraryId>Scriban</MatrixLibraryId>
+            <MatrixLibraryName>Scriban</MatrixLibraryName>
+            <MatrixCodeName>Scriban</MatrixCodeName>
+            <MatrixDescription>A fast Liquid and Handlebars flavoured engine with an optional scripting mode and reusable parsed templates.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/scriban/scriban</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/scriban/scriban</MatrixRepositoryUrl>
+            <MatrixLogo>logos/scriban.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Fluid.Core" Version="2.40.0">
+            <MatrixLibraryId>Fluid.Core</MatrixLibraryId>
+            <MatrixLibraryName>Fluid.Core</MatrixLibraryName>
+            <MatrixCodeName>Fluid</MatrixCodeName>
+            <MatrixDescription>An embeddable Liquid template engine that parses once and renders many times.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/sebastienros/fluid</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/sebastienros/fluid</MatrixRepositoryUrl>
+            <MatrixLogo>logos/fluid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="DotLiquid" Version="2.3.260">
+            <MatrixLibraryId>DotLiquid</MatrixLibraryId>
+            <MatrixLibraryName>DotLiquid</MatrixLibraryName>
+            <MatrixCodeName>DotLiquid</MatrixCodeName>
+            <MatrixDescription>A pure .NET port of the Ruby Liquid template language.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/dotliquid/dotliquid</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotliquid/dotliquid</MatrixRepositoryUrl>
+            <MatrixLogo>logos/dotliquid.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Stubble.Core" Version="1.10.8">
+            <MatrixLibraryId>Stubble.Core</MatrixLibraryId>
+            <MatrixLibraryName>Stubble.Core</MatrixLibraryName>
+            <MatrixCodeName>Stubble</MatrixCodeName>
+            <MatrixDescription>A Mustache engine with a configurable parser cache and HTML escaping by default.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/stubbleorg/stubble</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/stubbleorg/stubble</MatrixRepositoryUrl>
+            <MatrixLogo>logos/stubble.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="SmartFormat" Version="3.6.2">
+            <MatrixLibraryId>SmartFormat</MatrixLibraryId>
+            <MatrixLibraryName>SmartFormat</MatrixLibraryName>
+            <MatrixCodeName>SmartFormat</MatrixCodeName>
+            <MatrixDescription>A string composition engine that extends string.Format syntax with named placeholders and formatters.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/axuno/SmartFormat</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/axuno/SmartFormat</MatrixRepositoryUrl>
+            <MatrixLogo>logos/smart-format.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Cottle" Version="2.1.0">
+            <MatrixLibraryId>Cottle</MatrixLibraryId>
+            <MatrixLibraryName>Cottle</MatrixLibraryName>
+            <MatrixCodeName>Cottle</MatrixCodeName>
+            <MatrixDescription>A lightweight template engine with a bracket syntax and parsed document reuse.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/remyvdwerf/Cottle</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/remyvdwerf/Cottle</MatrixRepositoryUrl>
+            <MatrixLogo>logos/cottle.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="RazorLight" Version="2.3.1">
+            <MatrixLibraryId>RazorLight</MatrixLibraryId>
+            <MatrixLibraryName>RazorLight</MatrixLibraryName>
+            <MatrixCodeName>RazorLight</MatrixCodeName>
+            <MatrixDescription>A Razor engine that compiles templates through Roslyn and caches the compiled result.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/toddams/RazorLight</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/toddams/RazorLight</MatrixRepositoryUrl>
+            <MatrixLogo>logos/razor-light.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="RazorEngineCore" Version="2026.1.1">
+            <MatrixLibraryId>RazorEngineCore</MatrixLibraryId>
+            <MatrixLibraryName>RazorEngineCore</MatrixLibraryName>
+            <MatrixCodeName>RazorEngineCore</MatrixCodeName>
+            <MatrixDescription>A small Razor engine that compiles a template string with Roslyn into a reusable compiled template.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/adoconnection/RazorEngineCore</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/adoconnection/RazorEngineCore</MatrixRepositoryUrl>
+            <MatrixLogo>logos/razor-engine-core.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Razor.Templating.Core" Version="3.1.0">
+            <MatrixLibraryId>Razor.Templating.Core</MatrixLibraryId>
+            <MatrixLibraryName>Razor.Templating.Core</MatrixLibraryName>
+            <MatrixCodeName>RazorTemplating</MatrixCodeName>
+            <MatrixDescription>A library that renders Razor views by name through the ASP.NET Core view engine.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/soundaranbu/Razor.Templating.Core</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/soundaranbu/Razor.Templating.Core</MatrixRepositoryUrl>
+            <MatrixLogo>logos/razor-templating.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
