@@ -13,10 +13,10 @@ public partial class ReadLargeDataset
         while (csv.Read())
         {
             records.Add(new CsvRecord(
-                csv.GetInt32(0),
+                csv.Parse<int>(0),
                 csv.GetString(1),
-                csv.GetDecimal(2),
-                csv.GetBoolean(3)));
+                csv.Parse<decimal>(2),
+                csv.Parse<bool>(3)));
         }
 
         var result = records.ToArray();

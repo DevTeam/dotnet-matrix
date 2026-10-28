@@ -12,7 +12,7 @@ public partial class EscapedDelimiters
         var rows = new List<TextCsvRow>(2);
         while (csv.Read())
         {
-            rows.Add(new TextCsvRow(csv.GetInt32(0), csv.GetString(1)));
+            rows.Add(new TextCsvRow(csv.Parse<int>(0), csv.GetString(1)));
         }
 
         var result = rows.ToArray();

@@ -16,9 +16,9 @@ public partial class AsyncRead
         while (await csv.ReadAsync())
         {
             count++;
-            idSum += csv.GetInt32(0);
-            amountSum += csv.GetDecimal(2);
-            if (csv.GetBoolean(3))
+            idSum += csv.Parse<int>(0);
+            amountSum += csv.Parse<decimal>(2);
+            if (csv.Parse<bool>(3))
             {
                 activeCount++;
             }

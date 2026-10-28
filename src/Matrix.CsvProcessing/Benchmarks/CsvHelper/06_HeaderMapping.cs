@@ -17,10 +17,10 @@ public partial class HeaderMapping
         while (csv.Read())
         {
             records.Add(new CsvRecord(
-                csv.GetInt32(id),
+                csv.Parse<int>(id),
                 csv.GetString(name),
-                csv.GetDecimal(amount),
-                csv.GetBoolean(active)));
+                csv.Parse<decimal>(amount),
+                csv.Parse<bool>(active)));
         }
 
         var result = records.ToArray();
