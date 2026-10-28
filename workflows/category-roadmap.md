@@ -48,6 +48,7 @@ which is scored across every scenario; see [rating.md](rating.md).
 | LINQ Queries | `linq-queries` | `src/Matrix.LinqQueries` | 6 | 18 | Core, Sources, Partitioning, Sequences, Advanced, Allocation-Free |
 | Logging | `logging` | `src/Matrix.Logging` | 5 | 8 | Core, Structured, Prepare |
 | ZIP Archives | `zip-archives` | `src/Matrix.ZipArchives` | 3 | 13 | Metadata, Read, Write, Advanced |
+| Compression Codecs | `compression-codecs` | `src/Matrix.CompressionCodecs` | 6 | 6 | Compress, Decompress, Round Trip |
 
 The planned first expansion sequence — Object Mapping, Validation, JSON
 Serialization, CSV Processing, Logging — is complete. The category-neutral
