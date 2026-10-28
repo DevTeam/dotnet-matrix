@@ -1,0 +1,419 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "message-dispatch",
+  "GeneratedAtUtc": "2026-10-28T20:05:57.8256841+00:00",
+  "Framework": ".NET 10.0.13",
+  "OperatingSystem": "Microsoft Windows 10.0.19045",
+  "Libraries": [
+    {
+      "Id": "Cortex.Mediator",
+      "Name": "Cortex.Mediator",
+      "Package": "Cortex.Mediator",
+      "Version": "3.1.2",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "FastMediator",
+      "Name": "FastMediator",
+      "Package": "FastMediator",
+      "Version": "2.0.1",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "Immediate.Handlers",
+      "Name": "Immediate.Handlers",
+      "Package": "Immediate.Handlers",
+      "Version": "4.2.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "Mediator",
+      "Name": "Mediator.Abstractions",
+      "Package": "Mediator.Abstractions",
+      "Version": "3.0.2",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "Mediator.Net",
+      "Name": "Mediator.Net",
+      "Package": "Mediator.Net",
+      "Version": "5.0.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "MediatR",
+      "Name": "MediatR",
+      "Package": "MediatR",
+      "Version": "14.2.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "WolverineFx",
+      "Name": "WolverineFx",
+      "Package": "WolverineFx",
+      "Version": "6.56.0",
+      "Baseline": false,
+      "Companions": []
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "SendCommand",
+      "Name": "Send Command",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 47.2545
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 971.0952
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 4.1583
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 8.9061
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 12.5437
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 21.2136
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 1341.7747
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 2,
+      "Id": "SendQuery",
+      "Name": "Send Query",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 16.5695
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 4.9137
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.3448
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.6765
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 4.8561
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.082
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 277.2813
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 3,
+      "Id": "PublishNotification",
+      "Name": "Publish Notification",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.7925
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Unsupported",
+          "Reason": "FastMediator 2.0.1 passes the whole notification handler list to every notification handler, so three registered handlers are invoked three times each instead of once; its fan-out cannot produce the one-invocation-per-handler result this scenario requires.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Unsupported",
+          "Reason": "Immediate.Handlers 4.2.0 generates one IHandler per annotated handler method and has no notification contract, so one message cannot be delivered to several handlers.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.5403
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.9705
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.0617
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 176.9973
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 4,
+      "Id": "PipelineBehavior",
+      "Name": "Pipeline Behavior",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.5309
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 5.1484
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.8553
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.6407
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.0773
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.8482
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 146.6929
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 5,
+      "Id": "ExceptionBehavior",
+      "Name": "Exception Behavior",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 7.6376
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 5.0021
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.9374
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.2722
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.4032
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.7859
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Unsupported",
+          "Reason": "WolverineFx 6.56.0 runs a [WolverineOnException] continuation when the handler of that message fails, but the inline InvokeAsync caller still completes with a null response instead of the continuation\u0027s value, so a recovered answer cannot be returned to the caller of the request.",
+          "DurationMilliseconds": 0
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 6,
+      "Id": "AsyncHandler",
+      "Name": "Async Handler",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 6.757
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 11.373
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 4.7151
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.2265
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 7.097
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.55
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 171.4688
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 7,
+      "Id": "SourceGeneratedDispatch",
+      "Name": "Source Generated Dispatch",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Unsupported",
+          "Reason": "Cortex.Mediator 3.1.2 resolves handlers and behaviors from the dependency-injection container at run time and ships no compile-time source generator, so no generated dispatch code exists to measure.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Unsupported",
+          "Reason": "FastMediator 2.0.1 builds its handler delegates from reflection and expression trees at start-up and ships no compile-time source generator, so there is no generated dispatch code to measure.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.9827
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.4777
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Unsupported",
+          "Reason": "Mediator.Net 5.0.0 builds its handler registry by reflecting over the registered assemblies at start-up and ships no compile-time source generator, so no generated dispatch code exists to measure.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Unsupported",
+          "Reason": "MediatR 14 resolves handlers and behaviors through the container at run time and ships no compile-time source generator, so no generated dispatch code exists to measure.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Unsupported",
+          "Reason": "WolverineFx 6.56.0 generates its handler code into a runtime-compiled assembly at start-up rather than from a compile-time source generator, and the generated code is not available to the call site, so there is no compile-time generated dispatcher to measure.",
+          "DurationMilliseconds": 0
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 8,
+      "Id": "Register",
+      "Name": "Register",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 9.0761
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 719.3317
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.898
+        },
+        {
+          "LibraryId": "Mediator",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.6625
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.5988
+        },
+        {
+          "LibraryId": "MediatR",
+          "Status": "Supported",
+          "DurationMilliseconds": 6.3933
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Status": "Supported",
+          "DurationMilliseconds": 496.3699
+        }
+      ],
+      "IsDeployment": false
+    }
+  ]
+}

@@ -85,6 +85,6 @@ internal static class CafConfiguration
         Environment.ExitCode = 0;
         return code == 0
             ? new ParseOutcome(true, string.Empty)
-            : new ParseOutcome(false, writer.ToString().Trim());
+            : new ParseOutcome(false, (writer.ToString() ?? string.Empty).Trim());
     }
 }

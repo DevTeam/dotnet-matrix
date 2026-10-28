@@ -1,0 +1,102 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>message-dispatch</MatrixModuleId>
+        <MatrixModuleName>Message Dispatch</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Dispatch</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>MessageDispatch</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.MessageDispatch.Infrastructure</MatrixLibraryCatalogNamespace>
+        <!-- Libraries vary in nullability annotations; the adapters are validated by behaviour. -->
+        <NoWarn>$(NoWarn);CS8618;CS8602;CS8604;CS1998</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14"/>
+        <PackageReference Include="MediatR" Version="14.2.0">
+            <MatrixLibraryId>MediatR</MatrixLibraryId>
+            <MatrixLibraryName>MediatR</MatrixLibraryName>
+            <MatrixCodeName>MediatR</MatrixCodeName>
+            <MatrixDescription>A well-known in-process mediator that dispatches requests and notifications to discovered handlers through dependency injection.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/jbogard/MediatR</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/jbogard/MediatR</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mediatr.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Mediator.Abstractions" Version="3.0.2">
+            <MatrixLibraryId>Mediator</MatrixLibraryId>
+            <MatrixLibraryName>Mediator.Abstractions</MatrixLibraryName>
+            <MatrixCodeName>Mediator</MatrixCodeName>
+            <MatrixDescription>A source-generated mediator whose dispatch code is generated at compile time for lower overhead than runtime reflection.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/martinothamar/Mediator</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/martinothamar/Mediator</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mediator.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Immediate.Handlers" Version="4.2.0">
+            <MatrixLibraryId>Immediate.Handlers</MatrixLibraryId>
+            <MatrixLibraryName>Immediate.Handlers</MatrixLibraryName>
+            <MatrixCodeName>ImmediateHandlers</MatrixCodeName>
+            <MatrixDescription>A source generator that turns annotated handler methods into a dispatcher resolved from dependency injection, with no runtime reflection.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ImmediatePlatform/Immediate.Handlers</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ImmediatePlatform/Immediate.Handlers</MatrixRepositoryUrl>
+            <MatrixLogo>logos/immediate-handlers.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Mediator.Net" Version="5.0.0">
+            <MatrixLibraryId>Mediator.Net</MatrixLibraryId>
+            <MatrixLibraryName>Mediator.Net</MatrixLibraryName>
+            <MatrixCodeName>MediatorNet</MatrixCodeName>
+            <MatrixDescription>A mediator with configurable command, event and request pipelines built from explicit middleware.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/mayuanyang/Mediator.Net</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/mayuanyang/Mediator.Net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mediator-net.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Cortex.Mediator" Version="3.1.2">
+            <MatrixLibraryId>Cortex.Mediator</MatrixLibraryId>
+            <MatrixLibraryName>Cortex.Mediator</MatrixLibraryName>
+            <MatrixCodeName>CortexMediator</MatrixCodeName>
+            <MatrixDescription>A mediator that separates commands, queries and notifications and offers pipeline behaviors for each of them.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cortex-Mediator/Cortex.Mediator</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cortex-Mediator/Cortex.Mediator</MatrixRepositoryUrl>
+            <MatrixLogo>logos/cortex-mediator.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="FastMediator" Version="2.0.1">
+            <MatrixLibraryId>FastMediator</MatrixLibraryId>
+            <MatrixLibraryName>FastMediator</MatrixLibraryName>
+            <MatrixCodeName>FastMediator</MatrixCodeName>
+            <MatrixDescription>A mediator focused on cached delegates and low allocation dispatch for requests and notifications.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/SelcukGurca/FastMediator</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/SelcukGurca/FastMediator</MatrixRepositoryUrl>
+            <MatrixLogo>logos/fast-mediator.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="WolverineFx" Version="6.56.0">
+            <MatrixLibraryId>WolverineFx</MatrixLibraryId>
+            <MatrixLibraryName>WolverineFx</MatrixLibraryName>
+            <MatrixCodeName>Wolverine</MatrixCodeName>
+            <MatrixDescription>A message bus and mediator whose in-process invocation path runs handlers without a transport.</MatrixDescription>
+            <MatrixDocumentationUrl>https://wolverinefx.net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/JasperFx/wolverine</MatrixRepositoryUrl>
+            <MatrixLogo>logos/wolverine.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="WolverineFx.RuntimeCompilation" Version="6.56.0">
+            <!-- WolverineFx 6.56.0 no longer ships its runtime compiler; this companion
+                 registers the Roslyn assembly generator the handler codegen needs. -->
+        </PackageReference>
+        <PackageReference Include="Mediator.SourceGenerator" Version="3.0.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
