@@ -7,7 +7,9 @@ namespace Matrix.Caching.Benchmarks;
     "FailSafe",
     8,
     "Fail Safe",
-    "Serves the last known value when the value factory throws after the entry expired.")]
+    "Serves the last known value when the value factory throws after the entry expired.",
+    rated: false,
+    reason: "With this few rated entrants, the reference is a library's own result, not a result earned against a competitor, so the full 200 points would not reflect a win.")]
 [FeatureUnavailable(
     LibraryCatalog.MicrosoftExtensionsCachingMemory,
     FeatureStatus.Unsupported,

@@ -26,8 +26,8 @@ Excluded by design, because they are a different category:
 | Miss key | one key that is never written |
 | Write keys | a pool of 65 536 distinct keys, handed out in order |
 | Default lifetime | 10 minutes, far longer than a run |
-| Short lifetime | 20 ms, used only by the expiration scenario |
-| Settle delay | 250 ms after writing a short-lived entry |
+| Short lifetime | 50 ms, used only by the expiration scenario |
+| Settle delay | 200 ms after writing a short-lived entry |
 
 The write-key pool exists so an insertion never overwrites what a read scenario
 seeded, and so the write path never degenerates into overwriting one key.
@@ -36,16 +36,16 @@ that is a property of its API, not a different scenario.
 
 ## Scenarios
 
-| # | Feature | What the measured region does | Entrants |
+| # | Scenario | What the measured region does | Entrants |
 | --- | --- | --- | --- |
-| 1 | GetHit | Read a key seeded before the measurement | 7 |
-| 2 | GetMiss | Read a key that is absent | 6 |
-| 3 | Set | Write a fresh key, then read it back | 7 |
-| 4 | GetOrCreate | Read-through for a present key: factory must not run | 5 |
-| 5 | Expiration | Write a 20 ms entry, wait 250 ms, read it | 6 |
-| 6 | Invalidate | Write a key, remove it, read it | 7 |
-| 7 | ConcurrentGetOrCreate | Eight threads, one absent key, factory must run once | 2 |
-| 8 | FailSafe | Factory throws while a stale value is present | 1 |
+| 1 | Get Hit (`GetHit`) | Read a key seeded before the measurement | 7 |
+| 2 | Get Miss (`GetMiss`) | Read a key that is absent | 6 |
+| 3 | Set (`Set`) | Write a fresh key, then read it back | 7 |
+| 4 | Get Or Create (`GetOrCreate`) | Read-through for a present key: factory must not run | 5 |
+| 5 | Expiration (`Expiration`) | Write a 50 ms entry, wait 200 ms, read it | 6 |
+| 6 | Invalidate (`Invalidate`) | Write a key, remove it, read it | 7 |
+| 7 | Concurrent Get Or Create (`ConcurrentGetOrCreate`) | Eight threads, one absent key, factory must run once | 2 |
+| 8 | Fail Safe (`FailSafe`) | Factory throws while a stale value is present | 1 |
 
 Every scenario returns a CacheLookup or bool built from what the cache actually
 returned, and a CacheChecks call asserts the expected outcome inside the measured
@@ -89,12 +89,18 @@ Groups are sets of feature ids, never sets of libraries or algorithms:
 | reads | Reads | GetHit, GetMiss |
 | writes | Writes | Set, Invalidate |
 | read-through | Read Through | GetOrCreate, ConcurrentGetOrCreate |
-| lifetime | Lifetime | Expiration, FailSafe |
+| lifetime | Lifetime | Expiration |
 
-FailSafe sits in lifetime and is unrated. A group ranks a library only when it
-covers the whole set, so lifetime ranks on expiration and shows its single rated
-entrant; the unrated FailSafe result is published in features.json and the feature
-matrix, which is the documented form of visibility for an unrated capability.
+A group is a set of rated feature ids, never a set of libraries or algorithms, and
+a feature marked `rated: false` belongs to no group: it is excluded from the
+group standings by design rather than by omission, and stays visible in
+`features.json` and the feature matrix. FailSafe is therefore drawn in no group;
+it keeps its own scenario and its own published status for every library, which is
+the documented form of visibility for an unrated capability.
+
+With one feature and six rated entrants, `lifetime` is not degenerate: its
+standing compares six libraries on the same operation, which is what a group
+standing is for.
 
 ## Support matrix
 
@@ -155,7 +161,9 @@ Three claims the documentation does not make, each measured on this machine:
 
 ## Maximum points
 
-Maximum: 200 x 8 = 1600 - eight scenarios, 200 points each.
+Maximum: 200 x 7 = 1400 - seven rated scenarios, 200 points each. The eighth
+scenario, FailSafe, is measured and published but marked `rated: false`, so it
+adds nothing to the maximum.
 
 The maximum counts the points a library can earn by winning a scenario. It is not a
 claim that any library reaches it: FusionCache covers all eight, the others do not,

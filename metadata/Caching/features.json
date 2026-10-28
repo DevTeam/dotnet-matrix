@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "features": [
+    {
+      "id": "GetHit",
+      "order": 1,
+      "name": "Get Hit",
+      "description": "Reads a key that is already present and returns the entry the cache holds.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "GetMiss",
+      "order": 2,
+      "name": "Get Miss",
+      "description": "Reads a key that is absent and reports the absence without allocating an entry.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "Set",
+      "order": 3,
+      "name": "Set",
+      "description": "Stores one entry under a fresh key with a ten-minute lifetime.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "GetOrCreate",
+      "order": 4,
+      "name": "Get Or Create",
+      "description": "Reads a present key through the read-through API, so the value factory must not run.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "Expiration",
+      "order": 5,
+      "name": "Expiration",
+      "description": "Stores an entry with a fifty-millisecond lifetime, waits for it to elapse, then reads it.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "Invalidate",
+      "order": 6,
+      "name": "Invalidate",
+      "description": "Removes a present key and confirms the entry is gone.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "ConcurrentGetOrCreate",
+      "order": 7,
+      "name": "Concurrent Get Or Create",
+      "description": "Eight threads ask for one absent key at the same time; the value factory must run exactly once.",
+      "rated": true,
+      "reason": null
+    },
+    {
+      "id": "FailSafe",
+      "order": 8,
+      "name": "Fail Safe",
+      "description": "Serves the last known value when the value factory throws after the entry expired.",
+      "rated": false,
+      "reason": "With this few rated entrants, the reference is a library\u0027s own result, not a result earned against a competitor, so the full 200 points would not reflect a win."
+    }
+  ]
+}
