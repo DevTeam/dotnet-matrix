@@ -1,0 +1,34 @@
+attribute "fs_serializer";
+
+namespace Matrix.BinarySerialization.Schemas.Flat;
+
+table AddressTable (fs_serializer) {
+  City:string;
+  PostalCode:string;
+}
+
+table CustomerTable (fs_serializer) {
+  Name:string;
+  Address:AddressTable;
+}
+
+table SimpleTable (fs_serializer) {
+  Id:int;
+  Name:string;
+  Active:bool;
+}
+
+table OrderTable (fs_serializer) {
+  Id:int;
+  Customer:CustomerTable;
+}
+
+table SimpleList (fs_serializer) {
+  Items:[SimpleTable];
+}
+
+table EnumTable (fs_serializer) {
+  Status:int;
+}
+
+root_type SimpleTable;

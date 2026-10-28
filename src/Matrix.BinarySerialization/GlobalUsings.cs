@@ -1,0 +1,9 @@
+global using System.Buffers;
+global using System.Diagnostics;
+global using BenchmarkDotNet.Attributes;
+global using BenchmarkDotNet.Order;
+global using Matrix;
+global using Matrix.BinarySerialization.Infrastructure;
+global using Matrix.BinarySerialization.Models;
+global using Matrix.BinarySerialization.Schemas;
+global using Matrix.BinarySerialization.Schemas.Flat;

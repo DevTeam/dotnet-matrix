@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "Matrix.BinarySerialization.Schemas";
+
+message SimpleMessage {
+  int32 id = 1;
+  string name = 2;
+  bool active = 3;
+}
+
+message AddressMessage {
+  string city = 1;
+  string postal_code = 2;
+}
+
+message CustomerMessage {
+  string name = 1;
+  AddressMessage address = 2;
+}
+
+message OrderMessage {
+  int32 id = 1;
+  CustomerMessage customer = 2;
+}
+
+message CollectionMessage {
+  repeated SimpleMessage items = 1;
+}
+
+enum ProcessingStatusMessage {
+  PROCESSING_STATUS_MESSAGE_PENDING = 0;
+  PROCESSING_STATUS_MESSAGE_READY = 1;
+  PROCESSING_STATUS_MESSAGE_FAILED = 2;
+}
+
+message EnumMessage {
+  ProcessingStatusMessage status = 1;
+}

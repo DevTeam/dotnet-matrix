@@ -1,0 +1,115 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>binary-serialization</MatrixModuleId>
+        <MatrixModuleName>Binary Serialization</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Binary</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>BinarySerialization</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.BinarySerialization.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="MessagePack" Version="3.1.12">
+            <MatrixLibraryId>MessagePack</MatrixLibraryId>
+            <MatrixLibraryName>MessagePack</MatrixLibraryName>
+            <MatrixCodeName>MessagePack</MatrixCodeName>
+            <MatrixDescription>A compact binary serializer with attribute-driven contracts, contractless mode, and LZ4 compression support.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MessagePack-CSharp/MessagePack-CSharp</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MessagePack-CSharp/MessagePack-CSharp</MatrixRepositoryUrl>
+            <MatrixLogo>logos/message-pack.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="protobuf-net" Version="3.4.40">
+            <MatrixLibraryId>protobuf-net</MatrixLibraryId>
+            <MatrixLibraryName>protobuf-net</MatrixLibraryName>
+            <MatrixCodeName>ProtoBufNet</MatrixCodeName>
+            <MatrixDescription>A contract-first Protocol Buffers implementation for .NET driven by attributes instead of generated code.</MatrixDescription>
+            <MatrixDocumentationUrl>https://protobuf-net.github.io/protobuf-net/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/protobuf-net/protobuf-net</MatrixRepositoryUrl>
+            <MatrixLogo>logos/protobuf-net.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="MemoryPack" Version="1.21.4">
+            <MatrixLibraryId>MemoryPack</MatrixLibraryId>
+            <MatrixLibraryName>MemoryPack</MatrixLibraryName>
+            <MatrixCodeName>MemoryPack</MatrixCodeName>
+            <MatrixDescription>A source-generated binary serializer that writes directly into memory instead of intermediate buffers.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cysharp/MemoryPack</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cysharp/MemoryPack</MatrixRepositoryUrl>
+            <MatrixLogo>logos/memory-pack.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="MongoDB.Bson" Version="3.13.0">
+            <MatrixLibraryId>MongoDB.Bson</MatrixLibraryId>
+            <MatrixLibraryName>MongoDB.Bson</MatrixLibraryName>
+            <MatrixCodeName>MongoBson</MatrixCodeName>
+            <MatrixDescription>The BSON document serializer used by the MongoDB .NET driver, usable independently of a database.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.mongodb.com/docs/drivers/csharp/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/mongodb/mongo-csharp-driver</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mongo-bson.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Google.Protobuf" Version="3.36.2">
+            <MatrixLibraryId>Google.Protobuf</MatrixLibraryId>
+            <MatrixLibraryName>Google.Protobuf</MatrixLibraryName>
+            <MatrixCodeName>GoogleProtobuf</MatrixCodeName>
+            <MatrixDescription>The reference Protocol Buffers runtime for .NET, driven by C# code generated from a .proto schema.</MatrixDescription>
+            <MatrixDocumentationUrl>https://protobuf.dev/getting-started/csharptutorial/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/protocolbuffers/protobuf</MatrixRepositoryUrl>
+            <MatrixLogo>logos/google-protobuf.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Apache.Avro" Version="1.12.2">
+            <MatrixLibraryId>Apache.Avro</MatrixLibraryId>
+            <MatrixLibraryName>Apache.Avro</MatrixLibraryName>
+            <MatrixCodeName>ApacheAvro</MatrixCodeName>
+            <MatrixDescription>Apache Avro for .NET with schema-driven generic, specific, and reflection-based binary encoding.</MatrixDescription>
+            <MatrixDocumentationUrl>https://avro.apache.org/docs/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/apache/avro</MatrixRepositoryUrl>
+            <MatrixLogo>logos/apache-avro.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="FlatSharp" Version="7.5.1">
+            <MatrixLibraryId>FlatSharp</MatrixLibraryId>
+            <MatrixLibraryName>FlatSharp</MatrixLibraryName>
+            <MatrixCodeName>FlatSharp</MatrixCodeName>
+            <MatrixDescription>A FlatBuffers implementation with compile-time generated serializers and zero-copy reads over the buffer.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/jamescourtney/FlatSharp</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/jamescourtney/FlatSharp</MatrixRepositoryUrl>
+            <MatrixLogo>logos/flat-sharp.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="HyperSerializer" Version="1.6.0">
+            <MatrixLibraryId>HyperSerializer</MatrixLibraryId>
+            <MatrixLibraryName>HyperSerializer</MatrixLibraryName>
+            <MatrixCodeName>HyperSerializer</MatrixCodeName>
+            <MatrixDescription>A small source-generated binary serializer focused on minimal allocations for simple contracts.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/replaysMike/HyperSerializer</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/replaysMike/HyperSerializer</MatrixRepositoryUrl>
+            <MatrixLogo>logos/hyper-serializer.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Grpc.Tools" Version="2.85.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FlatSharp.Compiler" Version="7.5.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Schemas\simple.proto" ProtoRoot="Schemas" GrpcServices="None"/>
+        <FlatSharpSchema Include="Schemas\models.fbs"/>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
