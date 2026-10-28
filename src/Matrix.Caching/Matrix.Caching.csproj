@@ -1,0 +1,89 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>caching</MatrixModuleId>
+        <MatrixModuleName>Caching</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Cache</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>Caching</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.Caching.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>        <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.14">
+            <MatrixLibraryId>Microsoft.Extensions.Caching.Memory</MatrixLibraryId>
+            <MatrixLibraryName>Microsoft.Extensions.Caching.Memory</MatrixLibraryName>
+            <MatrixCodeName>MicrosoftExtensionsCachingMemory</MatrixCodeName>
+            <MatrixDescription>The general-purpose in-memory cache shipped with .NET, with absolute, sliding, and size-limited eviction policies.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/core/extensions/caching</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/microsoft-extensions-caching-memory.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="System.Runtime.Caching" Version="10.0.14">
+            <MatrixLibraryId>System.Runtime.Caching</MatrixLibraryId>
+            <MatrixLibraryName>System.Runtime.Caching</MatrixLibraryName>
+            <MatrixCodeName>SystemRuntimeCaching</MatrixCodeName>
+            <MatrixDescription>The classic MemoryCache from the .NET Framework lineage, still the default in-memory cache for older application models.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.runtime.caching</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-runtime-caching.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14"/>        <PackageReference Include="ZiggyCreatures.FusionCache" Version="2.9.0">
+            <MatrixLibraryId>ZiggyCreatures.FusionCache</MatrixLibraryId>
+            <MatrixLibraryName>FusionCache</MatrixLibraryName>
+            <MatrixCodeName>FusionCache</MatrixCodeName>
+            <MatrixDescription>An in-memory cache with read-through, stampede protection, fail-safe stale values, and optional distributed backing.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ZiggyCreatures/FusionCache</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ZiggyCreatures/FusionCache</MatrixRepositoryUrl>
+            <MatrixLogo>logos/fusion-cache.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="LazyCache" Version="2.4.0">
+            <MatrixLibraryId>LazyCache</MatrixLibraryId>
+            <MatrixLibraryName>LazyCache</MatrixLibraryName>
+            <MatrixCodeName>LazyCache</MatrixCodeName>
+            <MatrixDescription>A small caching service that makes Microsoft.Extensions.Caching.Memory thread-safe for lazy get-or-add by wrapping values in Lazy.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/alastairtree/LazyCache</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/alastairtree/LazyCache</MatrixRepositoryUrl>
+            <MatrixLogo>logos/lazy-cache.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="CacheManager.Core" Version="3.0.0">
+            <MatrixLibraryId>CacheManager.Core</MatrixLibraryId>
+            <MatrixLibraryName>CacheManager.Core</MatrixLibraryName>
+            <MatrixCodeName>CacheManagerCore</MatrixCodeName>
+            <MatrixDescription>A cache abstraction with multiple layered handles, regions, per-item expiration, and pluggable backends.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MichalStrehovsky/CacheManager</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MichalStrehovsky/CacheManager</MatrixRepositoryUrl>
+            <MatrixLogo>logos/cache-manager-core.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="EasyCaching.InMemory" Version="1.9.2">
+            <MatrixLibraryId>EasyCaching.InMemory</MatrixLibraryId>
+            <MatrixLibraryName>EasyCaching.InMemory</MatrixLibraryName>
+            <MatrixCodeName>EasyCachingInMemory</MatrixCodeName>
+            <MatrixDescription>The in-memory provider of the EasyCaching stack, offering a provider abstraction, prefix queries, and per-call retriever functions.</MatrixDescription>
+            <MatrixDocumentationUrl>https://easycaching.readthedocs.io/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnetcore/EasyCaching</MatrixRepositoryUrl>
+            <MatrixLogo>logos/easy-caching-in-memory.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="BitFaster.Caching" Version="2.6.1">
+            <MatrixLibraryId>BitFaster.Caching</MatrixLibraryId>
+            <MatrixLibraryName>BitFaster.Caching</MatrixLibraryName>
+            <MatrixCodeName>BitFasterCaching</MatrixCodeName>
+            <MatrixDescription>A high-throughput concurrent cache library with bounded LRU and time-based eviction policies and low contention.</MatrixDescription>
+            <MatrixDocumentationUrl>https://bitfaster.github.io/BitFaster.Caching/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/bitfaster/BitFaster.Caching</MatrixRepositoryUrl>
+            <MatrixLogo>logos/bit-faster-caching.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
