@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>compression-codecs</MatrixModuleId>
+        <MatrixModuleName>Compression Codecs</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Compress</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>CompressionCodecs</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.CompressionCodecs.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="ZstdSharp.Port" Version="0.8.8">
+            <MatrixLibraryId>ZstdSharp.Port</MatrixLibraryId>
+            <MatrixLibraryName>ZstdSharp.Port</MatrixLibraryName>
+            <MatrixCodeName>ZstdSharp</MatrixCodeName>
+            <MatrixDescription>A fully managed port of the Zstandard codec with no native binary dependency.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/oleg-st/ZstdSharp</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/oleg-st/ZstdSharp</MatrixRepositoryUrl>
+            <MatrixLogo>logos/zstd-sharp.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ZstdNet" Version="1.5.7">
+            <MatrixLibraryId>ZstdNet</MatrixLibraryId>
+            <MatrixLibraryName>ZstdNet</MatrixLibraryName>
+            <MatrixCodeName>ZstdNet</MatrixCodeName>
+            <MatrixDescription>A Zstandard binding that ships the native libzstd binary for every supported runtime inside the package.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/skbkontur/ZstdNet</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/skbkontur/ZstdNet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/zstd-net.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Snappier" Version="1.3.1">
+            <MatrixLibraryId>Snappier</MatrixLibraryId>
+            <MatrixLibraryName>Snappier</MatrixLibraryName>
+            <MatrixCodeName>Snappier</MatrixCodeName>
+            <MatrixDescription>A managed implementation of Google Snappy aimed at very fast compression and decompression.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/brantburnett/Snappier</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/brantburnett/Snappier</MatrixRepositoryUrl>
+            <MatrixLogo>logos/snappier.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="K4os.Compression.LZ4" Version="1.3.8">
+            <MatrixLibraryId>K4os.Compression.LZ4</MatrixLibraryId>
+            <MatrixLibraryName>K4os.Compression.LZ4</MatrixLibraryName>
+            <MatrixCodeName>K4osLz4</MatrixCodeName>
+            <MatrixDescription>A managed LZ4 block codec exposing fast and high-compression levels.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/MiloszKrajewski/K4os.Compression.LZ4</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/MiloszKrajewski/K4os.Compression.LZ4</MatrixRepositoryUrl>
+            <MatrixLogo>logos/k4os-lz4.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="BrotliSharpLib" Version="0.3.3">
+            <MatrixLibraryId>BrotliSharpLib</MatrixLibraryId>
+            <MatrixLibraryName>BrotliSharpLib</MatrixLibraryName>
+            <MatrixCodeName>BrotliSharpLib</MatrixCodeName>
+            <MatrixDescription>A fully managed port of the Brotli codec published as a portable library.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/master131/BrotliSharpLib</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/master131/BrotliSharpLib</MatrixRepositoryUrl>
+            <MatrixLogo>logos/brotli-sharp.svg</MatrixLogo>
+        </PackageReference>
+        <MatrixLibrary Include="System.IO.Compression">
+            <MatrixLibraryName>System.IO.Compression</MatrixLibraryName>
+            <MatrixCodeName>SystemIOCompression</MatrixCodeName>
+            <MatrixDescription>The Brotli stream included with .NET, used here as the platform codec baseline.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/api/system.io.compression.brotlistream</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/runtime</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-io-compression.svg</MatrixLogo>
+            <MatrixBaseline>true</MatrixBaseline>
+            <MatrixRating>true</MatrixRating>
+        </MatrixLibrary>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
