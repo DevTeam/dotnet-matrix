@@ -68,11 +68,19 @@ payload bytes. Every nested member must be written: a library that silently
 drops a nested value cannot satisfy the validation of its own read-back and is
 `Unsupported` for this scenario.
 
+`HyperSerializer` is `Unsupported` here: it serializes only scalar members and
+skips a property whose type is a class, so the nested customer and address are
+never written.
+
 ## 4. Deserialize Nested Object
 
 Deserialize the library's own nested payload and validate the order id, the
 customer name, and both address members. Every nested object must be
 materialized.
+
+`HyperSerializer` is `Unsupported` here for the reason stated in scenario 3: it
+encodes nothing for the nested customer or address, so there is nothing to read
+back.
 
 ## 5. Serialize Collection
 
@@ -86,10 +94,17 @@ accept that shape rather than how they encode a collection. Every library
 therefore encodes the same wrapper with the same three nested objects, and the
 nested elements stay a real part of the measured graph.
 
+`HyperSerializer` is `Unsupported` here: it generates no code for
+collection-typed members, so the array property is skipped and the payload comes
+out empty.
+
 ## 6. Deserialize Collection
 
 Deserialize the library's own `CollectionModel` payload and validate that `Items`
 holds exactly three elements in the prescribed order with every member intact.
+
+`HyperSerializer` is `Unsupported` here for the reason stated in scenario 5: it
+writes no collection data, so no element can be read back.
 
 ## 7. Enum Round Trip
 
