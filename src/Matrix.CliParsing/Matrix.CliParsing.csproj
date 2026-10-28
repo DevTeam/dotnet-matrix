@@ -1,0 +1,118 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>cli-parsing</MatrixModuleId>
+        <MatrixModuleName>CLI Parsing</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Cli</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>CliParsing</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.CliParsing.Infrastructure</MatrixLibraryCatalogNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.15.8"/>
+        <PackageReference Include="System.CommandLine" Version="2.0.14">
+            <MatrixLibraryId>System.CommandLine</MatrixLibraryId>
+            <MatrixLibraryName>System.CommandLine</MatrixLibraryName>
+            <MatrixCodeName>SystemCommandLine</MatrixCodeName>
+            <MatrixDescription>The command-line parsing library maintained by the .NET team, with commands, options, argument arity, and built-in help generation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://learn.microsoft.com/dotnet/standard/commandline/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/dotnet/command-line-api</MatrixRepositoryUrl>
+            <MatrixLogo>logos/system-command-line.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Spectre.Console.Cli" Version="0.57.2">
+            <MatrixLibraryId>Spectre.Console.Cli</MatrixLibraryId>
+            <MatrixLibraryName>Spectre.Console.Cli</MatrixLibraryName>
+            <MatrixCodeName>SpectreConsoleCli</MatrixCodeName>
+            <MatrixDescription>A command-line parser built on Spectre.Console that binds arguments to typed settings classes and renders rich help.</MatrixDescription>
+            <MatrixDocumentationUrl>https://spectreconsole.net/cli/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/spectreconsole/spectre.console</MatrixRepositoryUrl>
+            <MatrixLogo>logos/spectre-cli.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="ConsoleAppFramework" Version="5.8.0">
+            <MatrixLibraryId>ConsoleAppFramework</MatrixLibraryId>
+            <MatrixLibraryName>ConsoleAppFramework</MatrixLibraryName>
+            <MatrixCodeName>ConsoleAppFramework</MatrixCodeName>
+            <MatrixDescription>A source-generated minimal CLI framework that turns method signatures into commands with generated help and binding.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Cysharp/ConsoleAppFramework</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Cysharp/ConsoleAppFramework</MatrixRepositoryUrl>
+            <MatrixLogo>logos/console-app-framework.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14"/>
+        <PackageReference Include="CliFx" Version="3.0.1">
+            <MatrixLibraryId>CliFx</MatrixLibraryId>
+            <MatrixLibraryName>CliFx</MatrixLibraryName>
+            <MatrixCodeName>CliFx</MatrixCodeName>
+            <MatrixDescription>A declarative command-line framework with typed command classes, argument attributes, and generated help.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/Tyrrrz/CliFx</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/Tyrrrz/CliFx</MatrixRepositoryUrl>
+            <MatrixLogo>logos/cli-fx.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="5.1.0">
+            <MatrixLibraryId>McMaster.Extensions.CommandLineUtils</MatrixLibraryId>
+            <MatrixLibraryName>McMaster.Extensions.CommandLineUtils</MatrixLibraryName>
+            <MatrixCodeName>McMasterCommandLineUtils</MatrixCodeName>
+            <MatrixDescription>A command-line utility library with attribute-based model binding, subcommands, validators, and help text generation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://natemcmaster.github.io/CommandLineUtils/</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/natemcmaster/CommandLineUtils</MatrixRepositoryUrl>
+            <MatrixLogo>logos/mcmaster.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="CommandLineParser" Version="2.9.1">
+            <MatrixLibraryId>CommandLineParser</MatrixLibraryId>
+            <MatrixLibraryName>CommandLineParser</MatrixLibraryName>
+            <MatrixCodeName>CommandLineParser</MatrixCodeName>
+            <MatrixDescription>A widely used attribute-based parser that maps verbs and options onto a typed options class.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/commandlineparser/commandline/wiki</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/commandlineparser/commandline</MatrixRepositoryUrl>
+            <MatrixLogo>logos/command-line-parser.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Cocona" Version="2.2.0">
+            <MatrixLibraryId>Cocona</MatrixLibraryId>
+            <MatrixLibraryName>Cocona</MatrixLibraryName>
+            <MatrixCodeName>Cocona</MatrixCodeName>
+            <MatrixDescription>A micro CLI framework that maps method parameters and attributes to commands, options, and arguments.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/mayuki/Cocona</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/mayuki/Cocona</MatrixRepositoryUrl>
+            <MatrixLogo>logos/cocona.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="PowerArgs" Version="4.0.3">
+            <MatrixLibraryId>PowerArgs</MatrixLibraryId>
+            <MatrixLibraryName>PowerArgs</MatrixLibraryName>
+            <MatrixCodeName>PowerArgs</MatrixCodeName>
+            <MatrixDescription>An attribute-driven argument parser with typed properties, argument validators, and usage generation.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/adamabdelhamed/PowerArgs</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/adamabdelhamed/PowerArgs</MatrixRepositoryUrl>
+            <MatrixLogo>logos/power-args.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Typin" Version="3.1.0">
+            <MatrixLibraryId>Typin</MatrixLibraryId>
+            <MatrixLibraryName>Typin</MatrixLibraryName>
+            <MatrixCodeName>Typin</MatrixCodeName>
+            <MatrixDescription>A framework for interactive and non-interactive console applications with typed commands and argument binding.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/adambajguz/Typin</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/adambajguz/Typin</MatrixRepositoryUrl>
+            <MatrixLogo>logos/typin.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="clipr" Version="1.6.1">
+            <MatrixLibraryId>clipr</MatrixLibraryId>
+            <MatrixLibraryName>clipr</MatrixLibraryName>
+            <MatrixCodeName>Clipr</MatrixCodeName>
+            <MatrixDescription>A small attribute-based parser that converts command-line tokens into a strongly typed object.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/nemec/clipr</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/nemec/clipr</MatrixRepositoryUrl>
+            <MatrixLogo>logos/clipr.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
