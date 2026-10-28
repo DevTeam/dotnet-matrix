@@ -36,7 +36,7 @@
 
 | Category | Leader | Libraries | Scenarios | Full report |
 |---|---|---:|---:|---|
-| [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 4 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
+| [**CSV Processing**](#csv-processing) | [CsvHelper](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 4 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
 | [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 22 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
 | [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 | [Every scenario →](reports/LinqQueries/README.md) |
@@ -59,7 +59,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [CSV Processing](https://matrix.dev-team.org/?category=csv-processing)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sep">Sep</a></strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">CsvHelper</a></strong> leads the current rating · 4 libraries · 10 scenarios
 </blockquote>
 
 [![CSV Processing rating](reports/CsvProcessing/charts/rating.png)](https://matrix.dev-team.org/?category=csv-processing)
