@@ -50,7 +50,7 @@ method dispatches one fixed message instance and returns the category result.
 - Inside invocation: resolving every handler for the notification and running all of them.
 - Validation: the count is exactly three, so a dispatcher that runs only the first or the last handler does not pass.
 - Supported: the library fans one message out to several handlers of the same type.
-- Group: `dispatch`.
+- Group: `notification`.
 
 ## 4. Pipeline Behavior
 
@@ -86,7 +86,7 @@ method dispatches one fixed message instance and returns the category result.
 - Inside invocation: the generated dispatcher's own call path.
 - Validation: the answer is the expected one and the count is one.
 - Supported: the library generates its dispatch code at compile time instead of resolving handlers with runtime reflection.
-- Group: `dispatch`.
+- Group: `generated`.
 
 ## 8. Register
 

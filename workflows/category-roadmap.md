@@ -54,6 +54,8 @@ which is scored across every scenario; see [rating.md](rating.md).
 | Template Engines | `template-engines` | `src/Matrix.TemplateEngines` | 10 | 3 | Parse, Render |
 | Hashing | `hashing` | `src/Matrix.Hashing` | 8 | 9 | Hash, Large Input, Streaming, Checksum, Wide Hash |
 | Caching | `caching` | `src/Matrix.Caching` | 7 | 8 | Reads, Writes, Read Through, Lifetime |
+| CLI Parsing | `cli-parsing` | `src/Matrix.CliParsing` | 10 | 10 | Parse, Options, Help, Errors |
+| Message Dispatch | `message-dispatch` | `src/Matrix.MessageDispatch` | 7 | 8 | Dispatch, Notification, Pipeline, Generated, Setup |
 The planned first expansion sequence — Object Mapping, Validation, JSON
 Serialization, CSV Processing, Logging — is complete. The category-neutral
 execution framework in `src/Matrix`, the package-less baseline model, and
