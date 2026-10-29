@@ -5,7 +5,7 @@ public partial class Render
 {
     private global::RazorEngineCore.IRazorEngineCompiledTemplate<RazorTemplate> _template = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(RazorEngineCore))]
     public void SetupRazorEngineCore()
     {
         var engine = new global::RazorEngineCore.RazorEngine();

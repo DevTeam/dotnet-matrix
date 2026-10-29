@@ -7,7 +7,7 @@ public partial class Escape
 
     private object _stubbleEscapeModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Stubble))]
     public void SetupStubble()
     {
         _stubbleEscapeRenderer = new global::Stubble.Core.Builders.StubbleBuilder().Build();

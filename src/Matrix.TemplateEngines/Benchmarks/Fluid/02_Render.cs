@@ -9,7 +9,7 @@ public partial class Render
 
     private object _fluidModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Fluid))]
     public void SetupFluid()
     {
         var parser = new FluidParser();

@@ -5,7 +5,7 @@ public partial class Render
 {
     private global::Scriban.Template _scribanTemplate = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Scriban))]
     public void SetupScriban() =>
         _scribanTemplate = global::Scriban.Template.Parse("Hello, {{ name }}!");
 

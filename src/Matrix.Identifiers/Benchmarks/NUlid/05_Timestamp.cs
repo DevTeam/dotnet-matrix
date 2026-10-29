@@ -7,7 +7,7 @@ public partial class Timestamp
 
     private global::NUlid.Ulid _nulidValue;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(NUlid))]
     public void SetupNUlid()
     {
         _nulidTimestamp = IdentifierData.NextTimestampMilliseconds();

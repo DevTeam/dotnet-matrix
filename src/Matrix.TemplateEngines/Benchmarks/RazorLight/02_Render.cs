@@ -9,7 +9,7 @@ public partial class Render
 
     private object _razorLightModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(RazorLight))]
     public void SetupRazorLight()
     {
         _razorLightEngine = new global::RazorLight.RazorLightEngineBuilder()

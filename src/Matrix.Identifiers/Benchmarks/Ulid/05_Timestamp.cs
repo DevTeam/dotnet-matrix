@@ -7,7 +7,7 @@ public partial class Timestamp
 
     private global::System.Ulid _ulidValue;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Ulid))]
     public void SetupUlid()
     {
         _ulidTimestamp = IdentifierData.NextTimestampMilliseconds();

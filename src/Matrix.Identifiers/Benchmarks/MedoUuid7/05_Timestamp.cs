@@ -7,7 +7,7 @@ public partial class Timestamp
 
     private global::Medo.Uuid7 _medoValue;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(MedoUuid7))]
     public void SetupMedoUuid7()
     {
         _medoTimestamp = IdentifierData.NextTimestampMilliseconds();

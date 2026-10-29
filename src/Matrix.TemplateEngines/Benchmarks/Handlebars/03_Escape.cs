@@ -7,7 +7,7 @@ public partial class Escape
 
     private object _handlebarsEscapeModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Handlebars))]
     public void SetupHandlebars()
     {
         var handlebars = global::HandlebarsDotNet.Handlebars.Create();

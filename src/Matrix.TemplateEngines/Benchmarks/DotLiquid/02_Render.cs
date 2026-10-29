@@ -7,7 +7,7 @@ public partial class Render
 
     private global::DotLiquid.Hash _dotLiquidModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(DotLiquid))]
     public void SetupDotLiquid()
     {
         _dotLiquidTemplate = global::DotLiquid.Template.Parse("Hello, {{ name }}!");

@@ -7,7 +7,7 @@ public partial class Render
 
     private global::Cottle.IContext _cottleContext = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Cottle))]
     public void SetupCottle()
     {
         // Cottle substitutes {name}; square brackets are literal text.

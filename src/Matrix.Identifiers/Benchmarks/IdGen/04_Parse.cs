@@ -9,7 +9,7 @@ public partial class Parse
 
     private global::IdGen.Id _idGenExpected;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(IdGen))]
     public void SetupIdGen() => _idGenExpected = _idGenParser.FromId(_idGenNumber);
 
     [Benchmark]

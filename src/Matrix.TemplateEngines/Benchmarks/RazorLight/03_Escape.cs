@@ -9,7 +9,7 @@ public partial class Escape
 
     private object _razorLightEscapeModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(RazorLight))]
     public void SetupRazorLight()
     {
         _razorLightEscapeEngine = new global::RazorLight.RazorLightEngineBuilder()

@@ -9,7 +9,7 @@ public partial class Render
 
     private object[] _smartArguments = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(SmartFormat))]
     public void SetupSmartFormat()
     {
         _smartFormatter = global::SmartFormat.Smart.CreateDefaultSmartFormat(

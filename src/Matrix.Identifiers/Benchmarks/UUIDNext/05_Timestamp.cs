@@ -7,7 +7,7 @@ public partial class Timestamp
 
     private Guid _uuidNextValue;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(UUIDNext))]
     public void SetupUUIDNext()
     {
         _uuidNextTimestamp = IdentifierData.NextTimestampMilliseconds();

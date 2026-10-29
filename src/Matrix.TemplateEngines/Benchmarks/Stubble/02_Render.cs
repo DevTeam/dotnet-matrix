@@ -9,7 +9,7 @@ public partial class Render
 
     private object _stubbleModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Stubble))]
     public void SetupStubble()
     {
         _stubbleRenderer = new global::Stubble.Core.Builders.StubbleBuilder().Build();

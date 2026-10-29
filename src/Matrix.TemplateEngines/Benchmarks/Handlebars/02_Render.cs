@@ -7,7 +7,7 @@ public partial class Render
 
     private object _handlebarsModel = null!;
 
-    [GlobalSetup]
+    [GlobalSetup(Target = nameof(Handlebars))]
     public void SetupHandlebars()
     {
         var handlebars = global::HandlebarsDotNet.Handlebars.Create();
