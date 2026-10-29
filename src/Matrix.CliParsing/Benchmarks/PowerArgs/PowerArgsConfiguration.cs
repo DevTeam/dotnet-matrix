@@ -9,6 +9,11 @@ namespace Matrix.CliParsing.Benchmarks;
 /// </summary>
 internal static class PowerArgsConfiguration
 {
+    // The default template's Description+ wraps to Console.BufferWidth. PowerArgs 4.0.3
+    // can loop indefinitely when CI has no terminal (width 0). Keep the library's
+    // template and renderer, but let description columns grow without console wrapping.
+    private static readonly string HelpTemplate = UsageTemplates.ConsoleTemplate.Replace("Description+", "Description");
+
     public static ReportArguments ReadReport(string[] args)
     {
         var options = Args.Parse<PowerArgsReportOptions>(args);
@@ -30,7 +35,7 @@ internal static class PowerArgsConfiguration
     public static GeneratedHelp RenderHelp()
     {
         var definition = new CommandLineArgumentsDefinition(typeof(PowerArgsReportOptions));
-        return new GeneratedHelp(ArgUsage.GenerateUsageFromTemplate(definition).ToString());
+        return new GeneratedHelp(ArgUsage.GenerateUsageFromTemplate(definition, HelpTemplate).ToString());
     }
 
     public static ParseOutcome ReadFailure(Func<object> run)
