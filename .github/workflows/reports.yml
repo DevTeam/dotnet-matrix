@@ -97,6 +97,15 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      - name: Upload execution logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: matrix-logs-${{ matrix.category }}
+          path: artifacts/logs
+          if-no-files-found: warn
+          retention-days: 7
+
   merge:
     name: Merge reports
     needs: reports

@@ -72,7 +72,19 @@ internal sealed class MatrixTarget(
                 [],
                 operation),
             operation,
-            cancellationToken);
+            cancellationToken,
+            outputHandler: mode == MatrixMode.Benchmark ? static output =>
+            {
+                var line = output.Line;
+                if (line.StartsWith("// Benchmark:", StringComparison.Ordinal)
+                    || line.StartsWith("// ** Remained", StringComparison.Ordinal)
+                    || line.StartsWith("// ***** Building", StringComparison.Ordinal)
+                    || line.StartsWith("// start dotnet", StringComparison.Ordinal))
+                {
+                    Console.WriteLine(line);
+                }
+            } : null,
+            suppressConsoleOutput: mode != MatrixMode.Benchmark);
         if (result == 0)
         {
             Info($"{operation} completed.");

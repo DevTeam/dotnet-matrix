@@ -210,6 +210,7 @@ internal sealed partial class AotProbesTarget(
 
         var output = new StringBuilder();
         var publishOperation = $"{module.Metadata.Id} AOT publish {library.Id}";
+        Info($"Native AOT {module.Metadata.Name}: publishing {library.Id}.");
         var publish = await processRunner.RunAsync(
             new HostCommandLine(
                 "dotnet",
@@ -244,6 +245,7 @@ internal sealed partial class AotProbesTarget(
 
         var run = new StringBuilder();
         var runOperation = $"{module.Metadata.Id} AOT probe {library.Id}";
+        Info($"Native AOT {module.Metadata.Name}: running {library.Id} probe.");
         var exitCode = await processRunner.RunAsync(
             new HostCommandLine(
                 executable,
