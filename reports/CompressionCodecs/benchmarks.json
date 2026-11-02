@@ -1,0 +1,439 @@
+{
+  "SchemaVersion": 2,
+  "ModuleId": "compression-codecs",
+  "GeneratedAtUtc": "2026-11-02T12:55:01.1410408+00:00",
+  "Environments": [
+    {
+      "Id": "91de1da20b47",
+      "OperatingSystem": "Ubuntu 26.04.1 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.14",
+      "RuntimeVersion": "10.0.14",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.403",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "BrotliSharpLib",
+      "Name": "BrotliSharpLib",
+      "Package": "BrotliSharpLib",
+      "Version": "0.3.3",
+      "Baseline": false
+    },
+    {
+      "Id": "K4os.Compression.LZ4",
+      "Name": "K4os.Compression.LZ4",
+      "Package": "K4os.Compression.LZ4",
+      "Version": "1.3.8",
+      "Baseline": false
+    },
+    {
+      "Id": "Snappier",
+      "Name": "Snappier",
+      "Package": "Snappier",
+      "Version": "1.3.1",
+      "Baseline": false
+    },
+    {
+      "Id": "System.IO.Compression",
+      "Name": "System.IO.Compression",
+      "Baseline": true
+    },
+    {
+      "Id": "ZstdNet",
+      "Name": "ZstdNet",
+      "Package": "ZstdNet",
+      "Version": "1.5.7",
+      "Baseline": false
+    },
+    {
+      "Id": "ZstdSharp.Port",
+      "Name": "ZstdSharp.Port",
+      "Package": "ZstdSharp.Port",
+      "Version": "0.8.8",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "CompressText",
+      "Name": "Compress Text",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 51619.41440561655,
+          "StandardErrorNanoseconds": 63.495952471916766,
+          "AllocatedBytesPerOperation": 72841,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 34472.68280480295,
+          "StandardErrorNanoseconds": 159.22708145691797,
+          "AllocatedBytesPerOperation": 264364,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "Snappier",
+          "Successful": true,
+          "MeanNanoseconds": 25368.446898877057,
+          "StandardErrorNanoseconds": 49.50706767197623,
+          "AllocatedBytesPerOperation": 12632,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 268575.05957512313,
+          "StandardErrorNanoseconds": 537.9564352095846,
+          "AllocatedBytesPerOperation": 608,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 27274.5658172123,
+          "StandardErrorNanoseconds": 63.20558544599868,
+          "AllocatedBytesPerOperation": 200,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 41966.305384678475,
+          "StandardErrorNanoseconds": 367.030446561899,
+          "AllocatedBytesPerOperation": 263404,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "CompressTextMax",
+      "Name": "Compress Text Max Effort",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 16689053.1875,
+          "StandardErrorNanoseconds": 612925.860580775,
+          "AllocatedBytesPerOperation": 89616,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 50499.81674011752,
+          "StandardErrorNanoseconds": 100.69672360361932,
+          "AllocatedBytesPerOperation": 264392,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 13405584.53515625,
+          "StandardErrorNanoseconds": 48978.515474321925,
+          "AllocatedBytesPerOperation": 575,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 273414.4697420635,
+          "StandardErrorNanoseconds": 437.3905211285754,
+          "AllocatedBytesPerOperation": 200,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 387614.14953271026,
+          "StandardErrorNanoseconds": 2213.201358982595,
+          "AllocatedBytesPerOperation": 263404,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "CompressIncompressible",
+      "Name": "Compress Incompressible",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 285132.4565515351,
+          "StandardErrorNanoseconds": 1500.0258810061555,
+          "AllocatedBytesPerOperation": 1316832,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 287254.7328125,
+          "StandardErrorNanoseconds": 791.2284788289045,
+          "AllocatedBytesPerOperation": 526472,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "Snappier",
+          "Successful": true,
+          "MeanNanoseconds": 157196.11297736916,
+          "StandardErrorNanoseconds": 647.2676701020407,
+          "AllocatedBytesPerOperation": 262355,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 610522.3368389423,
+          "StandardErrorNanoseconds": 4588.453865341233,
+          "AllocatedBytesPerOperation": 1246675,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 179143.275297619,
+          "StandardErrorNanoseconds": 349.53085045318767,
+          "AllocatedBytesPerOperation": 262320,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 315667.744260204,
+          "StandardErrorNanoseconds": 1384.3361642075622,
+          "AllocatedBytesPerOperation": 525496,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "DecompressText",
+      "Name": "Decompress Text",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 865962.9075520835,
+          "StandardErrorNanoseconds": 2977.7020514231262,
+          "AllocatedBytesPerOperation": 792144,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 138405.3167798913,
+          "StandardErrorNanoseconds": 332.94320735059176,
+          "AllocatedBytesPerOperation": 262224,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "Snappier",
+          "Successful": true,
+          "MeanNanoseconds": 56496.29916958043,
+          "StandardErrorNanoseconds": 705.6780153999712,
+          "AllocatedBytesPerOperation": 262926,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 492651.70514112903,
+          "StandardErrorNanoseconds": 1735.1244289748577,
+          "AllocatedBytesPerOperation": 525757,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 155822.18533549784,
+          "StandardErrorNanoseconds": 161.733508452351,
+          "AllocatedBytesPerOperation": 262296,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 296649.4829009434,
+          "StandardErrorNanoseconds": 602.8749806848438,
+          "AllocatedBytesPerOperation": 525472,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "DecompressIncompressible",
+      "Name": "Decompress Incompressible",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 311444.87703125,
+          "StandardErrorNanoseconds": 1010.5161989354164,
+          "AllocatedBytesPerOperation": 792080,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 41059.30489527926,
+          "StandardErrorNanoseconds": 679.4555376646637,
+          "AllocatedBytesPerOperation": 262211,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "Snappier",
+          "Successful": true,
+          "MeanNanoseconds": 42567.213138812156,
+          "StandardErrorNanoseconds": 1093.5144284950397,
+          "AllocatedBytesPerOperation": 262883,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 265237.59736761084,
+          "StandardErrorNanoseconds": 476.6046973182383,
+          "AllocatedBytesPerOperation": 525757,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 34348.597333073776,
+          "StandardErrorNanoseconds": 455.43516976181894,
+          "AllocatedBytesPerOperation": 262742,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 260798.12818877553,
+          "StandardErrorNanoseconds": 1027.1235847188514,
+          "AllocatedBytesPerOperation": 525472,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "RoundTripSmall",
+      "Name": "Round Trip Small",
+      "Results": [
+        {
+          "LibraryId": "BrotliSharpLib",
+          "Successful": true,
+          "MeanNanoseconds": 18429.67605064655,
+          "StandardErrorNanoseconds": 170.27506245471724,
+          "AllocatedBytesPerOperation": 145276,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "K4os.Compression.LZ4",
+          "Successful": true,
+          "MeanNanoseconds": 1281.6475512484587,
+          "StandardErrorNanoseconds": 2.5220828226296463,
+          "AllocatedBytesPerOperation": 2216,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "Snappier",
+          "Successful": true,
+          "MeanNanoseconds": 615.260309710356,
+          "StandardErrorNanoseconds": 2.7766016456775797,
+          "AllocatedBytesPerOperation": 1352,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "System.IO.Compression",
+          "Successful": true,
+          "MeanNanoseconds": 7604.537626462701,
+          "StandardErrorNanoseconds": 39.71164923485659,
+          "AllocatedBytesPerOperation": 3944,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdNet",
+          "Successful": true,
+          "MeanNanoseconds": 6121.005959416864,
+          "StandardErrorNanoseconds": 2.35112851711608,
+          "AllocatedBytesPerOperation": 1304,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        },
+        {
+          "LibraryId": "ZstdSharp.Port",
+          "Successful": true,
+          "MeanNanoseconds": 2721.272863295053,
+          "StandardErrorNanoseconds": 7.581113839143815,
+          "AllocatedBytesPerOperation": 4464,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-compression-codecs-measured"
+        }
+      ]
+    }
+  ],
+  "Evidence": [
+    {
+      "Id": "41447572041-1-compression-codecs-measured",
+      "Kind": "measured",
+      "GeneratedAtUtc": "2026-11-02T12:55:01.1300513+00:00",
+      "CommitSha": "bfb24472dd60196008cbb15b57ee909a5902cfa5",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41447572041",
+      "Job": "Quick",
+      "EnvironmentId": "91de1da20b47",
+      "ArchiveName": "matrix-reports",
+      "ManifestPath": "reports/CompressionCodecs/evidence/41447572041-1-compression-codecs-measured/manifest.json",
+      "Repository": "DevTeam/dotnet-matrix"
+    }
+  ]
+}

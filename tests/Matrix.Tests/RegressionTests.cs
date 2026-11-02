@@ -20,7 +20,8 @@ internal static class RegressionTests
             ("Runner rejects duplicate results", () => Sync(DuplicateResults)),
             ("Executor failure preserves reports and cleans artifacts", () => Sync(ExecutorFailure)),
             ("Unsuccessful measurements produce a failed report", () => Sync(FailedMeasurement)),
-            ("Presentation targets read injected reports", PresentationReadsAsync)
+            ("Presentation targets read injected reports", PresentationReadsAsync),
+            ("Malformed SVG logos warn without blocking other logos", () => Sync(MalformedLogos))
         ];
         var failed = 0;
         foreach (var (name, run) in tests)
@@ -45,6 +46,39 @@ internal static class RegressionTests
     {
         test();
         return Task.CompletedTask;
+    }
+
+    private static void MalformedLogos()
+    {
+        var directory = TemporaryDirectory();
+        var originalError = Console.Error;
+        using var warnings = new StringWriter();
+        try
+        {
+            File.WriteAllText(Path.Combine(directory, "broken.svg"),
+                "<svg xmlns=\"http://www.w3.org/2000/svg\"><path d=`\"M0 0\"/></svg>");
+            File.WriteAllText(Path.Combine(directory, "valid.svg"),
+                """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#0369a1"/></svg>""");
+            var catalog = new MatrixLibraryMetadataCatalog(1,
+            [
+                new("broken", "", null, null, "broken.svg", true, false),
+                new("valid", "", null, null, "valid.svg", true, false)
+            ]);
+            Console.SetError(warnings);
+            using var logos = LibraryLogos.Load(directory, catalog);
+            Check(logos.Find("broken") is null, "The invalid SVG must not produce an image.");
+            Check(logos.Find("valid") is { Width: 128, Height: 128 },
+                "A malformed logo must not prevent valid logos from being rendered.");
+            Check(warnings.ToString().Contains("'broken'")
+                  && warnings.ToString().Contains(Path.Combine(directory, "broken.svg"))
+                  && warnings.ToString().Contains("Invalid SVG XML"),
+                "The warning must identify the library, source file and XML error.");
+        }
+        finally
+        {
+            Console.SetError(originalError);
+            Directory.Delete(directory, true);
+        }
     }
 
     private static void CoreDependencies()

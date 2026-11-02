@@ -1,6 +1,7 @@
 using Matrix;
 using SkiaSharp;
 using Svg.Skia;
+using System.Xml;
 
 namespace Build.Targets;
 
@@ -20,7 +21,17 @@ internal sealed class LibraryLogos : IDisposable
         foreach (var library in catalog.Libraries)
         {
             var path = Path.Combine(metadataDirectory, library.Logo);
-            var image = Decode(path);
+            SKImage? image;
+            try
+            {
+                image = Decode(path);
+            }
+            catch (XmlException error)
+            {
+                Console.Error.WriteLine(
+                    $"WARNING: Cannot read the logo of '{library.Id}': {path}. Invalid SVG XML: {error.Message}");
+                continue;
+            }
             if (image is null)
             {
                 Console.Error.WriteLine(

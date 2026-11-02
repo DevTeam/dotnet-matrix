@@ -1,0 +1,579 @@
+{
+  "SchemaVersion": 2,
+  "ModuleId": "message-dispatch",
+  "GeneratedAtUtc": "2026-11-02T12:56:51.5082092+00:00",
+  "Environments": [
+    {
+      "Id": "91de1da20b47",
+      "OperatingSystem": "Ubuntu 26.04.1 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.14",
+      "RuntimeVersion": "10.0.14",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.403",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "Cortex.Mediator",
+      "Name": "Cortex.Mediator",
+      "Package": "Cortex.Mediator",
+      "Version": "3.1.2",
+      "Baseline": false
+    },
+    {
+      "Id": "FastMediator",
+      "Name": "FastMediator",
+      "Package": "FastMediator",
+      "Version": "2.0.1",
+      "Baseline": false
+    },
+    {
+      "Id": "Immediate.Handlers",
+      "Name": "Immediate.Handlers",
+      "Package": "Immediate.Handlers",
+      "Version": "4.2.0",
+      "Baseline": false
+    },
+    {
+      "Id": "Mediator",
+      "Name": "Mediator.Abstractions",
+      "Package": "Mediator.Abstractions",
+      "Version": "3.0.2",
+      "Baseline": false
+    },
+    {
+      "Id": "Mediator.Net",
+      "Name": "Mediator.Net",
+      "Package": "Mediator.Net",
+      "Version": "5.0.0",
+      "Baseline": false
+    },
+    {
+      "Id": "MediatR",
+      "Name": "MediatR",
+      "Package": "MediatR",
+      "Version": "14.2.0",
+      "Baseline": false
+    },
+    {
+      "Id": "WolverineFx",
+      "Name": "WolverineFx",
+      "Package": "WolverineFx",
+      "Version": "6.57.0",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "SendCommand",
+      "Name": "Send Command",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 115.6896611292541,
+          "StandardErrorNanoseconds": 0.06948655557589985,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 9633.695512381215,
+          "StandardErrorNanoseconds": 10.280490566334436,
+          "AllocatedBytesPerOperation": 8836,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 52.160870940146665,
+          "StandardErrorNanoseconds": 0.09142663928585588,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 80.45878633199814,
+          "StandardErrorNanoseconds": 0.01924296156216815,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 2173.2761491191604,
+          "StandardErrorNanoseconds": 2.038084824244876,
+          "AllocatedBytesPerOperation": 1944,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 211.77989215541874,
+          "StandardErrorNanoseconds": 0.1686974823881438,
+          "AllocatedBytesPerOperation": 408,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 553.8723584883941,
+          "StandardErrorNanoseconds": 0.2468713499566758,
+          "AllocatedBytesPerOperation": 120,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "SendQuery",
+      "Name": "Send Query",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 315.7114867554691,
+          "StandardErrorNanoseconds": 1.00793843998782,
+          "AllocatedBytesPerOperation": 848,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 9415.766016793192,
+          "StandardErrorNanoseconds": 20.16349330703973,
+          "AllocatedBytesPerOperation": 8811,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 47.25420875635176,
+          "StandardErrorNanoseconds": 0.10293838451827789,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 74.3031778614026,
+          "StandardErrorNanoseconds": 0.025592433277575325,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 2297.6520635051243,
+          "StandardErrorNanoseconds": 3.6899960029918524,
+          "AllocatedBytesPerOperation": 2152,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 206.48459104712148,
+          "StandardErrorNanoseconds": 0.12195087368146709,
+          "AllocatedBytesPerOperation": 480,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 732.73640267336,
+          "StandardErrorNanoseconds": 0.4727374132237319,
+          "AllocatedBytesPerOperation": 312,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "PublishNotification",
+      "Name": "Publish Notification",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 232.50954034475882,
+          "StandardErrorNanoseconds": 0.4438585120011062,
+          "AllocatedBytesPerOperation": 536,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 50.401094333817646,
+          "StandardErrorNanoseconds": 0.32972150999907207,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 2958.56799444078,
+          "StandardErrorNanoseconds": 4.037269863047231,
+          "AllocatedBytesPerOperation": 2448,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 540.0134897747023,
+          "StandardErrorNanoseconds": 1.304487001138704,
+          "AllocatedBytesPerOperation": 1344,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 554.4131647807639,
+          "StandardErrorNanoseconds": 0.24200144117533995,
+          "AllocatedBytesPerOperation": 168,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "PipelineBehavior",
+      "Name": "Pipeline Behavior",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 313.60577980342896,
+          "StandardErrorNanoseconds": 1.5670831551534037,
+          "AllocatedBytesPerOperation": 848,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 9444.120452744946,
+          "StandardErrorNanoseconds": 7.7229712922149485,
+          "AllocatedBytesPerOperation": 9079,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 59.086046861971546,
+          "StandardErrorNanoseconds": 0.1767330453755095,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 77.96454879780363,
+          "StandardErrorNanoseconds": 0.1816030048598521,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 2227.2829560896707,
+          "StandardErrorNanoseconds": 4.845415131701414,
+          "AllocatedBytesPerOperation": 2152,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 197.73703304995425,
+          "StandardErrorNanoseconds": 0.2896235771836482,
+          "AllocatedBytesPerOperation": 480,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 751.7939964522946,
+          "StandardErrorNanoseconds": 0.7785229564088408,
+          "AllocatedBytesPerOperation": 312,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "ExceptionBehavior",
+      "Name": "Exception Behavior",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 3270.3228317029034,
+          "StandardErrorNanoseconds": 1.1988546503114095,
+          "AllocatedBytesPerOperation": 1240,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 13084.100586611457,
+          "StandardErrorNanoseconds": 26.848593421003155,
+          "AllocatedBytesPerOperation": 9404,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 5405.3558060068335,
+          "StandardErrorNanoseconds": 15.454962137751162,
+          "AllocatedBytesPerOperation": 1328,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 2507.8252215609127,
+          "StandardErrorNanoseconds": 1.0064555352889535,
+          "AllocatedBytesPerOperation": 416,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 21315.310604050588,
+          "StandardErrorNanoseconds": 11.597266581404252,
+          "AllocatedBytesPerOperation": 6465,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 2785.651592782357,
+          "StandardErrorNanoseconds": 0.8446660683602079,
+          "AllocatedBytesPerOperation": 976,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "AsyncHandler",
+      "Name": "Async Handler",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 1553.7896583735044,
+          "StandardErrorNanoseconds": 5.1538694235000975,
+          "AllocatedBytesPerOperation": 1104,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 10148.593614969135,
+          "StandardErrorNanoseconds": 303.89221971943044,
+          "AllocatedBytesPerOperation": 9739,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 1007.1470590860938,
+          "StandardErrorNanoseconds": 4.401578553410369,
+          "AllocatedBytesPerOperation": 504,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 936.6801892244456,
+          "StandardErrorNanoseconds": 5.399247660006777,
+          "AllocatedBytesPerOperation": 416,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 5942.087838338895,
+          "StandardErrorNanoseconds": 119.402489717032,
+          "AllocatedBytesPerOperation": 2769,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 1106.7291859956235,
+          "StandardErrorNanoseconds": 5.950335695797874,
+          "AllocatedBytesPerOperation": 536,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 2700.9954908258856,
+          "StandardErrorNanoseconds": 10.088648740520524,
+          "AllocatedBytesPerOperation": 952,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "SourceGeneratedDispatch",
+      "Name": "Source Generated Dispatch",
+      "Results": [
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 46.92843950772754,
+          "StandardErrorNanoseconds": 0.17799030113041445,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 73.66871340962076,
+          "StandardErrorNanoseconds": 0.055505985491387,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "Register",
+      "Name": "Register",
+      "Results": [
+        {
+          "LibraryId": "Cortex.Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 1278761.619212963,
+          "StandardErrorNanoseconds": 27679.256777114424,
+          "AllocatedBytesPerOperation": 350621,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "FastMediator",
+          "Successful": true,
+          "MeanNanoseconds": 207385684,
+          "StandardErrorNanoseconds": 404768.03151928884,
+          "AllocatedBytesPerOperation": 12539792,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Immediate.Handlers",
+          "Successful": true,
+          "MeanNanoseconds": 3670.37125462376,
+          "StandardErrorNanoseconds": 3.16990205645663,
+          "AllocatedBytesPerOperation": 8024,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator",
+          "Successful": true,
+          "MeanNanoseconds": 24739.823018699906,
+          "StandardErrorNanoseconds": 31.158103930389853,
+          "AllocatedBytesPerOperation": 35514,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "Mediator.Net",
+          "Successful": true,
+          "MeanNanoseconds": 135320.45348995112,
+          "StandardErrorNanoseconds": 304.9572984606691,
+          "AllocatedBytesPerOperation": 293677,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "MediatR",
+          "Successful": true,
+          "MeanNanoseconds": 808466.9722222221,
+          "StandardErrorNanoseconds": 27873.609827604487,
+          "AllocatedBytesPerOperation": 750651,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        },
+        {
+          "LibraryId": "WolverineFx",
+          "Successful": true,
+          "MeanNanoseconds": 36242603.14285714,
+          "StandardErrorNanoseconds": 621940.886758018,
+          "AllocatedBytesPerOperation": 3289586,
+          "EnvironmentId": "91de1da20b47",
+          "EvidenceId": "41447572041-1-message-dispatch-measured"
+        }
+      ]
+    }
+  ],
+  "Evidence": [
+    {
+      "Id": "41447572041-1-message-dispatch-measured",
+      "Kind": "measured",
+      "GeneratedAtUtc": "2026-11-02T12:56:51.4957073+00:00",
+      "CommitSha": "bfb24472dd60196008cbb15b57ee909a5902cfa5",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41447572041",
+      "Job": "Quick",
+      "EnvironmentId": "91de1da20b47",
+      "ArchiveName": "matrix-reports",
+      "ManifestPath": "reports/MessageDispatch/evidence/41447572041-1-message-dispatch-measured/manifest.json",
+      "Repository": "DevTeam/dotnet-matrix"
+    }
+  ]
+}

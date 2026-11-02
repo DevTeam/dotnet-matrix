@@ -1,0 +1,350 @@
+{
+  "SchemaVersion": 2,
+  "ModuleId": "hashing",
+  "GeneratedAtUtc": "2026-11-02T12:53:00.1018528+00:00",
+  "Environments": [
+    {
+      "Id": "36e5c72a9b10",
+      "OperatingSystem": "Ubuntu 26.04.1 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 10.0.14",
+      "RuntimeVersion": "10.0.14",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "10.0.403",
+      "Processor": "AMD EPYC 9V45 96-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.15.8.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "Blake3",
+      "Name": "Blake3",
+      "Package": "Blake3",
+      "Version": "3.0.2",
+      "Baseline": false
+    },
+    {
+      "Id": "Crc32.NET",
+      "Name": "Crc32.NET",
+      "Package": "Crc32.NET",
+      "Version": "2.1.0",
+      "Baseline": false
+    },
+    {
+      "Id": "FarmHash.Sharp",
+      "Name": "FarmHash.Sharp",
+      "Package": "FarmHash.Sharp",
+      "Version": "0.9.0",
+      "Baseline": false
+    },
+    {
+      "Id": "HashDepot",
+      "Name": "HashDepot",
+      "Package": "HashDepot",
+      "Version": "3.2.0",
+      "Baseline": false
+    },
+    {
+      "Id": "Isopoh.Cryptography.Blake2b",
+      "Name": "Isopoh.Cryptography.Blake2b",
+      "Package": "Isopoh.Cryptography.Blake2b",
+      "Version": "2.0.0",
+      "Baseline": false
+    },
+    {
+      "Id": "K4os.Hash.xxHash",
+      "Name": "K4os Hash xxHash",
+      "Package": "K4os.Hash.xxHash",
+      "Version": "1.0.8",
+      "Baseline": false
+    },
+    {
+      "Id": "Standart.Hash.xxHash",
+      "Name": "Standart.Hash.xxHash",
+      "Package": "Standart.Hash.xxHash",
+      "Version": "4.0.5",
+      "Baseline": false
+    },
+    {
+      "Id": "System.IO.Hashing",
+      "Name": "System.IO.Hashing",
+      "Package": "System.IO.Hashing",
+      "Version": "10.0.14",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "XxHash64",
+      "Name": "XxHash64",
+      "Results": [
+        {
+          "LibraryId": "HashDepot",
+          "Successful": true,
+          "MeanNanoseconds": 549.4170806456544,
+          "StandardErrorNanoseconds": 1.541874334485426,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "K4os.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 203.85974321015436,
+          "StandardErrorNanoseconds": 1.700853280511144,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "Standart.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 178.15472552258075,
+          "StandardErrorNanoseconds": 0.799067794578707,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 257.2446277410675,
+          "StandardErrorNanoseconds": 0.4283368288435265,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "XxHash32",
+      "Name": "XxHash32",
+      "Results": [
+        {
+          "LibraryId": "HashDepot",
+          "Successful": true,
+          "MeanNanoseconds": 480.9701902815554,
+          "StandardErrorNanoseconds": 2.867358304739615,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "K4os.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 352.06410660282256,
+          "StandardErrorNanoseconds": 0.9317182475404611,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "Standart.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 352.7129954764279,
+          "StandardErrorNanoseconds": 0.8957626777705144,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 363.24051635367215,
+          "StandardErrorNanoseconds": 0.3648828785274838,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "XxHash3",
+      "Name": "XxHash3",
+      "Results": [
+        {
+          "LibraryId": "Standart.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 224.73313082147826,
+          "StandardErrorNanoseconds": 0.8977885468248197,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 70.87499993809605,
+          "StandardErrorNanoseconds": 0.33176151777805546,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "XxHash64Streaming",
+      "Name": "XxHash64 Streaming",
+      "Results": [
+        {
+          "LibraryId": "K4os.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 351.1028811222992,
+          "StandardErrorNanoseconds": 2.35025882084707,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 327.0649680511803,
+          "StandardErrorNanoseconds": 1.7687245661019944,
+          "AllocatedBytesPerOperation": 96,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "XxHash64Large",
+      "Name": "XxHash64 Large",
+      "Results": [
+        {
+          "LibraryId": "HashDepot",
+          "Successful": true,
+          "MeanNanoseconds": 141657.2174831081,
+          "StandardErrorNanoseconds": 251.46433652244417,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "K4os.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 51012.45133341166,
+          "StandardErrorNanoseconds": 16.82438338150924,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "Standart.Hash.xxHash",
+          "Successful": true,
+          "MeanNanoseconds": 44524.19691326531,
+          "StandardErrorNanoseconds": 39.20870356276859,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 64261.01671340024,
+          "StandardErrorNanoseconds": 298.22538471345814,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "Crc32",
+      "Name": "Crc32",
+      "Results": [
+        {
+          "LibraryId": "Crc32.NET",
+          "Successful": true,
+          "MeanNanoseconds": 236.11504210515412,
+          "StandardErrorNanoseconds": 1.0328935287340104,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        },
+        {
+          "LibraryId": "System.IO.Hashing",
+          "Successful": true,
+          "MeanNanoseconds": 237.24282879624556,
+          "StandardErrorNanoseconds": 0.9771695715488178,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 7,
+      "Id": "Blake3",
+      "Name": "Blake3",
+      "Results": [
+        {
+          "LibraryId": "Blake3",
+          "Successful": true,
+          "MeanNanoseconds": 6153.867123413086,
+          "StandardErrorNanoseconds": 27.827485840080744,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 8,
+      "Id": "Blake2b",
+      "Name": "Blake2b",
+      "Results": [
+        {
+          "LibraryId": "Isopoh.Cryptography.Blake2b",
+          "Successful": true,
+          "MeanNanoseconds": 13018.23200476695,
+          "StandardErrorNanoseconds": 105.4841801396256,
+          "AllocatedBytesPerOperation": 952,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 9,
+      "Id": "FarmHash64",
+      "Name": "FarmHash64",
+      "Results": [
+        {
+          "LibraryId": "FarmHash.Sharp",
+          "Successful": true,
+          "MeanNanoseconds": 159.07193645459498,
+          "StandardErrorNanoseconds": 0.3098644250687396,
+          "AllocatedBytesPerOperation": 0,
+          "EnvironmentId": "36e5c72a9b10",
+          "EvidenceId": "41447572041-1-hashing-measured"
+        }
+      ]
+    }
+  ],
+  "Evidence": [
+    {
+      "Id": "41447572041-1-hashing-measured",
+      "Kind": "measured",
+      "GeneratedAtUtc": "2026-11-02T12:53:00.0955841+00:00",
+      "CommitSha": "bfb24472dd60196008cbb15b57ee909a5902cfa5",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41447572041",
+      "Job": "Quick",
+      "EnvironmentId": "36e5c72a9b10",
+      "ArchiveName": "matrix-reports",
+      "ManifestPath": "reports/Hashing/evidence/41447572041-1-hashing-measured/manifest.json",
+      "Repository": "DevTeam/dotnet-matrix"
+    }
+  ]
+}
