@@ -86,6 +86,7 @@ public partial class DeserializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
 
 

@@ -20,6 +20,7 @@ public partial class SerializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
 
     {

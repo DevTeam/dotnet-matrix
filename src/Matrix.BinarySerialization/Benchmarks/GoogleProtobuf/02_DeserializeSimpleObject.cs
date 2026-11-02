@@ -16,6 +16,7 @@ public partial class DeserializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() =>
 
         _payload = SerializationData.SimpleMessage().ToByteArray();

@@ -9,6 +9,7 @@ public partial class SerializeCollection
 {
     private ReflectWriter<CollectionModel> _writer = null!;
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
     {
         var data = new ClassCache();

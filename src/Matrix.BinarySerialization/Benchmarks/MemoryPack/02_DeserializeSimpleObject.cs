@@ -16,6 +16,7 @@ public partial class DeserializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(MemoryPack))]
     public void SetupMemoryPack() => _payload = MemoryPackSerializer.Serialize(SerializationData.Simple());
 
 

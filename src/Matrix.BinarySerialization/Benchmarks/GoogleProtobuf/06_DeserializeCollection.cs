@@ -16,6 +16,7 @@ public partial class DeserializeCollection
 
 
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() =>
 
         _payload = SerializationData.CollectionMessage().ToByteArray();

@@ -16,6 +16,7 @@ public partial class DeserializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() =>
 
         _payload = SerializationData.OrderMessage().ToByteArray();

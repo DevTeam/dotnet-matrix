@@ -8,6 +8,7 @@ public partial class SerializeSimpleObject
 {
     private SimpleMessage _message = new();
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() => _message = SerializationData.SimpleMessage();
 
     [Benchmark]

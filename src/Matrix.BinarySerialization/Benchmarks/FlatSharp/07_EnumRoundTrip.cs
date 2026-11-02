@@ -8,6 +8,7 @@ public partial class EnumRoundTrip
 {
     private EnumTable _table = new();
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _table = SerializationData.EnumTable();
 
     [Benchmark]

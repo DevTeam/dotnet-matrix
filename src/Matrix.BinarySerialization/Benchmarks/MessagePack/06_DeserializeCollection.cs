@@ -6,6 +6,7 @@ namespace Matrix.BinarySerialization.Benchmarks;
 
 public partial class DeserializeCollection
 {
+    [GlobalSetup(Target = nameof(MessagePack))]
     public void SetupMessagePack() => _payload = MessagePackSerializer.Serialize(SerializationData.Collection());
 
     [Benchmark]

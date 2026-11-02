@@ -8,6 +8,7 @@ public partial class SerializeCollection
 {
     private SimpleList _list = new();
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _list = SerializationData.SimpleList();
 
     [Benchmark]

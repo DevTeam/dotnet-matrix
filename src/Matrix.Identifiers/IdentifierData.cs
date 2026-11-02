@@ -35,5 +35,9 @@ internal static class IdentifierData
 
     public static long NowMilliseconds() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
-    public static IdGen.IdGenerator CreateGenerator() => new(1);
+    // Sustained benchmark loops can exhaust a tick's sequence space. Use IdGen's
+    // built-in backpressure so generation waits for the next tick instead of throwing.
+    public static IdGen.IdGenerator CreateGenerator() => new(
+        1,
+        new IdGen.IdGeneratorOptions(sequenceOverflowStrategy: IdGen.SequenceOverflowStrategy.SpinWait));
 }

@@ -8,6 +8,7 @@ public partial class EnumRoundTrip
 {
     private EnumMessage _message = new();
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() => _message = SerializationData.EnumMessage();
 
     [Benchmark]

@@ -6,6 +6,7 @@ namespace Matrix.BinarySerialization.Benchmarks;
 
 public partial class DeserializeCollection
 {
+    [GlobalSetup(Target = nameof(ProtoBufNet))]
     public void SetupProtoBufNet() => _payload = SerializationData.CollectionBytes();
 
     [Benchmark]

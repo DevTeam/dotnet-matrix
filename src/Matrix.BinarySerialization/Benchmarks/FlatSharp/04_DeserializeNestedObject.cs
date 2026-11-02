@@ -16,6 +16,7 @@ public partial class DeserializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _payload = SerializationData.OrderTableBytes();
 
 

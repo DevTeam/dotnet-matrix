@@ -8,6 +8,7 @@ public partial class SerializeCollection
 {
     private CollectionMessage _message = new();
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() => _message = SerializationData.CollectionMessage();
 
     [Benchmark]

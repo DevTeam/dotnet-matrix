@@ -20,6 +20,7 @@ public partial class SerializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
 
     {

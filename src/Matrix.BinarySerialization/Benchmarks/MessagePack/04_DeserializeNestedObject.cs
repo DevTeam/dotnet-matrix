@@ -16,6 +16,7 @@ public partial class DeserializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(MessagePack))]
     public void SetupMessagePack() => _payload = MessagePackSerializer.Serialize(SerializationData.Nested());
 
 

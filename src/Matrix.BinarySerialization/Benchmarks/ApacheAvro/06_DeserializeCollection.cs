@@ -9,6 +9,7 @@ public partial class DeserializeCollection
 {
     private ReflectReader<CollectionModel> _reader = null!;
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
     {
         _payload = SerializationData.CollectionAvroBytes();

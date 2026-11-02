@@ -35,6 +35,7 @@ public partial class DeserializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(MongoBson))]
     public void SetupMongoBson() =>
 
 

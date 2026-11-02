@@ -8,6 +8,7 @@ public partial class SerializeNestedObject
 {
     private OrderTable _table = new();
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _table = SerializationData.OrderTable();
 
     [Benchmark]

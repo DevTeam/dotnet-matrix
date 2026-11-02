@@ -7,6 +7,7 @@ namespace Matrix.BinarySerialization.Benchmarks;
 
 public partial class DeserializeCollection
 {
+    [GlobalSetup(Target = nameof(MongoBson))]
     public void SetupMongoBson() =>
         _payload = BsonExtensionMethods.ToBson(SerializationData.Collection());
 

@@ -8,6 +8,7 @@ public partial class SerializeSimpleObject
 {
     private SimpleTable _table = new();
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _table = SerializationData.SimpleTable();
 
     [Benchmark]

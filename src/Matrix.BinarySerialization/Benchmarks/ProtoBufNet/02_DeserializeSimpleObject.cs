@@ -16,6 +16,7 @@ public partial class DeserializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(ProtoBufNet))]
     public void SetupProtoBufNet() => _payload = SerializationData.SimpleBytes();
 
 

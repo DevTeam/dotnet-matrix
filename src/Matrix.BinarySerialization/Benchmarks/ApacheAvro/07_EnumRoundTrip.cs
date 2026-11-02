@@ -46,6 +46,7 @@ public partial class EnumRoundTrip
 
 
 
+    [GlobalSetup(Target = nameof(ApacheAvro))]
     public void SetupApacheAvro()
 
 

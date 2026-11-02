@@ -8,6 +8,7 @@ public partial class SerializeNestedObject
 {
     private OrderMessage _message = new();
 
+    [GlobalSetup(Target = nameof(GoogleProtobuf))]
     public void SetupGoogleProtobuf() => _message = SerializationData.OrderMessage();
 
     [Benchmark]

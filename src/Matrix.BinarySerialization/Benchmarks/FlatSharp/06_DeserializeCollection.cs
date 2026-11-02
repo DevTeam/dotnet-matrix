@@ -16,6 +16,7 @@ public partial class DeserializeCollection
 
 
 
+    [GlobalSetup(Target = nameof(FlatSharp))]
     public void SetupFlatSharp() => _payload = SerializationData.SimpleListBytes();
 
 

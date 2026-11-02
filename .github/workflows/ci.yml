@@ -27,6 +27,9 @@ jobs:
       - name: Build solution
         run: dotnet run --project ./build -- build-solution
 
+      - name: Check benchmark adapters
+        run: dotnet run --project tests/Matrix.Benchmark.Tests --configuration Release -p:MatrixMode=Benchmark
+
   discover:
     name: Discover categories
     runs-on: ubuntu-latest

@@ -35,6 +35,7 @@ public partial class DeserializeNestedObject
 
 
 
+    [GlobalSetup(Target = nameof(MongoBson))]
     public void SetupMongoBson() =>
 
 

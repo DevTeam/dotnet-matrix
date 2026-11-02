@@ -14,6 +14,7 @@ public partial class DeserializeSimpleObject
 
 
 
+    [GlobalSetup(Target = nameof(HyperSerializer))]
     public void SetupHyperSerializer() =>
 
         _payload = Hyper.HyperSerializer<SimpleModel>.Serialize(SerializationData.Simple()).ToArray();
