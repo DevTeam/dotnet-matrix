@@ -46,6 +46,41 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      # The published catalog is what decides which release the application reads its
+      # reports from, so the deployment is not done until that catalog names the newest tag.
+      - name: Checkout repository and tags
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+      - name: Verify the published catalog
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          expected="$(git tag --list '[0-9]*' --sort=-v:refname | head -n 1)"
+          if [[ -z "$expected" ]]; then
+            echo "::error::No release tag is present, so there is nothing to compare the catalog with."
+            exit 1
+          fi
+
+          catalog="${PAGE_URL%/}/data/catalog.json"
+          # Pages serves the previous release from its own cache for up to ten minutes, so
+          # a mismatch is retried rather than reported as a failure on the first attempt.
+          for attempt in $(seq 1 15); do
+            served="$(curl -fsS -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' "$catalog" \
+                      | jq -r '.versions[0].version // empty')" || served=""
+            if [[ "$served" == "$expected" ]]; then
+              echo "Published catalog names release $served."
+              exit 0
+            fi
+
+            echo "Attempt $attempt: catalog names '${served:-nothing}', expected '$expected'."
+            sleep 40
+          done
+
+          echo "::error::The published catalog never named release $expected; visitors are reading an older one."
+          exit 1

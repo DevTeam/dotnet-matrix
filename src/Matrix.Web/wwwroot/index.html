@@ -31,11 +31,85 @@
     <a href="" class="reload">Reload</a>
     <button class="dismiss" type="button">×</button>
 </div>
+<!-- Outside the application, because a release waiting to be installed must be announced
+     even on the screen that is still loading the old one. -->
+<div id="update-ui" role="status">
+    A new version is available.
+    <button id="update-reload" type="button">Update</button>
+    <button id="update-dismiss" type="button" class="dismiss">×</button>
+</div>
 <script src="_framework/blazor.webassembly.js"></script>
 <script src="js/scroll-header.js"></script>
 <script src="js/feature-table-scroll.js"></script>
 <!-- Required for Chrome to offer installation. In development the worker is a stub,
      so a reload always shows the current build. -->
-<script>navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' });</script>
+<script>
+    // A published build keeps its files in a cache named after itself, and a new worker
+    // stays in waiting until every window of the old build is closed. A visitor who leaves
+    // the application open — an installed PWA, a pinned tab — would then never receive a
+    // release at all, and the reports would keep arriving at the release they installed
+    // with. So the page looks for that waiting worker itself and offers the swap, instead
+    // of the browser silently doing it or not doing it.
+    (function () {
+        if (!('serviceWorker' in navigator)) {
+            return;
+        }
+
+        const banner = document.getElementById('update-ui');
+        const reload = document.getElementById('update-reload');
+        const dismiss = document.getElementById('update-dismiss');
+        let reloading = false;
+
+        // The new worker claims the page, which is the moment the old files stop being
+        // the ones behind it: from here the only safe screen is the freshly loaded one.
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (reloading) {
+                return;
+            }
+
+            reloading = true;
+            location.reload();
+        });
+
+        navigator.serviceWorker.register('service-worker.js', { updateViaCache: 'none' })
+            .then(registration => {
+                if (registration.waiting) {
+                    banner.style.display = 'block';
+                }
+
+                registration.addEventListener('updatefound', () => {
+                    const worker = registration.installing;
+                    if (!worker) {
+                        return;
+                    }
+
+                    worker.addEventListener('statechange', () => {
+                        // On the first visit nothing controls the page yet: that worker is
+                        // the one the page is about to use, not a replacement for it.
+                        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                            banner.style.display = 'block';
+                        }
+                    });
+                });
+
+                // A tab left open for days has no other reason to ask for the worker again,
+                // and the update is the only way a release reaches it.
+                setInterval(() => registration.update(), 15 * 60 * 1000);
+
+                reload.addEventListener('click', () => {
+                    if (registration.waiting) {
+                        registration.waiting.postMessage('SKIP_WAITING');
+                        return;
+                    }
+
+                    location.reload();
+                });
+
+                dismiss.addEventListener('click', () => {
+                    banner.style.display = 'none';
+                });
+            });
+    })();
+</script>
 </body>
 </html>

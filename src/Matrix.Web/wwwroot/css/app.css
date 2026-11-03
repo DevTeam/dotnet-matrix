@@ -2339,6 +2339,36 @@ tbody th {
     margin-left: 8px;
 }
 
+/* The release notice stands where the error box stands, in the accent colour rather than
+   the danger one: a newer build waiting to be installed means nothing went wrong. */
+#update-ui {
+    display: none;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    padding: 14px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    color: var(--text);
+}
+
+#update-ui button {
+    margin-left: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-control);
+    background: var(--surface-2);
+    color: var(--text);
+    cursor: pointer;
+}
+
+#update-ui #update-reload {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);
