@@ -5,7 +5,7 @@
 # Logging
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">ZLogger</a></strong> leads the current rating · 6 libraries · 9 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">ZLogger</a></strong> leads the current rating · 7 libraries · 9 scenarios
 </blockquote>
 
 
@@ -21,12 +21,12 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**ZLogger**](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 9/9 | 418 | 801 | 1220 | gold in Core, silver in Structured |
-| 2 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 7/9 | 559 | 584 | 1143 | gold in Structured |
-| 3 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) | 9/9 | 695 | 420 | 1115 | silver in Core, bronze in Prepare, bronze in Structured |
-| 4 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 9/9 | 559 | 432 | 990 | gold in Prepare |
-| 5 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) | 9/9 | 435 | 382 | 817 | silver in Prepare |
-| 6 | [**OpenTelemetry**](https://matrix.dev-team.org/?category=logging&library=OpenTelemetry) | 8/9 | 346 | 449 | 796 | bronze in Core |
+| 1 | [**ZLogger**](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 9/9 | 412 | 801 | 1213 | gold in Core, silver in Structured |
+| 2 | [**Microsoft.Extensions.Logging**](https://matrix.dev-team.org/?category=logging&library=Microsoft.Extensions.Logging) | 7/9 | 557 | 584 | 1142 | gold in Structured |
+| 3 | [**NLog**](https://matrix.dev-team.org/?category=logging&library=NLog) | 9/9 | 686 | 419 | 1105 | silver in Core, bronze in Prepare, bronze in Structured |
+| 4 | [**Serilog**](https://matrix.dev-team.org/?category=logging&library=Serilog) | 9/9 | 553 | 432 | 984 | gold in Prepare |
+| 5 | [**log4net**](https://matrix.dev-team.org/?category=logging&library=log4net) | 9/9 | 428 | 383 | 812 | silver in Prepare |
+| 6 | [**OpenTelemetry**](https://matrix.dev-team.org/?category=logging&library=OpenTelemetry) | 8/9 | 343 | 449 | 792 | bronze in Core |
 
 
 <details>
@@ -40,89 +40,89 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=logging).
 
-#### 1. ZLogger — 1220 of 1800
+#### 1. ZLogger — 1213 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 1.72 ns | 0.01 ns | 60.9 | 0 B | 0 B | 100 |
-| Simple Message | 105.89 ns | 11.76 ns | 34.6 | 0 B | 0 B | 100 |
-| Structured Properties | 122.28 ns | 25.56 ns | 46.4 | 0 B | 0 B | 100 |
-| Exception | 107.12 ns | 11.5 ns | 34 | 0 B | 0 B | 100 |
-| Scope Or Context | 173.25 ns | 42.49 ns | 50 | 336 B | 120 B | 63.2 |
-| Template Rendering | 116.78 ns | 22.31 ns | 44.5 | 0 B | 0 B | 100 |
-| Buffered Logging | 227.21 ns | 68.22 ns | 55.1 | 0 B | 0 B | 100 |
-| Prepare Logger | 18.98 μs | 585.75 ns | 17.6 | 21.33 KB | 3.07 KB | 38.1 |
-| Formatted Output | 206.46 ns | 117.06 ns | 75.4 | 0 B | 0 B | 100 |
+| Disabled Log | 1.77 ns | 0 ns | 60.2 | 0 B | 0 B | 100 |
+| Simple Message | 114.32 ns | 11.99 ns | 33.6 | 0 B | 0 B | 100 |
+| Structured Properties | 124.6 ns | 26.83 ns | 47.1 | 0 B | 0 B | 100 |
+| Exception | 108.77 ns | 11.67 ns | 34 | 0 B | 0 B | 100 |
+| Scope Or Context | 173.12 ns | 38.18 ns | 47.4 | 336 B | 120 B | 63.2 |
+| Template Rendering | 120.77 ns | 23.24 ns | 44.6 | 0 B | 0 B | 100 |
+| Buffered Logging | 230.92 ns | 65.68 ns | 53.6 | 0 B | 0 B | 100 |
+| Prepare Logger | 19.7 μs | 596.63 ns | 17.4 | 21.33 KB | 3.07 KB | 38.1 |
+| Formatted Output | 198.81 ns | 109.01 ns | 74.2 | 0 B | 0 B | 100 |
 
-#### 2. Microsoft.Extensions.Logging — 1143 of 1800
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 4.83 ns | 0.01 ns | 41.6 | 0 B | 0 B | 100 |
-| Simple Message | 11.76 ns | 11.76 ns | 100 | 0 B | 0 B | 100 |
-| Structured Properties | 25.56 ns | 25.56 ns | 100 | 88 B | 0 B | 46.3 |
-| Exception | 11.5 ns | 11.5 ns | 100 | 0 B | 0 B | 100 |
-| Scope Or Context | 42.49 ns | 42.49 ns | 100 | 120 B | 120 B | 100 |
-| Template Rendering | 22.31 ns | 22.31 ns | 100 | 0 B | 0 B | 100 |
-| Buffered Logging | — | 68.22 ns | 0 | — | 0 B | 0 |
-| Prepare Logger | 20.06 μs | 585.75 ns | 17.1 | 21.19 KB | 3.07 KB | 38.2 |
-| Formatted Output | — | 117.06 ns | 0 | — | 0 B | 0 |
-
-#### 3. NLog — 1115 of 1800
+#### 2. Microsoft.Extensions.Logging — 1142 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 0.01 ns | 0.01 ns | 100 | 0 B | 0 B | 100 |
-| Simple Message | 30.63 ns | 11.76 ns | 63.5 | 120 B | 0 B | 40.8 |
-| Structured Properties | 49 ns | 25.56 ns | 72.9 | 248 B | 0 B | 29.7 |
-| Exception | 31.94 ns | 11.5 ns | 61.6 | 120 B | 0 B | 40.8 |
-| Scope Or Context | 57.05 ns | 42.49 ns | 86.6 | 248 B | 120 B | 72.8 |
-| Template Rendering | 48.76 ns | 22.31 ns | 68.4 | 232 B | 0 B | 30.6 |
-| Buffered Logging | 68.22 ns | 68.22 ns | 100 | 120 B | 0 B | 40.8 |
-| Prepare Logger | 3.32 μs | 585.75 ns | 42 | 24.46 KB | 3.07 KB | 35.6 |
-| Formatted Output | 117.06 ns | 117.06 ns | 100 | 272 B | 0 B | 28.5 |
+| Disabled Log | 4.98 ns | 0 ns | 41 | 0 B | 0 B | 100 |
+| Simple Message | 11.99 ns | 11.99 ns | 100 | 0 B | 0 B | 100 |
+| Structured Properties | 26.83 ns | 26.83 ns | 100 | 88 B | 0 B | 46.3 |
+| Exception | 11.67 ns | 11.67 ns | 100 | 0 B | 0 B | 100 |
+| Scope Or Context | 38.18 ns | 38.18 ns | 100 | 120 B | 120 B | 100 |
+| Template Rendering | 23.24 ns | 23.24 ns | 100 | 0 B | 0 B | 100 |
+| Buffered Logging | — | 65.68 ns | 0 | — | 0 B | 0 |
+| Prepare Logger | 22.14 μs | 596.63 ns | 16.4 | 21.25 KB | 3.07 KB | 38.1 |
+| Formatted Output | — | 109.01 ns | 0 | — | 0 B | 0 |
 
-#### 4. Serilog — 990 of 1800
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 0.44 ns | 0.01 ns | 83.7 | 0 B | 0 B | 100 |
-| Simple Message | 56.33 ns | 11.76 ns | 47.2 | 160 B | 0 B | 36.1 |
-| Structured Properties | 111.45 ns | 25.56 ns | 48.6 | 448 B | 0 B | 22.5 |
-| Exception | 60.87 ns | 11.5 ns | 45 | 160 B | 0 B | 36.1 |
-| Scope Or Context | 122.45 ns | 42.49 ns | 59.4 | 544 B | 120 B | 50.4 |
-| Template Rendering | 107.68 ns | 22.31 ns | 46.3 | 432 B | 0 B | 22.9 |
-| Buffered Logging | 242.8 ns | 68.22 ns | 53.3 | 160 B | 0 B | 36.1 |
-| Prepare Logger | 585.75 ns | 585.75 ns | 100 | 3.07 KB | 3.07 KB | 100 |
-| Formatted Output | 206.88 ns | 117.06 ns | 75.4 | 296 B | 0 B | 27.4 |
-
-#### 5. log4net — 817 of 1800
+#### 3. NLog — 1105 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 4.02 ns | 0.01 ns | 44.8 | 0 B | 0 B | 100 |
-| Simple Message | 76.26 ns | 11.76 ns | 40.6 | 160 B | 0 B | 36.1 |
-| Structured Properties | 112.41 ns | 25.56 ns | 48.4 | 336 B | 0 B | 25.8 |
-| Exception | 77.16 ns | 11.5 ns | 40 | 160 B | 0 B | 36.1 |
-| Scope Or Context | 226.03 ns | 42.49 ns | 43.8 | 896 B | 120 B | 39.6 |
-| Template Rendering | 86.68 ns | 22.31 ns | 51.6 | 272 B | 0 B | 28.5 |
-| Buffered Logging | 243.92 ns | 68.22 ns | 53.2 | 840 B | 0 B | 16.7 |
-| Prepare Logger | 11.77 μs | 585.75 ns | 22.3 | 6.79 KB | 3.07 KB | 67.4 |
-| Formatted Output | 142.78 ns | 117.06 ns | 90.6 | 219 B | 0 B | 31.4 |
+| Disabled Log | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
+| Simple Message | 32.51 ns | 11.99 ns | 62.3 | 120 B | 0 B | 40.8 |
+| Structured Properties | 54.21 ns | 26.83 ns | 71 | 248 B | 0 B | 29.7 |
+| Exception | 32.34 ns | 11.67 ns | 61.7 | 120 B | 0 B | 40.8 |
+| Scope Or Context | 55.85 ns | 38.18 ns | 83 | 248 B | 120 B | 72.8 |
+| Template Rendering | 59.12 ns | 23.24 ns | 63.5 | 232 B | 0 B | 30.6 |
+| Buffered Logging | 65.68 ns | 65.68 ns | 100 | 120 B | 0 B | 40.8 |
+| Prepare Logger | 3.02 μs | 596.63 ns | 44.5 | 24.46 KB | 3.07 KB | 35.6 |
+| Formatted Output | 109.01 ns | 109.01 ns | 100 | 282 B | 0 B | 28 |
 
-#### 6. OpenTelemetry — 796 of 1800
+#### 4. Serilog — 984 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Disabled Log | 5.1 ns | 0.01 ns | 40.6 | 0 B | 0 B | 100 |
-| Simple Message | 75.11 ns | 11.76 ns | 40.9 | 48 B | 0 B | 57.7 |
-| Structured Properties | 138.45 ns | 25.56 ns | 43.6 | 216 B | 0 B | 31.6 |
-| Exception | 76.13 ns | 11.5 ns | 40.3 | 48 B | 0 B | 57.7 |
-| Scope Or Context | 108.09 ns | 42.49 ns | 63.1 | 168 B | 120 B | 86.6 |
-| Template Rendering | 151.82 ns | 22.31 ns | 39.1 | 112 B | 0 B | 42 |
-| Buffered Logging | 131.17 ns | 68.22 ns | 72.4 | 48 B | 0 B | 57.7 |
-| Prepare Logger | 143.89 μs | 585.75 ns | 6.386 | 125.96 KB | 3.07 KB | 15.7 |
-| Formatted Output | — | 117.06 ns | 0 | — | 0 B | 0 |
+| Disabled Log | 0.43 ns | 0 ns | 83.8 | 0 B | 0 B | 100 |
+| Simple Message | 57.01 ns | 11.99 ns | 47.3 | 160 B | 0 B | 36.1 |
+| Structured Properties | 118.5 ns | 26.83 ns | 48.3 | 448 B | 0 B | 22.5 |
+| Exception | 59.57 ns | 11.67 ns | 45.7 | 160 B | 0 B | 36.1 |
+| Scope Or Context | 122 ns | 38.18 ns | 56.4 | 544 B | 120 B | 50.4 |
+| Template Rendering | 124.41 ns | 23.24 ns | 44 | 432 B | 0 B | 22.9 |
+| Buffered Logging | 237.58 ns | 65.68 ns | 52.9 | 160 B | 0 B | 36.1 |
+| Prepare Logger | 596.63 ns | 596.63 ns | 100 | 3.07 KB | 3.07 KB | 100 |
+| Formatted Output | 198.78 ns | 109.01 ns | 74.2 | 296 B | 0 B | 27.4 |
+
+#### 5. log4net — 812 of 1800
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Disabled Log | 4.2 ns | 0 ns | 43.9 | 0 B | 0 B | 100 |
+| Simple Message | 75.38 ns | 11.99 ns | 41.2 | 160 B | 0 B | 36.1 |
+| Structured Properties | 120.34 ns | 26.83 ns | 47.9 | 336 B | 0 B | 25.8 |
+| Exception | 76.05 ns | 11.67 ns | 40.6 | 160 B | 0 B | 36.1 |
+| Scope Or Context | 207.32 ns | 38.18 ns | 43.4 | 896 B | 120 B | 39.6 |
+| Template Rendering | 97.82 ns | 23.24 ns | 49.5 | 272 B | 0 B | 28.5 |
+| Buffered Logging | 274.48 ns | 65.68 ns | 49.2 | 840 B | 0 B | 16.7 |
+| Prepare Logger | 10.79 μs | 596.63 ns | 23.5 | 6.79 KB | 3.07 KB | 67.4 |
+| Formatted Output | 137.72 ns | 109.01 ns | 89.1 | 192 B | 0 B | 33.3 |
+
+#### 6. OpenTelemetry — 792 of 1800
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Disabled Log | 4.78 ns | 0 ns | 41.6 | 0 B | 0 B | 100 |
+| Simple Message | 81.48 ns | 11.99 ns | 39.7 | 48 B | 0 B | 57.7 |
+| Structured Properties | 142.11 ns | 26.83 ns | 44.1 | 216 B | 0 B | 31.6 |
+| Exception | 75.76 ns | 11.67 ns | 40.6 | 48 B | 0 B | 57.7 |
+| Scope Or Context | 107.42 ns | 38.18 ns | 60.1 | 168 B | 120 B | 86.6 |
+| Template Rendering | 151.23 ns | 23.24 ns | 39.9 | 112 B | 0 B | 42 |
+| Buffered Logging | 133.09 ns | 65.68 ns | 70.5 | 48 B | 0 B | 57.7 |
+| Prepare Logger | 156.49 μs | 596.63 ns | 6.18 | 125.96 KB | 3.07 KB | 15.7 |
+| Formatted Output | — | 109.01 ns | 0 | — | 0 B | 0 |
 
 </details>
 
@@ -145,7 +145,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 </details>
 
-## Compared libraries (6)
+## Compared libraries (7)
 
 <table>
 <tr>
@@ -174,8 +174,13 @@ rating above. The same breakdown appears as a hint on any points value in the
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=Serilog">Compare →</a></td>
 </tr>
 <tr>
+<td width="64"><img src="../../metadata/Logging/logos/zerolog.svg" width="48" height="48" alt="ZeroLog logo"></td>
+<td><strong><a href="https://github.com/Abc-Arbitrage/ZeroLog">ZeroLog</a></strong> 2.6.1<br>A zero-allocation logger that builds events from a pooled message buffer and appends to synchronous or asynchronous appenders.</td>
+<td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZeroLog">Compare →</a></td>
+</tr>
+<tr>
 <td width="64"><img src="../../metadata/Logging/logos/zlogger.svg" width="48" height="48" alt="ZLogger logo"></td>
-<td><strong><a href="https://github.com/Cysharp/ZLogger">ZLogger</a></strong> 2.5.10<br>A source-generated and interpolated-string logger built on Microsoft.Extensions.Logging with UTF-8 and processor APIs.</td>
+<td><strong><a href="https://github.com/Cysharp/ZLogger">ZLogger</a></strong> 2.6.0<br>A source-generated and interpolated-string logger built on Microsoft.Extensions.Logging with UTF-8 and processor APIs.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">Compare →</a></td>
 </tr>
 </table>

@@ -1,9 +1,9 @@
 {
   "SchemaVersion": 1,
   "ModuleId": "dependency-injection",
-  "GeneratedAtUtc": "2026-11-02T12:50:49.9905027+00:00",
-  "Framework": ".NET 10.0.14",
-  "OperatingSystem": "Ubuntu 26.04.1 LTS",
+  "GeneratedAtUtc": "2026-11-03T12:49:10.5940979+00:00",
+  "Framework": ".NET 10.0.13",
+  "OperatingSystem": "Microsoft Windows 10.0.19045",
   "Libraries": [
     {
       "Id": "Autofac",
@@ -41,6 +41,14 @@
       "Id": "HandCoded",
       "Name": "Hand-coded",
       "Baseline": true,
+      "Companions": []
+    },
+    {
+      "Id": "Jab",
+      "Name": "Jab",
+      "Package": "Jab",
+      "Version": "0.12.0",
+      "Baseline": false,
       "Companions": []
     },
     {
@@ -210,6 +218,11 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.1761
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 3.3426
         },
         {
           "LibraryId": "Lamar",
@@ -487,6 +500,11 @@
           "DurationMilliseconds": 0.1324
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.9462
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 16.6683
@@ -605,6 +623,12 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.0768
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab has no lifetime shared only within one top-level resolve graph: a dependency requested twice by one constructor is constructed twice.",
+          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Lamar",
@@ -738,6 +762,11 @@
           "DurationMilliseconds": 0.2954
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.2519
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 12.0901
@@ -861,6 +890,11 @@
           "DurationMilliseconds": 0.193
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.2557
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 3.024
@@ -977,6 +1011,11 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.1991
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.3239
         },
         {
           "LibraryId": "Lamar",
@@ -1096,6 +1135,12 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.1881
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab activates a service only through its constructor, a factory, or a registered instance and never assigns writable properties.",
+          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Lamar",
@@ -1218,6 +1263,12 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.1239
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab registers an open generic service, but its generator fails on an open generic root, so a closed GenericRoot\u003CT\u003E cannot be resolved.",
+          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Lamar",
@@ -1343,6 +1394,12 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.3454
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab materializes IEnumerable\u003CT\u003E and activates every element before the consumer\u0027s constructor runs.",
+          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Lamar",
@@ -1479,6 +1536,12 @@
           "DurationMilliseconds": 0.2014
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab injects a registered sequence only as IEnumerable\u003CT\u003E; an IPlugin[] constructor parameter is reported as an unregistered service.",
+          "DurationMilliseconds": 0
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 3.3518
@@ -1603,6 +1666,12 @@
           "DurationMilliseconds": 0.1221
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab named registrations are reachable only through [FromNamedServices] on a constructor parameter the generator builds itself, so the category-owned ConditionalRoot types cannot request them.",
+          "DurationMilliseconds": 0
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 1.6353
@@ -1723,6 +1792,12 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.1208
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab generated scopes cannot add or override registrations.",
+          "DurationMilliseconds": 0
         },
         {
           "LibraryId": "Lamar",
@@ -1858,6 +1933,12 @@
           "DurationMilliseconds": 0.0946
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Unsupported",
+          "Reason": "Jab resolves a compile-time-typed constructor call and has no interception or activation extension point.",
+          "DurationMilliseconds": 0
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 1.5125
@@ -1983,6 +2064,11 @@
           "DurationMilliseconds": 0.0516
         },
         {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.1666
+        },
+        {
           "LibraryId": "Lamar",
           "Status": "Supported",
           "DurationMilliseconds": 1.1716
@@ -2099,6 +2185,11 @@
           "LibraryId": "HandCoded",
           "Status": "Supported",
           "DurationMilliseconds": 0.0499
+        },
+        {
+          "LibraryId": "Jab",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.3611
         },
         {
           "LibraryId": "Lamar",

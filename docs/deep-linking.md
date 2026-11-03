@@ -10,31 +10,31 @@ link straight to the relevant comparison instead of the front page:
 | Link | Opens |
 |---|---|
 | [https://matrix.dev-team.org/](https://matrix.dev-team.org/) | the default category, newest reports |
-| [https://matrix.dev-team.org/?category=csv-processing](https://matrix.dev-team.org/?category=csv-processing) | that category |
-| [https://matrix.dev-team.org/?library=CsvHelper](https://matrix.dev-team.org/?library=CsvHelper) | the library overview, in its own category |
-| [https://matrix.dev-team.org/?version=latest&library=CsvHelper](https://matrix.dev-team.org/?version=latest&library=CsvHelper) | the same overview, newest release named explicitly |
-| [https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper](https://matrix.dev-team.org/?category=csv-processing&libraries=CsvHelper) | that category, narrowed to one library |
-| [https://matrix.dev-team.org/?category=csv-processing&features=ReadSimpleRows](https://matrix.dev-team.org/?category=csv-processing&features=ReadSimpleRows) | that category, narrowed to one scenario |
+| [https://matrix.dev-team.org/?category=binary-serialization](https://matrix.dev-team.org/?category=binary-serialization) | that category |
+| [https://matrix.dev-team.org/?library=Apache.Avro](https://matrix.dev-team.org/?library=Apache.Avro) | the library overview, in its own category |
+| [https://matrix.dev-team.org/?version=latest&library=Apache.Avro](https://matrix.dev-team.org/?version=latest&library=Apache.Avro) | the same overview, newest release named explicitly |
+| [https://matrix.dev-team.org/?category=binary-serialization&libraries=Apache.Avro](https://matrix.dev-team.org/?category=binary-serialization&libraries=Apache.Avro) | that category, narrowed to one library |
+| [https://matrix.dev-team.org/?category=binary-serialization&features=SerializeSimpleObject](https://matrix.dev-team.org/?category=binary-serialization&features=SerializeSimpleObject) | that category, narrowed to one scenario |
 
 The five are independent and combine freely; the links in the tables above are the
 same thing with the values filled in.
 
 ## `category`
 
-Accepts the category id or its displayed name, for example `?category=csv-processing`.
+Accepts the category id or its displayed name, for example `?category=binary-serialization`.
 Matching ignores case, spaces and punctuation.
 
 ## `library`
 
 Accepts the library id, its displayed name or its NuGet package id, and finds the
-category on its own, so `?library=CsvHelper` needs no `category` beside it.
+category on its own, so `?library=Apache.Avro` needs no `category` beside it.
 Add `category` only to break a tie between two categories that use the same library
 id. The library overview opens as a dialog over the matrix.
 
 ## `libraries`
 
 Narrows the comparison to the libraries you name, for example
-`?libraries=CsvHelper`. Ids, displayed names and NuGet package ids all
+`?libraries=Apache.Avro`. Ids, displayed names and NuGet package ids all
 work, separated by commas and matched the same forgiving way as `category`. Start the
 list with `-` to name what to leave out instead, as in `?libraries=-CsvHelper`, and
 use `none` for an empty comparison.
@@ -49,7 +49,7 @@ is shorter.
 ## `features`
 
 Narrows the comparison to the scenarios you name, for example
-`?features=ReadSimpleRows`. Scenario ids and displayed names both work,
+`?features=SerializeSimpleObject`. Scenario ids and displayed names both work,
 separated by commas and matched the same forgiving way as `category`. Start the list
 with `-` to name what to leave out instead, and use `none` for an empty comparison —
 the same spelling as `libraries`.

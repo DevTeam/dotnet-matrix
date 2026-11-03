@@ -26,9 +26,9 @@
 
 <table align="center">
 <tr>
-<td width="180" align="center"><strong>8</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>51</strong><br><sub>LIBRARIES</sub></td>
-<td width="180" align="center"><strong>99</strong><br><sub>SCENARIOS</sub></td>
+<td width="180" align="center"><strong>16</strong><br><sub>CATEGORIES</sub></td>
+<td width="180" align="center"><strong>127</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>158</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
 
@@ -36,14 +36,22 @@
 
 | Category | Leader | Libraries | Scenarios | Full report |
 |---|---|---:|---:|---|
-| [**CSV Processing**](#csv-processing) | [CsvHelper](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 4 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
-| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 22 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
-| [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 3 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
+| [**Binary Serialization**](#binary-serialization) | [MemoryPack](https://matrix.dev-team.org/?category=binary-serialization&library=MemoryPack) | 8 | 7 | [Every scenario →](reports/BinarySerialization/README.md) |
+| [**Caching**](#caching) | [LazyCache](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 8 | 8 | [Every scenario →](reports/Caching/README.md) |
+| [**CLI Parsing**](#cli-parsing) | [McMaster.Extensions.CommandLineUtils](https://matrix.dev-team.org/?category=cli-parsing&library=McMaster.Extensions.CommandLineUtils) | 11 | 10 | [Every scenario →](reports/CliParsing/README.md) |
+| [**Compression Codecs**](#compression-codecs) | [ZstdNet](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdNet) | 7 | 6 | [Every scenario →](reports/CompressionCodecs/README.md) |
+| [**CSV Processing**](#csv-processing) | [CsvHelper](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 6 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
+| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
+| [**Hashing**](#hashing) | [System.IO.Hashing](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 8 | 9 | [Every scenario →](reports/Hashing/README.md) |
+| [**Identifiers**](#identifiers) | [Ulid](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
+| [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 4 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 | [Every scenario →](reports/LinqQueries/README.md) |
-| [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 6 | 9 | [Every scenario →](reports/Logging/README.md) |
+| [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
+| [**Message Dispatch**](#message-dispatch) | [Mediator.Abstractions](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 7 | 8 | [Every scenario →](reports/MessageDispatch/README.md) |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 | [Every scenario →](reports/ObjectMapping/README.md) |
-| [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 5 | 10 | [Every scenario →](reports/Validation/README.md) |
-| [**ZIP Archives**](#zip-archives) | [SharpZipLib](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 3 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
+| [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 10 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
+| [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 6 | 10 | [Every scenario →](reports/Validation/README.md) |
+| [**ZIP Archives**](#zip-archives) | [SharpZipLib](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 4 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
 
 ## How to read the results
 
@@ -56,10 +64,54 @@ The README is a generated snapshot of the reports committed to this repository.
 
 
 
+## [Binary Serialization](https://matrix.dev-team.org/?category=binary-serialization)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=binary-serialization&amp;library=MemoryPack">MemoryPack</a></strong> leads the current rating · 8 libraries · 7 scenarios
+</blockquote>
+
+[![Binary Serialization rating](reports/BinarySerialization/charts/rating.png)](https://matrix.dev-team.org/?category=binary-serialization)
+
+<p><a href="reports/BinarySerialization/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [Caching](https://matrix.dev-team.org/?category=caching)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=caching&amp;library=LazyCache">LazyCache</a></strong> leads the current rating · 8 libraries · 8 scenarios
+</blockquote>
+
+[![Caching rating](reports/Caching/charts/rating.png)](https://matrix.dev-team.org/?category=caching)
+
+<p><a href="reports/Caching/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [CLI Parsing](https://matrix.dev-team.org/?category=cli-parsing)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=cli-parsing&amp;library=McMaster.Extensions.CommandLineUtils">McMaster.Extensions.CommandLineUtils</a></strong> leads the current rating · 11 libraries · 10 scenarios
+</blockquote>
+
+[![CLI Parsing rating](reports/CliParsing/charts/rating.png)](https://matrix.dev-team.org/?category=cli-parsing)
+
+<p><a href="reports/CliParsing/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [Compression Codecs](https://matrix.dev-team.org/?category=compression-codecs)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=compression-codecs&amp;library=ZstdNet">ZstdNet</a></strong> leads the current rating · 7 libraries · 6 scenarios
+</blockquote>
+
+[![Compression Codecs rating](reports/CompressionCodecs/charts/rating.png)](https://matrix.dev-team.org/?category=compression-codecs)
+
+<p><a href="reports/CompressionCodecs/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
 ## [CSV Processing](https://matrix.dev-team.org/?category=csv-processing)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">CsvHelper</a></strong> leads the current rating · 4 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">CsvHelper</a></strong> leads the current rating · 6 libraries · 10 scenarios
 </blockquote>
 
 [![CSV Processing rating](reports/CsvProcessing/charts/rating.png)](https://matrix.dev-team.org/?category=csv-processing)
@@ -70,7 +122,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Dependency Injection](https://matrix.dev-team.org/?category=dependency-injection)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 22 libraries · 15 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 23 libraries · 15 scenarios
 </blockquote>
 
 [![Dependency Injection rating](reports/DependencyInjection/charts/rating.png)](https://matrix.dev-team.org/?category=dependency-injection)
@@ -78,10 +130,32 @@ The README is a generated snapshot of the reports committed to this repository.
 <p><a href="reports/DependencyInjection/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
 
 
+## [Hashing](https://matrix.dev-team.org/?category=hashing)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=hashing&amp;library=System.IO.Hashing">System.IO.Hashing</a></strong> leads the current rating · 8 libraries · 9 scenarios
+</blockquote>
+
+[![Hashing rating](reports/Hashing/charts/rating.png)](https://matrix.dev-team.org/?category=hashing)
+
+<p><a href="reports/Hashing/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [Identifiers](https://matrix.dev-team.org/?category=identifiers)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=Ulid">Ulid</a></strong> leads the current rating · 11 libraries · 8 scenarios
+</blockquote>
+
+[![Identifiers rating](reports/Identifiers/charts/rating.png)](https://matrix.dev-team.org/?category=identifiers)
+
+<p><a href="reports/Identifiers/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
 ## [JSON Serialization](https://matrix.dev-team.org/?category=json-serialization)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=System.Text.Json">System.Text.Json</a></strong> leads the current rating · 3 libraries · 14 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=System.Text.Json">System.Text.Json</a></strong> leads the current rating · 4 libraries · 14 scenarios
 </blockquote>
 
 [![JSON Serialization rating](reports/JsonSerialization/charts/rating.png)](https://matrix.dev-team.org/?category=json-serialization)
@@ -103,12 +177,23 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Logging](https://matrix.dev-team.org/?category=logging)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">ZLogger</a></strong> leads the current rating · 6 libraries · 9 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=logging&amp;library=ZLogger">ZLogger</a></strong> leads the current rating · 7 libraries · 9 scenarios
 </blockquote>
 
 [![Logging rating](reports/Logging/charts/rating.png)](https://matrix.dev-team.org/?category=logging)
 
 <p><a href="reports/Logging/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [Message Dispatch](https://matrix.dev-team.org/?category=message-dispatch)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=message-dispatch&amp;library=Mediator">Mediator.Abstractions</a></strong> leads the current rating · 7 libraries · 8 scenarios
+</blockquote>
+
+[![Message Dispatch rating](reports/MessageDispatch/charts/rating.png)](https://matrix.dev-team.org/?category=message-dispatch)
+
+<p><a href="reports/MessageDispatch/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
 
 
 ## [Object Mapping](https://matrix.dev-team.org/?category=object-mapping)
@@ -122,10 +207,21 @@ The README is a generated snapshot of the reports committed to this repository.
 <p><a href="reports/ObjectMapping/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
 
 
+## [Template Engines](https://matrix.dev-team.org/?category=template-engines)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=template-engines&amp;library=Handlebars.Net">Handlebars.Net</a></strong> leads the current rating · 10 libraries · 3 scenarios
+</blockquote>
+
+[![Template Engines rating](reports/TemplateEngines/charts/rating.png)](https://matrix.dev-team.org/?category=template-engines)
+
+<p><a href="reports/TemplateEngines/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
 ## [Validation](https://matrix.dev-team.org/?category=validation)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=validation&amp;library=ValidationModules">ValidationModules</a></strong> leads the current rating · 5 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=validation&amp;library=ValidationModules">ValidationModules</a></strong> leads the current rating · 6 libraries · 10 scenarios
 </blockquote>
 
 [![Validation rating](reports/Validation/charts/rating.png)](https://matrix.dev-team.org/?category=validation)
@@ -136,7 +232,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [ZIP Archives](https://matrix.dev-team.org/?category=zip-archives)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpZipLib">SharpZipLib</a></strong> leads the current rating · 3 libraries · 13 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpZipLib">SharpZipLib</a></strong> leads the current rating · 4 libraries · 13 scenarios
 </blockquote>
 
 [![ZIP Archives rating](reports/ZipArchives/charts/rating.png)](https://matrix.dev-team.org/?category=zip-archives)
