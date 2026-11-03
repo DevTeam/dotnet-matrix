@@ -18,10 +18,13 @@ internal static class LoggingData
     public const string BufferedMessage = "Buffered event";
     public const int BufferedCapacity = 10_000;
     public const string OutputMessage = "Formatted event";
-
     // Equivalent plain-text layouts for FormattedOutput: timestamp, padded level, logger and message.
     public const string Log4NetOutputLayout = "%date %-5level %logger - %message";
     public const string NLogOutputLayout = "${longdate} ${level:uppercase=true:padding=-5} ${logger} - ${message}";
     public const string SerilogOutputTemplate =
         "{Timestamp:yyyy-MM-dd HH:mm:ss,fff} {Level:u5} {SourceContext} - {Message}";
+
+    // ZeroLog renders with %placeholders instead of a .NET format string; the level padding
+    // and the logger name reproduce the same fields as the other layouts above.
+    public const string ZeroLogOutputLayout = "%{localDate} %{localTime} %{level:5} %logger - %message";
 }

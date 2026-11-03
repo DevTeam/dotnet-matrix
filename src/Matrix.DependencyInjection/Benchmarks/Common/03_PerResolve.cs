@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -68,6 +68,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.VsMef,
     FeatureStatus.Unsupported,
     "MEF sharing is either global or bound to a sharing boundary, never to one resolve graph.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab has no lifetime shared only within one top-level resolve graph: a dependency requested twice by one constructor is constructed twice.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class PerResolve

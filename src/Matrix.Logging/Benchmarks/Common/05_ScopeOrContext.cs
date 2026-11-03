@@ -3,6 +3,10 @@ namespace Matrix.Logging.Benchmarks;
 
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
+[FeatureUnavailable(
+    LibraryCatalog.ZeroLog,
+    FeatureStatus.Unsupported,
+    "ZeroLog has no ambient scope or context stack; it attaches named values only to the event being built.")]
 [MatrixFeature(
     "ScopeOrContext",
     5,

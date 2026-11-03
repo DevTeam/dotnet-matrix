@@ -29,4 +29,8 @@ namespace Matrix.Identifiers.Benchmarks;
     LibraryCatalog.HashidsNet,
     FeatureStatus.NotApplicable,
     "Hashids.net encodes numbers and has no time order.")]
+[FeatureUnavailable(
+    LibraryCatalog.CuidNet,
+    FeatureStatus.NotApplicable,
+    "Cuid2 values are random, carry no time order, and implement no ordering comparison.")]
 public partial class SortableOrder;

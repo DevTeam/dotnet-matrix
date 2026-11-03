@@ -21,4 +21,8 @@ namespace Matrix.Identifiers.Benchmarks;
     LibraryCatalog.HashidsNet,
     FeatureStatus.NotApplicable,
     "Hashids.net has no notion of time; it encodes numbers only.")]
+[FeatureUnavailable(
+    LibraryCatalog.CuidNet,
+    FeatureStatus.NotApplicable,
+    "Cuid2 exposes no timestamp accessor; it keeps the time as private hash state, so reading it back would measure a reimplementation rather than the library.")]
 public partial class Timestamp;

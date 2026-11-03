@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -32,6 +32,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.SimpleInjector,
     FeatureStatus.Unsupported,
     "Simple Injector injects registered collections as IEnumerable<T>, not as T[].")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab injects a registered sequence only as IEnumerable<T>; an IPlugin[] constructor parameter is reported as an unregistered service.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Array

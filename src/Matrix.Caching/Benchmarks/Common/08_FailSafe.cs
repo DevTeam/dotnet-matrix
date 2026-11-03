@@ -34,4 +34,8 @@ namespace Matrix.Caching.Benchmarks;
     LibraryCatalog.CacheManagerCore,
     FeatureStatus.Unsupported,
     "It has no fail-safe concept: a throwing factory propagates the exception.")]
+[FeatureUnavailable(
+    LibraryCatalog.MicrosoftExtensionsCachingHybrid,
+    FeatureStatus.Unsupported,
+    "It has no fail-safe concept: a throwing value factory propagates the exception and the expired entry is not served in its place.")]
 public partial class FailSafe;

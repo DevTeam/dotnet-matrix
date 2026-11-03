@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -82,6 +82,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.VsMef,
     FeatureStatus.Unsupported,
     "VS MEF materializes an ImportMany collection before activating the consumer.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab materializes IEnumerable<T> and activates every element before the consumer's constructor runs.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Enumerable

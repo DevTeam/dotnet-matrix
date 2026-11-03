@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -28,6 +28,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.MvvmCross,
     FeatureStatus.Unsupported,
     "MvvmCross property injection only targets interface-typed properties.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab activates a service only through its constructor, a factory, or a registered instance and never assigns writable properties.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Property

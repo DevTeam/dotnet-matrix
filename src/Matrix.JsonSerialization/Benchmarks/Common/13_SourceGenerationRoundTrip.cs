@@ -11,6 +11,10 @@ namespace Matrix.JsonSerialization.Benchmarks;
     LibraryCatalog.ServiceStackText,
     FeatureStatus.NotApplicable,
     "ServiceStack.Text has no source-generation programming model.")]
+[FeatureUnavailable(
+    LibraryCatalog.SpanJson,
+    FeatureStatus.NotApplicable,
+    "SpanJson has no source-generation programming model; its formatters are created at runtime by a resolver.")]
 [MatrixFeature(
     "SourceGenerationRoundTrip",
     13,

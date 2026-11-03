@@ -15,6 +15,10 @@ namespace Matrix.Validation.Benchmarks;
     LibraryCatalog.MicrosoftExtensionsValidation,
     FeatureStatus.Unsupported,
     "Microsoft.Extensions.Validation 10 does not support asynchronous validation rules.")]
+[FeatureUnavailable(
+    LibraryCatalog.Validot,
+    FeatureStatus.Unsupported,
+    "Validot exposes only synchronous validation APIs and has no asynchronous rules.")]
 [MatrixFeature(
     "AsyncValidation",
     9,

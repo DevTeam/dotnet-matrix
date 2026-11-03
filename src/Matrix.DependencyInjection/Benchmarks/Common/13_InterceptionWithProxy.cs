@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -36,6 +36,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.Mef2,
     FeatureStatus.Unsupported,
     "MEF has no interception or activation extension point.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab resolves a compile-time-typed constructor call and has no interception or activation extension point.")]
 [FeatureUnavailable(
     LibraryCatalog.VsMef,
     FeatureStatus.Unsupported,

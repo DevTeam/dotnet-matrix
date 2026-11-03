@@ -7,3 +7,5 @@ global using Matrix.Validation.Infrastructure;
 global using Matrix.Validation.Models;
 global using FluentValidationResult = FluentValidation.Results.ValidationResult;
 global using ValidationModulesResult = ValidationModules.ValidationResult;
+global using ValidotResult = Validot.Results.IValidationResult;
+global using ValidotValidator = Validot.Validator;

@@ -3,6 +3,10 @@ namespace Matrix.Validation.Benchmarks;
 
 [MemoryDiagnoser]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
+[FeatureUnavailable(
+    LibraryCatalog.Validot,
+    FeatureStatus.Unsupported,
+    "Validot reports a collection element as 'Items.#1.Quantity', not the required zero-based 'Items[1].Quantity', and offers no path format setting.")]
 [MatrixFeature(
     "Collection",
     5,

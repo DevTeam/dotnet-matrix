@@ -37,4 +37,8 @@ namespace Matrix.Identifiers.Benchmarks;
     LibraryCatalog.Nanoid,
     FeatureStatus.NotApplicable,
     "Nanoid text carries no numbers to decode.")]
+[FeatureUnavailable(
+    LibraryCatalog.CuidNet,
+    FeatureStatus.NotApplicable,
+    "Cuid2 text carries no encoded numbers, and the library exposes no decoder for them.")]
 public partial class Decode;

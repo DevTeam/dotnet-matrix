@@ -11,6 +11,10 @@ namespace Matrix.Validation.Benchmarks;
     LibraryCatalog.MicrosoftExtensionsValidation,
     FeatureStatus.Unsupported,
     "Microsoft.Extensions.Validation has no fail-fast or cascade mode and validates the complete object.")]
+[FeatureUnavailable(
+    LibraryCatalog.Validot,
+    FeatureStatus.Unsupported,
+    "Validot collects every failing rule and has no fail-fast or cascade mode.")]
 [MatrixFeature(
     "StopOnFirstFailure",
     8,

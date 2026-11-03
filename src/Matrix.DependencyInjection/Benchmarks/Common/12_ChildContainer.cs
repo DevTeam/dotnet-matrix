@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -68,6 +68,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.Mef2,
     FeatureStatus.Unsupported,
     "A MEF composition host is immutable and has no nested host with its own parts.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab generated scopes cannot add or override registrations.")]
 [FeatureUnavailable(
     LibraryCatalog.VsMef,
     FeatureStatus.Unsupported,

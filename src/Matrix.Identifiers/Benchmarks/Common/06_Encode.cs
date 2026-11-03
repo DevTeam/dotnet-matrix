@@ -37,4 +37,8 @@ namespace Matrix.Identifiers.Benchmarks;
     LibraryCatalog.Nanoid,
     FeatureStatus.NotApplicable,
     "Nanoid generates random text without an encoded numeric value.")]
+[FeatureUnavailable(
+    LibraryCatalog.CuidNet,
+    FeatureStatus.NotApplicable,
+    "Cuid2 generates random identifiers and offers no API that encodes existing numbers.")]
 public partial class Encode;

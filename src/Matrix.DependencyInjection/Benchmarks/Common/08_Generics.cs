@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -24,6 +24,10 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.VsMef,
     FeatureStatus.Unsupported,
     "VS MEF part discovery rejects open generic types.")]
+[FeatureUnavailable(
+    LibraryCatalog.Jab,
+    FeatureStatus.Unsupported,
+    "Jab registers an open generic service, but its generator fails on an open generic root, so a closed GenericRoot<T> cannot be resolved.")]
 [Orderer(SummaryOrderPolicy.FastestToSlowest)]
 [MemoryDiagnoser]
 public partial class Generics;

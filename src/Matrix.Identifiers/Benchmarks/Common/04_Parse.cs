@@ -21,4 +21,8 @@ namespace Matrix.Identifiers.Benchmarks;
     LibraryCatalog.HashidsNet,
     FeatureStatus.NotApplicable,
     "Hashids.net decodes numbers, which the decode scenario measures instead.")]
+[FeatureUnavailable(
+    LibraryCatalog.CuidNet,
+    FeatureStatus.NotApplicable,
+    "Cuid2 values are opaque random text with no canonical value to reconstruct; the library only parses the deprecated Cuid type, which is marked obsolete in favour of Cuid2.")]
 public partial class Parse;
