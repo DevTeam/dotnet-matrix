@@ -21,15 +21,15 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Handlebars.Net**](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 3/3 | 166 | 212 | 378 | gold in Render |
-| 2 | [**Fluid.Core**](https://matrix.dev-team.org/?category=template-engines&library=Fluid.Core) | 2/3 | 158 | 139 | 298 | gold in Parse |
-| 3 | [**Cottle**](https://matrix.dev-team.org/?category=template-engines&library=Cottle) | 2/3 | 147 | 85 | 232 | bronze in Parse |
-| 4 | [**DotLiquid**](https://matrix.dev-team.org/?category=template-engines&library=DotLiquid) | 2/3 | 97 | 70 | 168 |  |
-| 5 | [**Stubble.Core**](https://matrix.dev-team.org/?category=template-engines&library=Stubble.Core) | 2/3 | 127 | 35 | 162 | silver in Render |
-| 6 | [**RazorEngineCore**](https://matrix.dev-team.org/?category=template-engines&library=RazorEngineCore) | 2/3 | 101 | 45 | 146 | bronze in Render |
-| 7 | [**Scriban**](https://matrix.dev-team.org/?category=template-engines&library=Scriban) | 2/3 | 86 | 56 | 142 | silver in Parse |
-| 8 | [**RazorLight**](https://matrix.dev-team.org/?category=template-engines&library=RazorLight) | 2/3 | 51 | 37 | 88 |  |
-| 9 | [**SmartFormat**](https://matrix.dev-team.org/?category=template-engines&library=SmartFormat) | 1/3 | 26 | 34 | 61 |  |
+| 1 | [**Handlebars.Net**](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 3/3 | 162 | 212 | 374 | gold in Render |
+| 2 | [**Fluid.Core**](https://matrix.dev-team.org/?category=template-engines&library=Fluid.Core) | 2/3 | 153 | 139 | 292 | gold in Parse |
+| 3 | [**Cottle**](https://matrix.dev-team.org/?category=template-engines&library=Cottle) | 2/3 | 152 | 85 | 236 | bronze in Parse |
+| 4 | [**DotLiquid**](https://matrix.dev-team.org/?category=template-engines&library=DotLiquid) | 2/3 | 99 | 70 | 169 |  |
+| 5 | [**Stubble.Core**](https://matrix.dev-team.org/?category=template-engines&library=Stubble.Core) | 2/3 | 118 | 35 | 153 | silver in Render |
+| 6 | [**Scriban**](https://matrix.dev-team.org/?category=template-engines&library=Scriban) | 2/3 | 91 | 56 | 147 | silver in Parse |
+| 7 | [**RazorEngineCore**](https://matrix.dev-team.org/?category=template-engines&library=RazorEngineCore) | 2/3 | 101 | 45 | 146 | bronze in Render |
+| 8 | [**RazorLight**](https://matrix.dev-team.org/?category=template-engines&library=RazorLight) | 2/3 | 50 | 37 | 87 |  |
+| 9 | [**SmartFormat**](https://matrix.dev-team.org/?category=template-engines&library=SmartFormat) | 1/3 | 26 | 34 | 60 |  |
 | 10 | [**Razor.Templating.Core**](https://matrix.dev-team.org/?category=template-engines&library=Razor.Templating.Core) | 0/3 | 0 | 0 | 0 |  |
 
 
@@ -44,85 +44,85 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=template-engines).
 
-#### 1. Handlebars.Net — 378 of 600
+#### 1. Handlebars.Net — 374 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | 380.27 μs | 359.65 ns | 3.08 | 43.46 KB | 624 B | 12.1 |
-| Render | 123.17 ns | 47.71 ns | 62.6 | 48 B | 48 B | 100 |
-| Escape | 154.95 ns | 154.95 ns | 100 | 80 B | 80 B | 100 |
+| Parse | 565.01 μs | 679.34 ns | 3.47 | 44.02 KB | 624 B | 12 |
+| Render | 231.62 ns | 79.28 ns | 58.7 | 48 B | 48 B | 100 |
+| Escape | 264.87 ns | 264.87 ns | 100 | 80 B | 80 B | 100 |
 
-#### 2. Fluid.Core — 298 of 600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse | 359.65 ns | 359.65 ns | 100 | 624 B | 624 B | 100 |
-| Render | 143.16 ns | 47.71 ns | 58.1 | 440 B | 48 B | 39.4 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
-
-#### 3. Cottle — 232 of 600
+#### 2. Fluid.Core — 292 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | 739.79 ns | 359.65 ns | 69.8 | 3.3 KB | 624 B | 43.7 |
-| Render | 81.17 ns | 47.71 ns | 77 | 400 B | 48 B | 41.2 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
+| Parse | 679.34 ns | 679.34 ns | 100 | 624 B | 624 B | 100 |
+| Render | 289.89 ns | 79.28 ns | 52.5 | 440 B | 48 B | 39.4 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
 
-#### 4. DotLiquid — 168 of 600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse | 1.03 μs | 359.65 ns | 59.1 | 2.65 KB | 624 B | 48.7 |
-| Render | 329.71 ns | 47.71 ns | 38.4 | 1.47 KB | 48 B | 21.7 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
-
-#### 5. Stubble.Core — 162 of 600
+#### 3. Cottle — 236 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | — | 359.65 ns | 0 | — | 624 B | 0 |
-| Render | 230.52 ns | 47.71 ns | 45.9 | 2.63 KB | 48 B | 16.3 |
-| Escape | 234.11 ns | 154.95 ns | 81.4 | 2.84 KB | 80 B | 18.8 |
+| Parse | 1.15 μs | 679.34 ns | 77 | 3.3 KB | 624 B | 43.7 |
+| Render | 143.26 ns | 79.28 ns | 74.6 | 400 B | 48 B | 41.2 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
 
-#### 6. RazorEngineCore — 146 of 600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse | 8.75 ms | 359.65 ns | 0.642 | 2.11 MB | 624 B | 1.712 |
-| Render | 47.71 ns | 47.71 ns | 100 | 352 B | 48 B | 43.8 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
-
-#### 7. Scriban — 142 of 600
+#### 4. DotLiquid — 169 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | 571.95 ns | 359.65 ns | 79.3 | 2.34 KB | 624 B | 51.8 |
-| Render | 12.46 μs | 47.71 ns | 6.252 | 33.15 KB | 48 B | 4.604 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
+| Parse | 1.68 μs | 679.34 ns | 63.5 | 2.65 KB | 624 B | 48.7 |
+| Render | 633.82 ns | 79.28 ns | 35.6 | 1.47 KB | 48 B | 21.7 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
 
-#### 8. RazorLight — 88 of 600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse | — | 359.65 ns | 0 | — | 624 B | 0 |
-| Render | 1.39 μs | 47.71 ns | 18.7 | 2.3 KB | 48 B | 17.4 |
-| Escape | 1.5 μs | 154.95 ns | 32.2 | 2.51 KB | 80 B | 20 |
-
-#### 9. SmartFormat — 61 of 600
+#### 5. Stubble.Core — 153 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | — | 359.65 ns | 0 | — | 624 B | 0 |
-| Render | 712.94 ns | 47.71 ns | 26.1 | 584 B | 48 B | 34.4 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
+| Parse | — | 679.34 ns | 0 | — | 624 B | 0 |
+| Render | 438.67 ns | 79.28 ns | 42.7 | 2.63 KB | 48 B | 16.3 |
+| Escape | 469.32 ns | 264.87 ns | 75.2 | 2.84 KB | 80 B | 18.8 |
+
+#### 6. Scriban — 147 of 600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse | 999.41 ns | 679.34 ns | 82.5 | 2.34 KB | 624 B | 51.8 |
+| Render | 12.24 μs | 79.28 ns | 8.098 | 33.15 KB | 48 B | 4.604 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
+
+#### 7. RazorEngineCore — 146 of 600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse | 16.72 ms | 679.34 ns | 0.638 | 2.11 MB | 624 B | 1.712 |
+| Render | 79.28 ns | 79.28 ns | 100 | 352 B | 48 B | 43.8 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
+
+#### 8. RazorLight — 87 of 600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse | — | 679.34 ns | 0 | — | 624 B | 0 |
+| Render | 2.59 μs | 79.28 ns | 17.6 | 2.3 KB | 48 B | 17.4 |
+| Escape | 2.58 μs | 264.87 ns | 32.1 | 2.51 KB | 80 B | 20 |
+
+#### 9. SmartFormat — 60 of 600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse | — | 679.34 ns | 0 | — | 624 B | 0 |
+| Render | 1.22 μs | 79.28 ns | 25.6 | 584 B | 48 B | 34.4 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
 
 #### 10. Razor.Templating.Core — 0 of 600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse | — | 359.65 ns | 0 | — | 624 B | 0 |
-| Render | — | 47.71 ns | 0 | — | 48 B | 0 |
-| Escape | — | 154.95 ns | 0 | — | 80 B | 0 |
+| Parse | — | 679.34 ns | 0 | — | 624 B | 0 |
+| Render | — | 79.28 ns | 0 | — | 48 B | 0 |
+| Escape | — | 264.87 ns | 0 | — | 80 B | 0 |
 
 </details>
 

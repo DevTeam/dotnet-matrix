@@ -43,11 +43,11 @@
 | [**CSV Processing**](#csv-processing) | [CsvHelper](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 6 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
 | [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
 | [**Hashing**](#hashing) | [System.IO.Hashing](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 8 | 9 | [Every scenario →](reports/Hashing/README.md) |
-| [**Identifiers**](#identifiers) | [Ulid](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
-| [**JSON Serialization**](#json-serialization) | [System.Text.Json](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 4 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
+| [**Identifiers**](#identifiers) | [FlakeId](https://matrix.dev-team.org/?category=identifiers&library=FlakeId) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
+| [**JSON Serialization**](#json-serialization) | [SpanJson](https://matrix.dev-team.org/?category=json-serialization&library=SpanJson) | 4 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 | [Every scenario →](reports/LinqQueries/README.md) |
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
-| [**Message Dispatch**](#message-dispatch) | [Mediator.Abstractions](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 7 | 8 | [Every scenario →](reports/MessageDispatch/README.md) |
+| [**Message Dispatch**](#message-dispatch) | [Mediator](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 7 | 8 | [Every scenario →](reports/MessageDispatch/README.md) |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 | [Every scenario →](reports/ObjectMapping/README.md) |
 | [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 10 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
 | [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 6 | 10 | [Every scenario →](reports/Validation/README.md) |
@@ -144,7 +144,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Identifiers](https://matrix.dev-team.org/?category=identifiers)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=Ulid">Ulid</a></strong> leads the current rating · 11 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=FlakeId">FlakeId</a></strong> leads the current rating · 11 libraries · 8 scenarios
 </blockquote>
 
 [![Identifiers rating](reports/Identifiers/charts/rating.png)](https://matrix.dev-team.org/?category=identifiers)
@@ -155,7 +155,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [JSON Serialization](https://matrix.dev-team.org/?category=json-serialization)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=System.Text.Json">System.Text.Json</a></strong> leads the current rating · 4 libraries · 14 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=json-serialization&amp;library=SpanJson">SpanJson</a></strong> leads the current rating · 4 libraries · 14 scenarios
 </blockquote>
 
 [![JSON Serialization rating](reports/JsonSerialization/charts/rating.png)](https://matrix.dev-team.org/?category=json-serialization)
@@ -188,7 +188,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Message Dispatch](https://matrix.dev-team.org/?category=message-dispatch)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=message-dispatch&amp;library=Mediator">Mediator.Abstractions</a></strong> leads the current rating · 7 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=message-dispatch&amp;library=Mediator">Mediator</a></strong> leads the current rating · 7 libraries · 8 scenarios
 </blockquote>
 
 [![Message Dispatch rating](reports/MessageDispatch/charts/rating.png)](https://matrix.dev-team.org/?category=message-dispatch)

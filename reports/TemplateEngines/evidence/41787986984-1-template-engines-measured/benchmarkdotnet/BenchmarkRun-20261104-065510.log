@@ -1,0 +1,1760 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 18 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet  restore /p:MatrixMode=Benchmark --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/" /p:OutDir="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0/" /p:OutputPath="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0/" /p:PublishDir="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/publish/" in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1
+// command took 1.55 sec and exited with 0
+// start dotnet  build -c Release /p:MatrixMode=Benchmark --no-restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true /p:ArtifactsPath="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/" /p:OutDir="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0/" /p:OutputPath="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0/" /p:PublishDir="/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/publish/" --output "/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0/" in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1
+// command took 12.68 sec and exited with 0
+// ***** Done, took 00:00:14 (14.33 sec)   *****
+// Found 3 benchmarks:
+//   Escape.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Escape.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Escape.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: Escape.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 170 171 --benchmarkName Matrix.TemplateEngines.Benchmarks.Escape.Handlebars --job Quick --benchmarkId 0 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 243777.00 ns, 243.7770 us/op
+WorkloadJitting  1: 1 op, 23387387.00 ns, 23.3874 ms/op
+
+WorkloadPilot    1: 4 op, 282239.00 ns, 70.5598 us/op
+WorkloadPilot    2: 3543 op, 6789018.00 ns, 1.9162 us/op
+WorkloadPilot    3: 130468 op, 237996453.00 ns, 1.8242 us/op
+WorkloadPilot    4: 137048 op, 49158875.00 ns, 358.6982 ns/op
+WorkloadPilot    5: 696965 op, 185054646.00 ns, 265.5150 ns/op
+WorkloadPilot    6: 941566 op, 247091986.00 ns, 262.4266 ns/op
+WorkloadPilot    7: 952647 op, 250058648.00 ns, 262.4883 ns/op
+WorkloadPilot    8: 952424 op, 251319792.00 ns, 263.8739 ns/op
+WorkloadPilot    9: 947422 op, 248934179.00 ns, 262.7490 ns/op
+WorkloadPilot   10: 951478 op, 249916381.00 ns, 262.6612 ns/op
+WorkloadPilot   11: 951796 op, 249936879.00 ns, 262.5950 ns/op
+WorkloadPilot   12: 952036 op, 249248599.00 ns, 261.8059 ns/op
+WorkloadPilot   13: 954906 op, 251563770.00 ns, 263.4435 ns/op
+
+WorkloadWarmup   1: 954906 op, 287198448.00 ns, 300.7610 ns/op
+WorkloadWarmup   2: 954906 op, 254948585.00 ns, 266.9881 ns/op
+WorkloadWarmup   3: 954906 op, 255433384.00 ns, 267.4958 ns/op
+WorkloadWarmup   4: 954906 op, 253293753.00 ns, 265.2552 ns/op
+WorkloadWarmup   5: 954906 op, 263192376.00 ns, 275.6212 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 954906 op, 255158138.00 ns, 267.2076 ns/op
+WorkloadActual   2: 954906 op, 255837773.00 ns, 267.9193 ns/op
+WorkloadActual   3: 954906 op, 253566764.00 ns, 265.5411 ns/op
+WorkloadActual   4: 954906 op, 251020140.00 ns, 262.8742 ns/op
+WorkloadActual   5: 954906 op, 252269740.00 ns, 264.1828 ns/op
+WorkloadActual   6: 954906 op, 251458616.00 ns, 263.3334 ns/op
+WorkloadActual   7: 954906 op, 252558582.00 ns, 264.4853 ns/op
+WorkloadActual   8: 954906 op, 251512897.00 ns, 263.3902 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 954906 op, 255158138.00 ns, 267.2076 ns/op
+WorkloadResult   2: 954906 op, 255837773.00 ns, 267.9193 ns/op
+WorkloadResult   3: 954906 op, 253566764.00 ns, 265.5411 ns/op
+WorkloadResult   4: 954906 op, 251020140.00 ns, 262.8742 ns/op
+WorkloadResult   5: 954906 op, 252269740.00 ns, 264.1828 ns/op
+WorkloadResult   6: 954906 op, 251458616.00 ns, 263.3334 ns/op
+WorkloadResult   7: 954906 op, 252558582.00 ns, 264.4853 ns/op
+WorkloadResult   8: 954906 op, 251512897.00 ns, 263.3902 ns/op
+// GC:  4 0 0 76392480 954906
+// Threading:  0 0 954906
+
+// AfterAll
+// Benchmark Process 4450 has exited with code 0.
+
+Mean = 264.867 ns, StdErr = 0.660 ns (0.25%), N = 8, StdDev = 1.866 ns
+Min = 262.874 ns, Q1 = 263.376 ns, Median = 264.334 ns, Q3 = 265.958 ns, Max = 267.919 ns
+IQR = 2.582 ns, LowerFence = 259.503 ns, UpperFence = 269.830 ns
+ConfidenceInterval = [261.299 ns; 268.434 ns] (CI 99.9%), Margin = 3.567 ns (1.35% of Mean)
+Skewness = 0.51, Kurtosis = 1.48, MValue = 2
+
+// ** Remained 17 (94.4 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Escape.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 170 171 --benchmarkName Matrix.TemplateEngines.Benchmarks.Escape.RazorLight --job Quick --benchmarkId 1 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 226215.00 ns, 226.2150 us/op
+WorkloadJitting  1: 1 op, 1525019441.00 ns, 1.5250 s/op
+
+OverheadJitting  2: 1 op, 1042.00 ns, 1.0420 us/op
+WorkloadJitting  2: 1 op, 588794.00 ns, 588.7940 us/op
+
+OverheadJitting  3: 16 op, 539642.00 ns, 33.7276 us/op
+WorkloadJitting  3: 16 op, 840827.00 ns, 52.5517 us/op
+
+WorkloadPilot    1: 16 op, 460464.00 ns, 28.7790 us/op
+WorkloadPilot    2: 8688 op, 72379850.00 ns, 8.3310 us/op
+WorkloadPilot    3: 30016 op, 261849363.00 ns, 8.7237 us/op
+WorkloadPilot    4: 28672 op, 258685900.00 ns, 9.0222 us/op
+WorkloadPilot    5: 27712 op, 169262765.00 ns, 6.1079 us/op
+WorkloadPilot    6: 40944 op, 118790062.00 ns, 2.9013 us/op
+WorkloadPilot    7: 86176 op, 223087615.00 ns, 2.5887 us/op
+WorkloadPilot    8: 96576 op, 248767487.00 ns, 2.5759 us/op
+WorkloadPilot    9: 97056 op, 252420238.00 ns, 2.6008 us/op
+
+OverheadWarmup   1: 97056 op, 430518.00 ns, 4.4358 ns/op
+OverheadWarmup   2: 97056 op, 419026.00 ns, 4.3174 ns/op
+OverheadWarmup   3: 97056 op, 455755.00 ns, 4.6958 ns/op
+OverheadWarmup   4: 97056 op, 412674.00 ns, 4.2519 ns/op
+OverheadWarmup   5: 97056 op, 454913.00 ns, 4.6871 ns/op
+OverheadWarmup   6: 97056 op, 416922.00 ns, 4.2957 ns/op
+
+OverheadActual   1: 97056 op, 458710.00 ns, 4.7262 ns/op
+OverheadActual   2: 97056 op, 440616.00 ns, 4.5398 ns/op
+OverheadActual   3: 97056 op, 431870.00 ns, 4.4497 ns/op
+OverheadActual   4: 97056 op, 418345.00 ns, 4.3103 ns/op
+OverheadActual   5: 97056 op, 426439.00 ns, 4.3937 ns/op
+OverheadActual   6: 97056 op, 438723.00 ns, 4.5203 ns/op
+OverheadActual   7: 97056 op, 424056.00 ns, 4.3692 ns/op
+OverheadActual   8: 97056 op, 445826.00 ns, 4.5935 ns/op
+OverheadActual   9: 97056 op, 444854.00 ns, 4.5835 ns/op
+
+WorkloadWarmup   1: 97056 op, 258521340.00 ns, 2.6636 us/op
+WorkloadWarmup   2: 97056 op, 249697201.00 ns, 2.5727 us/op
+WorkloadWarmup   3: 97056 op, 249585301.00 ns, 2.5716 us/op
+WorkloadWarmup   4: 97056 op, 248939700.00 ns, 2.5649 us/op
+WorkloadWarmup   5: 97056 op, 248721490.00 ns, 2.5627 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 97056 op, 253411508.00 ns, 2.6110 us/op
+WorkloadActual   2: 97056 op, 250230702.00 ns, 2.5782 us/op
+WorkloadActual   3: 97056 op, 249654912.00 ns, 2.5723 us/op
+WorkloadActual   4: 97056 op, 250818022.00 ns, 2.5843 us/op
+WorkloadActual   5: 97056 op, 250225272.00 ns, 2.5782 us/op
+WorkloadActual   6: 97056 op, 252166422.00 ns, 2.5982 us/op
+WorkloadActual   7: 97056 op, 250860253.00 ns, 2.5847 us/op
+WorkloadActual   8: 97056 op, 255901787.00 ns, 2.6366 us/op
+
+// AfterActualRun
+WorkloadResult   1: 97056 op, 252972785.00 ns, 2.6065 us/op
+WorkloadResult   2: 97056 op, 249791979.00 ns, 2.5737 us/op
+WorkloadResult   3: 97056 op, 249216189.00 ns, 2.5678 us/op
+WorkloadResult   4: 97056 op, 250379299.00 ns, 2.5797 us/op
+WorkloadResult   5: 97056 op, 249786549.00 ns, 2.5736 us/op
+WorkloadResult   6: 97056 op, 251727699.00 ns, 2.5936 us/op
+WorkloadResult   7: 97056 op, 250421530.00 ns, 2.5802 us/op
+// GC:  14 0 0 249246680 97056
+// Threading:  0 0 97056
+
+// AfterAll
+// Benchmark Process 4461 has exited with code 0.
+
+Mean = 2.582 μs, StdErr = 0.005 μs (0.20%), N = 7, StdDev = 0.013 μs
+Min = 2.568 μs, Q1 = 2.574 μs, Median = 2.580 μs, Q3 = 2.587 μs, Max = 2.606 μs
+IQR = 0.013 μs, LowerFence = 2.554 μs, UpperFence = 2.607 μs
+ConfidenceInterval = [2.552 μs; 2.612 μs] (CI 99.9%), Margin = 0.030 μs (1.17% of Mean)
+Skewness = 0.68, Kurtosis = 1.84, MValue = 2
+
+// ** Remained 16 (88.9 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Escape.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 170 171 --benchmarkName Matrix.TemplateEngines.Benchmarks.Escape.Stubble --job Quick --benchmarkId 2 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 262803.00 ns, 262.8030 us/op
+WorkloadJitting  1: 1 op, 24179008.00 ns, 24.1790 ms/op
+
+WorkloadPilot    1: 4 op, 602821.00 ns, 150.7053 us/op
+WorkloadPilot    2: 1659 op, 5530302.00 ns, 3.3335 us/op
+WorkloadPilot    3: 74996 op, 147619803.00 ns, 1.9684 us/op
+WorkloadPilot    4: 127009 op, 223078322.00 ns, 1.7564 us/op
+WorkloadPilot    5: 142337 op, 66759879.00 ns, 469.0269 ns/op
+WorkloadPilot    6: 533018 op, 256007773.00 ns, 480.2986 ns/op
+WorkloadPilot    7: 520510 op, 271825717.00 ns, 522.2296 ns/op
+WorkloadPilot    8: 478717 op, 233017295.00 ns, 486.7538 ns/op
+WorkloadPilot    9: 513607 op, 259151593.00 ns, 504.5718 ns/op
+
+WorkloadWarmup   1: 513607 op, 237260555.00 ns, 461.9496 ns/op
+WorkloadWarmup   2: 513607 op, 245503407.00 ns, 477.9986 ns/op
+WorkloadWarmup   3: 513607 op, 242348154.00 ns, 471.8552 ns/op
+WorkloadWarmup   4: 513607 op, 243822355.00 ns, 474.7255 ns/op
+WorkloadWarmup   5: 513607 op, 244352425.00 ns, 475.7576 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 513607 op, 236682358.00 ns, 460.8239 ns/op
+WorkloadActual   2: 513607 op, 246694315.00 ns, 480.3173 ns/op
+WorkloadActual   3: 513607 op, 237850932.00 ns, 463.0991 ns/op
+WorkloadActual   4: 513607 op, 247153031.00 ns, 481.2104 ns/op
+WorkloadActual   5: 513607 op, 236296972.00 ns, 460.0735 ns/op
+WorkloadActual   6: 513607 op, 243108293.00 ns, 473.3352 ns/op
+WorkloadActual   7: 513607 op, 237809725.00 ns, 463.0189 ns/op
+WorkloadActual   8: 513607 op, 242767490.00 ns, 472.6717 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 513607 op, 236682358.00 ns, 460.8239 ns/op
+WorkloadResult   2: 513607 op, 246694315.00 ns, 480.3173 ns/op
+WorkloadResult   3: 513607 op, 237850932.00 ns, 463.0991 ns/op
+WorkloadResult   4: 513607 op, 247153031.00 ns, 481.2104 ns/op
+WorkloadResult   5: 513607 op, 236296972.00 ns, 460.0735 ns/op
+WorkloadResult   6: 513607 op, 243108293.00 ns, 473.3352 ns/op
+WorkloadResult   7: 513607 op, 237809725.00 ns, 463.0189 ns/op
+WorkloadResult   8: 513607 op, 242767490.00 ns, 472.6717 ns/op
+// GC:  89 0 0 1491514728 513607
+// Threading:  0 0 513607
+
+// AfterAll
+// Benchmark Process 4477 has exited with code 0.
+
+Mean = 469.319 ns, StdErr = 3.064 ns (0.65%), N = 8, StdDev = 8.667 ns
+Min = 460.074 ns, Q1 = 462.470 ns, Median = 467.885 ns, Q3 = 475.081 ns, Max = 481.210 ns
+IQR = 12.611 ns, LowerFence = 443.554 ns, UpperFence = 493.997 ns
+ConfidenceInterval = [452.749 ns; 485.889 ns] (CI 99.9%), Margin = 16.570 ns (3.53% of Mean)
+Skewness = 0.23, Kurtosis = 1.12, MValue = 2
+
+// ** Remained 15 (83.3 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Escape-report.csv
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Escape-report-github.md
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Escape-report.html
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Escape-report-full.json
+
+// * Detailed results *
+Escape.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 264.867 ns, StdErr = 0.660 ns (0.25%), N = 8, StdDev = 1.866 ns
+Min = 262.874 ns, Q1 = 263.376 ns, Median = 264.334 ns, Q3 = 265.958 ns, Max = 267.919 ns
+IQR = 2.582 ns, LowerFence = 259.503 ns, UpperFence = 269.830 ns
+ConfidenceInterval = [261.299 ns; 268.434 ns] (CI 99.9%), Margin = 3.567 ns (1.35% of Mean)
+Skewness = 0.51, Kurtosis = 1.48, MValue = 2
+-------------------- Histogram --------------------
+[261.650 ns ; 269.144 ns) | @@@@@@@@
+---------------------------------------------------
+
+Escape.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 469.319 ns, StdErr = 3.064 ns (0.65%), N = 8, StdDev = 8.667 ns
+Min = 460.074 ns, Q1 = 462.470 ns, Median = 467.885 ns, Q3 = 475.081 ns, Max = 481.210 ns
+IQR = 12.611 ns, LowerFence = 443.554 ns, UpperFence = 493.997 ns
+ConfidenceInterval = [452.749 ns; 485.889 ns] (CI 99.9%), Margin = 16.570 ns (3.53% of Mean)
+Skewness = 0.23, Kurtosis = 1.12, MValue = 2
+-------------------- Histogram --------------------
+[455.899 ns ; 467.274 ns) | @@@@
+[467.274 ns ; 482.628 ns) | @@@@
+---------------------------------------------------
+
+Escape.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 2.582 μs, StdErr = 0.005 μs (0.20%), N = 7, StdDev = 0.013 μs
+Min = 2.568 μs, Q1 = 2.574 μs, Median = 2.580 μs, Q3 = 2.587 μs, Max = 2.606 μs
+IQR = 0.013 μs, LowerFence = 2.554 μs, UpperFence = 2.607 μs
+ConfidenceInterval = [2.552 μs; 2.612 μs] (CI 99.9%), Margin = 0.030 μs (1.17% of Mean)
+Skewness = 0.68, Kurtosis = 1.84, MValue = 2
+-------------------- Histogram --------------------
+[2.559 μs ; 2.616 μs) | @@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.11GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.403
+  [Host] : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+  Quick  : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method     | Mean       | Error    | StdDev   | Gen0   | Allocated |
+|----------- |-----------:|---------:|---------:|-------:|----------:|
+| Handlebars |   264.9 ns |  3.57 ns |  1.87 ns | 0.0042 |      80 B |
+| Stubble    |   469.3 ns | 16.57 ns |  8.67 ns | 0.1733 |    2904 B |
+| RazorLight | 2,582.2 ns | 30.27 ns | 13.44 ns | 0.1442 |    2568 B |
+
+// * Hints *
+Outliers
+  Escape.RazorLight: Quick -> 1 outlier  was  removed (2.64 μs)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ns      : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:18 (18.9 sec), executed benchmarks: 3
+
+// Found 6 benchmarks:
+//   Parse.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Parse.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Parse.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Parse.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Parse.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Parse.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: Parse.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.Cottle --job Quick --benchmarkId 3 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 228899.00 ns, 228.8990 us/op
+WorkloadJitting  1: 1 op, 30459802.00 ns, 30.4598 ms/op
+
+WorkloadPilot    1: 4 op, 145543.00 ns, 36.3858 us/op
+WorkloadPilot    2: 6871 op, 54716358.00 ns, 7.9634 us/op
+WorkloadPilot    3: 31394 op, 241289025.00 ns, 7.6858 us/op
+WorkloadPilot    4: 32527 op, 65277047.00 ns, 2.0069 us/op
+WorkloadPilot    5: 124573 op, 151147941.00 ns, 1.2133 us/op
+WorkloadPilot    6: 206045 op, 236009963.00 ns, 1.1454 us/op
+WorkloadPilot    7: 218259 op, 247108129.00 ns, 1.1322 us/op
+WorkloadPilot    8: 220813 op, 250251936.00 ns, 1.1333 us/op
+WorkloadPilot    9: 220591 op, 251616124.00 ns, 1.1406 us/op
+WorkloadPilot   10: 219174 op, 248513094.00 ns, 1.1339 us/op
+WorkloadPilot   11: 220485 op, 249265535.00 ns, 1.1305 us/op
+WorkloadPilot   12: 221135 op, 252791770.00 ns, 1.1432 us/op
+
+WorkloadWarmup   1: 221135 op, 249343291.00 ns, 1.1276 us/op
+WorkloadWarmup   2: 221135 op, 255351962.00 ns, 1.1547 us/op
+WorkloadWarmup   3: 221135 op, 252955898.00 ns, 1.1439 us/op
+WorkloadWarmup   4: 221135 op, 251598101.00 ns, 1.1378 us/op
+WorkloadWarmup   5: 221135 op, 251640430.00 ns, 1.1379 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 221135 op, 251177141.00 ns, 1.1359 us/op
+WorkloadActual   2: 221135 op, 256488761.00 ns, 1.1599 us/op
+WorkloadActual   3: 221135 op, 252620168.00 ns, 1.1424 us/op
+WorkloadActual   4: 221135 op, 256386564.00 ns, 1.1594 us/op
+WorkloadActual   5: 221135 op, 252656417.00 ns, 1.1425 us/op
+WorkloadActual   6: 221135 op, 252695941.00 ns, 1.1427 us/op
+WorkloadActual   7: 221135 op, 250020038.00 ns, 1.1306 us/op
+WorkloadActual   8: 221135 op, 254412247.00 ns, 1.1505 us/op
+
+// AfterActualRun
+WorkloadResult   1: 221135 op, 251177141.00 ns, 1.1359 us/op
+WorkloadResult   2: 221135 op, 256488761.00 ns, 1.1599 us/op
+WorkloadResult   3: 221135 op, 252620168.00 ns, 1.1424 us/op
+WorkloadResult   4: 221135 op, 256386564.00 ns, 1.1594 us/op
+WorkloadResult   5: 221135 op, 252656417.00 ns, 1.1425 us/op
+WorkloadResult   6: 221135 op, 252695941.00 ns, 1.1427 us/op
+WorkloadResult   7: 221135 op, 250020038.00 ns, 1.1306 us/op
+WorkloadResult   8: 221135 op, 254412247.00 ns, 1.1505 us/op
+// GC:  44 0 0 746556440 221135
+// Threading:  0 0 221135
+
+// AfterAll
+// Benchmark Process 4493 has exited with code 0.
+
+Mean = 1.145 μs, StdErr = 0.004 μs (0.32%), N = 8, StdDev = 0.010 μs
+Min = 1.131 μs, Q1 = 1.141 μs, Median = 1.143 μs, Q3 = 1.153 μs, Max = 1.160 μs
+IQR = 0.012 μs, LowerFence = 1.123 μs, UpperFence = 1.171 μs
+ConfidenceInterval = [1.125 μs; 1.165 μs] (CI 99.9%), Margin = 0.020 μs (1.75% of Mean)
+Skewness = 0.17, Kurtosis = 1.45, MValue = 2
+
+// ** Remained 14 (77.8 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Parse.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.DotLiquid --job Quick --benchmarkId 4 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 228177.00 ns, 228.1770 us/op
+WorkloadJitting  1: 1 op, 41836904.00 ns, 41.8369 ms/op
+
+WorkloadPilot    1: 4 op, 121638.00 ns, 30.4095 us/op
+WorkloadPilot    2: 8221 op, 41168291.00 ns, 5.0077 us/op
+WorkloadPilot    3: 49923 op, 209721326.00 ns, 4.2009 us/op
+WorkloadPilot    4: 59511 op, 130243589.00 ns, 2.1886 us/op
+WorkloadPilot    5: 114230 op, 193741517.00 ns, 1.6961 us/op
+WorkloadPilot    6: 147400 op, 248314102.00 ns, 1.6846 us/op
+WorkloadPilot    7: 148401 op, 249404455.00 ns, 1.6806 us/op
+WorkloadPilot    8: 148755 op, 246807309.00 ns, 1.6592 us/op
+WorkloadPilot    9: 150679 op, 250960921.00 ns, 1.6655 us/op
+WorkloadPilot   10: 150102 op, 250417242.00 ns, 1.6683 us/op
+WorkloadPilot   11: 149852 op, 248838615.00 ns, 1.6606 us/op
+WorkloadPilot   12: 150551 op, 250592280.00 ns, 1.6645 us/op
+
+WorkloadWarmup   1: 150551 op, 251710586.00 ns, 1.6719 us/op
+WorkloadWarmup   2: 150551 op, 253535304.00 ns, 1.6840 us/op
+WorkloadWarmup   3: 150551 op, 251987604.00 ns, 1.6738 us/op
+WorkloadWarmup   4: 150551 op, 251082348.00 ns, 1.6678 us/op
+WorkloadWarmup   5: 150551 op, 253685987.00 ns, 1.6851 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 150551 op, 259022254.00 ns, 1.7205 us/op
+WorkloadActual   2: 150551 op, 254938958.00 ns, 1.6934 us/op
+WorkloadActual   3: 150551 op, 253098766.00 ns, 1.6811 us/op
+WorkloadActual   4: 150551 op, 252576219.00 ns, 1.6777 us/op
+WorkloadActual   5: 150551 op, 252103975.00 ns, 1.6745 us/op
+WorkloadActual   6: 150551 op, 249817296.00 ns, 1.6594 us/op
+WorkloadActual   7: 150551 op, 251663169.00 ns, 1.6716 us/op
+WorkloadActual   8: 150551 op, 254801375.00 ns, 1.6925 us/op
+
+// AfterActualRun
+WorkloadResult   1: 150551 op, 259022254.00 ns, 1.7205 us/op
+WorkloadResult   2: 150551 op, 254938958.00 ns, 1.6934 us/op
+WorkloadResult   3: 150551 op, 253098766.00 ns, 1.6811 us/op
+WorkloadResult   4: 150551 op, 252576219.00 ns, 1.6777 us/op
+WorkloadResult   5: 150551 op, 252103975.00 ns, 1.6745 us/op
+WorkloadResult   6: 150551 op, 249817296.00 ns, 1.6594 us/op
+WorkloadResult   7: 150551 op, 251663169.00 ns, 1.6716 us/op
+WorkloadResult   8: 150551 op, 254801375.00 ns, 1.6925 us/op
+// GC:  24 0 0 408299112 150551
+// Threading:  0 0 150551
+
+// AfterAll
+// Benchmark Process 4506 has exited with code 0.
+
+Mean = 1.684 μs, StdErr = 0.007 μs (0.39%), N = 8, StdDev = 0.018 μs
+Min = 1.659 μs, Q1 = 1.674 μs, Median = 1.679 μs, Q3 = 1.693 μs, Max = 1.720 μs
+IQR = 0.019 μs, LowerFence = 1.645 μs, UpperFence = 1.721 μs
+ConfidenceInterval = [1.649 μs; 1.719 μs] (CI 99.9%), Margin = 0.035 μs (2.10% of Mean)
+Skewness = 0.66, Kurtosis = 2.37, MValue = 2
+
+// ** Remained 13 (72.2 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Parse.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.Fluid --job Quick --benchmarkId 5 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 224341.00 ns, 224.3410 us/op
+WorkloadJitting  1: 1 op, 14295904.00 ns, 14.2959 ms/op
+
+OverheadJitting  2: 16 op, 471845.00 ns, 29.4903 us/op
+WorkloadJitting  2: 16 op, 695114.00 ns, 43.4446 us/op
+
+WorkloadPilot    1: 16 op, 168997.00 ns, 10.5623 us/op
+WorkloadPilot    2: 23680 op, 175915234.00 ns, 7.4289 us/op
+WorkloadPilot    3: 33664 op, 104078834.00 ns, 3.0917 us/op
+WorkloadPilot    4: 80864 op, 59088054.00 ns, 730.7090 ns/op
+WorkloadPilot    5: 342144 op, 235240529.00 ns, 687.5483 ns/op
+WorkloadPilot    6: 363616 op, 247591608.00 ns, 680.9151 ns/op
+WorkloadPilot    7: 367168 op, 249310571.00 ns, 679.0095 ns/op
+WorkloadPilot    8: 368192 op, 252041361.00 ns, 684.5379 ns/op
+WorkloadPilot    9: 365216 op, 257716913.00 ns, 705.6561 ns/op
+WorkloadPilot   10: 354288 op, 247329597.00 ns, 698.1032 ns/op
+WorkloadPilot   11: 358128 op, 245349002.00 ns, 685.0875 ns/op
+WorkloadPilot   12: 364928 op, 253320380.00 ns, 694.1654 ns/op
+
+OverheadWarmup   1: 364928 op, 1593238.00 ns, 4.3659 ns/op
+OverheadWarmup   2: 364928 op, 1648361.00 ns, 4.5169 ns/op
+OverheadWarmup   3: 364928 op, 1615700.00 ns, 4.4274 ns/op
+OverheadWarmup   4: 364928 op, 1588548.00 ns, 4.3530 ns/op
+OverheadWarmup   5: 364928 op, 1558493.00 ns, 4.2707 ns/op
+OverheadWarmup   6: 364928 op, 1577688.00 ns, 4.3233 ns/op
+OverheadWarmup   7: 364928 op, 1564173.00 ns, 4.2863 ns/op
+
+OverheadActual   1: 364928 op, 1562129.00 ns, 4.2806 ns/op
+OverheadActual   2: 364928 op, 1569002.00 ns, 4.2995 ns/op
+OverheadActual   3: 364928 op, 1534858.00 ns, 4.2059 ns/op
+OverheadActual   4: 364928 op, 1550518.00 ns, 4.2488 ns/op
+OverheadActual   5: 364928 op, 1549846.00 ns, 4.2470 ns/op
+OverheadActual   6: 364928 op, 1574312.00 ns, 4.3140 ns/op
+OverheadActual   7: 364928 op, 1536201.00 ns, 4.2096 ns/op
+OverheadActual   8: 364928 op, 1708975.00 ns, 4.6830 ns/op
+
+WorkloadWarmup   1: 364928 op, 258279809.00 ns, 707.7555 ns/op
+WorkloadWarmup   2: 364928 op, 253237664.00 ns, 693.9387 ns/op
+WorkloadWarmup   3: 364928 op, 270304806.00 ns, 740.7072 ns/op
+WorkloadWarmup   4: 364928 op, 259425327.00 ns, 710.8946 ns/op
+WorkloadWarmup   5: 364928 op, 258197985.00 ns, 707.5313 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 364928 op, 258821815.00 ns, 709.2408 ns/op
+WorkloadActual   2: 364928 op, 248850408.00 ns, 681.9165 ns/op
+WorkloadActual   3: 364928 op, 250317639.00 ns, 685.9371 ns/op
+WorkloadActual   4: 364928 op, 249660177.00 ns, 684.1354 ns/op
+WorkloadActual   5: 364928 op, 248789724.00 ns, 681.7502 ns/op
+WorkloadActual   6: 364928 op, 248702931.00 ns, 681.5123 ns/op
+WorkloadActual   7: 364928 op, 249997739.00 ns, 685.0604 ns/op
+WorkloadActual   8: 364928 op, 249936855.00 ns, 684.8936 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 364928 op, 247294084.50 ns, 677.6517 ns/op
+WorkloadResult   2: 364928 op, 248761315.50 ns, 681.6723 ns/op
+WorkloadResult   3: 364928 op, 248103853.50 ns, 679.8707 ns/op
+WorkloadResult   4: 364928 op, 247233400.50 ns, 677.4854 ns/op
+WorkloadResult   5: 364928 op, 247146607.50 ns, 677.2476 ns/op
+WorkloadResult   6: 364928 op, 248441415.50 ns, 680.7957 ns/op
+WorkloadResult   7: 364928 op, 248380531.50 ns, 680.6289 ns/op
+// GC:  13 0 0 227715072 364928
+// Threading:  0 0 364928
+
+// AfterAll
+// Benchmark Process 4515 has exited with code 0.
+
+Mean = 679.336 ns, StdErr = 0.693 ns (0.10%), N = 7, StdDev = 1.833 ns
+Min = 677.248 ns, Q1 = 677.569 ns, Median = 679.871 ns, Q3 = 680.712 ns, Max = 681.672 ns
+IQR = 3.144 ns, LowerFence = 672.853 ns, UpperFence = 685.428 ns
+ConfidenceInterval = [675.207 ns; 683.465 ns] (CI 99.9%), Margin = 4.129 ns (0.61% of Mean)
+Skewness = -0.05, Kurtosis = 0.96, MValue = 2
+
+// ** Remained 12 (66.7 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Parse.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.Handlebars --job Quick --benchmarkId 6 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 230783.00 ns, 230.7830 us/op
+WorkloadJitting  1: 1 op, 89695925.00 ns, 89.6959 ms/op
+
+WorkloadPilot    1: 4 op, 3267377.00 ns, 816.8443 us/op
+WorkloadPilot    2: 306 op, 220010181.00 ns, 718.9875 us/op
+WorkloadPilot    3: 348 op, 234482237.00 ns, 673.7995 us/op
+WorkloadPilot    4: 371 op, 246068672.00 ns, 663.2579 us/op
+WorkloadPilot    5: 377 op, 249163035.00 ns, 660.9099 us/op
+
+WorkloadWarmup   1: 377 op, 249528480.00 ns, 661.8793 us/op
+WorkloadWarmup   2: 377 op, 243605975.00 ns, 646.1697 us/op
+WorkloadWarmup   3: 377 op, 241225371.00 ns, 639.8551 us/op
+WorkloadWarmup   4: 377 op, 243597264.00 ns, 646.1466 us/op
+WorkloadWarmup   5: 377 op, 239866501.00 ns, 636.2507 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 377 op, 238408206.00 ns, 632.3825 us/op
+WorkloadActual   2: 377 op, 237911464.00 ns, 631.0649 us/op
+WorkloadActual   3: 377 op, 234695513.00 ns, 622.5345 us/op
+WorkloadActual   4: 377 op, 237866039.00 ns, 630.9444 us/op
+WorkloadActual   5: 377 op, 227779835.00 ns, 604.1905 us/op
+WorkloadActual   6: 377 op, 226154697.00 ns, 599.8798 us/op
+WorkloadActual   7: 377 op, 226043836.00 ns, 599.5858 us/op
+WorkloadActual   8: 377 op, 213039376.00 ns, 565.0912 us/op
+WorkloadActual   9: 377 op, 193148710.00 ns, 512.3308 us/op
+WorkloadActual  10: 377 op, 183002911.00 ns, 485.4189 us/op
+WorkloadActual  11: 377 op, 169676046.00 ns, 450.0691 us/op
+WorkloadActual  12: 377 op, 168374424.00 ns, 446.6165 us/op
+
+// AfterActualRun
+WorkloadResult   1: 377 op, 238408206.00 ns, 632.3825 us/op
+WorkloadResult   2: 377 op, 237911464.00 ns, 631.0649 us/op
+WorkloadResult   3: 377 op, 234695513.00 ns, 622.5345 us/op
+WorkloadResult   4: 377 op, 237866039.00 ns, 630.9444 us/op
+WorkloadResult   5: 377 op, 227779835.00 ns, 604.1905 us/op
+WorkloadResult   6: 377 op, 226154697.00 ns, 599.8798 us/op
+WorkloadResult   7: 377 op, 226043836.00 ns, 599.5858 us/op
+WorkloadResult   8: 377 op, 213039376.00 ns, 565.0912 us/op
+WorkloadResult   9: 377 op, 193148710.00 ns, 512.3308 us/op
+WorkloadResult  10: 377 op, 183002911.00 ns, 485.4189 us/op
+WorkloadResult  11: 377 op, 169676046.00 ns, 450.0691 us/op
+WorkloadResult  12: 377 op, 168374424.00 ns, 446.6165 us/op
+// GC:  1 0 0 16992360 377
+// Threading:  0 0 377
+
+// AfterAll
+// Benchmark Process 4527 has exited with code 0.
+
+Mean = 565.009 μs, StdErr = 20.752 μs (3.67%), N = 12, StdDev = 71.886 μs
+Min = 446.617 μs, Q1 = 505.603 μs, Median = 599.733 μs, Q3 = 624.637 μs, Max = 632.383 μs
+IQR = 119.034 μs, LowerFence = 327.052 μs, UpperFence = 803.188 μs
+ConfidenceInterval = [472.934 μs; 657.084 μs] (CI 99.9%), Margin = 92.075 μs (16.30% of Mean)
+Skewness = -0.59, Kurtosis = 1.54, MValue = 3
+
+// ** Remained 11 (61.1 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Parse.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.RazorEngineCore --job Quick --benchmarkId 7 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 231935.00 ns, 231.9350 us/op
+WorkloadJitting  1: 1 op, 1213959126.00 ns, 1.2140 s/op
+
+OverheadJitting  2: 1 op, 270.00 ns, 270.0000 ns/op
+WorkloadJitting  2: 1 op, 18497724.00 ns, 18.4977 ms/op
+
+WorkloadPilot    1: 4 op, 83798158.00 ns, 20.9495 ms/op
+WorkloadPilot    2: 12 op, 245681040.00 ns, 20.4734 ms/op
+
+WorkloadWarmup   1: 12 op, 220972815.00 ns, 18.4144 ms/op
+WorkloadWarmup   2: 12 op, 210177883.00 ns, 17.5148 ms/op
+WorkloadWarmup   3: 12 op, 225860142.00 ns, 18.8217 ms/op
+WorkloadWarmup   4: 12 op, 211019246.00 ns, 17.5849 ms/op
+WorkloadWarmup   5: 12 op, 201689194.00 ns, 16.8074 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 12 op, 199670328.00 ns, 16.6392 ms/op
+WorkloadActual   2: 12 op, 195788541.00 ns, 16.3157 ms/op
+WorkloadActual   3: 12 op, 193479771.00 ns, 16.1233 ms/op
+WorkloadActual   4: 12 op, 207295192.00 ns, 17.2746 ms/op
+WorkloadActual   5: 12 op, 211582964.00 ns, 17.6319 ms/op
+WorkloadActual   6: 12 op, 199682404.00 ns, 16.6402 ms/op
+WorkloadActual   7: 12 op, 213405683.00 ns, 17.7838 ms/op
+WorkloadActual   8: 12 op, 209566983.00 ns, 17.4639 ms/op
+WorkloadActual   9: 12 op, 211756195.00 ns, 17.6463 ms/op
+WorkloadActual  10: 12 op, 209215982.00 ns, 17.4347 ms/op
+WorkloadActual  11: 12 op, 187581181.00 ns, 15.6318 ms/op
+WorkloadActual  12: 12 op, 169131173.00 ns, 14.0943 ms/op
+
+// AfterActualRun
+WorkloadResult   1: 12 op, 199670328.00 ns, 16.6392 ms/op
+WorkloadResult   2: 12 op, 195788541.00 ns, 16.3157 ms/op
+WorkloadResult   3: 12 op, 193479771.00 ns, 16.1233 ms/op
+WorkloadResult   4: 12 op, 207295192.00 ns, 17.2746 ms/op
+WorkloadResult   5: 12 op, 211582964.00 ns, 17.6319 ms/op
+WorkloadResult   6: 12 op, 199682404.00 ns, 16.6402 ms/op
+WorkloadResult   7: 12 op, 213405683.00 ns, 17.7838 ms/op
+WorkloadResult   8: 12 op, 209566983.00 ns, 17.4639 ms/op
+WorkloadResult   9: 12 op, 211756195.00 ns, 17.6463 ms/op
+WorkloadResult  10: 12 op, 209215982.00 ns, 17.4347 ms/op
+WorkloadResult  11: 12 op, 187581181.00 ns, 15.6318 ms/op
+WorkloadResult  12: 12 op, 169131173.00 ns, 14.0943 ms/op
+// GC:  1 0 0 26531560 12
+// Threading:  108 0 12
+
+// AfterAll
+// Benchmark Process 4538 has exited with code 0.
+
+Mean = 16.723 ms, StdErr = 0.311 ms (1.86%), N = 12, StdDev = 1.079 ms
+Min = 14.094 ms, Q1 = 16.268 ms, Median = 16.957 ms, Q3 = 17.506 ms, Max = 17.784 ms
+IQR = 1.238 ms, LowerFence = 14.410 ms, UpperFence = 19.363 ms
+ConfidenceInterval = [15.341 ms; 18.105 ms] (CI 99.9%), Margin = 1.382 ms (8.26% of Mean)
+Skewness = -1.07, Kurtosis = 3.24, MValue = 2
+
+// ** Remained 10 (55.6 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 1m from now) **
+// **************************
+// Benchmark: Parse.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Parse.Scriban --job Quick --benchmarkId 8 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 255930.00 ns, 255.9300 us/op
+WorkloadJitting  1: 1 op, 18200571.00 ns, 18.2006 ms/op
+
+WorkloadPilot    1: 4 op, 143078.00 ns, 35.7695 us/op
+WorkloadPilot    2: 6989 op, 59316450.00 ns, 8.4871 us/op
+WorkloadPilot    3: 29456 op, 195752775.00 ns, 6.6456 us/op
+WorkloadPilot    4: 37619 op, 53538879.00 ns, 1.4232 us/op
+WorkloadPilot    5: 175662 op, 175398604.00 ns, 998.5006 ns/op
+WorkloadPilot    6: 250375 op, 251591499.00 ns, 1.0049 us/op
+WorkloadPilot    7: 248791 op, 248365997.00 ns, 998.2917 ns/op
+WorkloadPilot    8: 250428 op, 249644827.00 ns, 996.8727 ns/op
+WorkloadPilot    9: 250784 op, 250096445.00 ns, 997.2584 ns/op
+WorkloadPilot   10: 250687 op, 249251299.00 ns, 994.2729 ns/op
+WorkloadPilot   11: 251440 op, 250883881.00 ns, 997.7883 ns/op
+
+WorkloadWarmup   1: 251440 op, 251544451.00 ns, 1.0004 us/op
+WorkloadWarmup   2: 251440 op, 250431053.00 ns, 995.9873 ns/op
+WorkloadWarmup   3: 251440 op, 249790601.00 ns, 993.4402 ns/op
+WorkloadWarmup   4: 251440 op, 253076456.00 ns, 1.0065 us/op
+WorkloadWarmup   5: 251440 op, 250003149.00 ns, 994.2855 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 251440 op, 251890871.00 ns, 1.0018 us/op
+WorkloadActual   2: 251440 op, 252578341.00 ns, 1.0045 us/op
+WorkloadActual   3: 251440 op, 251638949.00 ns, 1.0008 us/op
+WorkloadActual   4: 251440 op, 252860601.00 ns, 1.0056 us/op
+WorkloadActual   5: 251440 op, 257858098.00 ns, 1.0255 us/op
+WorkloadActual   6: 251440 op, 249976339.00 ns, 994.1789 ns/op
+WorkloadActual   7: 251440 op, 250584710.00 ns, 996.5984 ns/op
+WorkloadActual   8: 251440 op, 249510585.00 ns, 992.3265 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 251440 op, 251890871.00 ns, 1.0018 us/op
+WorkloadResult   2: 251440 op, 252578341.00 ns, 1.0045 us/op
+WorkloadResult   3: 251440 op, 251638949.00 ns, 1.0008 us/op
+WorkloadResult   4: 251440 op, 252860601.00 ns, 1.0056 us/op
+WorkloadResult   5: 251440 op, 249976339.00 ns, 994.1789 ns/op
+WorkloadResult   6: 251440 op, 250584710.00 ns, 996.5984 ns/op
+WorkloadResult   7: 251440 op, 249510585.00 ns, 992.3265 ns/op
+// GC:  35 0 0 601484800 251440
+// Threading:  0 0 251440
+
+// AfterAll
+// Benchmark Process 4554 has exited with code 0.
+
+Mean = 999.409 ns, StdErr = 1.941 ns (0.19%), N = 7, StdDev = 5.134 ns
+Min = 992.327 ns, Q1 = 995.389 ns, Median = 1,000.791 ns, Q3 = 1,003.160 ns, Max = 1,005.650 ns
+IQR = 7.772 ns, LowerFence = 983.731 ns, UpperFence = 1,014.818 ns
+ConfidenceInterval = [987.846 ns; 1,010.972 ns] (CI 99.9%), Margin = 11.563 ns (1.16% of Mean)
+Skewness = -0.13, Kurtosis = 1.14, MValue = 2
+
+// ** Remained 9 (50.0 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Parse-report.csv
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Parse-report-github.md
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Parse-report.html
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Parse-report-full.json
+
+// * Detailed results *
+Parse.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 679.336 ns, StdErr = 0.693 ns (0.10%), N = 7, StdDev = 1.833 ns
+Min = 677.248 ns, Q1 = 677.569 ns, Median = 679.871 ns, Q3 = 680.712 ns, Max = 681.672 ns
+IQR = 3.144 ns, LowerFence = 672.853 ns, UpperFence = 685.428 ns
+ConfidenceInterval = [675.207 ns; 683.465 ns] (CI 99.9%), Margin = 4.129 ns (0.61% of Mean)
+Skewness = -0.05, Kurtosis = 0.96, MValue = 2
+-------------------- Histogram --------------------
+[675.990 ns ; 682.930 ns) | @@@@@@@
+---------------------------------------------------
+
+Parse.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 999.409 ns, StdErr = 1.941 ns (0.19%), N = 7, StdDev = 5.134 ns
+Min = 992.327 ns, Q1 = 995.389 ns, Median = 1,000.791 ns, Q3 = 1,003.160 ns, Max = 1,005.650 ns
+IQR = 7.772 ns, LowerFence = 983.731 ns, UpperFence = 1,014.818 ns
+ConfidenceInterval = [987.846 ns; 1,010.972 ns] (CI 99.9%), Margin = 11.563 ns (1.16% of Mean)
+Skewness = -0.13, Kurtosis = 1.14, MValue = 2
+-------------------- Histogram --------------------
+[988.804 ns ; 1,009.173 ns) | @@@@@@@
+---------------------------------------------------
+
+Parse.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.145 μs, StdErr = 0.004 μs (0.32%), N = 8, StdDev = 0.010 μs
+Min = 1.131 μs, Q1 = 1.141 μs, Median = 1.143 μs, Q3 = 1.153 μs, Max = 1.160 μs
+IQR = 0.012 μs, LowerFence = 1.123 μs, UpperFence = 1.171 μs
+ConfidenceInterval = [1.125 μs; 1.165 μs] (CI 99.9%), Margin = 0.020 μs (1.75% of Mean)
+Skewness = 0.17, Kurtosis = 1.45, MValue = 2
+-------------------- Histogram --------------------
+[1.125 μs ; 1.167 μs) | @@@@@@@@
+---------------------------------------------------
+
+Parse.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.684 μs, StdErr = 0.007 μs (0.39%), N = 8, StdDev = 0.018 μs
+Min = 1.659 μs, Q1 = 1.674 μs, Median = 1.679 μs, Q3 = 1.693 μs, Max = 1.720 μs
+IQR = 0.019 μs, LowerFence = 1.645 μs, UpperFence = 1.721 μs
+ConfidenceInterval = [1.649 μs; 1.719 μs] (CI 99.9%), Margin = 0.035 μs (2.10% of Mean)
+Skewness = 0.66, Kurtosis = 2.37, MValue = 2
+-------------------- Histogram --------------------
+[1.647 μs ; 1.733 μs) | @@@@@@@@
+---------------------------------------------------
+
+Parse.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 565.009 μs, StdErr = 20.752 μs (3.67%), N = 12, StdDev = 71.886 μs
+Min = 446.617 μs, Q1 = 505.603 μs, Median = 599.733 μs, Q3 = 624.637 μs, Max = 632.383 μs
+IQR = 119.034 μs, LowerFence = 327.052 μs, UpperFence = 803.188 μs
+ConfidenceInterval = [472.934 μs; 657.084 μs] (CI 99.9%), Margin = 92.075 μs (16.30% of Mean)
+Skewness = -0.59, Kurtosis = 1.54, MValue = 3
+-------------------- Histogram --------------------
+[438.262 μs ; 520.685 μs) | @@@@
+[520.685 μs ; 557.526 μs) | 
+[557.526 μs ; 639.948 μs) | @@@@@@@@
+---------------------------------------------------
+
+Parse.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 16.723 ms, StdErr = 0.311 ms (1.86%), N = 12, StdDev = 1.079 ms
+Min = 14.094 ms, Q1 = 16.268 ms, Median = 16.957 ms, Q3 = 17.506 ms, Max = 17.784 ms
+IQR = 1.238 ms, LowerFence = 14.410 ms, UpperFence = 19.363 ms
+ConfidenceInterval = [15.341 ms; 18.105 ms] (CI 99.9%), Margin = 1.382 ms (8.26% of Mean)
+Skewness = -1.07, Kurtosis = 3.24, MValue = 2
+-------------------- Histogram --------------------
+[13.476 ms ; 14.713 ms) | @
+[14.713 ms ; 15.355 ms) | 
+[15.355 ms ; 16.593 ms) | @@@
+[16.593 ms ; 17.830 ms) | @@@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.11GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.403
+  [Host] : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+  Quick  : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method          | Mean            | Error           | StdDev          | Gen0    | Allocated |
+|---------------- |----------------:|----------------:|----------------:|--------:|----------:|
+| Fluid           |        679.3 ns |         4.13 ns |         1.83 ns |  0.0356 |     624 B |
+| Scriban         |        999.4 ns |        11.56 ns |         5.13 ns |  0.1392 |    2392 B |
+| Cottle          |      1,145.5 ns |        20.00 ns |        10.46 ns |  0.1990 |    3376 B |
+| DotLiquid       |      1,683.8 ns |        35.33 ns |        18.48 ns |  0.1594 |    2712 B |
+| Handlebars      |    565,009.1 ns |    92,074.82 ns |    71,885.96 ns |  2.6525 |   45073 B |
+| RazorEngineCore | 16,723,308.3 ns | 1,381,896.03 ns | 1,078,893.52 ns | 83.3333 | 2210963 B |
+
+// * Hints *
+Outliers
+  Parse.Fluid: Quick           -> 1 outlier  was  removed (709.24 ns)
+  Parse.Scriban: Quick         -> 1 outlier  was  removed (1.03 μs)
+  Parse.RazorEngineCore: Quick -> 1 outlier  was  detected (14.09 ms)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ns      : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:35 (35.55 sec), executed benchmarks: 6
+
+// Found 9 benchmarks:
+//   Render.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.SmartFormat: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   Render.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: Render.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.Cottle --job Quick --benchmarkId 9 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 214112.00 ns, 214.1120 us/op
+WorkloadJitting  1: 1 op, 3813576.00 ns, 3.8136 ms/op
+
+OverheadJitting  2: 16 op, 430699.00 ns, 26.9187 us/op
+WorkloadJitting  2: 16 op, 511750.00 ns, 31.9844 us/op
+
+WorkloadPilot    1: 16 op, 41759.00 ns, 2.6099 us/op
+WorkloadPilot    2: 95792 op, 95524781.00 ns, 997.2104 ns/op
+WorkloadPilot    3: 250704 op, 109276453.00 ns, 435.8784 ns/op
+WorkloadPilot    4: 573568 op, 86399818.00 ns, 150.6357 ns/op
+WorkloadPilot    5: 1659648 op, 248618722.00 ns, 149.8021 ns/op
+WorkloadPilot    6: 1668880 op, 245269196.00 ns, 146.9663 ns/op
+WorkloadPilot    7: 1701072 op, 249052886.00 ns, 146.4094 ns/op
+WorkloadPilot    8: 1707552 op, 251463143.00 ns, 147.2653 ns/op
+WorkloadPilot    9: 1697632 op, 249627110.00 ns, 147.0443 ns/op
+WorkloadPilot   10: 1700176 op, 251349589.00 ns, 147.8374 ns/op
+WorkloadPilot   11: 1691056 op, 250569166.00 ns, 148.1732 ns/op
+
+OverheadWarmup   1: 1691056 op, 7248662.00 ns, 4.2865 ns/op
+OverheadWarmup   2: 1691056 op, 7295670.00 ns, 4.3143 ns/op
+OverheadWarmup   3: 1691056 op, 7222583.00 ns, 4.2710 ns/op
+OverheadWarmup   4: 1691056 op, 7233503.00 ns, 4.2775 ns/op
+OverheadWarmup   5: 1691056 op, 7210681.00 ns, 4.2640 ns/op
+
+OverheadActual   1: 1691056 op, 7217003.00 ns, 4.2677 ns/op
+OverheadActual   2: 1691056 op, 7234856.00 ns, 4.2783 ns/op
+OverheadActual   3: 1691056 op, 7231801.00 ns, 4.2765 ns/op
+OverheadActual   4: 1691056 op, 7237562.00 ns, 4.2799 ns/op
+OverheadActual   5: 1691056 op, 7226862.00 ns, 4.2736 ns/op
+OverheadActual   6: 1691056 op, 7302753.00 ns, 4.3185 ns/op
+OverheadActual   7: 1691056 op, 7306059.00 ns, 4.3204 ns/op
+OverheadActual   8: 1691056 op, 7219588.00 ns, 4.2693 ns/op
+
+WorkloadWarmup   1: 1691056 op, 261305859.00 ns, 154.5223 ns/op
+WorkloadWarmup   2: 1691056 op, 254669495.00 ns, 150.5979 ns/op
+WorkloadWarmup   3: 1691056 op, 247132983.00 ns, 146.1412 ns/op
+WorkloadWarmup   4: 1691056 op, 247913437.00 ns, 146.6027 ns/op
+WorkloadWarmup   5: 1691056 op, 248456915.00 ns, 146.9241 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 1691056 op, 249933384.00 ns, 147.7972 ns/op
+WorkloadActual   2: 1691056 op, 248186318.00 ns, 146.7641 ns/op
+WorkloadActual   3: 1691056 op, 248648415.00 ns, 147.0374 ns/op
+WorkloadActual   4: 1691056 op, 250402844.00 ns, 148.0748 ns/op
+WorkloadActual   5: 1691056 op, 250482123.00 ns, 148.1217 ns/op
+WorkloadActual   6: 1691056 op, 248451025.00 ns, 146.9206 ns/op
+WorkloadActual   7: 1691056 op, 248898825.00 ns, 147.1854 ns/op
+WorkloadActual   8: 1691056 op, 251009202.00 ns, 148.4334 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 1691056 op, 242700055.50 ns, 143.5198 ns/op
+WorkloadResult   2: 1691056 op, 240952989.50 ns, 142.4867 ns/op
+WorkloadResult   3: 1691056 op, 241415086.50 ns, 142.7600 ns/op
+WorkloadResult   4: 1691056 op, 243169515.50 ns, 143.7974 ns/op
+WorkloadResult   5: 1691056 op, 243248794.50 ns, 143.8443 ns/op
+WorkloadResult   6: 1691056 op, 241217696.50 ns, 142.6432 ns/op
+WorkloadResult   7: 1691056 op, 241665496.50 ns, 142.9080 ns/op
+WorkloadResult   8: 1691056 op, 243775873.50 ns, 144.1560 ns/op
+// GC:  40 0 0 676422400 1691056
+// Threading:  0 0 1691056
+
+// AfterAll
+// Benchmark Process 4566 has exited with code 0.
+
+Mean = 143.264 ns, StdErr = 0.226 ns (0.16%), N = 8, StdDev = 0.638 ns
+Min = 142.487 ns, Q1 = 142.731 ns, Median = 143.214 ns, Q3 = 143.809 ns, Max = 144.156 ns
+IQR = 1.078 ns, LowerFence = 141.113 ns, UpperFence = 145.427 ns
+ConfidenceInterval = [142.044 ns; 144.485 ns] (CI 99.9%), Margin = 1.221 ns (0.85% of Mean)
+Skewness = 0.09, Kurtosis = 1.07, MValue = 2
+
+// ** Remained 8 (44.4 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.DotLiquid --job Quick --benchmarkId 10 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 253305.00 ns, 253.3050 us/op
+WorkloadJitting  1: 1 op, 12611358.00 ns, 12.6114 ms/op
+
+OverheadJitting  2: 16 op, 442539.00 ns, 27.6587 us/op
+WorkloadJitting  2: 16 op, 639279.00 ns, 39.9549 us/op
+
+WorkloadPilot    1: 16 op, 94066.00 ns, 5.8791 us/op
+WorkloadPilot    2: 42528 op, 154764251.00 ns, 3.6391 us/op
+WorkloadPilot    3: 68704 op, 180404860.00 ns, 2.6258 us/op
+WorkloadPilot    4: 95216 op, 62362697.00 ns, 654.9603 ns/op
+WorkloadPilot    5: 381712 op, 242812421.00 ns, 636.1142 ns/op
+WorkloadPilot    6: 393024 op, 247994439.00 ns, 630.9906 ns/op
+WorkloadPilot    7: 396208 op, 249729451.00 ns, 630.2989 ns/op
+WorkloadPilot    8: 396640 op, 250837680.00 ns, 632.4064 ns/op
+WorkloadPilot    9: 395328 op, 251586246.00 ns, 636.3988 ns/op
+WorkloadPilot   10: 392848 op, 251362884.00 ns, 639.8477 ns/op
+
+OverheadWarmup   1: 392848 op, 1699968.00 ns, 4.3273 ns/op
+OverheadWarmup   2: 392848 op, 1687505.00 ns, 4.2956 ns/op
+OverheadWarmup   3: 392848 op, 1701872.00 ns, 4.3321 ns/op
+OverheadWarmup   4: 392848 op, 1751464.00 ns, 4.4584 ns/op
+OverheadWarmup   5: 392848 op, 1686172.00 ns, 4.2922 ns/op
+OverheadWarmup   6: 392848 op, 1684439.00 ns, 4.2878 ns/op
+OverheadWarmup   7: 392848 op, 1675301.00 ns, 4.2645 ns/op
+OverheadWarmup   8: 392848 op, 1687775.00 ns, 4.2963 ns/op
+OverheadWarmup   9: 392848 op, 1684599.00 ns, 4.2882 ns/op
+
+OverheadActual   1: 392848 op, 1687314.00 ns, 4.2951 ns/op
+OverheadActual   2: 392848 op, 1672335.00 ns, 4.2570 ns/op
+OverheadActual   3: 392848 op, 1686513.00 ns, 4.2930 ns/op
+OverheadActual   4: 392848 op, 1686582.00 ns, 4.2932 ns/op
+OverheadActual   5: 392848 op, 1673107.00 ns, 4.2589 ns/op
+OverheadActual   6: 392848 op, 1684869.00 ns, 4.2889 ns/op
+OverheadActual   7: 392848 op, 1685952.00 ns, 4.2916 ns/op
+OverheadActual   8: 392848 op, 1670923.00 ns, 4.2534 ns/op
+
+WorkloadWarmup   1: 392848 op, 258975063.00 ns, 659.2246 ns/op
+WorkloadWarmup   2: 392848 op, 254758391.00 ns, 648.4910 ns/op
+WorkloadWarmup   3: 392848 op, 249846431.00 ns, 635.9875 ns/op
+WorkloadWarmup   4: 392848 op, 246836036.00 ns, 628.3245 ns/op
+WorkloadWarmup   5: 392848 op, 248524301.00 ns, 632.6220 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 392848 op, 251482489.00 ns, 640.1521 ns/op
+WorkloadActual   2: 392848 op, 251304926.00 ns, 639.7002 ns/op
+WorkloadActual   3: 392848 op, 248759082.00 ns, 633.2197 ns/op
+WorkloadActual   4: 392848 op, 251422977.00 ns, 640.0007 ns/op
+WorkloadActual   5: 392848 op, 248629528.00 ns, 632.8899 ns/op
+WorkloadActual   6: 392848 op, 251861209.00 ns, 641.1162 ns/op
+WorkloadActual   7: 392848 op, 251297101.00 ns, 639.6802 ns/op
+WorkloadActual   8: 392848 op, 250691104.00 ns, 638.1377 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 392848 op, 249797078.50 ns, 635.8619 ns/op
+WorkloadResult   2: 392848 op, 249619515.50 ns, 635.4099 ns/op
+WorkloadResult   3: 392848 op, 247073671.50 ns, 628.9294 ns/op
+WorkloadResult   4: 392848 op, 249737566.50 ns, 635.7104 ns/op
+WorkloadResult   5: 392848 op, 246944117.50 ns, 628.5997 ns/op
+WorkloadResult   6: 392848 op, 250175798.50 ns, 636.8259 ns/op
+WorkloadResult   7: 392848 op, 249611690.50 ns, 635.3900 ns/op
+WorkloadResult   8: 392848 op, 249005693.50 ns, 633.8474 ns/op
+// GC:  35 0 0 590843392 392848
+// Threading:  0 0 392848
+
+// AfterAll
+// Benchmark Process 4577 has exited with code 0.
+
+Mean = 633.822 ns, StdErr = 1.141 ns (0.18%), N = 8, StdDev = 3.228 ns
+Min = 628.600 ns, Q1 = 632.618 ns, Median = 635.400 ns, Q3 = 635.748 ns, Max = 636.826 ns
+IQR = 3.130 ns, LowerFence = 627.922 ns, UpperFence = 640.444 ns
+ConfidenceInterval = [627.650 ns; 639.994 ns] (CI 99.9%), Margin = 6.172 ns (0.97% of Mean)
+Skewness = -0.78, Kurtosis = 1.66, MValue = 2
+
+// ** Remained 7 (38.9 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.Fluid --job Quick --benchmarkId 11 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 221084.00 ns, 221.0840 us/op
+WorkloadJitting  1: 1 op, 22060168.00 ns, 22.0602 ms/op
+
+WorkloadPilot    1: 4 op, 302267.00 ns, 75.5668 us/op
+WorkloadPilot    2: 3308 op, 8815211.00 ns, 2.6648 us/op
+WorkloadPilot    3: 93815 op, 246452276.00 ns, 2.6270 us/op
+WorkloadPilot    4: 95165 op, 210136675.00 ns, 2.2081 us/op
+WorkloadPilot    5: 113218 op, 35220877.00 ns, 311.0890 ns/op
+WorkloadPilot    6: 803628 op, 236177077.00 ns, 293.8886 ns/op
+WorkloadPilot    7: 850663 op, 247095862.00 ns, 290.4744 ns/op
+WorkloadPilot    8: 860661 op, 248896409.00 ns, 289.1922 ns/op
+WorkloadPilot    9: 864477 op, 251224245.00 ns, 290.6084 ns/op
+WorkloadPilot   10: 860264 op, 249220667.00 ns, 289.7025 ns/op
+WorkloadPilot   11: 862954 op, 254596759.00 ns, 295.0294 ns/op
+WorkloadPilot   12: 847373 op, 245202202.00 ns, 289.3675 ns/op
+WorkloadPilot   13: 863953 op, 251609958.00 ns, 291.2311 ns/op
+
+WorkloadWarmup   1: 863953 op, 249372452.00 ns, 288.6412 ns/op
+WorkloadWarmup   2: 863953 op, 251476918.00 ns, 291.0771 ns/op
+WorkloadWarmup   3: 863953 op, 250888044.00 ns, 290.3955 ns/op
+WorkloadWarmup   4: 863953 op, 251888119.00 ns, 291.5530 ns/op
+WorkloadWarmup   5: 863953 op, 251703923.00 ns, 291.3398 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 863953 op, 250906869.00 ns, 290.4173 ns/op
+WorkloadActual   2: 863953 op, 250453035.00 ns, 289.8920 ns/op
+WorkloadActual   3: 863953 op, 250661319.00 ns, 290.1331 ns/op
+WorkloadActual   4: 863953 op, 251516102.00 ns, 291.1224 ns/op
+WorkloadActual   5: 863953 op, 250591658.00 ns, 290.0524 ns/op
+WorkloadActual   6: 863953 op, 250211696.00 ns, 289.6126 ns/op
+WorkloadActual   7: 863953 op, 250059749.00 ns, 289.4368 ns/op
+WorkloadActual   8: 863953 op, 250282292.00 ns, 289.6943 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 863953 op, 250906869.00 ns, 290.4173 ns/op
+WorkloadResult   2: 863953 op, 250453035.00 ns, 289.8920 ns/op
+WorkloadResult   3: 863953 op, 250661319.00 ns, 290.1331 ns/op
+WorkloadResult   4: 863953 op, 250591658.00 ns, 290.0524 ns/op
+WorkloadResult   5: 863953 op, 250211696.00 ns, 289.6126 ns/op
+WorkloadResult   6: 863953 op, 250059749.00 ns, 289.4368 ns/op
+WorkloadResult   7: 863953 op, 250282292.00 ns, 289.6943 ns/op
+// GC:  22 0 0 380148336 863953
+// Threading:  0 0 863953
+
+// AfterAll
+// Benchmark Process 4588 has exited with code 0.
+
+Mean = 289.891 ns, StdErr = 0.128 ns (0.04%), N = 7, StdDev = 0.338 ns
+Min = 289.437 ns, Q1 = 289.653 ns, Median = 289.892 ns, Q3 = 290.093 ns, Max = 290.417 ns
+IQR = 0.439 ns, LowerFence = 288.995 ns, UpperFence = 290.752 ns
+ConfidenceInterval = [289.131 ns; 290.652 ns] (CI 99.9%), Margin = 0.761 ns (0.26% of Mean)
+Skewness = 0.15, Kurtosis = 1.44, MValue = 2
+
+// ** Remained 6 (33.3 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.Handlebars --job Quick --benchmarkId 12 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 223289.00 ns, 223.2890 us/op
+WorkloadJitting  1: 1 op, 20410890.00 ns, 20.4109 ms/op
+
+WorkloadPilot    1: 4 op, 232656.00 ns, 58.1640 us/op
+WorkloadPilot    2: 4298 op, 5943083.00 ns, 1.3828 us/op
+WorkloadPilot    3: 180798 op, 239443800.00 ns, 1.3244 us/op
+WorkloadPilot    4: 188769 op, 50571671.00 ns, 267.9024 ns/op
+WorkloadPilot    5: 933176 op, 226586082.00 ns, 242.8117 ns/op
+WorkloadPilot    6: 1029604 op, 240571515.00 ns, 233.6544 ns/op
+WorkloadPilot    7: 1069956 op, 246724741.00 ns, 230.5934 ns/op
+WorkloadPilot    8: 1084160 op, 250847451.00 ns, 231.3749 ns/op
+WorkloadPilot    9: 1080497 op, 249319436.00 ns, 230.7451 ns/op
+WorkloadPilot   10: 1083446 op, 249923750.00 ns, 230.6749 ns/op
+WorkloadPilot   11: 1083777 op, 255888143.00 ns, 236.1077 ns/op
+WorkloadPilot   12: 1058839 op, 244810412.00 ns, 231.2065 ns/op
+WorkloadPilot   13: 1081285 op, 250187274.00 ns, 231.3796 ns/op
+
+WorkloadWarmup   1: 1081285 op, 249636401.00 ns, 230.8701 ns/op
+WorkloadWarmup   2: 1081285 op, 249863717.00 ns, 231.0804 ns/op
+WorkloadWarmup   3: 1081285 op, 250288493.00 ns, 231.4732 ns/op
+WorkloadWarmup   4: 1081285 op, 249910405.00 ns, 231.1235 ns/op
+WorkloadWarmup   5: 1081285 op, 251267849.00 ns, 232.3789 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 1081285 op, 253237733.00 ns, 234.2007 ns/op
+WorkloadActual   2: 1081285 op, 250625855.00 ns, 231.7852 ns/op
+WorkloadActual   3: 1081285 op, 249999151.00 ns, 231.2056 ns/op
+WorkloadActual   4: 1081285 op, 250792238.00 ns, 231.9391 ns/op
+WorkloadActual   5: 1081285 op, 250263697.00 ns, 231.4503 ns/op
+WorkloadActual   6: 1081285 op, 250897596.00 ns, 232.0365 ns/op
+WorkloadActual   7: 1081285 op, 250393290.00 ns, 231.5701 ns/op
+WorkloadActual   8: 1081285 op, 250157318.00 ns, 231.3519 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 1081285 op, 250625855.00 ns, 231.7852 ns/op
+WorkloadResult   2: 1081285 op, 249999151.00 ns, 231.2056 ns/op
+WorkloadResult   3: 1081285 op, 250792238.00 ns, 231.9391 ns/op
+WorkloadResult   4: 1081285 op, 250263697.00 ns, 231.4503 ns/op
+WorkloadResult   5: 1081285 op, 250897596.00 ns, 232.0365 ns/op
+WorkloadResult   6: 1081285 op, 250393290.00 ns, 231.5701 ns/op
+WorkloadResult   7: 1081285 op, 250157318.00 ns, 231.3519 ns/op
+// GC:  3 0 0 51901680 1081285
+// Threading:  0 0 1081285
+
+// AfterAll
+// Benchmark Process 4599 has exited with code 0.
+
+Mean = 231.620 ns, StdErr = 0.117 ns (0.05%), N = 7, StdDev = 0.310 ns
+Min = 231.206 ns, Q1 = 231.401 ns, Median = 231.570 ns, Q3 = 231.862 ns, Max = 232.037 ns
+IQR = 0.461 ns, LowerFence = 230.709 ns, UpperFence = 232.554 ns
+ConfidenceInterval = [230.921 ns; 232.319 ns] (CI 99.9%), Margin = 0.699 ns (0.30% of Mean)
+Skewness = 0.07, Kurtosis = 1.18, MValue = 2
+
+// ** Remained 5 (27.8 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.RazorEngineCore --job Quick --benchmarkId 13 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 230573.00 ns, 230.5730 us/op
+WorkloadJitting  1: 1 op, 2559750.00 ns, 2.5598 ms/op
+
+OverheadJitting  2: 16 op, 474560.00 ns, 29.6600 us/op
+WorkloadJitting  2: 16 op, 537428.00 ns, 33.5893 us/op
+
+WorkloadPilot    1: 16 op, 29355.00 ns, 1.8347 us/op
+WorkloadPilot    2: 136272 op, 57673178.00 ns, 423.2210 ns/op
+WorkloadPilot    3: 590720 op, 140586575.00 ns, 237.9919 ns/op
+WorkloadPilot    4: 1050464 op, 89475041.00 ns, 85.1767 ns/op
+WorkloadPilot    5: 2935088 op, 242508054.00 ns, 82.6238 ns/op
+WorkloadPilot    6: 3025776 op, 255802503.00 ns, 84.5411 ns/op
+WorkloadPilot    7: 2957152 op, 248712088.00 ns, 84.1053 ns/op
+WorkloadPilot    8: 2972480 op, 246744618.00 ns, 83.0097 ns/op
+WorkloadPilot    9: 3011712 op, 250175362.00 ns, 83.0675 ns/op
+WorkloadPilot   10: 3009616 op, 249920774.00 ns, 83.0408 ns/op
+WorkloadPilot   11: 3010576 op, 248986723.00 ns, 82.7040 ns/op
+WorkloadPilot   12: 3022832 op, 249126245.00 ns, 82.4148 ns/op
+WorkloadPilot   13: 3033440 op, 250937551.00 ns, 82.7238 ns/op
+
+OverheadWarmup   1: 3033440 op, 11918009.00 ns, 3.9289 ns/op
+OverheadWarmup   2: 3033440 op, 13099774.00 ns, 4.3185 ns/op
+OverheadWarmup   3: 3033440 op, 12846710.00 ns, 4.2350 ns/op
+OverheadWarmup   4: 3033440 op, 12061537.00 ns, 3.9762 ns/op
+OverheadWarmup   5: 3033440 op, 12535676.00 ns, 4.1325 ns/op
+OverheadWarmup   6: 3033440 op, 12837713.00 ns, 4.2321 ns/op
+OverheadWarmup   7: 3033440 op, 12854144.00 ns, 4.2375 ns/op
+OverheadWarmup   8: 3033440 op, 11957372.00 ns, 3.9419 ns/op
+
+OverheadActual   1: 3033440 op, 11959997.00 ns, 3.9427 ns/op
+OverheadActual   2: 3033440 op, 12064202.00 ns, 3.9771 ns/op
+OverheadActual   3: 3033440 op, 12030389.00 ns, 3.9659 ns/op
+OverheadActual   4: 3033440 op, 11906306.00 ns, 3.9250 ns/op
+OverheadActual   5: 3033440 op, 11907178.00 ns, 3.9253 ns/op
+OverheadActual   6: 3033440 op, 12896112.00 ns, 4.2513 ns/op
+OverheadActual   7: 3033440 op, 11906747.00 ns, 3.9252 ns/op
+OverheadActual   8: 3033440 op, 12823055.00 ns, 4.2272 ns/op
+OverheadActual   9: 3033440 op, 12859474.00 ns, 4.2392 ns/op
+OverheadActual  10: 3033440 op, 11957302.00 ns, 3.9418 ns/op
+OverheadActual  11: 3033440 op, 12835108.00 ns, 4.2312 ns/op
+OverheadActual  12: 3033440 op, 12833064.00 ns, 4.2305 ns/op
+
+WorkloadWarmup   1: 3033440 op, 265623179.00 ns, 87.5650 ns/op
+WorkloadWarmup   2: 3033440 op, 257756548.00 ns, 84.9717 ns/op
+WorkloadWarmup   3: 3033440 op, 250135598.00 ns, 82.4594 ns/op
+WorkloadWarmup   4: 3033440 op, 251388657.00 ns, 82.8725 ns/op
+WorkloadWarmup   5: 3033440 op, 249732461.00 ns, 82.3265 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 3033440 op, 252158190.00 ns, 83.1262 ns/op
+WorkloadActual   2: 3033440 op, 254139204.00 ns, 83.7792 ns/op
+WorkloadActual   3: 3033440 op, 253184334.00 ns, 83.4644 ns/op
+WorkloadActual   4: 3033440 op, 251740527.00 ns, 82.9885 ns/op
+WorkloadActual   5: 3033440 op, 252272204.00 ns, 83.1637 ns/op
+WorkloadActual   6: 3033440 op, 252233471.00 ns, 83.1510 ns/op
+WorkloadActual   7: 3033440 op, 253095608.00 ns, 83.4352 ns/op
+WorkloadActual   8: 3033440 op, 251426237.00 ns, 82.8849 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 3033440 op, 240110894.50 ns, 79.1547 ns/op
+WorkloadResult   2: 3033440 op, 242091908.50 ns, 79.8077 ns/op
+WorkloadResult   3: 3033440 op, 241137038.50 ns, 79.4929 ns/op
+WorkloadResult   4: 3033440 op, 239693231.50 ns, 79.0170 ns/op
+WorkloadResult   5: 3033440 op, 240224908.50 ns, 79.1922 ns/op
+WorkloadResult   6: 3033440 op, 240186175.50 ns, 79.1795 ns/op
+WorkloadResult   7: 3033440 op, 241048312.50 ns, 79.4637 ns/op
+WorkloadResult   8: 3033440 op, 239378941.50 ns, 78.9134 ns/op
+// GC:  63 0 0 1067785216 3033440
+// Threading:  0 0 3033440
+
+// AfterAll
+// Benchmark Process 4613 has exited with code 0.
+
+Mean = 79.278 ns, StdErr = 0.103 ns (0.13%), N = 8, StdDev = 0.291 ns
+Min = 78.913 ns, Q1 = 79.120 ns, Median = 79.186 ns, Q3 = 79.471 ns, Max = 79.808 ns
+IQR = 0.351 ns, LowerFence = 78.594 ns, UpperFence = 79.997 ns
+ConfidenceInterval = [78.720 ns; 79.835 ns] (CI 99.9%), Margin = 0.557 ns (0.70% of Mean)
+Skewness = 0.48, Kurtosis = 1.82, MValue = 2
+
+// ** Remained 4 (22.2 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.RazorLight --job Quick --benchmarkId 14 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 226655.00 ns, 226.6550 us/op
+WorkloadJitting  1: 1 op, 1526927159.00 ns, 1.5269 s/op
+
+OverheadJitting  2: 1 op, 872.00 ns, 872.0000 ns/op
+WorkloadJitting  2: 1 op, 561523.00 ns, 561.5230 us/op
+
+OverheadJitting  3: 16 op, 558948.00 ns, 34.9343 us/op
+WorkloadJitting  3: 16 op, 813255.00 ns, 50.8284 us/op
+
+WorkloadPilot    1: 16 op, 362730.00 ns, 22.6706 us/op
+WorkloadPilot    2: 11040 op, 94102961.00 ns, 8.5238 us/op
+WorkloadPilot    3: 29344 op, 265519351.00 ns, 9.0485 us/op
+WorkloadPilot    4: 27632 op, 260827513.00 ns, 9.4393 us/op
+WorkloadPilot    5: 26496 op, 132590864.00 ns, 5.0042 us/op
+WorkloadPilot    6: 49968 op, 128485615.00 ns, 2.5714 us/op
+WorkloadPilot    7: 97232 op, 249838186.00 ns, 2.5695 us/op
+WorkloadPilot    8: 97296 op, 247496585.00 ns, 2.5437 us/op
+WorkloadPilot    9: 98288 op, 250494827.00 ns, 2.5486 us/op
+
+OverheadWarmup   1: 98288 op, 406492.00 ns, 4.1357 ns/op
+OverheadWarmup   2: 98288 op, 394009.00 ns, 4.0087 ns/op
+OverheadWarmup   3: 98288 op, 428143.00 ns, 4.3560 ns/op
+OverheadWarmup   4: 98288 op, 395631.00 ns, 4.0252 ns/op
+OverheadWarmup   5: 98288 op, 426319.00 ns, 4.3374 ns/op
+OverheadWarmup   6: 98288 op, 392896.00 ns, 3.9974 ns/op
+
+OverheadActual   1: 98288 op, 427241.00 ns, 4.3468 ns/op
+OverheadActual   2: 98288 op, 418565.00 ns, 4.2586 ns/op
+OverheadActual   3: 98288 op, 432030.00 ns, 4.3956 ns/op
+OverheadActual   4: 98288 op, 416742.00 ns, 4.2400 ns/op
+OverheadActual   5: 98288 op, 423174.00 ns, 4.3054 ns/op
+OverheadActual   6: 98288 op, 388959.00 ns, 3.9573 ns/op
+OverheadActual   7: 98288 op, 430617.00 ns, 4.3812 ns/op
+OverheadActual   8: 98288 op, 392897.00 ns, 3.9974 ns/op
+OverheadActual   9: 98288 op, 403536.00 ns, 4.1056 ns/op
+OverheadActual  10: 98288 op, 410089.00 ns, 4.1723 ns/op
+OverheadActual  11: 98288 op, 432441.00 ns, 4.3997 ns/op
+OverheadActual  12: 98288 op, 389851.00 ns, 3.9664 ns/op
+
+WorkloadWarmup   1: 98288 op, 260262383.00 ns, 2.6480 us/op
+WorkloadWarmup   2: 98288 op, 257503741.00 ns, 2.6199 us/op
+WorkloadWarmup   3: 98288 op, 249509280.00 ns, 2.5386 us/op
+WorkloadWarmup   4: 98288 op, 248652162.00 ns, 2.5298 us/op
+WorkloadWarmup   5: 98288 op, 249766491.00 ns, 2.5412 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 98288 op, 255702061.00 ns, 2.6016 us/op
+WorkloadActual   2: 98288 op, 249481458.00 ns, 2.5383 us/op
+WorkloadActual   3: 98288 op, 249067971.00 ns, 2.5341 us/op
+WorkloadActual   4: 98288 op, 250337221.00 ns, 2.5470 us/op
+WorkloadActual   5: 98288 op, 251000806.00 ns, 2.5537 us/op
+WorkloadActual   6: 98288 op, 262010903.00 ns, 2.6657 us/op
+WorkloadActual   7: 98288 op, 261679441.00 ns, 2.6624 us/op
+WorkloadActual   8: 98288 op, 262420200.00 ns, 2.6699 us/op
+
+// AfterActualRun
+WorkloadResult   1: 98288 op, 255284407.50 ns, 2.5973 us/op
+WorkloadResult   2: 98288 op, 249063804.50 ns, 2.5340 us/op
+WorkloadResult   3: 98288 op, 248650317.50 ns, 2.5298 us/op
+WorkloadResult   4: 98288 op, 249919567.50 ns, 2.5427 us/op
+WorkloadResult   5: 98288 op, 250583152.50 ns, 2.5495 us/op
+WorkloadResult   6: 98288 op, 261593249.50 ns, 2.6615 us/op
+WorkloadResult   7: 98288 op, 261261787.50 ns, 2.6581 us/op
+WorkloadResult   8: 98288 op, 262002546.50 ns, 2.6657 us/op
+// GC:  13 0 0 231180000 98288
+// Threading:  0 0 98288
+
+// AfterAll
+// Benchmark Process 4632 has exited with code 0.
+
+Mean = 2.592 μs, StdErr = 0.022 μs (0.83%), N = 8, StdDev = 0.061 μs
+Min = 2.530 μs, Q1 = 2.541 μs, Median = 2.573 μs, Q3 = 2.659 μs, Max = 2.666 μs
+IQR = 0.118 μs, LowerFence = 2.363 μs, UpperFence = 2.837 μs
+ConfidenceInterval = [2.476 μs; 2.709 μs] (CI 99.9%), Margin = 0.117 μs (4.51% of Mean)
+Skewness = 0.2, Kurtosis = 0.96, MValue = 2
+
+// ** Remained 3 (16.7 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.Scriban --job Quick --benchmarkId 15 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 209062.00 ns, 209.0620 us/op
+WorkloadJitting  1: 1 op, 44996708.00 ns, 44.9967 ms/op
+
+WorkloadPilot    1: 4 op, 548348.00 ns, 137.0870 us/op
+WorkloadPilot    2: 1824 op, 113136523.00 ns, 62.0266 us/op
+WorkloadPilot    3: 4031 op, 271465552.00 ns, 67.3445 us/op
+WorkloadPilot    4: 3712 op, 240778507.00 ns, 64.8649 us/op
+WorkloadPilot    5: 3854 op, 249010875.00 ns, 64.6110 us/op
+WorkloadPilot    6: 3869 op, 245197674.00 ns, 63.3749 us/op
+WorkloadPilot    7: 3945 op, 236986844.00 ns, 60.0727 us/op
+WorkloadPilot    8: 4162 op, 252571280.00 ns, 60.6851 us/op
+WorkloadPilot    9: 4120 op, 244221805.00 ns, 59.2771 us/op
+WorkloadPilot   10: 4217 op, 192227668.00 ns, 45.5840 us/op
+WorkloadPilot   11: 5484 op, 214857619.00 ns, 39.1790 us/op
+WorkloadPilot   12: 6381 op, 173354992.00 ns, 27.1674 us/op
+WorkloadPilot   13: 9202 op, 238230521.00 ns, 25.8890 us/op
+WorkloadPilot   14: 9657 op, 227273407.00 ns, 23.5346 us/op
+WorkloadPilot   15: 10623 op, 237608836.00 ns, 22.3674 us/op
+WorkloadPilot   16: 11177 op, 234640461.00 ns, 20.9932 us/op
+WorkloadPilot   17: 11909 op, 217990442.00 ns, 18.3047 us/op
+WorkloadPilot   18: 13658 op, 186976192.00 ns, 13.6899 us/op
+WorkloadPilot   19: 18262 op, 221038207.00 ns, 12.1037 us/op
+WorkloadPilot   20: 20655 op, 248132357.00 ns, 12.0132 us/op
+WorkloadPilot   21: 20810 op, 253056099.00 ns, 12.1603 us/op
+
+WorkloadWarmup   1: 20810 op, 251419470.00 ns, 12.0817 us/op
+WorkloadWarmup   2: 20810 op, 253100642.00 ns, 12.1625 us/op
+WorkloadWarmup   3: 20810 op, 252177491.00 ns, 12.1181 us/op
+WorkloadWarmup   4: 20810 op, 257709955.00 ns, 12.3839 us/op
+WorkloadWarmup   5: 20810 op, 252287417.00 ns, 12.1234 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 20810 op, 250096850.00 ns, 12.0181 us/op
+WorkloadActual   2: 20810 op, 252106629.00 ns, 12.1147 us/op
+WorkloadActual   3: 20810 op, 252862165.00 ns, 12.1510 us/op
+WorkloadActual   4: 20810 op, 254659104.00 ns, 12.2373 us/op
+WorkloadActual   5: 20810 op, 252115686.00 ns, 12.1151 us/op
+WorkloadActual   6: 20810 op, 251662375.00 ns, 12.0933 us/op
+WorkloadActual   7: 20810 op, 262268301.00 ns, 12.6030 us/op
+WorkloadActual   8: 20810 op, 262118601.00 ns, 12.5958 us/op
+
+// AfterActualRun
+WorkloadResult   1: 20810 op, 250096850.00 ns, 12.0181 us/op
+WorkloadResult   2: 20810 op, 252106629.00 ns, 12.1147 us/op
+WorkloadResult   3: 20810 op, 252862165.00 ns, 12.1510 us/op
+WorkloadResult   4: 20810 op, 254659104.00 ns, 12.2373 us/op
+WorkloadResult   5: 20810 op, 252115686.00 ns, 12.1151 us/op
+WorkloadResult   6: 20810 op, 251662375.00 ns, 12.0933 us/op
+WorkloadResult   7: 20810 op, 262268301.00 ns, 12.6030 us/op
+WorkloadResult   8: 20810 op, 262118601.00 ns, 12.5958 us/op
+// GC:  42 4 0 706491208 20810
+// Threading:  0 0 20810
+
+// AfterAll
+// Benchmark Process 4648 has exited with code 0.
+
+Mean = 12.241 μs, StdErr = 0.081 μs (0.66%), N = 8, StdDev = 0.229 μs
+Min = 12.018 μs, Q1 = 12.109 μs, Median = 12.133 μs, Q3 = 12.327 μs, Max = 12.603 μs
+IQR = 0.218 μs, LowerFence = 11.783 μs, UpperFence = 12.653 μs
+ConfidenceInterval = [11.802 μs; 12.680 μs] (CI 99.9%), Margin = 0.439 μs (3.58% of Mean)
+Skewness = 0.76, Kurtosis = 1.65, MValue = 2
+
+// ** Remained 2 (11.1 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.SmartFormat: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.SmartFormat --job Quick --benchmarkId 16 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 224020.00 ns, 224.0200 us/op
+WorkloadJitting  1: 1 op, 28486331.00 ns, 28.4863 ms/op
+
+WorkloadPilot    1: 4 op, 447680.00 ns, 111.9200 us/op
+WorkloadPilot    2: 2234 op, 17995070.00 ns, 8.0551 us/op
+WorkloadPilot    3: 31036 op, 284635679.00 ns, 9.1711 us/op
+WorkloadPilot    4: 27259 op, 309709792.00 ns, 11.3617 us/op
+WorkloadPilot    5: 22004 op, 91210816.00 ns, 4.1452 us/op
+WorkloadPilot    6: 60311 op, 93541646.00 ns, 1.5510 us/op
+WorkloadPilot    7: 161188 op, 196825278.00 ns, 1.2211 us/op
+WorkloadPilot    8: 204735 op, 251369971.00 ns, 1.2278 us/op
+
+WorkloadWarmup   1: 204735 op, 248953460.00 ns, 1.2160 us/op
+WorkloadWarmup   2: 204735 op, 250199376.00 ns, 1.2221 us/op
+WorkloadWarmup   3: 204735 op, 255119083.00 ns, 1.2461 us/op
+WorkloadWarmup   4: 204735 op, 250183616.00 ns, 1.2220 us/op
+WorkloadWarmup   5: 204735 op, 250061224.00 ns, 1.2214 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 204735 op, 249229467.00 ns, 1.2173 us/op
+WorkloadActual   2: 204735 op, 250310435.00 ns, 1.2226 us/op
+WorkloadActual   3: 204735 op, 251609540.00 ns, 1.2290 us/op
+WorkloadActual   4: 204735 op, 249466532.00 ns, 1.2185 us/op
+WorkloadActual   5: 204735 op, 249385109.00 ns, 1.2181 us/op
+WorkloadActual   6: 204735 op, 248381317.00 ns, 1.2132 us/op
+WorkloadActual   7: 204735 op, 250794181.00 ns, 1.2250 us/op
+WorkloadActual   8: 204735 op, 250614063.00 ns, 1.2241 us/op
+
+// AfterActualRun
+WorkloadResult   1: 204735 op, 249229467.00 ns, 1.2173 us/op
+WorkloadResult   2: 204735 op, 250310435.00 ns, 1.2226 us/op
+WorkloadResult   3: 204735 op, 251609540.00 ns, 1.2290 us/op
+WorkloadResult   4: 204735 op, 249466532.00 ns, 1.2185 us/op
+WorkloadResult   5: 204735 op, 249385109.00 ns, 1.2181 us/op
+WorkloadResult   6: 204735 op, 248381317.00 ns, 1.2132 us/op
+WorkloadResult   7: 204735 op, 250794181.00 ns, 1.2250 us/op
+WorkloadResult   8: 204735 op, 250614063.00 ns, 1.2241 us/op
+// GC:  7 0 0 119565240 204735
+// Threading:  0 0 204735
+
+// AfterAll
+// Benchmark Process 4658 has exited with code 0.
+
+Mean = 1.221 μs, StdErr = 0.002 μs (0.15%), N = 8, StdDev = 0.005 μs
+Min = 1.213 μs, Q1 = 1.218 μs, Median = 1.221 μs, Q3 = 1.224 μs, Max = 1.229 μs
+IQR = 0.006 μs, LowerFence = 1.208 μs, UpperFence = 1.234 μs
+ConfidenceInterval = [1.211 μs; 1.231 μs] (CI 99.9%), Margin = 0.010 μs (0.80% of Mean)
+Skewness = 0.05, Kurtosis = 1.57, MValue = 2
+
+// ** Remained 1 (5.6 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// **************************
+// Benchmark: Render.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.TemplateEngines-Quick-1.dll --anonymousPipes 176 177 --benchmarkName Matrix.TemplateEngines.Benchmarks.Render.Stubble --job Quick --benchmarkId 17 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.TemplateEngines/bin/Benchmark/Release/net10.0/Matrix.TemplateEngines-Quick-1/bin/Release/net10.0
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.15.8
+// Runtime=.NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+OverheadJitting  1: 1 op, 228438.00 ns, 228.4380 us/op
+WorkloadJitting  1: 1 op, 27356517.00 ns, 27.3565 ms/op
+
+WorkloadPilot    1: 4 op, 588323.00 ns, 147.0808 us/op
+WorkloadPilot    2: 1700 op, 6304339.00 ns, 3.7084 us/op
+WorkloadPilot    3: 67414 op, 154383934.00 ns, 2.2901 us/op
+WorkloadPilot    4: 109166 op, 191379813.00 ns, 1.7531 us/op
+WorkloadPilot    5: 142604 op, 62411137.00 ns, 437.6535 ns/op
+WorkloadPilot    6: 571228 op, 244970423.00 ns, 428.8488 ns/op
+WorkloadPilot    7: 582956 op, 245868797.00 ns, 421.7622 ns/op
+WorkloadPilot    8: 592751 op, 249421207.00 ns, 420.7858 ns/op
+WorkloadPilot    9: 594127 op, 261594569.00 ns, 440.3008 ns/op
+WorkloadPilot   10: 567794 op, 244817937.00 ns, 431.1739 ns/op
+WorkloadPilot   11: 579812 op, 250562857.00 ns, 432.1450 ns/op
+WorkloadPilot   12: 578510 op, 247350155.00 ns, 427.5642 ns/op
+WorkloadPilot   13: 584708 op, 260465923.00 ns, 445.4632 ns/op
+
+WorkloadWarmup   1: 584708 op, 252402597.00 ns, 431.6729 ns/op
+WorkloadWarmup   2: 584708 op, 260419285.00 ns, 445.3835 ns/op
+WorkloadWarmup   3: 584708 op, 261893940.00 ns, 447.9055 ns/op
+WorkloadWarmup   4: 584708 op, 258692989.00 ns, 442.4311 ns/op
+WorkloadWarmup   5: 584708 op, 261034679.00 ns, 446.4360 ns/op
+
+// BeforeActualRun
+WorkloadActual   1: 584708 op, 250731163.00 ns, 428.8143 ns/op
+WorkloadActual   2: 584708 op, 259570814.00 ns, 443.9324 ns/op
+WorkloadActual   3: 584708 op, 252572439.00 ns, 431.9634 ns/op
+WorkloadActual   4: 584708 op, 256459728.00 ns, 438.6116 ns/op
+WorkloadActual   5: 584708 op, 254432798.00 ns, 435.1451 ns/op
+WorkloadActual   6: 584708 op, 259242366.00 ns, 443.3706 ns/op
+WorkloadActual   7: 584708 op, 261039105.00 ns, 446.4435 ns/op
+WorkloadActual   8: 584708 op, 257921439.00 ns, 441.1115 ns/op
+
+// AfterActualRun
+WorkloadResult   1: 584708 op, 250731163.00 ns, 428.8143 ns/op
+WorkloadResult   2: 584708 op, 259570814.00 ns, 443.9324 ns/op
+WorkloadResult   3: 584708 op, 252572439.00 ns, 431.9634 ns/op
+WorkloadResult   4: 584708 op, 256459728.00 ns, 438.6116 ns/op
+WorkloadResult   5: 584708 op, 254432798.00 ns, 435.1451 ns/op
+WorkloadResult   6: 584708 op, 259242366.00 ns, 443.3706 ns/op
+WorkloadResult   7: 584708 op, 261039105.00 ns, 446.4435 ns/op
+WorkloadResult   8: 584708 op, 257921439.00 ns, 441.1115 ns/op
+// GC:  93 0 0 1571695104 584708
+// Threading:  0 0 584708
+
+// AfterAll
+// Benchmark Process 4671 has exited with code 0.
+
+Mean = 438.674 ns, StdErr = 2.199 ns (0.50%), N = 8, StdDev = 6.219 ns
+Min = 428.814 ns, Q1 = 434.350 ns, Median = 439.862 ns, Q3 = 443.511 ns, Max = 446.444 ns
+IQR = 9.161 ns, LowerFence = 420.607 ns, UpperFence = 457.253 ns
+ConfidenceInterval = [426.784 ns; 450.564 ns] (CI 99.9%), Margin = 11.890 ns (2.71% of Mean)
+Skewness = -0.3, Kurtosis = 1.38, MValue = 2
+
+// ** Remained 0 (0.0 %) benchmark(s) to run. Estimated finish 2026-11-04 6:57 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Render-report.csv
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Render-report-github.md
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Render-report.html
+  tmp/dotnet-matrix/TemplateEngines/e1114154b6294e1e9549e6a54191106b/results/Matrix.TemplateEngines.Benchmarks.Render-report-full.json
+
+// * Detailed results *
+Render.RazorEngineCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 79.278 ns, StdErr = 0.103 ns (0.13%), N = 8, StdDev = 0.291 ns
+Min = 78.913 ns, Q1 = 79.120 ns, Median = 79.186 ns, Q3 = 79.471 ns, Max = 79.808 ns
+IQR = 0.351 ns, LowerFence = 78.594 ns, UpperFence = 79.997 ns
+ConfidenceInterval = [78.720 ns; 79.835 ns] (CI 99.9%), Margin = 0.557 ns (0.70% of Mean)
+Skewness = 0.48, Kurtosis = 1.82, MValue = 2
+-------------------- Histogram --------------------
+[78.722 ns ; 79.999 ns) | @@@@@@@@
+---------------------------------------------------
+
+Render.Cottle: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 143.264 ns, StdErr = 0.226 ns (0.16%), N = 8, StdDev = 0.638 ns
+Min = 142.487 ns, Q1 = 142.731 ns, Median = 143.214 ns, Q3 = 143.809 ns, Max = 144.156 ns
+IQR = 1.078 ns, LowerFence = 141.113 ns, UpperFence = 145.427 ns
+ConfidenceInterval = [142.044 ns; 144.485 ns] (CI 99.9%), Margin = 1.221 ns (0.85% of Mean)
+Skewness = 0.09, Kurtosis = 1.07, MValue = 2
+-------------------- Histogram --------------------
+[142.068 ns ; 144.575 ns) | @@@@@@@@
+---------------------------------------------------
+
+Render.Handlebars: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 231.620 ns, StdErr = 0.117 ns (0.05%), N = 7, StdDev = 0.310 ns
+Min = 231.206 ns, Q1 = 231.401 ns, Median = 231.570 ns, Q3 = 231.862 ns, Max = 232.037 ns
+IQR = 0.461 ns, LowerFence = 230.709 ns, UpperFence = 232.554 ns
+ConfidenceInterval = [230.921 ns; 232.319 ns] (CI 99.9%), Margin = 0.699 ns (0.30% of Mean)
+Skewness = 0.07, Kurtosis = 1.18, MValue = 2
+-------------------- Histogram --------------------
+[230.993 ns ; 232.250 ns) | @@@@@@@
+---------------------------------------------------
+
+Render.Fluid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 289.891 ns, StdErr = 0.128 ns (0.04%), N = 7, StdDev = 0.338 ns
+Min = 289.437 ns, Q1 = 289.653 ns, Median = 289.892 ns, Q3 = 290.093 ns, Max = 290.417 ns
+IQR = 0.439 ns, LowerFence = 288.995 ns, UpperFence = 290.752 ns
+ConfidenceInterval = [289.131 ns; 290.652 ns] (CI 99.9%), Margin = 0.761 ns (0.26% of Mean)
+Skewness = 0.15, Kurtosis = 1.44, MValue = 2
+-------------------- Histogram --------------------
+[289.205 ns ; 290.649 ns) | @@@@@@@
+---------------------------------------------------
+
+Render.Stubble: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 438.674 ns, StdErr = 2.199 ns (0.50%), N = 8, StdDev = 6.219 ns
+Min = 428.814 ns, Q1 = 434.350 ns, Median = 439.862 ns, Q3 = 443.511 ns, Max = 446.444 ns
+IQR = 9.161 ns, LowerFence = 420.607 ns, UpperFence = 457.253 ns
+ConfidenceInterval = [426.784 ns; 450.564 ns] (CI 99.9%), Margin = 11.890 ns (2.71% of Mean)
+Skewness = -0.3, Kurtosis = 1.38, MValue = 2
+-------------------- Histogram --------------------
+[427.660 ns ; 446.953 ns) | @@@@@@@@
+---------------------------------------------------
+
+Render.DotLiquid: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 633.822 ns, StdErr = 1.141 ns (0.18%), N = 8, StdDev = 3.228 ns
+Min = 628.600 ns, Q1 = 632.618 ns, Median = 635.400 ns, Q3 = 635.748 ns, Max = 636.826 ns
+IQR = 3.130 ns, LowerFence = 627.922 ns, UpperFence = 640.444 ns
+ConfidenceInterval = [627.650 ns; 639.994 ns] (CI 99.9%), Margin = 6.172 ns (0.97% of Mean)
+Skewness = -0.78, Kurtosis = 1.66, MValue = 2
+-------------------- Histogram --------------------
+[626.481 ns ; 638.944 ns) | @@@@@@@@
+---------------------------------------------------
+
+Render.SmartFormat: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.221 μs, StdErr = 0.002 μs (0.15%), N = 8, StdDev = 0.005 μs
+Min = 1.213 μs, Q1 = 1.218 μs, Median = 1.221 μs, Q3 = 1.224 μs, Max = 1.229 μs
+IQR = 0.006 μs, LowerFence = 1.208 μs, UpperFence = 1.234 μs
+ConfidenceInterval = [1.211 μs; 1.231 μs] (CI 99.9%), Margin = 0.010 μs (0.80% of Mean)
+Skewness = 0.05, Kurtosis = 1.57, MValue = 2
+-------------------- Histogram --------------------
+[1.210 μs ; 1.232 μs) | @@@@@@@@
+---------------------------------------------------
+
+Render.RazorLight: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 2.592 μs, StdErr = 0.022 μs (0.83%), N = 8, StdDev = 0.061 μs
+Min = 2.530 μs, Q1 = 2.541 μs, Median = 2.573 μs, Q3 = 2.659 μs, Max = 2.666 μs
+IQR = 0.118 μs, LowerFence = 2.363 μs, UpperFence = 2.837 μs
+ConfidenceInterval = [2.476 μs; 2.709 μs] (CI 99.9%), Margin = 0.117 μs (4.51% of Mean)
+Skewness = 0.2, Kurtosis = 0.96, MValue = 2
+-------------------- Histogram --------------------
+[2.523 μs ; 2.622 μs) | @@@@@
+[2.622 μs ; 2.706 μs) | @@@
+---------------------------------------------------
+
+Render.Scriban: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 12.241 μs, StdErr = 0.081 μs (0.66%), N = 8, StdDev = 0.229 μs
+Min = 12.018 μs, Q1 = 12.109 μs, Median = 12.133 μs, Q3 = 12.327 μs, Max = 12.603 μs
+IQR = 0.218 μs, LowerFence = 11.783 μs, UpperFence = 12.653 μs
+ConfidenceInterval = [11.802 μs; 12.680 μs] (CI 99.9%), Margin = 0.439 μs (3.58% of Mean)
+Skewness = 0.76, Kurtosis = 1.65, MValue = 2
+-------------------- Histogram --------------------
+[11.977 μs ; 12.449 μs) | @@@@@@
+[12.449 μs ; 12.754 μs) | @@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.15.8, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.11GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.403
+  [Host] : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+  Quick  : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method          | Mean         | Error      | StdDev     | Gen0   | Gen1   | Allocated |
+|---------------- |-------------:|-----------:|-----------:|-------:|-------:|----------:|
+| RazorEngineCore |     79.28 ns |   0.557 ns |   0.291 ns | 0.0208 |      - |     352 B |
+| Cottle          |    143.26 ns |   1.221 ns |   0.638 ns | 0.0237 |      - |     400 B |
+| Handlebars      |    231.62 ns |   0.699 ns |   0.310 ns | 0.0028 |      - |      48 B |
+| Fluid           |    289.89 ns |   0.761 ns |   0.338 ns | 0.0255 |      - |     440 B |
+| Stubble         |    438.67 ns |  11.890 ns |   6.219 ns | 0.1591 |      - |    2688 B |
+| DotLiquid       |    633.82 ns |   6.172 ns |   3.228 ns | 0.0891 |      - |    1504 B |
+| SmartFormat     |  1,220.96 ns |   9.709 ns |   5.078 ns | 0.0342 |      - |     584 B |
+| RazorLight      |  2,592.33 ns | 116.795 ns |  61.086 ns | 0.1323 |      - |    2352 B |
+| Scriban         | 12,241.05 ns | 438.578 ns | 229.385 ns | 2.0183 | 0.1922 |   33950 B |
+
+// * Hints *
+Outliers
+  Render.Handlebars: Quick -> 1 outlier  was  removed (234.20 ns)
+  Render.Fluid: Quick      -> 1 outlier  was  removed (291.12 ns)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ns      : 1 Nanosecond (0.000000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:59 (59.39 sec), executed benchmarks: 9
+
+Global total time: 00:02:08 (128.38 sec), executed benchmarks: 18
+// * Artifacts cleanup *
+Artifacts cleanup is finished

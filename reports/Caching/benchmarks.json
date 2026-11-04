@@ -1,21 +1,21 @@
 {
   "SchemaVersion": 2,
   "ModuleId": "caching",
-  "GeneratedAtUtc": "2026-11-02T12:55:37.4371206+00:00",
+  "GeneratedAtUtc": "2026-11-04T09:30:46.5087079+00:00",
   "Environments": [
     {
-      "Id": "91de1da20b47",
-      "OperatingSystem": "Ubuntu 26.04.1 LTS",
+      "Id": "7f387ec04cb0",
+      "OperatingSystem": "Microsoft Windows 10.0.19045",
       "OsArchitecture": "X64",
       "ProcessArchitecture": "X64",
-      "Framework": ".NET 10.0.14",
-      "RuntimeVersion": "10.0.14",
-      "RuntimeIdentifier": "linux-x64",
-      "DotNetSdkVersion": "10.0.403",
-      "Processor": "AMD EPYC 7763 64-Core Processor",
-      "LogicalCoreCount": 4,
+      "Framework": ".NET 10.0.13",
+      "RuntimeVersion": "10.0.13",
+      "RuntimeIdentifier": "win-x64",
+      "DotNetSdkVersion": "10.0.402",
+      "Processor": "AMD Ryzen 9 5900X 12-Core Processor",
+      "LogicalCoreCount": 24,
       "ServerGarbageCollector": false,
-      "StopwatchFrequency": 1000000000,
+      "StopwatchFrequency": 10000000,
       "BenchmarkTool": "BenchmarkDotNet",
       "BenchmarkToolVersion": "0.15.8.0",
       "Job": "Quick"
@@ -51,6 +51,13 @@
       "Baseline": false
     },
     {
+      "Id": "Microsoft.Extensions.Caching.Hybrid",
+      "Name": "Microsoft.Extensions.Caching.Hybrid",
+      "Package": "Microsoft.Extensions.Caching.Hybrid",
+      "Version": "10.11.0",
+      "Baseline": false
+    },
+    {
       "Id": "Microsoft.Extensions.Caching.Memory",
       "Name": "Microsoft.Extensions.Caching.Memory",
       "Package": "Microsoft.Extensions.Caching.Memory",
@@ -81,65 +88,74 @@
         {
           "LibraryId": "BitFaster.Caching",
           "Successful": true,
-          "MeanNanoseconds": 8.535239397127892,
-          "StandardErrorNanoseconds": 0.008226998994359613,
+          "MeanNanoseconds": 5.879876311013245,
+          "StandardErrorNanoseconds": 0.05776235536447358,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "CacheManager.Core",
           "Successful": true,
-          "MeanNanoseconds": 73.22476453733957,
-          "StandardErrorNanoseconds": 0.009707604211703776,
+          "MeanNanoseconds": 66.43668032710093,
+          "StandardErrorNanoseconds": 0.2890972711687991,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "EasyCaching.InMemory",
           "Successful": true,
-          "MeanNanoseconds": 94.81249017620527,
-          "StandardErrorNanoseconds": 0.06933726175778918,
+          "MeanNanoseconds": 83.36546758799867,
+          "StandardErrorNanoseconds": 0.6502206921487684,
           "AllocatedBytesPerOperation": 48,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 58.494331646919406,
-          "StandardErrorNanoseconds": 0.06528835421506823,
+          "MeanNanoseconds": 48.67005046400712,
+          "StandardErrorNanoseconds": 0.3287329738199819,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 58.397441876904324,
+          "StandardErrorNanoseconds": 0.6393490780611596,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 42.551591959416506,
-          "StandardErrorNanoseconds": 0.022289061980796058,
+          "MeanNanoseconds": 35.13980802360534,
+          "StandardErrorNanoseconds": 0.12706620070545926,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 101.86269182314648,
-          "StandardErrorNanoseconds": 0.031895101568959444,
+          "MeanNanoseconds": 82.83374912721595,
+          "StandardErrorNanoseconds": 0.35190057182414336,
           "AllocatedBytesPerOperation": 32,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 170.22985474274498,
-          "StandardErrorNanoseconds": 0.03610933379403794,
+          "MeanNanoseconds": 545.6847881524606,
+          "StandardErrorNanoseconds": 2.008858265884368,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -151,56 +167,65 @@
         {
           "LibraryId": "BitFaster.Caching",
           "Successful": true,
-          "MeanNanoseconds": 5.90836322814708,
-          "StandardErrorNanoseconds": 0.018399188727165828,
+          "MeanNanoseconds": 4.657669015914657,
+          "StandardErrorNanoseconds": 0.04549525446066527,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "EasyCaching.InMemory",
           "Successful": true,
-          "MeanNanoseconds": 10.304893305029148,
-          "StandardErrorNanoseconds": 0.006503155200187707,
+          "MeanNanoseconds": 8.282104278603441,
+          "StandardErrorNanoseconds": 0.023235732243191597,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 52.82302465154451,
-          "StandardErrorNanoseconds": 0.014566241601310596,
+          "MeanNanoseconds": 44.78051632588157,
+          "StandardErrorNanoseconds": 0.18486162671361106,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 243.69641161712602,
+          "StandardErrorNanoseconds": 0.7148797726562461,
+          "AllocatedBytesPerOperation": 416,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 37.071746450007865,
-          "StandardErrorNanoseconds": 0.012695245915847884,
+          "MeanNanoseconds": 31.800709388591255,
+          "StandardErrorNanoseconds": 0.12193843400485282,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 35.04863512071107,
-          "StandardErrorNanoseconds": 0.02351385296866686,
+          "MeanNanoseconds": 24.650046371679007,
+          "StandardErrorNanoseconds": 0.18013825753294097,
           "AllocatedBytesPerOperation": 32,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 55.21117574026932,
-          "StandardErrorNanoseconds": 0.017058674157508034,
+          "MeanNanoseconds": 49.81270790875548,
+          "StandardErrorNanoseconds": 0.19213423601707572,
           "AllocatedBytesPerOperation": 0,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -212,65 +237,74 @@
         {
           "LibraryId": "BitFaster.Caching",
           "Successful": true,
-          "MeanNanoseconds": 168.44282311621706,
-          "StandardErrorNanoseconds": 0.14671045726415938,
+          "MeanNanoseconds": 127.35126567906129,
+          "StandardErrorNanoseconds": 0.44824112025044244,
           "AllocatedBytesPerOperation": 96,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "CacheManager.Core",
           "Successful": true,
-          "MeanNanoseconds": 315.5874439232604,
-          "StandardErrorNanoseconds": 3.4939137669722666,
+          "MeanNanoseconds": 264.205070228881,
+          "StandardErrorNanoseconds": 1.0212785564145632,
           "AllocatedBytesPerOperation": 192,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "EasyCaching.InMemory",
           "Successful": true,
-          "MeanNanoseconds": 579.0930942351387,
-          "StandardErrorNanoseconds": 4.583798124932305,
+          "MeanNanoseconds": 500.6513492970293,
+          "StandardErrorNanoseconds": 3.171988317016977,
           "AllocatedBytesPerOperation": 184,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 294.43303447131103,
-          "StandardErrorNanoseconds": 2.9962989585840862,
+          "MeanNanoseconds": 259.10184360737964,
+          "StandardErrorNanoseconds": 3.868060289376548,
           "AllocatedBytesPerOperation": 144,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 973.1330805413021,
+          "StandardErrorNanoseconds": 18.21149699077748,
+          "AllocatedBytesPerOperation": 560,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 266.1071426230918,
-          "StandardErrorNanoseconds": 2.641019873488168,
+          "MeanNanoseconds": 228.40347238101458,
+          "StandardErrorNanoseconds": 5.30279775355373,
           "AllocatedBytesPerOperation": 144,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 847.1948693362913,
-          "StandardErrorNanoseconds": 7.845603662002779,
+          "MeanNanoseconds": 762.484016165446,
+          "StandardErrorNanoseconds": 6.967949623451667,
           "AllocatedBytesPerOperation": 208,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 651.9075560206563,
-          "StandardErrorNanoseconds": 4.612024830442343,
+          "MeanNanoseconds": 961.1914503994615,
+          "StandardErrorNanoseconds": 7.220249922478027,
           "AllocatedBytesPerOperation": 224,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -282,38 +316,47 @@
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 237.68669657409427,
-          "StandardErrorNanoseconds": 0.8038726944025864,
+          "MeanNanoseconds": 175.94063280646677,
+          "StandardErrorNanoseconds": 0.6488269707921943,
           "AllocatedBytesPerOperation": 240,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 481.5660441261854,
+          "StandardErrorNanoseconds": 3.7144281706824116,
+          "AllocatedBytesPerOperation": 560,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 151.5793510969004,
-          "StandardErrorNanoseconds": 0.16783406819957114,
+          "MeanNanoseconds": 120.93604828309707,
+          "StandardErrorNanoseconds": 0.946256602786842,
           "AllocatedBytesPerOperation": 144,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 183.24714748642018,
-          "StandardErrorNanoseconds": 0.0965957627712127,
+          "MeanNanoseconds": 153.66112636469725,
+          "StandardErrorNanoseconds": 1.0074399934604308,
           "AllocatedBytesPerOperation": 176,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 479.4539943339241,
-          "StandardErrorNanoseconds": 0.3994922219690612,
+          "MeanNanoseconds": 870.9178846432263,
+          "StandardErrorNanoseconds": 7.974115310155428,
           "AllocatedBytesPerOperation": 400,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -325,56 +368,65 @@
         {
           "LibraryId": "CacheManager.Core",
           "Successful": true,
-          "MeanNanoseconds": 200132254.14285713,
-          "StandardErrorNanoseconds": 1180.5318097118334,
+          "MeanNanoseconds": 210195044.44444445,
+          "StandardErrorNanoseconds": 1944132.4025492643,
           "AllocatedBytesPerOperation": 408,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "EasyCaching.InMemory",
           "Successful": true,
-          "MeanNanoseconds": 200128491,
-          "StandardErrorNanoseconds": 5064.307074305145,
+          "MeanNanoseconds": 208464587.5,
+          "StandardErrorNanoseconds": 1788230.1698923975,
           "AllocatedBytesPerOperation": 248,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 200137643,
-          "StandardErrorNanoseconds": 3034.266554508605,
+          "MeanNanoseconds": 213194462.5,
+          "StandardErrorNanoseconds": 535866.814455627,
           "AllocatedBytesPerOperation": 304,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 211014125,
+          "StandardErrorNanoseconds": 1539859.6685540164,
+          "AllocatedBytesPerOperation": 1312,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 200130516.5,
-          "StandardErrorNanoseconds": 3589.1193259230436,
+          "MeanNanoseconds": 212871350,
+          "StandardErrorNanoseconds": 448691.62612772576,
           "AllocatedBytesPerOperation": 304,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 200140655.7142857,
-          "StandardErrorNanoseconds": 3651.658114664427,
-          "AllocatedBytesPerOperation": 2592,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "MeanNanoseconds": 207668633.33333334,
+          "StandardErrorNanoseconds": 1883586.0876854612,
+          "AllocatedBytesPerOperation": 1360,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 200132896.375,
-          "StandardErrorNanoseconds": 7681.842900952264,
+          "MeanNanoseconds": 211049922.2222222,
+          "StandardErrorNanoseconds": 2038944.4137005045,
           "AllocatedBytesPerOperation": 488,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -386,65 +438,74 @@
         {
           "LibraryId": "BitFaster.Caching",
           "Successful": true,
-          "MeanNanoseconds": 112.01246021493391,
-          "StandardErrorNanoseconds": 0.13681643533496118,
+          "MeanNanoseconds": 79.62651137022351,
+          "StandardErrorNanoseconds": 0.41254326133368496,
           "AllocatedBytesPerOperation": 96,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "CacheManager.Core",
           "Successful": true,
-          "MeanNanoseconds": 182.03114743278067,
-          "StandardErrorNanoseconds": 0.0849508643223626,
+          "MeanNanoseconds": 128.51206100192377,
+          "StandardErrorNanoseconds": 0.7457070302659778,
           "AllocatedBytesPerOperation": 144,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "EasyCaching.InMemory",
           "Successful": true,
-          "MeanNanoseconds": 303.5280586906899,
-          "StandardErrorNanoseconds": 0.8010867124459136,
+          "MeanNanoseconds": 268.17550979130675,
+          "StandardErrorNanoseconds": 0.8625640490025739,
           "AllocatedBytesPerOperation": 184,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 266.21769691090407,
-          "StandardErrorNanoseconds": 0.641258592612898,
+          "MeanNanoseconds": 192.38963740958098,
+          "StandardErrorNanoseconds": 0.4642501456427174,
           "AllocatedBytesPerOperation": 192,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 724.1321834378948,
+          "StandardErrorNanoseconds": 3.5194961232102115,
+          "AllocatedBytesPerOperation": 936,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "Microsoft.Extensions.Caching.Memory",
           "Successful": true,
-          "MeanNanoseconds": 209.96116075342542,
-          "StandardErrorNanoseconds": 0.4787564050994581,
+          "MeanNanoseconds": 169.911020428586,
+          "StandardErrorNanoseconds": 0.31354393992526813,
           "AllocatedBytesPerOperation": 192,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "System.Runtime.Caching",
           "Successful": true,
-          "MeanNanoseconds": 988.3480459659919,
-          "StandardErrorNanoseconds": 6.006325990120064,
-          "AllocatedBytesPerOperation": 6800,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "MeanNanoseconds": 359.6190738123,
+          "StandardErrorNanoseconds": 3.2179319229755183,
+          "AllocatedBytesPerOperation": 240,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 413.3102228841227,
-          "StandardErrorNanoseconds": 0.26574230809504584,
+          "MeanNanoseconds": 326.93742013535575,
+          "StandardErrorNanoseconds": 0.9118773670317405,
           "AllocatedBytesPerOperation": 272,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -456,20 +517,29 @@
         {
           "LibraryId": "LazyCache",
           "Successful": true,
-          "MeanNanoseconds": 2206333.2020089286,
-          "StandardErrorNanoseconds": 3021.617278355363,
-          "AllocatedBytesPerOperation": 2569,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "MeanNanoseconds": 15286704.6875,
+          "StandardErrorNanoseconds": 50288.64449076145,
+          "AllocatedBytesPerOperation": 2590,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
+        },
+        {
+          "LibraryId": "Microsoft.Extensions.Caching.Hybrid",
+          "Successful": true,
+          "MeanNanoseconds": 15280357.03125,
+          "StandardErrorNanoseconds": 39063.4204433967,
+          "AllocatedBytesPerOperation": 3368,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         },
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 2242621.0331632653,
-          "StandardErrorNanoseconds": 3720.5959914582586,
-          "AllocatedBytesPerOperation": 3194,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "MeanNanoseconds": 15075335.9375,
+          "StandardErrorNanoseconds": 40728.47278925368,
+          "AllocatedBytesPerOperation": 3193,
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     },
@@ -481,27 +551,24 @@
         {
           "LibraryId": "ZiggyCreatures.FusionCache",
           "Successful": true,
-          "MeanNanoseconds": 200171335.2857143,
-          "StandardErrorNanoseconds": 8071.707554386333,
+          "MeanNanoseconds": 208356950,
+          "StandardErrorNanoseconds": 2096180.3126560142,
           "AllocatedBytesPerOperation": 1360,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-caching-measured"
+          "EnvironmentId": "7f387ec04cb0",
+          "EvidenceId": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured"
         }
       ]
     }
   ],
   "Evidence": [
     {
-      "Id": "41447572041-1-caching-measured",
+      "Id": "20261104T092558Z-1ddd2c9fc9054f8-caching-measured",
       "Kind": "measured",
-      "GeneratedAtUtc": "2026-11-02T12:55:37.4261595+00:00",
-      "CommitSha": "bfb24472dd60196008cbb15b57ee909a5902cfa5",
-      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41447572041",
+      "GeneratedAtUtc": "2026-11-04T09:30:46.498361+00:00",
       "Job": "Quick",
-      "EnvironmentId": "91de1da20b47",
+      "EnvironmentId": "7f387ec04cb0",
       "ArchiveName": "matrix-reports",
-      "ManifestPath": "reports/Caching/evidence/41447572041-1-caching-measured/manifest.json",
-      "Repository": "DevTeam/dotnet-matrix"
+      "ManifestPath": "reports/Caching/evidence/20261104T092558Z-1ddd2c9fc9054f8-caching-measured/manifest.json"
     }
   ]
 }

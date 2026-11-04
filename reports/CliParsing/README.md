@@ -21,16 +21,17 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**McMaster.Extensions.CommandLineUtils**](https://matrix.dev-team.org/?category=cli-parsing&library=McMaster.Extensions.CommandLineUtils) | 10/10 | 586 | 767 | 1352 | gold in Parse, silver in Errors, silver in Help, silver in Options |
-| 2 | [**System.CommandLine**](https://matrix.dev-team.org/?category=cli-parsing&library=System.CommandLine) | 10/10 | 710 | 560 | 1270 | gold in Errors, gold in Options, silver in Parse, bronze in Help |
-| 3 | [**ConsoleAppFramework**](https://matrix.dev-team.org/?category=cli-parsing&library=ConsoleAppFramework) | 5/10 | 306 | 306 | 612 | gold in Help, bronze in Options, bronze in Parse |
-| 4 | [**clipr**](https://matrix.dev-team.org/?category=cli-parsing&library=clipr) | 10/10 | 110 | 254 | 364 |  |
-| 5 | [**CommandLineParser**](https://matrix.dev-team.org/?category=cli-parsing&library=CommandLineParser) | 9/10 | 139 | 206 | 345 | bronze in Errors |
-| 6 | [**Spectre.Console.Cli**](https://matrix.dev-team.org/?category=cli-parsing&library=Spectre.Console.Cli) | 10/10 | 129 | 207 | 335 |  |
-| 7 | [**PowerArgs**](https://matrix.dev-team.org/?category=cli-parsing&library=PowerArgs) | 9/10 | 111 | 145 | 256 |  |
-| 8 | [**CliFx**](https://matrix.dev-team.org/?category=cli-parsing&library=CliFx) | 10/10 | 112 | 93 | 205 |  |
-| 9 | [**Typin**](https://matrix.dev-team.org/?category=cli-parsing&library=Typin) | 10/10 | 56 | 132 | 188 |  |
-| 10 | [**Cocona**](https://matrix.dev-team.org/?category=cli-parsing&library=Cocona) | 10/10 | 19 | 64 | 82 |  |
+| 1 | [**McMaster.Extensions.CommandLineUtils**](https://matrix.dev-team.org/?category=cli-parsing&library=McMaster.Extensions.CommandLineUtils) | 10/10 | 581 | 767 | 1348 | gold in Parse, silver in Errors, silver in Help, silver in Options |
+| 2 | [**System.CommandLine**](https://matrix.dev-team.org/?category=cli-parsing&library=System.CommandLine) | 10/10 | 713 | 560 | 1274 | gold in Errors, gold in Options, silver in Parse, bronze in Help |
+| 3 | [**ConsoleAppFramework**](https://matrix.dev-team.org/?category=cli-parsing&library=ConsoleAppFramework) | 5/10 | 306 | 305 | 611 | gold in Help, bronze in Options, bronze in Parse |
+| 4 | [**CommandDotNet**](https://matrix.dev-team.org/?category=cli-parsing&library=CommandDotNet) | 10/10 | 158 | 255 | 413 |  |
+| 5 | [**clipr**](https://matrix.dev-team.org/?category=cli-parsing&library=clipr) | 10/10 | 128 | 254 | 382 |  |
+| 6 | [**CommandLineParser**](https://matrix.dev-team.org/?category=cli-parsing&library=CommandLineParser) | 9/10 | 159 | 206 | 365 | bronze in Errors |
+| 7 | [**Spectre.Console.Cli**](https://matrix.dev-team.org/?category=cli-parsing&library=Spectre.Console.Cli) | 10/10 | 129 | 207 | 336 |  |
+| 8 | [**PowerArgs**](https://matrix.dev-team.org/?category=cli-parsing&library=PowerArgs) | 9/10 | 125 | 145 | 270 |  |
+| 9 | [**CliFx**](https://matrix.dev-team.org/?category=cli-parsing&library=CliFx) | 10/10 | 109 | 92 | 201 |  |
+| 10 | [**Typin**](https://matrix.dev-team.org/?category=cli-parsing&library=Typin) | 10/10 | 60 | 132 | 192 |  |
+| 11 | [**Cocona**](https://matrix.dev-team.org/?category=cli-parsing&library=Cocona) | 10/10 | 18 | 61 | 79 |  |
 
 
 <details>
@@ -44,155 +45,170 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=cli-parsing).
 
-#### 1. McMaster.Extensions.CommandLineUtils — 1352 of 2000
+#### 1. McMaster.Extensions.CommandLineUtils — 1348 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 3.78 μs | 64.47 ns | 13.2 | 3.94 KB | 96 B | 17.2 |
-| Parse Positional Argument | 1.95 μs | 1.95 μs | 100 | 2.26 KB | 2.26 KB | 100 |
-| Parse Repeated Option | 4.86 μs | 3.27 μs | 81.9 | 5.27 KB | 5.27 KB | 100 |
-| Parse Switch | 7.96 μs | 124.98 ns | 12.6 | 8.27 KB | 144 B | 14.1 |
-| Bind Typed Model | 1.92 μs | 1.92 μs | 100 | 2.3 KB | 2.3 KB | 100 |
-| Generate Help | 2.96 μs | 119.43 ns | 20.2 | 5.39 KB | 672 B | 35.4 |
-| Error Unknown Option | 4.81 μs | 2.26 μs | 68.6 | 3.25 KB | 3.25 KB | 100 |
-| Error Missing Required Value | 6.22 μs | 1.96 μs | 56.2 | 3.39 KB | 3.39 KB | 100 |
-| Error Invalid Type | 6.42 μs | 2.74 μs | 65.3 | 1.95 KB | 1.95 KB | 100 |
-| Error Missing Required Argument | 4.74 μs | 2.17 μs | 67.7 | 2.47 KB | 2.47 KB | 100 |
+| Parse Option Value | 2.59 μs | 43.28 ns | 13.1 | 3.94 KB | 96 B | 17.2 |
+| Parse Positional Argument | 1.39 μs | 1.39 μs | 100 | 2.3 KB | 2.3 KB | 100 |
+| Parse Repeated Option | 3.54 μs | 2.39 μs | 82.2 | 5.27 KB | 5.27 KB | 100 |
+| Parse Switch | 5.37 μs | 85.41 ns | 12.7 | 8.27 KB | 144 B | 14.1 |
+| Bind Typed Model | 1.39 μs | 1.39 μs | 100 | 2.3 KB | 2.3 KB | 100 |
+| Generate Help | 2.02 μs | 101.17 ns | 22.5 | 5.39 KB | 672 B | 35.4 |
+| Error Unknown Option | 3.73 μs | 1.56 μs | 64.7 | 3.25 KB | 3.25 KB | 100 |
+| Error Missing Required Value | 4.35 μs | 1.39 μs | 56.5 | 3.39 KB | 3.39 KB | 100 |
+| Error Invalid Type | 4.93 μs | 1.89 μs | 61.9 | 1.95 KB | 1.95 KB | 100 |
+| Error Missing Required Argument | 3.44 μs | 1.58 μs | 67.9 | 2.47 KB | 2.47 KB | 100 |
 
-#### 2. System.CommandLine — 1270 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 2.45 μs | 64.47 ns | 16.4 | 5.73 KB | 96 B | 14.3 |
-| Parse Positional Argument | 2.59 μs | 1.95 μs | 86.9 | 5.7 KB | 2.26 KB | 63.1 |
-| Parse Repeated Option | 3.27 μs | 3.27 μs | 100 | 6.63 KB | 5.27 KB | 89.2 |
-| Parse Switch | 5.08 μs | 124.98 ns | 15.7 | 11.52 KB | 144 B | 11.9 |
-| Bind Typed Model | 2.81 μs | 1.92 μs | 82.5 | 5.7 KB | 2.3 KB | 63.7 |
-| Generate Help | 16.52 μs | 119.43 ns | 8.537 | 26.09 KB | 672 B | 16.1 |
-| Error Unknown Option | 2.26 μs | 2.26 μs | 100 | 4.95 KB | 3.25 KB | 81.2 |
-| Error Missing Required Value | 1.96 μs | 1.96 μs | 100 | 4.47 KB | 3.39 KB | 87.2 |
-| Error Invalid Type | 2.74 μs | 2.74 μs | 100 | 5.36 KB | 1.95 KB | 60.6 |
-| Error Missing Required Argument | 2.17 μs | 2.17 μs | 100 | 4.7 KB | 2.47 KB | 72.7 |
-
-#### 3. ConsoleAppFramework — 612 of 2000
+#### 2. System.CommandLine — 1274 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 64.47 ns | 64.47 ns | 100 | 96 B | 96 B | 100 |
-| Parse Positional Argument | — | 1.95 μs | 0 | — | 2.26 KB | 0 |
-| Parse Repeated Option | — | 3.27 μs | 0 | — | 5.27 KB | 0 |
-| Parse Switch | 124.98 ns | 124.98 ns | 100 | 144 B | 144 B | 100 |
-| Bind Typed Model | — | 1.92 μs | 0 | — | 2.3 KB | 0 |
-| Generate Help | 119.43 ns | 119.43 ns | 100 | 672 B | 672 B | 100 |
-| Error Unknown Option | 2.2 ms | 2.26 μs | 3.205 | 3.63 MB | 3.25 KB | 2.966 |
-| Error Missing Required Value | 2.11 ms | 1.96 μs | 3.049 | 4.87 MB | 3.39 KB | 2.616 |
-| Error Invalid Type | — | 2.74 μs | 0 | — | 1.95 KB | 0 |
-| Error Missing Required Argument | — | 2.17 μs | 0 | — | 2.47 KB | 0 |
+| Parse Option Value | 1.78 μs | 43.28 ns | 15.8 | 5.73 KB | 96 B | 14.3 |
+| Parse Positional Argument | 1.85 μs | 1.39 μs | 86.9 | 5.7 KB | 2.3 KB | 63.7 |
+| Parse Repeated Option | 2.39 μs | 2.39 μs | 100 | 6.63 KB | 5.27 KB | 89.2 |
+| Parse Switch | 3.82 μs | 85.41 ns | 15 | 11.52 KB | 144 B | 11.9 |
+| Bind Typed Model | 1.89 μs | 1.39 μs | 85.9 | 5.7 KB | 2.3 KB | 63.7 |
+| Generate Help | 10.9 μs | 101.17 ns | 9.681 | 26.09 KB | 672 B | 16.1 |
+| Error Unknown Option | 1.56 μs | 1.56 μs | 100 | 4.95 KB | 3.25 KB | 81.2 |
+| Error Missing Required Value | 1.39 μs | 1.39 μs | 100 | 4.47 KB | 3.39 KB | 87.2 |
+| Error Invalid Type | 1.89 μs | 1.89 μs | 100 | 5.36 KB | 1.95 KB | 60.6 |
+| Error Missing Required Argument | 1.58 μs | 1.58 μs | 100 | 4.7 KB | 2.47 KB | 72.7 |
 
-#### 4. clipr — 364 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 146.77 μs | 64.47 ns | 2.112 | 38.94 KB | 96 B | 5.484 |
-| Parse Positional Argument | 71.74 μs | 1.95 μs | 16.5 | 18.21 KB | 2.26 KB | 35.4 |
-| Parse Repeated Option | 175.04 μs | 3.27 μs | 13.7 | 43.16 KB | 5.27 KB | 35 |
-| Parse Switch | 327.44 μs | 124.98 ns | 1.961 | 78.58 KB | 144 B | 4.569 |
-| Bind Typed Model | 74.99 μs | 1.92 μs | 16 | 18.21 KB | 2.3 KB | 35.7 |
-| Generate Help | 172.05 μs | 119.43 ns | 2.646 | 59.31 KB | 672 B | 10.7 |
-| Error Unknown Option | 118.31 μs | 2.26 μs | 13.8 | 39.4 KB | 3.25 KB | 28.8 |
-| Error Missing Required Value | 169 μs | 1.96 μs | 10.8 | 38.94 KB | 3.39 KB | 29.6 |
-| Error Invalid Type | 95.96 μs | 2.74 μs | 16.9 | 19.41 KB | 1.95 KB | 31.9 |
-| Error Missing Required Argument | 87.24 μs | 2.17 μs | 15.8 | 18.33 KB | 2.47 KB | 36.8 |
-
-#### 5. CommandLineParser — 345 of 2000
+#### 3. ConsoleAppFramework — 611 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 47.92 μs | 64.47 ns | 3.696 | 33.1 KB | 96 B | 5.948 |
-| Parse Positional Argument | 50.98 μs | 1.95 μs | 19.6 | 24.74 KB | 2.26 KB | 30.3 |
-| Parse Repeated Option | — | 3.27 μs | 0 | — | 5.27 KB | 0 |
-| Parse Switch | 132.13 μs | 124.98 ns | 3.088 | 69.29 KB | 144 B | 4.865 |
-| Bind Typed Model | 32.32 μs | 1.92 μs | 24.4 | 24.73 KB | 2.3 KB | 30.6 |
-| Generate Help | 169.3 μs | 119.43 ns | 2.667 | 70.92 KB | 672 B | 9.788 |
-| Error Unknown Option | 90.17 μs | 2.26 μs | 15.8 | 34.56 KB | 3.25 KB | 30.8 |
-| Error Missing Required Value | 47.9 μs | 1.96 μs | 20.2 | 31.08 KB | 3.39 KB | 33.1 |
-| Error Invalid Type | 49.7 μs | 2.74 μs | 23.5 | 25.91 KB | 1.95 KB | 27.6 |
-| Error Missing Required Argument | 31.96 μs | 2.17 μs | 26.1 | 23.12 KB | 2.47 KB | 32.8 |
+| Parse Option Value | 43.28 ns | 43.28 ns | 100 | 96 B | 96 B | 100 |
+| Parse Positional Argument | — | 1.39 μs | 0 | — | 2.3 KB | 0 |
+| Parse Repeated Option | — | 2.39 μs | 0 | — | 5.27 KB | 0 |
+| Parse Switch | 85.41 ns | 85.41 ns | 100 | 144 B | 144 B | 100 |
+| Bind Typed Model | — | 1.39 μs | 0 | — | 2.3 KB | 0 |
+| Generate Help | 101.17 ns | 101.17 ns | 100 | 672 B | 672 B | 100 |
+| Error Unknown Option | 1.8 ms | 1.56 μs | 2.944 | 4.79 MB | 3.25 KB | 2.583 |
+| Error Missing Required Value | 2.05 ms | 1.39 μs | 2.604 | 5.72 MB | 3.39 KB | 2.415 |
+| Error Invalid Type | — | 1.89 μs | 0 | — | 1.95 KB | 0 |
+| Error Missing Required Argument | — | 1.58 μs | 0 | — | 2.47 KB | 0 |
 
-#### 6. Spectre.Console.Cli — 335 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 69.32 μs | 64.47 ns | 3.073 | 37.7 KB | 96 B | 5.574 |
-| Parse Positional Argument | 53.38 μs | 1.95 μs | 19.1 | 30.32 KB | 2.26 KB | 27.4 |
-| Parse Repeated Option | 73.79 μs | 3.27 μs | 21 | 42.48 KB | 5.27 KB | 35.3 |
-| Parse Switch | 232.71 μs | 124.98 ns | 2.327 | 76.61 KB | 144 B | 4.627 |
-| Bind Typed Model | 53.54 μs | 1.92 μs | 18.9 | 30.32 KB | 2.3 KB | 27.7 |
-| Generate Help | 230.15 μs | 119.43 ns | 2.287 | 154.27 KB | 672 B | 6.637 |
-| Error Unknown Option | 146.98 μs | 2.26 μs | 12.4 | 99.54 KB | 3.25 KB | 18.1 |
-| Error Missing Required Value | 93.52 μs | 1.96 μs | 14.5 | 39.48 KB | 3.39 KB | 29.4 |
-| Error Invalid Type | 86.17 μs | 2.74 μs | 17.8 | 34.54 KB | 1.95 KB | 23.9 |
-| Error Missing Required Argument | 73.9 μs | 2.17 μs | 17.1 | 31.93 KB | 2.47 KB | 27.9 |
-
-#### 7. PowerArgs — 256 of 2000
+#### 4. CommandDotNet — 413 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 102.75 μs | 64.47 ns | 2.524 | 88.22 KB | 96 B | 3.644 |
-| Parse Positional Argument | 51.43 μs | 1.95 μs | 19.5 | 42.87 KB | 2.26 KB | 23.1 |
-| Parse Repeated Option | — | 3.27 μs | 0 | — | 5.27 KB | 0 |
-| Parse Switch | 232.91 μs | 124.98 ns | 2.326 | 191.4 KB | 144 B | 2.928 |
-| Bind Typed Model | 52.86 μs | 1.92 μs | 19 | 42.87 KB | 2.3 KB | 23.3 |
-| Generate Help | 1.04 ms | 119.43 ns | 1.074 | 326.45 KB | 672 B | 4.563 |
-| Error Unknown Option | 135.39 μs | 2.26 μs | 12.9 | 102.91 KB | 3.25 KB | 17.8 |
-| Error Missing Required Value | 89.13 μs | 1.96 μs | 14.8 | 65.46 KB | 3.39 KB | 22.8 |
-| Error Invalid Type | 65.94 μs | 2.74 μs | 20.4 | 40.29 KB | 1.95 KB | 22.1 |
-| Error Missing Required Argument | 64.28 μs | 2.17 μs | 18.4 | 42.29 KB | 2.47 KB | 24.3 |
+| Parse Option Value | 40.07 μs | 43.28 ns | 3.324 | 32.2 KB | 96 B | 6.031 |
+| Parse Positional Argument | 25.14 μs | 1.39 μs | 23.6 | 21.4 KB | 2.3 KB | 32.9 |
+| Parse Repeated Option | 45.2 μs | 2.39 μs | 23 | 34.55 KB | 5.27 KB | 39.1 |
+| Parse Switch | 83.82 μs | 85.41 ns | 3.211 | 65.1 KB | 144 B | 5.019 |
+| Bind Typed Model | 37.91 μs | 1.39 μs | 19.2 | 23.37 KB | 2.3 KB | 31.5 |
+| Generate Help | 48.44 μs | 101.17 ns | 4.593 | 38.18 KB | 672 B | 13.3 |
+| Error Unknown Option | 50.63 μs | 1.56 μs | 17.6 | 40.05 KB | 3.25 KB | 28.6 |
+| Error Missing Required Value | 41.17 μs | 1.39 μs | 18.4 | 30.98 KB | 3.39 KB | 33.2 |
+| Error Invalid Type | 39.22 μs | 1.89 μs | 21.9 | 20.46 KB | 1.95 KB | 31.1 |
+| Error Missing Required Argument | 29.14 μs | 1.58 μs | 23.3 | 20.71 KB | 2.47 KB | 34.7 |
 
-#### 8. CliFx — 205 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 29.72 μs | 64.47 ns | 4.693 | 52.06 KB | 96 B | 4.743 |
-| Parse Positional Argument | 27.91 μs | 1.95 μs | 26.5 | 50.84 KB | 2.26 KB | 21.2 |
-| Parse Repeated Option | 39.98 μs | 3.27 μs | 28.6 | 54.04 KB | 5.27 KB | 31.3 |
-| Parse Switch | 58.61 μs | 124.98 ns | 4.636 | 104.61 KB | 144 B | 3.96 |
-| Bind Typed Model | 28.75 μs | 1.92 μs | 25.8 | 50.84 KB | 2.3 KB | 21.4 |
-| Generate Help | 1.81 ms | 119.43 ns | 0.816 | 10.04 MB | 672 B | 0.813 |
-| Error Unknown Option | 401.23 μs | 2.26 μs | 7.511 | 3.28 MB | 3.25 KB | 3.122 |
-| Error Missing Required Value | 611.93 μs | 1.96 μs | 5.661 | 3.69 MB | 3.39 KB | 3.006 |
-| Error Invalid Type | 5.58 ms | 2.74 μs | 2.217 | 23.29 MB | 1.95 KB | 0.91 |
-| Error Missing Required Argument | 589.2 μs | 2.17 μs | 6.073 | 4.5 MB | 2.47 KB | 2.326 |
-
-#### 9. Typin — 188 of 2000
+#### 5. clipr — 382 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 287.23 μs | 64.47 ns | 1.51 | 99.1 KB | 96 B | 3.438 |
-| Parse Positional Argument | 381.74 μs | 1.95 μs | 7.155 | 92.43 KB | 2.26 KB | 15.7 |
-| Parse Repeated Option | 492.14 μs | 3.27 μs | 8.147 | 101.17 KB | 5.27 KB | 22.9 |
-| Parse Switch | 920.61 μs | 124.98 ns | 1.17 | 191.38 KB | 144 B | 2.928 |
-| Bind Typed Model | 331.01 μs | 1.92 μs | 7.611 | 92.42 KB | 2.3 KB | 15.8 |
-| Generate Help | 466.27 μs | 119.43 ns | 1.607 | 110.46 KB | 672 B | 7.843 |
-| Error Unknown Option | 375.95 μs | 2.26 μs | 7.759 | 113.22 KB | 3.25 KB | 17 |
-| Error Missing Required Value | 329.22 μs | 1.96 μs | 7.718 | 112.74 KB | 3.39 KB | 17.4 |
-| Error Invalid Type | 554.17 μs | 2.74 μs | 7.031 | 113.01 KB | 1.95 KB | 13.2 |
-| Error Missing Required Argument | 474.83 μs | 2.17 μs | 6.765 | 105.99 KB | 2.47 KB | 15.3 |
+| Parse Option Value | 92.47 μs | 43.28 ns | 2.188 | 38.87 KB | 96 B | 5.489 |
+| Parse Positional Argument | 29.21 μs | 1.39 μs | 21.9 | 18.2 KB | 2.3 KB | 35.7 |
+| Parse Repeated Option | 113.41 μs | 2.39 μs | 14.5 | 43.15 KB | 5.27 KB | 35 |
+| Parse Switch | 201.02 μs | 85.41 ns | 2.073 | 78.34 KB | 144 B | 4.576 |
+| Bind Typed Model | 34.36 μs | 1.39 μs | 20.1 | 18.2 KB | 2.3 KB | 35.7 |
+| Generate Help | 129.29 μs | 101.17 ns | 2.811 | 59.44 KB | 672 B | 10.7 |
+| Error Unknown Option | 103.19 μs | 1.56 μs | 12.3 | 39.41 KB | 3.25 KB | 28.8 |
+| Error Missing Required Value | 107.81 μs | 1.39 μs | 11.3 | 39.36 KB | 3.39 KB | 29.4 |
+| Error Invalid Type | 51.84 μs | 1.89 μs | 19.1 | 19.41 KB | 1.95 KB | 31.9 |
+| Error Missing Required Argument | 33.57 μs | 1.58 μs | 21.7 | 18.32 KB | 2.47 KB | 36.9 |
 
-#### 10. Cocona — 82 of 2000
+#### 6. CommandLineParser — 365 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Parse Option Value | 3.18 ms | 64.47 ns | 0.454 | 320.9 KB | 96 B | 1.911 |
-| Parse Positional Argument | 3.63 ms | 1.95 μs | 2.32 | 317.35 KB | 2.26 KB | 8.478 |
-| Parse Repeated Option | 3.64 ms | 3.27 μs | 2.998 | 321.58 KB | 5.27 KB | 12.8 |
-| Parse Switch | 7.25 ms | 124.98 ns | 0.417 | 640.95 KB | 144 B | 1.6 |
-| Bind Typed Model | 3.13 ms | 1.92 μs | 2.477 | 316.88 KB | 2.3 KB | 8.557 |
-| Generate Help | 4.47 ms | 119.43 ns | 0.519 | 379.75 KB | 672 B | 4.231 |
-| Error Unknown Option | 3.63 ms | 2.26 μs | 2.497 | 479.69 KB | 3.25 KB | 8.261 |
-| Error Missing Required Value | 4.11 ms | 1.96 μs | 2.184 | 690.87 KB | 3.39 KB | 7.03 |
-| Error Invalid Type | 4.55 ms | 2.74 μs | 2.453 | 876.29 KB | 1.95 KB | 4.749 |
-| Error Missing Required Argument | 4.09 ms | 2.17 μs | 2.305 | 692.14 KB | 2.47 KB | 6 |
+| Parse Option Value | 26.56 μs | 43.28 ns | 4.083 | 33.22 KB | 96 B | 5.937 |
+| Parse Positional Argument | 25.86 μs | 1.39 μs | 23.2 | 24.61 KB | 2.3 KB | 30.7 |
+| Parse Repeated Option | — | 2.39 μs | 0 | — | 5.27 KB | 0 |
+| Parse Switch | 78.32 μs | 85.41 ns | 3.322 | 69.27 KB | 144 B | 4.866 |
+| Bind Typed Model | 16.68 μs | 1.39 μs | 28.9 | 24.61 KB | 2.3 KB | 30.7 |
+| Generate Help | 97.98 μs | 101.17 ns | 3.229 | 69.91 KB | 672 B | 9.858 |
+| Error Unknown Option | 37.66 μs | 1.56 μs | 20.4 | 34.55 KB | 3.25 KB | 30.8 |
+| Error Missing Required Value | 33.89 μs | 1.39 μs | 20.2 | 31.09 KB | 3.39 KB | 33.1 |
+| Error Invalid Type | 22.96 μs | 1.89 μs | 28.7 | 25.87 KB | 1.95 KB | 27.6 |
+| Error Missing Required Argument | 22.42 μs | 1.58 μs | 26.6 | 23.12 KB | 2.47 KB | 32.8 |
+
+#### 7. Spectre.Console.Cli — 336 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse Option Value | 68.06 μs | 43.28 ns | 2.551 | 37.71 KB | 96 B | 5.573 |
+| Parse Positional Argument | 49.63 μs | 1.39 μs | 16.8 | 30.32 KB | 2.3 KB | 27.7 |
+| Parse Repeated Option | 51.21 μs | 2.39 μs | 21.6 | 42.47 KB | 5.27 KB | 35.3 |
+| Parse Switch | 141.38 μs | 85.41 ns | 2.472 | 76.33 KB | 144 B | 4.636 |
+| Bind Typed Model | 37.8 μs | 1.39 μs | 19.2 | 30.32 KB | 2.3 KB | 27.7 |
+| Generate Help | 320.39 μs | 101.17 ns | 1.786 | 154.59 KB | 672 B | 6.63 |
+| Error Unknown Option | 100.28 μs | 1.56 μs | 12.5 | 99.53 KB | 3.25 KB | 18.1 |
+| Error Missing Required Value | 60.58 μs | 1.39 μs | 15.1 | 39.48 KB | 3.39 KB | 29.4 |
+| Error Invalid Type | 54.89 μs | 1.89 μs | 18.5 | 34.54 KB | 1.95 KB | 23.9 |
+| Error Missing Required Argument | 47.09 μs | 1.58 μs | 18.4 | 31.93 KB | 2.47 KB | 27.9 |
+
+#### 8. PowerArgs — 270 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse Option Value | 58.09 μs | 43.28 ns | 2.761 | 88.22 KB | 96 B | 3.644 |
+| Parse Positional Argument | 29.51 μs | 1.39 μs | 21.7 | 42.87 KB | 2.3 KB | 23.3 |
+| Parse Repeated Option | — | 2.39 μs | 0 | — | 5.27 KB | 0 |
+| Parse Switch | 125.57 μs | 85.41 ns | 2.623 | 191.4 KB | 144 B | 2.928 |
+| Bind Typed Model | 29.6 μs | 1.39 μs | 21.7 | 42.87 KB | 2.3 KB | 23.3 |
+| Generate Help | 645.3 μs | 101.17 ns | 1.258 | 326.46 KB | 672 B | 4.563 |
+| Error Unknown Option | 74.12 μs | 1.56 μs | 14.5 | 102.91 KB | 3.25 KB | 17.8 |
+| Error Missing Required Value | 48.94 μs | 1.39 μs | 16.8 | 65.46 KB | 3.39 KB | 22.8 |
+| Error Invalid Type | 36.36 μs | 1.89 μs | 22.8 | 40.29 KB | 1.95 KB | 22.1 |
+| Error Missing Required Argument | 35.57 μs | 1.58 μs | 21.1 | 42.29 KB | 2.47 KB | 24.3 |
+
+#### 9. CliFx — 201 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse Option Value | 22.02 μs | 43.28 ns | 4.484 | 52.06 KB | 96 B | 4.743 |
+| Parse Positional Argument | 21.48 μs | 1.39 μs | 25.5 | 50.84 KB | 2.3 KB | 21.4 |
+| Parse Repeated Option | 22.88 μs | 2.39 μs | 32.3 | 54.04 KB | 5.27 KB | 31.3 |
+| Parse Switch | 43.02 μs | 85.41 ns | 4.482 | 104.61 KB | 144 B | 3.96 |
+| Bind Typed Model | 21.55 μs | 1.39 μs | 25.4 | 50.84 KB | 2.3 KB | 21.4 |
+| Generate Help | 2.44 ms | 101.17 ns | 0.647 | 13.04 MB | 672 B | 0.713 |
+| Error Unknown Option | 620.8 μs | 1.56 μs | 5.019 | 4.76 MB | 3.25 KB | 2.591 |
+| Error Missing Required Value | 704.61 μs | 1.39 μs | 4.439 | 5 MB | 3.39 KB | 2.583 |
+| Error Invalid Type | 7.01 ms | 1.89 μs | 1.641 | 25.81 MB | 1.95 KB | 0.865 |
+| Error Missing Required Argument | 544.93 μs | 1.58 μs | 5.395 | 4.99 MB | 2.47 KB | 2.208 |
+
+#### 10. Typin — 192 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse Option Value | 270.72 μs | 43.28 ns | 1.279 | 95.43 KB | 96 B | 3.504 |
+| Parse Positional Argument | 269.32 μs | 1.39 μs | 7.198 | 92.38 KB | 2.3 KB | 15.8 |
+| Parse Repeated Option | 292.5 μs | 2.39 μs | 9.042 | 101.12 KB | 5.27 KB | 22.9 |
+| Parse Switch | 570.44 μs | 85.41 ns | 1.231 | 191.25 KB | 144 B | 2.929 |
+| Bind Typed Model | 244.76 μs | 1.39 μs | 7.545 | 92.37 KB | 2.3 KB | 15.8 |
+| Generate Help | 342.92 μs | 101.17 ns | 1.726 | 110.43 KB | 672 B | 7.845 |
+| Error Unknown Option | 349.23 μs | 1.56 μs | 6.692 | 110.29 KB | 3.25 KB | 17.2 |
+| Error Missing Required Value | 330.73 μs | 1.39 μs | 6.479 | 109.08 KB | 3.39 KB | 17.7 |
+| Error Invalid Type | 259.28 μs | 1.89 μs | 8.532 | 107.62 KB | 1.95 KB | 13.6 |
+| Error Missing Required Argument | 157.89 μs | 1.58 μs | 10 | 108.62 KB | 2.47 KB | 15.1 |
+
+#### 11. Cocona — 79 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Parse Option Value | 2.48 ms | 43.28 ns | 0.422 | 320.37 KB | 96 B | 1.912 |
+| Parse Positional Argument | 2.72 ms | 1.39 μs | 2.267 | 317.87 KB | 2.3 KB | 8.543 |
+| Parse Repeated Option | 2.75 ms | 2.39 μs | 2.949 | 320.88 KB | 5.27 KB | 12.8 |
+| Parse Switch | 5.52 ms | 85.41 ns | 0.396 | 644.43 KB | 144 B | 1.596 |
+| Bind Typed Model | 2.33 ms | 1.39 μs | 2.445 | 316.44 KB | 2.3 KB | 8.563 |
+| Generate Help | 3.14 ms | 101.17 ns | 0.57 | 379.23 KB | 672 B | 4.233 |
+| Error Unknown Option | 2.88 ms | 1.56 μs | 2.33 | 597.84 KB | 3.25 KB | 7.399 |
+| Error Missing Required Value | 3.35 ms | 1.39 μs | 2.036 | 880.81 KB | 3.39 KB | 6.226 |
+| Error Invalid Type | 3.11 ms | 1.89 μs | 2.463 | 970.57 KB | 1.95 KB | 4.513 |
+| Error Missing Required Argument | 3.26 ms | 1.58 μs | 2.205 | 813.14 KB | 2.47 KB | 5.536 |
 
 </details>
 

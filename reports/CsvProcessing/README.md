@@ -21,10 +21,12 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 896 | 999 | 1895 | gold in Throughput, gold in Write, silver in Correctness, silver in Read |
-| 2 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 874 | 902 | 1776 | gold in Correctness, gold in Read, silver in Throughput, silver in Write |
-| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 489 | 370 | 859 | bronze in Correctness, bronze in Read |
-| 4 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 534 | 249 | 783 | bronze in Throughput, bronze in Write |
+| 1 | [**CsvHelper**](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 10/10 | 874 | 975 | 1849 | gold in Throughput, silver in Correctness, silver in Read, silver in Write |
+| 2 | [**Sep**](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 10/10 | 870 | 886 | 1756 | gold in Correctness, gold in Read, silver in Throughput, bronze in Write |
+| 3 | [**TinyCsvParser**](https://matrix.dev-team.org/?category=csv-processing&library=TinyCsvParser) | 9/10 | 510 | 370 | 880 | bronze in Correctness, bronze in Read |
+| 4 | [**Sylvan.Data.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=Sylvan.Data.Csv) | 9/10 | 528 | 245 | 773 | bronze in Throughput |
+| 5 | [**NReco.Csv**](https://matrix.dev-team.org/?category=csv-processing&library=NReco.Csv) | 6/10 | 332 | 155 | 487 | gold in Write |
+| 6 | [**FlatFiles**](https://matrix.dev-team.org/?category=csv-processing&library=FlatFiles) | 10/10 | 72 | 188 | 261 |  |
 
 
 <details>
@@ -38,65 +40,95 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=csv-processing).
 
-#### 1. CsvHelper — 1895 of 2000
+#### 1. CsvHelper — 1849 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 942.65 ns | 506.24 ns | 73.3 | 1.59 KB | 1.59 KB | 100 |
-| Read Typed Records | 789.98 ns | 613.05 ns | 88.1 | 1.4 KB | 1.4 KB | 100 |
-| Read Large Dataset | 379.54 μs | 379.54 μs | 100 | 1016.67 KB | 1016.67 KB | 100 |
-| Quoted Fields | 555.61 ns | 410.74 ns | 86 | 1.38 KB | 1.34 KB | 98.9 |
-| Escaped Delimiters | 488.87 ns | 369.07 ns | 86.9 | 1.11 KB | 1.11 KB | 100 |
-| Header Mapping | 941.08 ns | 621.63 ns | 81.3 | 1.4 KB | 1.4 KB | 100 |
-| Custom Conversion | 436.5 ns | 284.52 ns | 80.8 | 1.04 KB | 1.04 KB | 100 |
-| Streaming Read | 246.17 μs | 246.17 μs | 100 | 1.04 KB | 1.04 KB | 100 |
-| Write Rows | 223.62 ns | 223.62 ns | 100 | 744 B | 744 B | 100 |
-| Async Read | 264.32 μs | 264.32 μs | 100 | 1.14 KB | 1.14 KB | 100 |
+| Read Simple Rows | 1.21 μs | 674.89 ns | 74.6 | 1.59 KB | 1.59 KB | 100 |
+| Read Typed Records | 1.19 μs | 833.74 ns | 83.8 | 1.4 KB | 1.4 KB | 100 |
+| Read Large Dataset | 496.15 μs | 496.15 μs | 100 | 1016.67 KB | 1016.67 KB | 100 |
+| Quoted Fields | 860.61 ns | 581.99 ns | 82.3 | 1.38 KB | 1.34 KB | 98.9 |
+| Escaped Delimiters | 744.96 ns | 528.43 ns | 84.2 | 1.11 KB | 1.11 KB | 100 |
+| Header Mapping | 1.23 μs | 869.82 ns | 84.2 | 1.4 KB | 1.4 KB | 100 |
+| Custom Conversion | 648.25 ns | 414.4 ns | 80 | 1.04 KB | 1.04 KB | 100 |
+| Streaming Read | 352.07 μs | 352.07 μs | 100 | 1.04 KB | 1.04 KB | 100 |
+| Write Rows | 316.07 ns | 227.68 ns | 84.9 | 744 B | 416 B | 75.7 |
+| Async Read | 368.59 μs | 368.59 μs | 100 | 1.14 KB | 1.14 KB | 100 |
 
-#### 2. Sep — 1776 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 506.24 ns | 506.24 ns | 100 | 1.89 KB | 1.59 KB | 91.9 |
-| Read Typed Records | 613.05 ns | 613.05 ns | 100 | 1.7 KB | 1.4 KB | 91 |
-| Read Large Dataset | 809.44 μs | 379.54 μs | 68.5 | 1016.97 KB | 1016.67 KB | 100 |
-| Quoted Fields | 410.74 ns | 410.74 ns | 100 | 1.34 KB | 1.34 KB | 100 |
-| Escaped Delimiters | 369.07 ns | 369.07 ns | 100 | 1.35 KB | 1.11 KB | 90.8 |
-| Header Mapping | 621.63 ns | 621.63 ns | 100 | 1.7 KB | 1.4 KB | 91 |
-| Custom Conversion | 284.52 ns | 284.52 ns | 100 | 1.11 KB | 1.04 KB | 96.8 |
-| Streaming Read | 625.47 μs | 246.17 μs | 62.7 | 1.34 KB | 1.04 KB | 88.4 |
-| Write Rows | 360.43 ns | 223.62 ns | 78.8 | 1.89 KB | 744 B | 62.6 |
-| Async Read | 647.9 μs | 264.32 μs | 63.9 | 1.44 KB | 1.14 KB | 89.3 |
-
-#### 3. TinyCsvParser — 859 of 2000
+#### 2. Sep — 1756 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 1.18 μs | 506.24 ns | 65.6 | 5.56 KB | 1.59 KB | 53.8 |
-| Read Typed Records | 1.36 μs | 613.05 ns | 67.3 | 5.3 KB | 1.4 KB | 51.7 |
-| Read Large Dataset | 2.29 ms | 379.54 μs | 40.7 | 2.91 MB | 1016.67 KB | 58.4 |
-| Quoted Fields | 1.07 μs | 410.74 ns | 62.1 | 4.87 KB | 1.34 KB | 52.9 |
-| Escaped Delimiters | 976.28 ns | 369.07 ns | 61.5 | 4.98 KB | 1.11 KB | 47.6 |
-| Header Mapping | 1.43 μs | 621.63 ns | 65.9 | 5.3 KB | 1.4 KB | 51.7 |
-| Custom Conversion | 707.08 ns | 284.52 ns | 63.5 | 4.32 KB | 1.04 KB | 49.5 |
-| Streaming Read | 2.46 ms | 246.17 μs | 31.6 | 2.75 MB | 1.04 KB | 1.941 |
-| Write Rows | — | 223.62 ns | 0 | — | 744 B | 0 |
-| Async Read | 2.9 ms | 264.32 μs | 30.2 | 1.39 MB | 1.14 KB | 2.864 |
+| Read Simple Rows | 674.89 ns | 674.89 ns | 100 | 1.89 KB | 1.59 KB | 91.9 |
+| Read Typed Records | 833.74 ns | 833.74 ns | 100 | 1.7 KB | 1.4 KB | 91 |
+| Read Large Dataset | 992.52 μs | 496.15 μs | 70.7 | 1016.97 KB | 1016.67 KB | 100 |
+| Quoted Fields | 581.99 ns | 581.99 ns | 100 | 1.34 KB | 1.34 KB | 100 |
+| Escaped Delimiters | 528.43 ns | 528.43 ns | 100 | 1.35 KB | 1.11 KB | 90.8 |
+| Header Mapping | 869.82 ns | 869.82 ns | 100 | 1.7 KB | 1.4 KB | 91 |
+| Custom Conversion | 414.4 ns | 414.4 ns | 100 | 1.11 KB | 1.04 KB | 96.8 |
+| Streaming Read | 812.86 μs | 352.07 μs | 65.8 | 1.34 KB | 1.04 KB | 88.4 |
+| Write Rows | 507.21 ns | 227.68 ns | 67.1 | 1.89 KB | 416 B | 47.4 |
+| Async Read | 846.74 μs | 368.59 μs | 66 | 1.44 KB | 1.14 KB | 89.3 |
 
-#### 4. Sylvan.Data.Csv — 783 of 2000
+#### 3. TinyCsvParser — 880 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Read Simple Rows | 1.42 μs | 506.24 ns | 59.8 | 35.38 KB | 1.59 KB | 21.4 |
-| Read Typed Records | 1.52 μs | 613.05 ns | 63.5 | 35.11 KB | 1.4 KB | 20.1 |
-| Read Large Dataset | 825.9 μs | 379.54 μs | 67.8 | 1.03 MB | 1016.67 KB | 98.4 |
-| Quoted Fields | 1.24 μs | 410.74 ns | 57.5 | 34.34 KB | 1.34 KB | 19.9 |
-| Escaped Delimiters | 1.22 μs | 369.07 ns | 55.1 | 34.3 KB | 1.11 KB | 18.2 |
-| Header Mapping | 1.63 μs | 621.63 ns | 61.7 | 35.11 KB | 1.4 KB | 20.1 |
-| Custom Conversion | — | 284.52 ns | 0 | — | 1.04 KB | 0 |
-| Streaming Read | 645 μs | 246.17 μs | 61.8 | 34.75 KB | 1.04 KB | 17.5 |
-| Write Rows | 920.79 ns | 223.62 ns | 49.4 | 32.78 KB | 744 B | 15.1 |
-| Async Read | 802.95 μs | 264.32 μs | 57.4 | 36.05 KB | 1.14 KB | 18 |
+| Read Simple Rows | 1.51 μs | 674.89 ns | 66.9 | 5.56 KB | 1.59 KB | 53.8 |
+| Read Typed Records | 1.82 μs | 833.74 ns | 67.8 | 5.3 KB | 1.4 KB | 51.7 |
+| Read Large Dataset | 2.97 ms | 496.15 μs | 40.9 | 2.91 MB | 1016.67 KB | 58.4 |
+| Quoted Fields | 1.26 μs | 581.99 ns | 67.9 | 4.87 KB | 1.34 KB | 52.9 |
+| Escaped Delimiters | 1.32 μs | 528.43 ns | 63.3 | 4.98 KB | 1.11 KB | 47.6 |
+| Header Mapping | 1.74 μs | 869.82 ns | 70.7 | 5.3 KB | 1.4 KB | 51.7 |
+| Custom Conversion | 871.74 ns | 414.4 ns | 69 | 4.32 KB | 1.04 KB | 49.5 |
+| Streaming Read | 3.07 ms | 352.07 μs | 33.8 | 2.75 MB | 1.04 KB | 1.941 |
+| Write Rows | — | 227.68 ns | 0 | — | 416 B | 0 |
+| Async Read | 4.3 ms | 368.59 μs | 29.3 | 1.39 MB | 1.14 KB | 2.864 |
+
+#### 4. Sylvan.Data.Csv — 773 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Read Simple Rows | 2.12 μs | 674.89 ns | 56.5 | 35.38 KB | 1.59 KB | 21.4 |
+| Read Typed Records | 2.26 μs | 833.74 ns | 60.8 | 35.11 KB | 1.4 KB | 20.1 |
+| Read Large Dataset | 1.05 ms | 496.15 μs | 68.8 | 1.03 MB | 1016.67 KB | 98.4 |
+| Quoted Fields | 1.69 μs | 581.99 ns | 58.7 | 34.34 KB | 1.34 KB | 19.9 |
+| Escaped Delimiters | 1.62 μs | 528.43 ns | 57.1 | 34.3 KB | 1.11 KB | 18.2 |
+| Header Mapping | 2.25 μs | 869.82 ns | 62.2 | 35.11 KB | 1.4 KB | 20.1 |
+| Custom Conversion | — | 414.4 ns | 0 | — | 1.04 KB | 0 |
+| Streaming Read | 840.96 μs | 352.07 μs | 64.7 | 34.75 KB | 1.04 KB | 17.5 |
+| Write Rows | 1.38 μs | 227.68 ns | 40.7 | 32.78 KB | 416 B | 11.4 |
+| Async Read | 1.09 ms | 368.59 μs | 58.1 | 36.05 KB | 1.14 KB | 18 |
+
+#### 5. NReco.Csv — 487 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Read Simple Rows | 2.78 μs | 674.89 ns | 49.3 | 81.01 KB | 1.59 KB | 14.1 |
+| Read Typed Records | — | 833.74 ns | 0 | — | 1.4 KB | 0 |
+| Read Large Dataset | — | 496.15 μs | 0 | — | 1016.67 KB | 0 |
+| Quoted Fields | 2.76 μs | 581.99 ns | 46 | 80.72 KB | 1.34 KB | 13 |
+| Escaped Delimiters | 2.89 μs | 528.43 ns | 42.8 | 80.63 KB | 1.11 KB | 11.9 |
+| Header Mapping | 3.22 μs | 869.82 ns | 52 | 81.15 KB | 1.4 KB | 13.2 |
+| Custom Conversion | — | 414.4 ns | 0 | — | 1.04 KB | 0 |
+| Streaming Read | 2.03 ms | 352.07 μs | 41.6 | 1017.93 KB | 1.04 KB | 3.231 |
+| Write Rows | 227.68 ns | 227.68 ns | 100 | 416 B | 416 B | 100 |
+| Async Read | — | 368.59 μs | 0 | — | 1.14 KB | 0 |
+
+#### 6. FlatFiles — 261 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Read Simple Rows | 653.11 μs | 674.89 ns | 3.217 | 23.38 KB | 1.59 KB | 26.3 |
+| Read Typed Records | 674.78 μs | 833.74 ns | 3.517 | 23.27 KB | 1.4 KB | 24.7 |
+| Read Large Dataset | 11.07 ms | 496.15 μs | 21.2 | 8.6 MB | 1016.67 KB | 34 |
+| Quoted Fields | 581.28 μs | 581.99 ns | 3.167 | 21.48 KB | 1.34 KB | 25.2 |
+| Escaped Delimiters | 591.15 μs | 528.43 ns | 2.993 | 22.03 KB | 1.11 KB | 22.7 |
+| Header Mapping | 1.9 ms | 869.82 ns | 2.142 | 67.64 KB | 1.4 KB | 14.5 |
+| Custom Conversion | 961.81 μs | 414.4 ns | 2.078 | 24.69 KB | 1.04 KB | 20.7 |
+| Streaming Read | 14.53 ms | 352.07 μs | 15.6 | 8.45 MB | 1.04 KB | 1.108 |
+| Write Rows | 504.61 μs | 227.68 ns | 2.129 | 13.14 KB | 416 B | 18.1 |
+| Async Read | 13.69 ms | 368.59 μs | 16.4 | 11.35 MB | 1.14 KB | 1.001 |
 
 </details>
 

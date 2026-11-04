@@ -21,13 +21,14 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**LazyCache**](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 7/7 | 497 | 630 | 1126 | gold in Read Through, bronze in Lifetime, bronze in Reads |
-| 2 | [**Microsoft.Extensions.Caching.Memory**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Memory) | 6/7 | 442 | 550 | 992 | silver in Lifetime, silver in Reads, silver in Writes, bronze in Read Through |
-| 3 | [**FusionCache**](https://matrix.dev-team.org/?category=caching&library=ZiggyCreatures.FusionCache) | 7/7 | 417 | 559 | 976 | silver in Read Through |
+| 1 | [**LazyCache**](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 7/7 | 488 | 630 | 1118 | gold in Read Through, bronze in Lifetime, bronze in Reads |
+| 2 | [**Microsoft.Extensions.Caching.Memory**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Memory) | 6/7 | 427 | 550 | 978 | silver in Lifetime, silver in Reads, bronze in Writes |
+| 3 | [**FusionCache**](https://matrix.dev-team.org/?category=caching&library=ZiggyCreatures.FusionCache) | 7/7 | 367 | 559 | 926 | bronze in Read Through |
 | 4 | [**BitFaster.Caching**](https://matrix.dev-team.org/?category=caching&library=BitFaster.Caching) | 4/7 | 400 | 400 | 800 | gold in Reads, gold in Writes |
-| 5 | [**EasyCaching.InMemory**](https://matrix.dev-team.org/?category=caching&library=EasyCaching.InMemory) | 5/7 | 325 | 410 | 734 | gold in Lifetime |
-| 6 | [**System.Runtime.Caching**](https://matrix.dev-team.org/?category=caching&library=System.Runtime.Caching) | 6/7 | 344 | 340 | 684 |  |
-| 7 | [**CacheManager.Core**](https://matrix.dev-team.org/?category=caching&library=CacheManager.Core) | 4/7 | 288 | 338 | 626 | bronze in Writes |
+| 5 | [**System.Runtime.Caching**](https://matrix.dev-team.org/?category=caching&library=System.Runtime.Caching) | 6/7 | 353 | 406 | 759 |  |
+| 6 | [**EasyCaching.InMemory**](https://matrix.dev-team.org/?category=caching&library=EasyCaching.InMemory) | 5/7 | 312 | 410 | 721 | gold in Lifetime |
+| 7 | [**Microsoft.Extensions.Caching.Hybrid**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Hybrid) | 7/7 | 368 | 337 | 705 | silver in Read Through |
+| 8 | [**CacheManager.Core**](https://matrix.dev-team.org/?category=caching&library=CacheManager.Core) | 4/7 | 280 | 338 | 618 | silver in Writes |
 
 
 <details>
@@ -41,89 +42,101 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=caching).
 
-#### 1. LazyCache — 1126 of 1400
+#### 1. LazyCache — 1118 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 58.49 ns | 8.54 ns | 40 | 0 B | 0 B | 100 |
-| Get Miss | 52.82 ns | 5.91 ns | 35.8 | 0 B | 0 B | 100 |
-| Set | 294.43 ns | 168.44 ns | 75.7 | 144 B | 96 B | 84.5 |
-| Get Or Create | 237.69 ns | 151.58 ns | 80 | 240 B | 144 B | 79.8 |
-| Expiration | 200.14 ms | 200.13 ms | 100 | 304 B | 248 B | 91.1 |
-| Invalidate | 266.22 ns | 112.01 ns | 65 | 192 B | 96 B | 74.5 |
-| Concurrent Get Or Create | 2.21 ms | 2.21 ms | 100 | 2.51 KB | 2.51 KB | 100 |
+| Get Hit | 48.67 ns | 5.88 ns | 37.2 | 0 B | 0 B | 100 |
+| Get Miss | 44.78 ns | 4.66 ns | 35.2 | 0 B | 0 B | 100 |
+| Set | 259.1 ns | 127.35 ns | 70.2 | 144 B | 96 B | 84.5 |
+| Get Or Create | 175.94 ns | 120.94 ns | 83 | 240 B | 144 B | 79.8 |
+| Expiration | 213.19 ms | 207.67 ms | 98.7 | 304 B | 248 B | 91.1 |
+| Invalidate | 192.39 ns | 79.63 ns | 64.6 | 192 B | 96 B | 74.5 |
+| Concurrent Get Or Create | 15.29 ms | 15.08 ms | 99.3 | 2.53 KB | 2.53 KB | 100 |
 
-#### 2. Microsoft.Extensions.Caching.Memory — 992 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 42.55 ns | 8.54 ns | 46.8 | 0 B | 0 B | 100 |
-| Get Miss | 37.07 ns | 5.91 ns | 42.6 | 0 B | 0 B | 100 |
-| Set | 266.11 ns | 168.44 ns | 79.6 | 144 B | 96 B | 84.5 |
-| Get Or Create | 151.58 ns | 151.58 ns | 100 | 144 B | 144 B | 100 |
-| Expiration | 200.13 ms | 200.13 ms | 100 | 304 B | 248 B | 91.1 |
-| Invalidate | 209.96 ns | 112.01 ns | 73.2 | 192 B | 96 B | 74.5 |
-| Concurrent Get Or Create | — | 2.21 ms | 0 | — | 2.51 KB | 0 |
-
-#### 3. FusionCache — 976 of 1400
+#### 2. Microsoft.Extensions.Caching.Memory — 978 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 170.23 ns | 8.54 ns | 23.6 | 0 B | 0 B | 100 |
-| Get Miss | 55.21 ns | 5.91 ns | 35.1 | 0 B | 0 B | 100 |
-| Set | 651.91 ns | 168.44 ns | 50.9 | 224 B | 96 B | 69.6 |
-| Get Or Create | 479.45 ns | 151.58 ns | 56.4 | 400 B | 144 B | 62.9 |
-| Expiration | 200.13 ms | 200.13 ms | 100 | 488 B | 248 B | 72.9 |
-| Invalidate | 413.31 ns | 112.01 ns | 52.2 | 272 B | 96 B | 63.7 |
-| Concurrent Get Or Create | 2.24 ms | 2.21 ms | 99.2 | 3.12 KB | 2.51 KB | 89.8 |
+| Get Hit | 35.14 ns | 5.88 ns | 43.6 | 0 B | 0 B | 100 |
+| Get Miss | 31.8 ns | 4.66 ns | 41.5 | 0 B | 0 B | 100 |
+| Set | 228.4 ns | 127.35 ns | 74.8 | 144 B | 96 B | 84.5 |
+| Get Or Create | 120.94 ns | 120.94 ns | 100 | 144 B | 144 B | 100 |
+| Expiration | 212.87 ms | 207.67 ms | 98.8 | 304 B | 248 B | 91.1 |
+| Invalidate | 169.91 ns | 79.63 ns | 68.7 | 192 B | 96 B | 74.5 |
+| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
+
+#### 3. FusionCache — 926 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 545.68 ns | 5.88 ns | 11.2 | 0 B | 0 B | 100 |
+| Get Miss | 49.81 ns | 4.66 ns | 33.4 | 0 B | 0 B | 100 |
+| Set | 961.19 ns | 127.35 ns | 36.5 | 224 B | 96 B | 69.6 |
+| Get Or Create | 870.92 ns | 120.94 ns | 37.4 | 400 B | 144 B | 62.9 |
+| Expiration | 211.05 ms | 207.67 ms | 99.2 | 488 B | 248 B | 72.9 |
+| Invalidate | 326.94 ns | 79.63 ns | 49.6 | 272 B | 96 B | 63.7 |
+| Concurrent Get Or Create | 15.08 ms | 15.08 ms | 100 | 3.12 KB | 2.53 KB | 90.1 |
 
 #### 4. BitFaster.Caching — 800 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 8.54 ns | 8.54 ns | 100 | 0 B | 0 B | 100 |
-| Get Miss | 5.91 ns | 5.91 ns | 100 | 0 B | 0 B | 100 |
-| Set | 168.44 ns | 168.44 ns | 100 | 96 B | 96 B | 100 |
-| Get Or Create | — | 151.58 ns | 0 | — | 144 B | 0 |
-| Expiration | — | 200.13 ms | 0 | — | 248 B | 0 |
-| Invalidate | 112.01 ns | 112.01 ns | 100 | 96 B | 96 B | 100 |
-| Concurrent Get Or Create | — | 2.21 ms | 0 | — | 2.51 KB | 0 |
+| Get Hit | 5.88 ns | 5.88 ns | 100 | 0 B | 0 B | 100 |
+| Get Miss | 4.66 ns | 4.66 ns | 100 | 0 B | 0 B | 100 |
+| Set | 127.35 ns | 127.35 ns | 100 | 96 B | 96 B | 100 |
+| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
+| Expiration | — | 207.67 ms | 0 | — | 248 B | 0 |
+| Invalidate | 79.63 ns | 79.63 ns | 100 | 96 B | 96 B | 100 |
+| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
 
-#### 5. EasyCaching.InMemory — 734 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 94.81 ns | 8.54 ns | 31.5 | 48 B | 0 B | 57.7 |
-| Get Miss | 10.3 ns | 5.91 ns | 78.2 | 0 B | 0 B | 100 |
-| Set | 579.09 ns | 168.44 ns | 54 | 184 B | 96 B | 76 |
-| Get Or Create | — | 151.58 ns | 0 | — | 144 B | 0 |
-| Expiration | 200.13 ms | 200.13 ms | 100 | 248 B | 248 B | 100 |
-| Invalidate | 303.53 ns | 112.01 ns | 60.9 | 184 B | 96 B | 76 |
-| Concurrent Get Or Create | — | 2.21 ms | 0 | — | 2.51 KB | 0 |
-
-#### 6. System.Runtime.Caching — 684 of 1400
+#### 5. System.Runtime.Caching — 759 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 101.86 ns | 8.54 ns | 30.4 | 32 B | 0 B | 65.5 |
-| Get Miss | 35.05 ns | 5.91 ns | 43.8 | 32 B | 0 B | 65.5 |
-| Set | 847.19 ns | 168.44 ns | 44.7 | 208 B | 96 B | 71.9 |
-| Get Or Create | 183.25 ns | 151.58 ns | 91 | 176 B | 144 B | 91.7 |
-| Expiration | 200.14 ms | 200.13 ms | 100 | 2.53 KB | 248 B | 32.2 |
-| Invalidate | 988.35 ns | 112.01 ns | 33.8 | 6.64 KB | 96 B | 13.3 |
-| Concurrent Get Or Create | — | 2.21 ms | 0 | — | 2.51 KB | 0 |
+| Get Hit | 82.83 ns | 5.88 ns | 28.6 | 32 B | 0 B | 65.5 |
+| Get Miss | 24.65 ns | 4.66 ns | 47 | 32 B | 0 B | 65.5 |
+| Set | 762.48 ns | 127.35 ns | 41 | 208 B | 96 B | 71.9 |
+| Get Or Create | 153.66 ns | 120.94 ns | 88.8 | 176 B | 144 B | 91.7 |
+| Expiration | 207.67 ms | 207.67 ms | 100 | 1.33 KB | 248 B | 44.3 |
+| Invalidate | 359.62 ns | 79.63 ns | 47.3 | 240 B | 96 B | 67.4 |
+| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
 
-#### 7. CacheManager.Core — 626 of 1400
+#### 6. EasyCaching.InMemory — 721 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 73.22 ns | 8.54 ns | 35.8 | 0 B | 0 B | 100 |
-| Get Miss | — | 5.91 ns | 0 | — | 0 B | 0 |
-| Set | 315.59 ns | 168.44 ns | 73.2 | 192 B | 96 B | 74.5 |
-| Get Or Create | — | 151.58 ns | 0 | — | 144 B | 0 |
-| Expiration | 200.13 ms | 200.13 ms | 100 | 408 B | 248 B | 79.3 |
-| Invalidate | 182.03 ns | 112.01 ns | 78.6 | 144 B | 96 B | 84.5 |
-| Concurrent Get Or Create | — | 2.21 ms | 0 | — | 2.51 KB | 0 |
+| Get Hit | 83.37 ns | 5.88 ns | 28.6 | 48 B | 0 B | 57.7 |
+| Get Miss | 8.28 ns | 4.66 ns | 78.1 | 0 B | 0 B | 100 |
+| Set | 500.65 ns | 127.35 ns | 50.6 | 184 B | 96 B | 76 |
+| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
+| Expiration | 208.46 ms | 207.67 ms | 99.8 | 248 B | 248 B | 100 |
+| Invalidate | 268.18 ns | 79.63 ns | 54.7 | 184 B | 96 B | 76 |
+| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
+
+#### 7. Microsoft.Extensions.Caching.Hybrid — 705 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 58.4 ns | 5.88 ns | 34 | 88 B | 0 B | 46.3 |
+| Get Miss | 243.7 ns | 4.66 ns | 15.2 | 416 B | 0 B | 23.4 |
+| Set | 973.13 ns | 127.35 ns | 36.3 | 560 B | 96 B | 45.3 |
+| Get Or Create | 481.57 ns | 120.94 ns | 50.3 | 560 B | 144 B | 53.6 |
+| Expiration | 211.01 ms | 207.67 ms | 99.2 | 1.28 KB | 248 B | 45.1 |
+| Invalidate | 724.13 ns | 79.63 ns | 33.3 | 936 B | 96 B | 35.4 |
+| Concurrent Get Or Create | 15.28 ms | 15.08 ms | 99.3 | 3.29 KB | 2.53 KB | 87.8 |
+
+#### 8. CacheManager.Core — 618 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 66.44 ns | 5.88 ns | 31.9 | 0 B | 0 B | 100 |
+| Get Miss | — | 4.66 ns | 0 | — | 0 B | 0 |
+| Set | 264.21 ns | 127.35 ns | 69.6 | 192 B | 96 B | 74.5 |
+| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
+| Expiration | 210.2 ms | 207.67 ms | 99.4 | 408 B | 248 B | 79.3 |
+| Invalidate | 128.51 ns | 79.63 ns | 78.9 | 144 B | 96 B | 84.5 |
+| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
 
 </details>
 

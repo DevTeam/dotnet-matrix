@@ -1,10 +1,10 @@
 {
   "SchemaVersion": 2,
   "ModuleId": "zip-archives",
-  "GeneratedAtUtc": "2026-11-02T12:54:55.0219244+00:00",
+  "GeneratedAtUtc": "2026-11-04T06:57:37.5559134+00:00",
   "Environments": [
     {
-      "Id": "91de1da20b47",
+      "Id": "231b71d2d61c",
       "OperatingSystem": "Ubuntu 26.04.1 LTS",
       "OsArchitecture": "X64",
       "ProcessArchitecture": "X64",
@@ -12,7 +12,7 @@
       "RuntimeVersion": "10.0.14",
       "RuntimeIdentifier": "linux-x64",
       "DotNetSdkVersion": "10.0.403",
-      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "Processor": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
       "LogicalCoreCount": 4,
       "ServerGarbageCollector": false,
       "StopwatchFrequency": 1000000000,
@@ -22,6 +22,13 @@
     }
   ],
   "Libraries": [
+    {
+      "Id": "DotNetZip",
+      "Name": "DotNetZip",
+      "Package": "DotNetZip",
+      "Version": "1.16.0",
+      "Baseline": false
+    },
     {
       "Id": "SharpCompress",
       "Name": "SharpCompress",
@@ -49,31 +56,40 @@
       "Name": "List Entries",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 389412.4369283537,
+          "StandardErrorNanoseconds": 1004.3948267889348,
+          "AllocatedBytesPerOperation": 1060968,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 850360.4854227406,
-          "StandardErrorNanoseconds": 2264.2798957943933,
-          "AllocatedBytesPerOperation": 676544,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 892928.244897959,
+          "StandardErrorNanoseconds": 1150.9459859236279,
+          "AllocatedBytesPerOperation": 676648,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 236660.4571496212,
-          "StandardErrorNanoseconds": 426.1407237589871,
-          "AllocatedBytesPerOperation": 312476,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 223558.14229910716,
+          "StandardErrorNanoseconds": 218.08786475556104,
+          "AllocatedBytesPerOperation": 312475,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 208140.31527549343,
-          "StandardErrorNanoseconds": 1497.9325668033096,
+          "MeanNanoseconds": 220969.10189260563,
+          "StandardErrorNanoseconds": 473.92752833921253,
           "AllocatedBytesPerOperation": 675232,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -83,31 +99,40 @@
       "Name": "Find Entry By Name",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 382728.1516768293,
+          "StandardErrorNanoseconds": 550.3807897875348,
+          "AllocatedBytesPerOperation": 1060894,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 975165.0930232557,
-          "StandardErrorNanoseconds": 2071.212471221416,
-          "AllocatedBytesPerOperation": 676400,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 821004.805280528,
+          "StandardErrorNanoseconds": 399.5010314408602,
+          "AllocatedBytesPerOperation": 676432,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 234745.3931902985,
-          "StandardErrorNanoseconds": 701.0894692595635,
-          "AllocatedBytesPerOperation": 312556,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 233756.97774520257,
+          "StandardErrorNanoseconds": 265.9746019694328,
+          "AllocatedBytesPerOperation": 312555,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 209109.14366987182,
-          "StandardErrorNanoseconds": 1979.052241834643,
+          "MeanNanoseconds": 219757.2827008929,
+          "StandardErrorNanoseconds": 301.3844616814811,
           "AllocatedBytesPerOperation": 675192,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -117,31 +142,40 @@
       "Name": "Read Stored Entry",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 27289700.83116883,
+          "StandardErrorNanoseconds": 15578.990118639447,
+          "AllocatedBytesPerOperation": 68793,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 13955247.849206349,
-          "StandardErrorNanoseconds": 12697.857723049592,
+          "MeanNanoseconds": 11316394.702380953,
+          "StandardErrorNanoseconds": 13699.914179688762,
           "AllocatedBytesPerOperation": 69449,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 13895118.655462187,
-          "StandardErrorNanoseconds": 3819.005583995533,
-          "AllocatedBytesPerOperation": 1045,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 11264552.988636363,
+          "StandardErrorNanoseconds": 2349.5691888223305,
+          "AllocatedBytesPerOperation": 1042,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 13934828.566964285,
-          "StandardErrorNanoseconds": 4630.640860546551,
+          "MeanNanoseconds": 11268552.1328125,
+          "StandardErrorNanoseconds": 11338.277965723835,
           "AllocatedBytesPerOperation": 5240,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -151,31 +185,40 @@
       "Name": "Decompress Entry",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 22036097.958333332,
+          "StandardErrorNanoseconds": 23371.315256785,
+          "AllocatedBytesPerOperation": 139042,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 14614981.916666666,
-          "StandardErrorNanoseconds": 8525.527518982897,
+          "MeanNanoseconds": 11956639.959183674,
+          "StandardErrorNanoseconds": 9374.251147349369,
           "AllocatedBytesPerOperation": 34368,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 14051272.558333334,
-          "StandardErrorNanoseconds": 13042.43089517399,
-          "AllocatedBytesPerOperation": 42039,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 11891219.18382353,
+          "StandardErrorNanoseconds": 4427.798990603682,
+          "AllocatedBytesPerOperation": 42037,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 14069168.569444444,
-          "StandardErrorNanoseconds": 8340.595812022733,
-          "AllocatedBytesPerOperation": 5513,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 11144714.072916666,
+          "StandardErrorNanoseconds": 3212.4566936087454,
+          "AllocatedBytesPerOperation": 5512,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -185,31 +228,40 @@
       "Name": "Extract Many Small Entries",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 32311586.39285714,
+          "StandardErrorNanoseconds": 38600.57222219027,
+          "AllocatedBytesPerOperation": 69492968,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 17310431.14285714,
-          "StandardErrorNanoseconds": 47366.28849962118,
+          "MeanNanoseconds": 14280143.222222222,
+          "StandardErrorNanoseconds": 37865.23583886492,
           "AllocatedBytesPerOperation": 2380576,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 17209554.23214286,
-          "StandardErrorNanoseconds": 109730.90641981347,
+          "MeanNanoseconds": 15454210.285714285,
+          "StandardErrorNanoseconds": 38871.13627388654,
           "AllocatedBytesPerOperation": 37728696,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 14941393.249999998,
-          "StandardErrorNanoseconds": 54350.70313727386,
+          "MeanNanoseconds": 12364622.670329671,
+          "StandardErrorNanoseconds": 21247.805360994225,
           "AllocatedBytesPerOperation": 1011232,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -219,31 +271,40 @@
       "Name": "Create Stored Archive",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 1013743.6337142857,
+          "StandardErrorNanoseconds": 4756.152599884181,
+          "AllocatedBytesPerOperation": 917106,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 1017742.8949404762,
-          "StandardErrorNanoseconds": 728.8847489703105,
-          "AllocatedBytesPerOperation": 661772,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 890036.8875868055,
+          "StandardErrorNanoseconds": 1961.8341703753633,
+          "AllocatedBytesPerOperation": 661773,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 343835.3036206896,
-          "StandardErrorNanoseconds": 2498.6685656425143,
+          "MeanNanoseconds": 332976.69375,
+          "StandardErrorNanoseconds": 1496.2616865006157,
           "AllocatedBytesPerOperation": 980681,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 215723.76978764476,
-          "StandardErrorNanoseconds": 511.386947760705,
+          "MeanNanoseconds": 164310.3463541667,
+          "StandardErrorNanoseconds": 411.69151708218504,
           "AllocatedBytesPerOperation": 661365,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -253,31 +314,40 @@
       "Name": "Create Deflate Fast Archive",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 3350341.4375,
+          "StandardErrorNanoseconds": 4504.735856170982,
+          "AllocatedBytesPerOperation": 1785432,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 2829372.7855113633,
-          "StandardErrorNanoseconds": 9384.42147385525,
-          "AllocatedBytesPerOperation": 353322,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 2843576.65448505,
+          "StandardErrorNanoseconds": 4827.844362262019,
+          "AllocatedBytesPerOperation": 353323,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 2116062.942887931,
-          "StandardErrorNanoseconds": 7648.195548769217,
+          "MeanNanoseconds": 2138285.3426724137,
+          "StandardErrorNanoseconds": 3659.6756662394478,
           "AllocatedBytesPerOperation": 637857,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 682435.9626623376,
-          "StandardErrorNanoseconds": 492.65537338201136,
+          "MeanNanoseconds": 684205.0638586956,
+          "StandardErrorNanoseconds": 568.3719407310879,
           "AllocatedBytesPerOperation": 337603,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -287,31 +357,40 @@
       "Name": "Create Deflate Optimal Archive",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 3754900.8390151514,
+          "StandardErrorNanoseconds": 2441.6927653309335,
+          "AllocatedBytesPerOperation": 1650785,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 3387138.675675676,
-          "StandardErrorNanoseconds": 7196.900013207631,
-          "AllocatedBytesPerOperation": 352873,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 3324497.931111111,
+          "StandardErrorNanoseconds": 1590.2248362567443,
+          "AllocatedBytesPerOperation": 352872,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 2582945.754464286,
-          "StandardErrorNanoseconds": 4852.899753718845,
+          "MeanNanoseconds": 2563239.9536082475,
+          "StandardErrorNanoseconds": 12368.36789351586,
           "AllocatedBytesPerOperation": 636182,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 1176892.8444368131,
-          "StandardErrorNanoseconds": 888.4531915425437,
+          "MeanNanoseconds": 1200116.4233630951,
+          "StandardErrorNanoseconds": 1379.3630902148072,
           "AllocatedBytesPerOperation": 198320,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -321,31 +400,40 @@
       "Name": "Create Many Small Entries",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 32394681.5,
+          "StandardErrorNanoseconds": 123976.90877986157,
+          "AllocatedBytesPerOperation": 57019894,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 22873613.583333332,
-          "StandardErrorNanoseconds": 48104.968915245445,
-          "AllocatedBytesPerOperation": 13301503,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 20495503.1125,
+          "StandardErrorNanoseconds": 36057.63347076383,
+          "AllocatedBytesPerOperation": 13301308,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 8375350.34375,
-          "StandardErrorNanoseconds": 40797.52211868287,
-          "AllocatedBytesPerOperation": 14671772,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 7697549.355769231,
+          "StandardErrorNanoseconds": 42610.326433165224,
+          "AllocatedBytesPerOperation": 14671088,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 5504198.228723404,
-          "StandardErrorNanoseconds": 156292.91883539988,
-          "AllocatedBytesPerOperation": 13275553,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 6091605.034722222,
+          "StandardErrorNanoseconds": 50552.65030785665,
+          "AllocatedBytesPerOperation": 13275306,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -355,31 +443,40 @@
       "Name": "Append Entry",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 189433.34521484375,
+          "StandardErrorNanoseconds": 407.4860946659839,
+          "AllocatedBytesPerOperation": 717612,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 1056970.3613744075,
-          "StandardErrorNanoseconds": 1862.1032346740988,
-          "AllocatedBytesPerOperation": 738737,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 954210.8574468085,
+          "StandardErrorNanoseconds": 3716.6195193173958,
+          "AllocatedBytesPerOperation": 738776,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 211941.42812499998,
-          "StandardErrorNanoseconds": 704.9985256040878,
+          "MeanNanoseconds": 159157.3324619772,
+          "StandardErrorNanoseconds": 604.8871473101941,
           "AllocatedBytesPerOperation": 407734,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 202615.48130933545,
-          "StandardErrorNanoseconds": 1317.329903937541,
-          "AllocatedBytesPerOperation": 404347,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 151001.9634433962,
+          "StandardErrorNanoseconds": 1025.9333339189816,
+          "AllocatedBytesPerOperation": 404348,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -391,29 +488,29 @@
         {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 17422185.551020406,
-          "StandardErrorNanoseconds": 83588.07974503918,
-          "AllocatedBytesPerOperation": 2388918,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 14437445.401960783,
+          "StandardErrorNanoseconds": 3572.0761935794185,
+          "AllocatedBytesPerOperation": 2388911,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 16194082.714285716,
-          "StandardErrorNanoseconds": 34944.99171852753,
-          "AllocatedBytesPerOperation": 469680,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 13598197.26984127,
+          "StandardErrorNanoseconds": 25816.395677155728,
+          "AllocatedBytesPerOperation": 469673,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 19499537.412698414,
-          "StandardErrorNanoseconds": 104426.99941520877,
-          "AllocatedBytesPerOperation": 17657920,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 16883489.985714287,
+          "StandardErrorNanoseconds": 44572.30420448169,
+          "AllocatedBytesPerOperation": 17657890,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -423,31 +520,40 @@
       "Name": "Read Zip64 Archive",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 96771867.75,
+          "StandardErrorNanoseconds": 2671646.445687521,
+          "AllocatedBytesPerOperation": 57371656,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 94223677.91666667,
-          "StandardErrorNanoseconds": 2020522.3697724338,
+          "MeanNanoseconds": 77969722.16666667,
+          "StandardErrorNanoseconds": 2543615.822318049,
           "AllocatedBytesPerOperation": 39914552,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 31688000.92857143,
-          "StandardErrorNanoseconds": 265692.99837984174,
-          "AllocatedBytesPerOperation": 20448146,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 37507364.979166664,
+          "StandardErrorNanoseconds": 496312.32195608714,
+          "AllocatedBytesPerOperation": 20448078,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "System.IO.Compression",
           "Successful": true,
-          "MeanNanoseconds": 56886494.395833336,
-          "StandardErrorNanoseconds": 888982.6425100227,
-          "AllocatedBytesPerOperation": 41301996,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "MeanNanoseconds": 62808028.395833336,
+          "StandardErrorNanoseconds": 843834.3052663532,
+          "AllocatedBytesPerOperation": 41301772,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     },
@@ -457,37 +563,46 @@
       "Name": "Read AES Encrypted Entry",
       "Results": [
         {
+          "LibraryId": "DotNetZip",
+          "Successful": true,
+          "MeanNanoseconds": 2927696.3042016802,
+          "StandardErrorNanoseconds": 3431.3553137879076,
+          "AllocatedBytesPerOperation": 141417,
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
+        },
+        {
           "LibraryId": "SharpCompress",
           "Successful": true,
-          "MeanNanoseconds": 1157470.2563073393,
-          "StandardErrorNanoseconds": 3030.4512278103653,
+          "MeanNanoseconds": 1206487.2038834952,
+          "StandardErrorNanoseconds": 1625.625624589989,
           "AllocatedBytesPerOperation": 10043,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         },
         {
           "LibraryId": "SharpZipLib",
           "Successful": true,
-          "MeanNanoseconds": 2600672.992105263,
-          "StandardErrorNanoseconds": 5989.018665090805,
+          "MeanNanoseconds": 2737815.7925824174,
+          "StandardErrorNanoseconds": 7897.77142463693,
           "AllocatedBytesPerOperation": 44967,
-          "EnvironmentId": "91de1da20b47",
-          "EvidenceId": "41447572041-1-zip-archives-measured"
+          "EnvironmentId": "231b71d2d61c",
+          "EvidenceId": "41787986984-1-zip-archives-measured"
         }
       ]
     }
   ],
   "Evidence": [
     {
-      "Id": "41447572041-1-zip-archives-measured",
+      "Id": "41787986984-1-zip-archives-measured",
       "Kind": "measured",
-      "GeneratedAtUtc": "2026-11-02T12:54:55.0108702+00:00",
-      "CommitSha": "bfb24472dd60196008cbb15b57ee909a5902cfa5",
-      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41447572041",
+      "GeneratedAtUtc": "2026-11-04T06:57:37.5452725+00:00",
+      "CommitSha": "c9ef3d5cafb9c2fc7a8b6f7d620b4b3ad8e43c5c",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/41787986984",
       "Job": "Quick",
-      "EnvironmentId": "91de1da20b47",
+      "EnvironmentId": "231b71d2d61c",
       "ArchiveName": "matrix-reports",
-      "ManifestPath": "reports/ZipArchives/evidence/41447572041-1-zip-archives-measured/manifest.json",
+      "ManifestPath": "reports/ZipArchives/evidence/41787986984-1-zip-archives-measured/manifest.json",
       "Repository": "DevTeam/dotnet-matrix"
     }
   ]
