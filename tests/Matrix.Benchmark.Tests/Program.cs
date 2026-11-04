@@ -54,6 +54,24 @@ if (binary.BenchmarksCases.Any(benchmark =>
 
 Console.WriteLine("PASS: CLI package optimization exception stays within its module.");
 
+// LZMA-SDK 22.1.1 ships SevenZip.dll without the attribute that marks an optimized
+// build, so the module opts out for that package only. Nothing else may inherit it.
+var compression = BenchmarkConverter.TypeToBenchmarks(typeof(Matrix.CompressionCodecs.Benchmarks.CompressText));
+if (compression.BenchmarksCases.Length == 0 || compression.BenchmarksCases.Any(benchmark =>
+        !benchmark.Config.Options.HasFlag(ConfigOptions.DisableOptimizationsValidator)))
+{
+    throw new InvalidOperationException("Compression codec benchmarks reject the published LZMA-SDK package.");
+}
+
+var identifiers = BenchmarkConverter.TypeToBenchmarks(typeof(Matrix.Identifiers.Benchmarks.GenerateBatch));
+if (identifiers.BenchmarksCases.Any(benchmark =>
+        benchmark.Config.Options.HasFlag(ConfigOptions.DisableOptimizationsValidator)))
+{
+    throw new InvalidOperationException("The compression codec optimization exception leaked into another module.");
+}
+
+Console.WriteLine("PASS: compression codec package optimization exception stays within its module.");
+
 // Exercise the actual configured generator through a public benchmark scenario.
 // One-shot feature validation cannot reach the sequence limit within a tick.
 var batch = new Matrix.Identifiers.Benchmarks.GenerateBatch();

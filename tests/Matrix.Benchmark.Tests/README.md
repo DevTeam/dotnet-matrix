@@ -8,6 +8,7 @@ dotnet run --project tests/Matrix.Benchmark.Tests --configuration Release -p:Mat
 
 These checks use BenchmarkDotNet discovery to verify binary serialization setup
 selection and execute each prepared adapter once. They also check the CLI-only
-exception for the non-optimized PowerArgs package and sustained IdGen generation.
+exception for the non-optimized PowerArgs package, the compression codec exception
+for the non-optimized LZMA-SDK package, and sustained IdGen generation.
 They do not measure performance or change repository reports. Real benchmark
 execution still requires running the modules with `MatrixMode=Benchmark`.
