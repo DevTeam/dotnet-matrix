@@ -27,7 +27,7 @@
 <table align="center">
 <tr>
 <td width="180" align="center"><strong>16</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>127</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>126</strong><br><sub>LIBRARIES</sub></td>
 <td width="180" align="center"><strong>158</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
@@ -40,10 +40,10 @@
 | [**Caching**](#caching) | [LazyCache](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 8 | 8 | [Every scenario →](reports/Caching/README.md) |
 | [**CLI Parsing**](#cli-parsing) | [McMaster.Extensions.CommandLineUtils](https://matrix.dev-team.org/?category=cli-parsing&library=McMaster.Extensions.CommandLineUtils) | 11 | 10 | [Every scenario →](reports/CliParsing/README.md) |
 | [**Compression Codecs**](#compression-codecs) | [ZstdNet](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdNet) | 7 | 6 | [Every scenario →](reports/CompressionCodecs/README.md) |
-| [**CSV Processing**](#csv-processing) | [CsvHelper](https://matrix.dev-team.org/?category=csv-processing&library=CsvHelper) | 6 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
-| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 23 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
+| [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 6 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
+| [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 22 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
 | [**Hashing**](#hashing) | [System.IO.Hashing](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 8 | 9 | [Every scenario →](reports/Hashing/README.md) |
-| [**Identifiers**](#identifiers) | [FlakeId](https://matrix.dev-team.org/?category=identifiers&library=FlakeId) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
+| [**Identifiers**](#identifiers) | [Ulid](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
 | [**JSON Serialization**](#json-serialization) | [SpanJson](https://matrix.dev-team.org/?category=json-serialization&library=SpanJson) | 4 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 | [Every scenario →](reports/LinqQueries/README.md) |
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
@@ -51,7 +51,7 @@
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 | [Every scenario →](reports/ObjectMapping/README.md) |
 | [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 10 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
 | [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 6 | 10 | [Every scenario →](reports/Validation/README.md) |
-| [**ZIP Archives**](#zip-archives) | [SharpZipLib](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 4 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
+| [**ZIP Archives**](#zip-archives) | [System.IO.Compression](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 4 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
 
 ## How to read the results
 
@@ -111,7 +111,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [CSV Processing](https://matrix.dev-team.org/?category=csv-processing)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">CsvHelper</a></strong> leads the current rating · 6 libraries · 10 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=Sep">Sep</a></strong> leads the current rating · 6 libraries · 10 scenarios
 </blockquote>
 
 [![CSV Processing rating](reports/CsvProcessing/charts/rating.png)](https://matrix.dev-team.org/?category=csv-processing)
@@ -122,7 +122,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Dependency Injection](https://matrix.dev-team.org/?category=dependency-injection)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 23 libraries · 15 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Pure.DI</a></strong> leads the current rating · 22 libraries · 15 scenarios
 </blockquote>
 
 [![Dependency Injection rating](reports/DependencyInjection/charts/rating.png)](https://matrix.dev-team.org/?category=dependency-injection)
@@ -144,7 +144,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Identifiers](https://matrix.dev-team.org/?category=identifiers)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=FlakeId">FlakeId</a></strong> leads the current rating · 11 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=Ulid">Ulid</a></strong> leads the current rating · 11 libraries · 8 scenarios
 </blockquote>
 
 [![Identifiers rating](reports/Identifiers/charts/rating.png)](https://matrix.dev-team.org/?category=identifiers)
@@ -232,7 +232,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [ZIP Archives](https://matrix.dev-team.org/?category=zip-archives)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=SharpZipLib">SharpZipLib</a></strong> leads the current rating · 4 libraries · 13 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=zip-archives&amp;library=System.IO.Compression">System.IO.Compression</a></strong> leads the current rating · 4 libraries · 13 scenarios
 </blockquote>
 
 [![ZIP Archives rating](reports/ZipArchives/charts/rating.png)](https://matrix.dev-team.org/?category=zip-archives)

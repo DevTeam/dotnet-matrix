@@ -22,8 +22,8 @@ See [workflows/rating.md](../../workflows/rating.md).
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 10/10 | 1000 | 1000 | 2000 | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 576 | 792 | 1367 | silver in Advanced, silver in Basic, bronze in Prepare |
-| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 464 | 802 | 1265 | silver in Prepare, bronze in Advanced, bronze in Basic |
+| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 575 | 792 | 1366 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 393 | 802 | 1194 | silver in Prepare, bronze in Advanced, bronze in Basic |
 
 
 <details>
@@ -41,46 +41,46 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 9.09 ns | 9.09 ns | 100 | 56 B | 56 B | 100 |
-| Nested Object | 42.11 ns | 42.11 ns | 100 | 248 B | 248 B | 100 |
-| Collection | 859.89 ns | 859.89 ns | 100 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 10.48 ns | 10.48 ns | 100 | 56 B | 56 B | 100 |
-| Map To Existing | 3.65 ns | 3.65 ns | 100 | 0 B | 0 B | 100 |
-| Null Handling | 8.11 ns | 8.11 ns | 100 | 40 B | 40 B | 100 |
-| Custom Conversion | 59.23 ns | 59.23 ns | 100 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 29.11 ns | 29.11 ns | 100 | 144 B | 144 B | 100 |
+| Simple Object | 8.47 ns | 8.47 ns | 100 | 56 B | 56 B | 100 |
+| Nested Object | 44 ns | 44 ns | 100 | 248 B | 248 B | 100 |
+| Collection | 1.01 μs | 1.01 μs | 100 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 10.9 ns | 10.9 ns | 100 | 56 B | 56 B | 100 |
+| Map To Existing | 3.89 ns | 3.89 ns | 100 | 0 B | 0 B | 100 |
+| Null Handling | 8.95 ns | 8.95 ns | 100 | 40 B | 40 B | 100 |
+| Custom Conversion | 80.35 ns | 80.35 ns | 100 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 33.52 ns | 33.52 ns | 100 | 144 B | 144 B | 100 |
 | Prepare Configuration | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
-| Prepare And Simple Map | 9 ns | 9 ns | 100 | 56 B | 56 B | 100 |
+| Prepare And Simple Map | 8.77 ns | 8.77 ns | 100 | 56 B | 56 B | 100 |
 
-#### 2. Mapster — 1367 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 19.54 ns | 9.09 ns | 70.1 | 56 B | 56 B | 100 |
-| Nested Object | 60.53 ns | 42.11 ns | 83.7 | 248 B | 248 B | 100 |
-| Collection | 1.02 μs | 859.89 ns | 91.9 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 19.25 ns | 10.48 ns | 75.3 | 56 B | 56 B | 100 |
-| Map To Existing | 10.95 ns | 3.65 ns | 62.4 | 0 B | 0 B | 100 |
-| Null Handling | 27.18 ns | 8.11 ns | 56.9 | 40 B | 40 B | 100 |
-| Custom Conversion | 87.36 ns | 59.23 ns | 82.6 | 112 B | 88 B | 90.7 |
-| Polymorphic Mapping | 106.33 ns | 29.11 ns | 53 | 144 B | 144 B | 100 |
-| Prepare Configuration | 20.89 ms | 0 ns | 0.022 | 2.43 MB | 0 B | 0.307 |
-| Prepare And Simple Map | 21.43 ms | 9 ns | 0.068 | 2.56 MB | 56 B | 0.545 |
-
-#### 3. AutoMapper — 1265 of 2000
+#### 2. Mapster — 1366 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 43.54 ns | 9.09 ns | 47.6 | 56 B | 56 B | 100 |
-| Nested Object | 86.24 ns | 42.11 ns | 70.3 | 248 B | 248 B | 100 |
-| Collection | 900.1 ns | 859.89 ns | 97.7 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 44.7 ns | 10.48 ns | 50.1 | 56 B | 56 B | 100 |
-| Map To Existing | 38.94 ns | 3.65 ns | 34.1 | 0 B | 0 B | 100 |
-| Null Handling | 43.89 ns | 8.11 ns | 45.1 | 40 B | 40 B | 100 |
-| Custom Conversion | 94.19 ns | 59.23 ns | 79.5 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 197.52 ns | 29.11 ns | 38.9 | 144 B | 144 B | 100 |
-| Prepare Configuration | 11.91 ms | 0 ns | 0.029 | 624.08 KB | 0 B | 0.613 |
-| Prepare And Simple Map | 12.71 ms | 9 ns | 0.089 | 657.28 KB | 56 B | 1.09 |
+| Simple Object | 22.63 ns | 8.47 ns | 63.3 | 56 B | 56 B | 100 |
+| Nested Object | 59.17 ns | 44 ns | 86.5 | 248 B | 248 B | 100 |
+| Collection | 1.13 μs | 1.01 μs | 94.6 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 21.01 ns | 10.9 ns | 73.5 | 56 B | 56 B | 100 |
+| Map To Existing | 13.33 ns | 3.89 ns | 58.4 | 0 B | 0 B | 100 |
+| Null Handling | 29.8 ns | 8.95 ns | 56.8 | 40 B | 40 B | 100 |
+| Custom Conversion | 105.44 ns | 80.35 ns | 87.4 | 112 B | 88 B | 90.7 |
+| Polymorphic Mapping | 116.9 ns | 33.52 ns | 54.1 | 144 B | 144 B | 100 |
+| Prepare Configuration | 23.23 ms | 0 ns | 0.021 | 2.44 MB | 0 B | 0.306 |
+| Prepare And Simple Map | 24.06 ms | 8.77 ns | 0.064 | 2.57 MB | 56 B | 0.545 |
+
+#### 3. AutoMapper — 1194 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Simple Object | 76.22 ns | 8.47 ns | 35 | 56 B | 56 B | 100 |
+| Nested Object | 113.62 ns | 44 ns | 62.7 | 248 B | 248 B | 100 |
+| Collection | 1.22 μs | 1.01 μs | 91.2 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 83.85 ns | 10.9 ns | 37.4 | 56 B | 56 B | 100 |
+| Map To Existing | 79.19 ns | 3.89 ns | 24.7 | 0 B | 0 B | 100 |
+| Null Handling | 76.61 ns | 8.95 ns | 35.8 | 40 B | 40 B | 100 |
+| Custom Conversion | 147.42 ns | 80.35 ns | 74 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 345.48 ns | 33.52 ns | 31.6 | 144 B | 144 B | 100 |
+| Prepare Configuration | 15.45 ms | 0 ns | 0.025 | 651.12 KB | 0 B | 0.6 |
+| Prepare And Simple Map | 15.83 ms | 8.77 ns | 0.079 | 685.39 KB | 56 B | 1.068 |
 
 </details>
 
@@ -108,7 +108,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 <table>
 <tr>
 <td width="64"><img src="../../metadata/ObjectMapping/logos/auto-mapper.svg" width="48" height="48" alt="AutoMapper logo"></td>
-<td><strong><a href="https://docs.automapper.io/">AutoMapper</a></strong> 16.2.0<br>A convention-based object-object mapper with runtime configuration and compiled mapping plans.</td>
+<td><strong><a href="https://docs.automapper.io/">AutoMapper</a></strong> 17.0.0<br>A convention-based object-object mapper with runtime configuration and compiled mapping plans.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=object-mapping&amp;library=AutoMapper">Compare →</a></td>
 </tr>
 <tr>

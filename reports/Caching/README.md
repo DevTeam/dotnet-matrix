@@ -21,14 +21,14 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**LazyCache**](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 7/7 | 488 | 630 | 1118 | gold in Read Through, bronze in Lifetime, bronze in Reads |
-| 2 | [**Microsoft.Extensions.Caching.Memory**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Memory) | 6/7 | 427 | 550 | 978 | silver in Lifetime, silver in Reads, bronze in Writes |
-| 3 | [**FusionCache**](https://matrix.dev-team.org/?category=caching&library=ZiggyCreatures.FusionCache) | 7/7 | 367 | 559 | 926 | bronze in Read Through |
+| 1 | [**LazyCache**](https://matrix.dev-team.org/?category=caching&library=LazyCache) | 7/7 | 498 | 630 | 1128 | gold in Read Through, silver in Lifetime, bronze in Reads |
+| 2 | [**Microsoft.Extensions.Caching.Memory**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Memory) | 6/7 | 437 | 550 | 987 | silver in Reads, silver in Writes, bronze in Lifetime |
+| 3 | [**FusionCache**](https://matrix.dev-team.org/?category=caching&library=ZiggyCreatures.FusionCache) | 7/7 | 414 | 559 | 973 | silver in Read Through |
 | 4 | [**BitFaster.Caching**](https://matrix.dev-team.org/?category=caching&library=BitFaster.Caching) | 4/7 | 400 | 400 | 800 | gold in Reads, gold in Writes |
-| 5 | [**System.Runtime.Caching**](https://matrix.dev-team.org/?category=caching&library=System.Runtime.Caching) | 6/7 | 353 | 406 | 759 |  |
-| 6 | [**EasyCaching.InMemory**](https://matrix.dev-team.org/?category=caching&library=EasyCaching.InMemory) | 5/7 | 312 | 410 | 721 | gold in Lifetime |
-| 7 | [**Microsoft.Extensions.Caching.Hybrid**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Hybrid) | 7/7 | 368 | 337 | 705 | silver in Read Through |
-| 8 | [**CacheManager.Core**](https://matrix.dev-team.org/?category=caching&library=CacheManager.Core) | 4/7 | 280 | 338 | 618 | silver in Writes |
+| 5 | [**EasyCaching.InMemory**](https://matrix.dev-team.org/?category=caching&library=EasyCaching.InMemory) | 5/7 | 318 | 410 | 728 | gold in Lifetime |
+| 6 | [**Microsoft.Extensions.Caching.Hybrid**](https://matrix.dev-team.org/?category=caching&library=Microsoft.Extensions.Caching.Hybrid) | 7/7 | 371 | 337 | 708 | bronze in Read Through |
+| 7 | [**System.Runtime.Caching**](https://matrix.dev-team.org/?category=caching&library=System.Runtime.Caching) | 6/7 | 341 | 340 | 681 |  |
+| 8 | [**CacheManager.Core**](https://matrix.dev-team.org/?category=caching&library=CacheManager.Core) | 4/7 | 284 | 338 | 623 | bronze in Writes |
 
 
 <details>
@@ -42,101 +42,101 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=caching).
 
-#### 1. LazyCache — 1118 of 1400
+#### 1. LazyCache — 1128 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 48.67 ns | 5.88 ns | 37.2 | 0 B | 0 B | 100 |
-| Get Miss | 44.78 ns | 4.66 ns | 35.2 | 0 B | 0 B | 100 |
-| Set | 259.1 ns | 127.35 ns | 70.2 | 144 B | 96 B | 84.5 |
-| Get Or Create | 175.94 ns | 120.94 ns | 83 | 240 B | 144 B | 79.8 |
-| Expiration | 213.19 ms | 207.67 ms | 98.7 | 304 B | 248 B | 91.1 |
-| Invalidate | 192.39 ns | 79.63 ns | 64.6 | 192 B | 96 B | 74.5 |
-| Concurrent Get Or Create | 15.29 ms | 15.08 ms | 99.3 | 2.53 KB | 2.53 KB | 100 |
+| Get Hit | 54.22 ns | 6.95 ns | 37.9 | 0 B | 0 B | 100 |
+| Get Miss | 52.94 ns | 5.86 ns | 35.7 | 0 B | 0 B | 100 |
+| Set | 294.09 ns | 166.98 ns | 75.4 | 144 B | 96 B | 84.5 |
+| Get Or Create | 229.46 ns | 153.13 ns | 81.8 | 240 B | 144 B | 79.8 |
+| Expiration | 200.16 ms | 200.14 ms | 100 | 304 B | 248 B | 91.1 |
+| Invalidate | 238.28 ns | 108.2 ns | 67.6 | 192 B | 96 B | 74.5 |
+| Concurrent Get Or Create | 2.19 ms | 2.17 ms | 99.5 | 2.51 KB | 2.51 KB | 100 |
 
-#### 2. Microsoft.Extensions.Caching.Memory — 978 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 35.14 ns | 5.88 ns | 43.6 | 0 B | 0 B | 100 |
-| Get Miss | 31.8 ns | 4.66 ns | 41.5 | 0 B | 0 B | 100 |
-| Set | 228.4 ns | 127.35 ns | 74.8 | 144 B | 96 B | 84.5 |
-| Get Or Create | 120.94 ns | 120.94 ns | 100 | 144 B | 144 B | 100 |
-| Expiration | 212.87 ms | 207.67 ms | 98.8 | 304 B | 248 B | 91.1 |
-| Invalidate | 169.91 ns | 79.63 ns | 68.7 | 192 B | 96 B | 74.5 |
-| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
-
-#### 3. FusionCache — 926 of 1400
+#### 2. Microsoft.Extensions.Caching.Memory — 987 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 545.68 ns | 5.88 ns | 11.2 | 0 B | 0 B | 100 |
-| Get Miss | 49.81 ns | 4.66 ns | 33.4 | 0 B | 0 B | 100 |
-| Set | 961.19 ns | 127.35 ns | 36.5 | 224 B | 96 B | 69.6 |
-| Get Or Create | 870.92 ns | 120.94 ns | 37.4 | 400 B | 144 B | 62.9 |
-| Expiration | 211.05 ms | 207.67 ms | 99.2 | 488 B | 248 B | 72.9 |
-| Invalidate | 326.94 ns | 79.63 ns | 49.6 | 272 B | 96 B | 63.7 |
-| Concurrent Get Or Create | 15.08 ms | 15.08 ms | 100 | 3.12 KB | 2.53 KB | 90.1 |
+| Get Hit | 41.4 ns | 6.95 ns | 43.3 | 0 B | 0 B | 100 |
+| Get Miss | 36.92 ns | 5.86 ns | 42.5 | 0 B | 0 B | 100 |
+| Set | 264.54 ns | 166.98 ns | 79.5 | 144 B | 96 B | 84.5 |
+| Get Or Create | 153.13 ns | 153.13 ns | 100 | 144 B | 144 B | 100 |
+| Expiration | 200.17 ms | 200.14 ms | 100 | 304 B | 248 B | 91.1 |
+| Invalidate | 211.26 ns | 108.2 ns | 71.7 | 192 B | 96 B | 74.5 |
+| Concurrent Get Or Create | — | 2.17 ms | 0 | — | 2.51 KB | 0 |
+
+#### 3. FusionCache — 973 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 167.92 ns | 6.95 ns | 21.7 | 0 B | 0 B | 100 |
+| Get Miss | 56.12 ns | 5.86 ns | 34.7 | 0 B | 0 B | 100 |
+| Set | 637.09 ns | 166.98 ns | 51.3 | 224 B | 96 B | 69.6 |
+| Get Or Create | 477.52 ns | 153.13 ns | 56.8 | 400 B | 144 B | 62.9 |
+| Expiration | 200.19 ms | 200.14 ms | 100 | 488 B | 248 B | 72.9 |
+| Invalidate | 418.5 ns | 108.2 ns | 51 | 272 B | 96 B | 63.7 |
+| Concurrent Get Or Create | 2.23 ms | 2.17 ms | 98.6 | 3.1 KB | 2.51 KB | 90 |
 
 #### 4. BitFaster.Caching — 800 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 5.88 ns | 5.88 ns | 100 | 0 B | 0 B | 100 |
-| Get Miss | 4.66 ns | 4.66 ns | 100 | 0 B | 0 B | 100 |
-| Set | 127.35 ns | 127.35 ns | 100 | 96 B | 96 B | 100 |
-| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
-| Expiration | — | 207.67 ms | 0 | — | 248 B | 0 |
-| Invalidate | 79.63 ns | 79.63 ns | 100 | 96 B | 96 B | 100 |
-| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
+| Get Hit | 6.95 ns | 6.95 ns | 100 | 0 B | 0 B | 100 |
+| Get Miss | 5.86 ns | 5.86 ns | 100 | 0 B | 0 B | 100 |
+| Set | 166.98 ns | 166.98 ns | 100 | 96 B | 96 B | 100 |
+| Get Or Create | — | 153.13 ns | 0 | — | 144 B | 0 |
+| Expiration | — | 200.14 ms | 0 | — | 248 B | 0 |
+| Invalidate | 108.2 ns | 108.2 ns | 100 | 96 B | 96 B | 100 |
+| Concurrent Get Or Create | — | 2.17 ms | 0 | — | 2.51 KB | 0 |
 
-#### 5. System.Runtime.Caching — 759 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 82.83 ns | 5.88 ns | 28.6 | 32 B | 0 B | 65.5 |
-| Get Miss | 24.65 ns | 4.66 ns | 47 | 32 B | 0 B | 65.5 |
-| Set | 762.48 ns | 127.35 ns | 41 | 208 B | 96 B | 71.9 |
-| Get Or Create | 153.66 ns | 120.94 ns | 88.8 | 176 B | 144 B | 91.7 |
-| Expiration | 207.67 ms | 207.67 ms | 100 | 1.33 KB | 248 B | 44.3 |
-| Invalidate | 359.62 ns | 79.63 ns | 47.3 | 240 B | 96 B | 67.4 |
-| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
-
-#### 6. EasyCaching.InMemory — 721 of 1400
+#### 5. EasyCaching.InMemory — 728 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 83.37 ns | 5.88 ns | 28.6 | 48 B | 0 B | 57.7 |
-| Get Miss | 8.28 ns | 4.66 ns | 78.1 | 0 B | 0 B | 100 |
-| Set | 500.65 ns | 127.35 ns | 50.6 | 184 B | 96 B | 76 |
-| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
-| Expiration | 208.46 ms | 207.67 ms | 99.8 | 248 B | 248 B | 100 |
-| Invalidate | 268.18 ns | 79.63 ns | 54.7 | 184 B | 96 B | 76 |
-| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
+| Get Hit | 94.62 ns | 6.95 ns | 28.8 | 48 B | 0 B | 57.7 |
+| Get Miss | 11.25 ns | 5.86 ns | 74.8 | 0 B | 0 B | 100 |
+| Set | 552.4 ns | 166.98 ns | 55.1 | 184 B | 96 B | 76 |
+| Get Or Create | — | 153.13 ns | 0 | — | 144 B | 0 |
+| Expiration | 200.14 ms | 200.14 ms | 100 | 248 B | 248 B | 100 |
+| Invalidate | 311.24 ns | 108.2 ns | 59.1 | 184 B | 96 B | 76 |
+| Concurrent Get Or Create | — | 2.17 ms | 0 | — | 2.51 KB | 0 |
 
-#### 7. Microsoft.Extensions.Caching.Hybrid — 705 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 58.4 ns | 5.88 ns | 34 | 88 B | 0 B | 46.3 |
-| Get Miss | 243.7 ns | 4.66 ns | 15.2 | 416 B | 0 B | 23.4 |
-| Set | 973.13 ns | 127.35 ns | 36.3 | 560 B | 96 B | 45.3 |
-| Get Or Create | 481.57 ns | 120.94 ns | 50.3 | 560 B | 144 B | 53.6 |
-| Expiration | 211.01 ms | 207.67 ms | 99.2 | 1.28 KB | 248 B | 45.1 |
-| Invalidate | 724.13 ns | 79.63 ns | 33.3 | 936 B | 96 B | 35.4 |
-| Concurrent Get Or Create | 15.28 ms | 15.08 ms | 99.3 | 3.29 KB | 2.53 KB | 87.8 |
-
-#### 8. CacheManager.Core — 618 of 1400
+#### 6. Microsoft.Extensions.Caching.Hybrid — 708 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Get Hit | 66.44 ns | 5.88 ns | 31.9 | 0 B | 0 B | 100 |
-| Get Miss | — | 4.66 ns | 0 | — | 0 B | 0 |
-| Set | 264.21 ns | 127.35 ns | 69.6 | 192 B | 96 B | 74.5 |
-| Get Or Create | — | 120.94 ns | 0 | — | 144 B | 0 |
-| Expiration | 210.2 ms | 207.67 ms | 99.4 | 408 B | 248 B | 79.3 |
-| Invalidate | 128.51 ns | 79.63 ns | 78.9 | 144 B | 96 B | 84.5 |
-| Concurrent Get Or Create | — | 15.08 ms | 0 | — | 2.53 KB | 0 |
+| Get Hit | 78.61 ns | 6.95 ns | 31.6 | 88 B | 0 B | 46.3 |
+| Get Miss | 354.82 ns | 5.86 ns | 13.9 | 440 B | 0 B | 22.7 |
+| Set | 1.1 μs | 166.98 ns | 39.1 | 584 B | 96 B | 44.4 |
+| Get Or Create | 566.25 ns | 153.13 ns | 52.1 | 584 B | 144 B | 52.6 |
+| Expiration | 200.24 ms | 200.14 ms | 100 | 1.05 KB | 248 B | 49.6 |
+| Invalidate | 938.97 ns | 108.2 ns | 34.1 | 984 B | 96 B | 34.5 |
+| Concurrent Get Or Create | 2.17 ms | 2.17 ms | 100 | 3.32 KB | 2.51 KB | 87.1 |
+
+#### 7. System.Runtime.Caching — 681 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 96.87 ns | 6.95 ns | 28.5 | 32 B | 0 B | 65.5 |
+| Get Miss | 32.57 ns | 5.86 ns | 45.2 | 32 B | 0 B | 65.5 |
+| Set | 818.65 ns | 166.98 ns | 45.3 | 208 B | 96 B | 71.9 |
+| Get Or Create | 191.47 ns | 153.13 ns | 89.5 | 176 B | 144 B | 91.7 |
+| Expiration | 200.17 ms | 200.14 ms | 100 | 2.53 KB | 248 B | 32.2 |
+| Invalidate | 1.02 μs | 108.2 ns | 32.7 | 6.64 KB | 96 B | 13.3 |
+| Concurrent Get Or Create | — | 2.17 ms | 0 | — | 2.51 KB | 0 |
+
+#### 8. CacheManager.Core — 623 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Get Hit | 70.87 ns | 6.95 ns | 33.2 | 0 B | 0 B | 100 |
+| Get Miss | — | 5.86 ns | 0 | — | 0 B | 0 |
+| Set | 321.9 ns | 166.98 ns | 72.1 | 192 B | 96 B | 74.5 |
+| Get Or Create | — | 153.13 ns | 0 | — | 144 B | 0 |
+| Expiration | 200.15 ms | 200.14 ms | 100 | 408 B | 248 B | 79.3 |
+| Invalidate | 174.35 ns | 108.2 ns | 78.9 | 144 B | 96 B | 84.5 |
+| Concurrent Get Or Create | — | 2.17 ms | 0 | — | 2.51 KB | 0 |
 
 </details>
 
@@ -193,17 +193,17 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Caching/logos/hybrid-cache.svg" width="48" height="48" alt="Microsoft.Extensions.Caching.Hybrid logo"></td>
-<td><strong><a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.hybrid.hybridcache">Microsoft.Extensions.Caching.Hybrid</a></strong> 10.11.0<br>The .NET two-level cache that serves reads from a fast in-process copy in front of an optional serialized distributed store, with stampede-protected read-through.</td>
+<td><strong><a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.hybrid.hybridcache">Microsoft.Extensions.Caching.Hybrid</a></strong> 11.0.0<br>The .NET two-level cache that serves reads from a fast in-process copy in front of an optional serialized distributed store, with stampede-protected read-through.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=caching&amp;library=Microsoft.Extensions.Caching.Hybrid">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Caching/logos/microsoft-extensions-caching-memory.svg" width="48" height="48" alt="Microsoft.Extensions.Caching.Memory logo"></td>
-<td><strong><a href="https://learn.microsoft.com/dotnet/core/extensions/caching">Microsoft.Extensions.Caching.Memory</a></strong> 10.0.14<br>The general-purpose in-memory cache shipped with .NET, with absolute, sliding, and size-limited eviction policies.</td>
+<td><strong><a href="https://learn.microsoft.com/dotnet/core/extensions/caching">Microsoft.Extensions.Caching.Memory</a></strong> 11.0.0<br>The general-purpose in-memory cache shipped with .NET, with absolute, sliding, and size-limited eviction policies.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=caching&amp;library=Microsoft.Extensions.Caching.Memory">Compare →</a></td>
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Caching/logos/system-runtime-caching.svg" width="48" height="48" alt="System.Runtime.Caching logo"></td>
-<td><strong><a href="https://learn.microsoft.com/dotnet/api/system.runtime.caching">System.Runtime.Caching</a></strong> 10.0.14<br>The classic MemoryCache from the .NET Framework lineage, still the default in-memory cache for older application models.</td>
+<td><strong><a href="https://learn.microsoft.com/dotnet/api/system.runtime.caching">System.Runtime.Caching</a></strong> 11.0.0<br>The classic MemoryCache from the .NET Framework lineage, still the default in-memory cache for older application models.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=caching&amp;library=System.Runtime.Caching">Compare →</a></td>
 </tr>
 </table>
