@@ -8,6 +8,7 @@ internal sealed class CiReportsTarget(
     IBuildPaths buildPaths,
     IMatrixTarget matrixTarget,
     IAotProbesTarget aotProbesTarget,
+    DeploymentReportGuard deploymentReportGuard,
     IMatrixReportStore reportStore) : ICiReportsTarget
 {
     private const string FeaturesFileName = "features.json";
@@ -110,6 +111,28 @@ internal sealed class CiReportsTarget(
         }
 
         Stage(selectedModules, output, benchmarked);
+
+        // The staged artifact is what the published site reads, so a module that lost its
+        // deployment capability is reported here rather than discovered on the site. A run that
+        // skipped probing on purpose (the per-push job does) says so in its summary, and its
+        // artifact is not the one that ends up in 'reports'. This is a warning, not a failure:
+        // the feature results themselves are valid.
+        if (!options.SkipAotProbes)
+        {
+            var lostCapabilities = deploymentReportGuard.FindLostCapabilities(selectedModules);
+            if (lostCapabilities.Count > 0)
+            {
+                await Console.Error.WriteLineAsync(
+                    $"WARNING: {string.Join(", ", lostCapabilities)} published a feature report "
+                    + "without its deployment capability; the Deployment tab will be empty for it.");
+                summary
+                    .AppendLine()
+                    .AppendLine(
+                        "> WARNING: no deployment capability was recorded for "
+                        + $"{string.Join(", ", lostCapabilities)}.");
+            }
+        }
+
         WriteSummary(output, options.Category ?? "all", summary);
         Console.WriteLine($"Report artifact: {output}");
         return exitCode;

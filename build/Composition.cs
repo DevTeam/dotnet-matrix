@@ -24,5 +24,6 @@ internal partial class Composition
             .Singleton<JsonSerializerWrapper, BuildPaths, MatrixModuleDiscovery, RazorTemplateEngine, QuietProcessRunner, MatrixTarget, MetadataTarget,
                 LibraryTarget, ReportChartsTarget, ReadmeTarget, PrepareCommitTarget, CiMatrixTarget, CiReportsTarget, ImportReportsTarget, WebManifestTarget,
                 WebTarget, LocalWebTarget, ReproduceTarget, RunConfigurationsTarget, BuildSolutionTarget, AotProbesTarget,
+                DeploymentReportGuard,
                 MatrixReportInvariants, MatrixScores, MatrixOverviews, MatrixRatings>();
 }

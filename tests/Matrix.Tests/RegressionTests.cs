@@ -21,7 +21,8 @@ internal static class RegressionTests
             ("Executor failure preserves reports and cleans artifacts", () => Sync(ExecutorFailure)),
             ("Unsuccessful measurements produce a failed report", () => Sync(FailedMeasurement)),
             ("Presentation targets read injected reports", PresentationReadsAsync),
-            ("Malformed SVG logos warn without blocking other logos", () => Sync(MalformedLogos))
+            ("Malformed SVG logos warn without blocking other logos", () => Sync(MalformedLogos)),
+            ("A lost deployment capability is detected, not ignored", () => Sync(DeploymentCapabilityGuard))
         ];
         var failed = 0;
         foreach (var (name, run) in tests)
@@ -46,6 +47,77 @@ internal static class RegressionTests
     {
         test();
         return Task.CompletedTask;
+    }
+
+    private static void DeploymentCapabilityGuard()
+    {
+        var directory = TemporaryDirectory();
+        try
+        {
+            var module = Module();
+            var reportPath = Path.Combine(directory, "reports", module.ReportDirectory, "features.json");
+            var store = new MemoryReportStore();
+            var guard = new DeploymentReportGuard(new PresentationFixture(directory), store);
+            DiscoveredMatrixModule[] modules = [new(module, ModuleProject(module, directory), "unused.dll")];
+
+            // Without a probe project a module is not expected to publish a capability, so a report
+            // without one is complete rather than damaged.
+            Check(guard.FindLostCapabilities(modules).Count == 0,
+                "A module without a probe project must not be reported.");
+
+            WriteProbeProject(module, directory);
+            store.Write(reportPath, FeatureReport(module, deployment: false));
+            Check(guard.FindLostCapabilities(modules).SequenceEqual([module.Name]),
+                "A module with a probe project and no deployment entry must be reported.");
+
+            // The capability is what the Deployment tab reads; a scenario alone is not enough.
+            store.Write(reportPath, FeatureReport(module, deployment: true));
+            Check(guard.FindLostCapabilities(modules).Count == 0,
+                "A report carrying a deployment entry must pass.");
+
+            store.Write(reportPath, FeatureReport(module, deployment: true) with { Features = [] });
+            Check(guard.FindLostCapabilities(modules).SequenceEqual([module.Name]),
+                "A report with no entries at all must be reported.");
+        }
+        finally
+        {
+            Directory.Delete(directory, true);
+        }
+    }
+
+    private static FeatureReport FeatureReport(MatrixModule module, bool deployment) => new(
+        1,
+        module.Id,
+        DateTimeOffset.UtcNow,
+        ".NET 10",
+        "test-os",
+        module.Libraries,
+        deployment
+            ?
+            [
+                new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)], false),
+                new(1, "NativeAot", "Native AOT", [new("baseline", "Supported", null, 0, "0 trim warnings")], true)
+            ]
+            : [new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)], false)]);
+
+    /// <summary>
+    /// The sibling project the guard derives from the module's own project path, which is also
+    /// where <see cref="AotProbesTarget"/> looks: <c>src/&lt;project&gt;.Aot/&lt;project&gt;.Aot.csproj</c>
+    /// beside <c>src/&lt;project&gt;/&lt;project&gt;.csproj</c>.
+    /// </summary>
+    private static string ModuleProject(MatrixModule module, string root) =>
+        Path.Combine(root, "src", ProjectName(module), $"{ProjectName(module)}.csproj");
+
+    private static string ProbeProject(MatrixModule module, string root) =>
+        Path.Combine(root, "src", $"{ProjectName(module)}.Aot", $"{ProjectName(module)}.Aot.csproj");
+
+    private static string ProjectName(MatrixModule module) => $"Matrix.{module.ReportDirectory}";
+
+    private static void WriteProbeProject(MatrixModule module, string root)
+    {
+        var project = ProbeProject(module, root);
+        Directory.CreateDirectory(Path.GetDirectoryName(project)!);
+        File.WriteAllText(project, "<Project/>");
     }
 
     private static void MalformedLogos()

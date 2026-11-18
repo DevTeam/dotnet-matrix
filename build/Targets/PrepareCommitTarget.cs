@@ -5,6 +5,7 @@ namespace Build.Targets;
 internal sealed class PrepareCommitTarget(
     IMatrixTarget matrixTarget,
     IAotProbesTarget aotProbesTarget,
+    DeploymentReportGuard deploymentReportGuard,
     IRunConfigurationsTarget runConfigurationsTarget,
     IWebManifestTarget webManifestTarget,
     IReadmeTarget readmeTarget) : IPrepareCommitTarget
@@ -48,6 +49,22 @@ internal sealed class PrepareCommitTarget(
             {
                 return probes;
             }
+        }
+
+        // Whatever the reports lost on the way here stays lost: this command is the last step that
+        // produces the source-controlled artifacts, so a silently missing deployment capability
+        // would reach the published site from it. Both paths are checked, because finalize-commit
+        // deliberately skips validation without putting the capability back either.
+        var lostCapabilities = deploymentReportGuard.FindLostCapabilities(modules);
+        if (lostCapabilities.Count > 0)
+        {
+            await Console.Error.WriteLineAsync(
+                "ERROR: The feature report of "
+                + string.Join(", ", lostCapabilities)
+                + " has no deployment capability, so the Deployment tab would be empty for it. "
+                + "Feature validation drops it and only 'aot-probes' writes it back: run "
+                + "'prepare-commit' rather than 'finalize-commit', or restore the report.");
+            return 1;
         }
 
         var result = runConfigurationsTarget.Run(modules);
