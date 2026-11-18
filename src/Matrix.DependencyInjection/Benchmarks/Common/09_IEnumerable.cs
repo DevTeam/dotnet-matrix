@@ -67,10 +67,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc does not resolve collections of registered implementations.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider does not resolve collections of registered implementations.")]
-[FeatureUnavailable(
     LibraryCatalog.Spring,
     FeatureStatus.Unsupported,
     "Spring.NET resolves a managed list eagerly before activating the consumer.")]

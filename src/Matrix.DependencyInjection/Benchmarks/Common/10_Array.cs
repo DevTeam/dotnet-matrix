@@ -17,10 +17,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc does not resolve collections of registered implementations.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider does not resolve collections of registered implementations.")]
-[FeatureUnavailable(
     LibraryCatalog.Maestro,
     FeatureStatus.Unsupported,
     "Maestro does not resolve an array of registered implementations as an injected dependency.")]

@@ -25,10 +25,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc does not provide property injection.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "MvvmCross property injection only targets interface-typed properties.")]
-[FeatureUnavailable(
     LibraryCatalog.Jab,
     FeatureStatus.Unsupported,
     "Jab activates a service only through its constructor, a factory, or a registered instance and never assigns writable properties.")]

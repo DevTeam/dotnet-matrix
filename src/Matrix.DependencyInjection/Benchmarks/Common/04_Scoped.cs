@@ -1,4 +1,4 @@
-﻿// ReSharper disable CheckNamespace
+// ReSharper disable CheckNamespace
 // ReSharper disable InconsistentNaming
 
 namespace Matrix.DependencyInjection.Benchmarks;
@@ -12,10 +12,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     LibraryCatalog.ZenIoc,
     FeatureStatus.Unsupported,
     "ZenIoc has no explicit resolution scope.")]
-[FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider has no explicit resolution scope.")]
 [FeatureUnavailable(
     LibraryCatalog.Spring,
     FeatureStatus.Unsupported,

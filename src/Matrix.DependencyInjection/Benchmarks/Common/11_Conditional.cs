@@ -15,10 +15,7 @@ namespace Matrix.DependencyInjection.Benchmarks;
 [FeatureUnavailable(
     LibraryCatalog.FasterIoc,
     FeatureStatus.Unsupported,
-    "Faster.Ioc keyed registrations are reachable only through an explicit keyed resolve and cannot be bound to a consumer constructor.")][FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider has no keyed, named, or consumer-conditional registration.")]
+    "Faster.Ioc keyed registrations are reachable only through an explicit keyed resolve and cannot be bound to a consumer constructor.")]
 [FeatureUnavailable(
     LibraryCatalog.Jab,
     FeatureStatus.Unsupported,

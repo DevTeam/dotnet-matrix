@@ -13,10 +13,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "ZenIoc cannot register an open generic service mapping.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider cannot close an open generic registration.")]
-[FeatureUnavailable(
     LibraryCatalog.Spring,
     FeatureStatus.Unsupported,
     "Spring.NET object definitions cannot declare an open generic type.")]

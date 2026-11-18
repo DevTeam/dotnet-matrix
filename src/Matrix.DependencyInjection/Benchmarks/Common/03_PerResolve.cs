@@ -53,10 +53,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "Faster.Ioc supports only singleton, scoped and transient lifetimes.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "The MvvmCross IoC provider supports only singleton and per-resolution-call registrations.")]
-[FeatureUnavailable(
     LibraryCatalog.Spring,
     FeatureStatus.Unsupported,
     "Spring.NET object definitions are either singleton or prototype scoped.")]

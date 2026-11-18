@@ -57,10 +57,6 @@ namespace Matrix.DependencyInjection.Benchmarks;
     FeatureStatus.Unsupported,
     "A Faster.Ioc child container cannot override a dependency of a registration owned by the parent.")]
 [FeatureUnavailable(
-    LibraryCatalog.MvvmCross,
-    FeatureStatus.Unsupported,
-    "An MvvmCross child container cannot override a dependency of a registration owned by the parent.")]
-[FeatureUnavailable(
     LibraryCatalog.Spring,
     FeatureStatus.Unsupported,
     "A Spring.NET child object factory cannot override a dependency of a definition owned by the parent.")]

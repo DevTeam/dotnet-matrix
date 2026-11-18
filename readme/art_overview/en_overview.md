@@ -54,7 +54,7 @@ To my mind the idea was sound and is still relevant, but the project has stopped
 - an interactive application instead of a static table, which makes comparing and choosing easier;
 - **the whole set of results reproducible with one command** on your own machine.
 
-The IocPerformance heritage is obvious from the list of Dependency Injection participants: Faster.Ioc, Maestro, Singularity, ZenIoc, MvvmCross, Catel, Spring, VS.MEF. Most of its libraries were carried over, except for a few that had not been updated in a long time and look abandoned.
+The IocPerformance heritage is obvious from the list of Dependency Injection participants: Faster.Ioc, Maestro, Singularity, ZenIoc, Spring, VS.MEF. Most of its libraries were carried over, except for a few that had not been updated in a long time and look abandoned.
 
 For every category, .NET Matrix answers three questions that matter.
 
@@ -85,7 +85,7 @@ Results add up into an overall rating: scenarios are collected into groups (for 
 | Category | Rating leader | Libraries | Scenarios |
 |---|---|---:|---:|
 | CSV Processing | Sep | 4 | 10 |
-| Dependency Injection | Pure.DI | 23 | 15 |
+| Dependency Injection | Pure.DI | 22 | 15 |
 | JSON Serialization | System.Text.Json | 3 | 14 |
 | LINQ Queries | ZLinq | 6 | 18 |
 | Logging | Microsoft.Extensions.Logging | 6 | 9 |
@@ -186,7 +186,7 @@ So the project is arranged to let anyone check the result instead of taking it o
 
 - **The rules are shared and in the open.** A category's feature contract is the same for every participant, it lives in the repository, and it was written before the implementations.
 - **The scenarios are identical.** No "special" benchmark for one participant: everyone implements the same scenario and passes the same scenario tests.
-- **Dependency Injection has 23 participants right now**, including the hand-coded implementation that shows the "physical" limit — what this would cost with no library at all.
+- **Dependency Injection has 22 participants right now**, including the hand-coded implementation that shows the "physical" limit — what this would cost with no library at all.
 - **Everything reproduces with one command** on your hardware, and the reports are committed together with their environment.
 - **Disagreements are settled by pull request.** If a scenario looks odd to you, a competitor's implementation looks suboptimal, or a measurement looks wrong, that gets fixed in code and discussed on the [dotnet-matrix repository](https://github.com/DevTeam/dotnet-matrix).
 

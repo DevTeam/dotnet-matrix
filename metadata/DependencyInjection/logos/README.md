@@ -10,7 +10,6 @@ declares (`<icon>` for an embedded file, `<iconUrl>` when the package only links
 | `grace.png` | `Grace` 7.2.1 | linked icon |
 | `lamar.png` | `Lamar` 16.0.0 | linked icon, downscaled to 128x128 |
 | `microsoft-di.png` | `Microsoft.Extensions.DependencyInjection` 10.0.10 | embedded icon |
-| `mvvm-cross.png` | `MvvmCross` 10.1.2 | embedded icon |
 | `ninject.png` | `Ninject` 3.3.6 | linked icon |
 | `pure-di.png` | `Pure.DI` 2.5.2 | embedded icon |
 | `singularity.png` | `Singularity` 0.18.0 | embedded icon, re-encoded at 128x128 |
