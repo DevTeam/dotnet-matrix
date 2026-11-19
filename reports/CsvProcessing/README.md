@@ -160,7 +160,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 <table>
 <tr>
 <td width="64"><img src="../../metadata/CsvProcessing/logos/csv-helper.svg" width="48" height="48" alt="CsvHelper logo"></td>
-<td><strong><a href="https://joshclose.github.io/CsvHelper/">CsvHelper</a></strong> 34.0.0<br>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</td>
+<td><strong><a href="https://joshclose.github.io/CsvHelper/">CsvHelper</a></strong> 34.1.0<br>A widely used CSV library with record mapping, type conversion, and synchronous and asynchronous readers and writers.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=csv-processing&amp;library=CsvHelper">Compare →</a></td>
 </tr>
 <tr>
