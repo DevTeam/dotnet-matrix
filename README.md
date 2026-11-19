@@ -247,7 +247,7 @@ The README is a generated snapshot of the reports committed to this repository.
 
 ## Built with
 
-<p>Three open-source tools from the same toolbox build, measure and document this project.</p>
+<p>.NET Matrix uses these tools for dependency injection, build automation, and AI-assisted development.</p>
 
 <table>
 <tr>
