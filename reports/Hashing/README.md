@@ -21,11 +21,11 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**System.IO.Hashing**](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 6/6 | 580 | 600 | 1180 | gold in Streaming, gold in Wide Hash, silver in Checksum, bronze in Hash, bronze in Large Input |
-| 2 | [**K4os Hash xxHash**](https://matrix.dev-team.org/?category=hashing&library=K4os.Hash.xxHash) | 4/6 | 395 | 400 | 795 | gold in Hash, silver in Large Input, silver in Streaming, bronze in Checksum, bronze in Wide Hash |
-| 3 | [**Standart.Hash.xxHash**](https://matrix.dev-team.org/?category=hashing&library=Standart.Hash.xxHash) | 4/6 | 367 | 400 | 767 | gold in Large Input, silver in Hash, silver in Wide Hash, bronze in Checksum, bronze in Streaming |
-| 4 | [**HashDepot**](https://matrix.dev-team.org/?category=hashing&library=HashDepot) | 3/6 | 192 | 300 | 492 | bronze in Checksum, bronze in Streaming, bronze in Wide Hash |
-| 5 | [**Crc32.NET**](https://matrix.dev-team.org/?category=hashing&library=Crc32.NET) | 1/6 | 100 | 100 | 200 | gold in Checksum, bronze in Streaming, bronze in Wide Hash |
+| 1 | [**System.IO.Hashing**](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 6/6 | 599 | 600 | 1199 | gold in Checksum, gold in Large Input, gold in Streaming, gold in Wide Hash, bronze in Hash |
+| 2 | [**K4os Hash xxHash**](https://matrix.dev-team.org/?category=hashing&library=K4os.Hash.xxHash) | 4/6 | 397 | 400 | 797 | gold in Hash, silver in Streaming, bronze in Checksum, bronze in Large Input, bronze in Wide Hash |
+| 3 | [**Standart.Hash.xxHash**](https://matrix.dev-team.org/?category=hashing&library=Standart.Hash.xxHash) | 4/6 | 387 | 400 | 787 | silver in Hash, silver in Large Input, silver in Wide Hash, bronze in Checksum, bronze in Streaming |
+| 4 | [**HashDepot**](https://matrix.dev-team.org/?category=hashing&library=HashDepot) | 3/6 | 226 | 300 | 526 | bronze in Checksum, bronze in Streaming, bronze in Wide Hash |
+| 5 | [**Crc32.NET**](https://matrix.dev-team.org/?category=hashing&library=Crc32.NET) | 1/6 | 100 | 100 | 200 | silver in Checksum, bronze in Streaming, bronze in Wide Hash |
 
 
 <details>
@@ -39,60 +39,60 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=hashing).
 
-#### 1. System.IO.Hashing — 1180 of 1200
+#### 1. System.IO.Hashing — 1199 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 373.47 ns | 329.53 ns | 94 | 0 B | 0 B | 100 |
-| XxHash32 | 643.61 ns | 643.61 ns | 100 | 0 B | 0 B | 100 |
-| XxHash3 | 124.31 ns | 124.31 ns | 100 | 0 B | 0 B | 100 |
-| XxHash64 Streaming | 567.19 ns | 567.19 ns | 100 | 96 B | 96 B | 100 |
-| XxHash64 Large | 92.55 μs | 82.15 μs | 94.2 | 0 B | 0 B | 100 |
-| Crc32 | 383.76 ns | 321.37 ns | 91.5 | 0 B | 0 B | 100 |
+| XxHash64 | 295.43 ns | 291.25 ns | 99.3 | 0 B | 0 B | 100 |
+| XxHash32 | 575.85 ns | 575.85 ns | 100 | 0 B | 0 B | 100 |
+| XxHash3 | 151.51 ns | 151.51 ns | 100 | 0 B | 0 B | 100 |
+| XxHash64 Streaming | 369.67 ns | 369.67 ns | 100 | 96 B | 96 B | 100 |
+| XxHash64 Large | 73.83 μs | 73.83 μs | 100 | 0 B | 0 B | 100 |
+| Crc32 | 143.35 ns | 143.35 ns | 100 | 0 B | 0 B | 100 |
 
-#### 2. K4os Hash xxHash — 795 of 1200
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 329.93 ns | 329.53 ns | 99.9 | 0 B | 0 B | 100 |
-| XxHash32 | 644.64 ns | 643.61 ns | 99.9 | 0 B | 0 B | 100 |
-| XxHash3 | — | 124.31 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | 625.28 ns | 567.19 ns | 95.2 | 96 B | 96 B | 100 |
-| XxHash64 Large | 82.52 μs | 82.15 μs | 99.8 | 0 B | 0 B | 100 |
-| Crc32 | — | 321.37 ns | 0 | — | 0 B | 0 |
-
-#### 3. Standart.Hash.xxHash — 767 of 1200
+#### 2. K4os Hash xxHash — 797 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 329.53 ns | 329.53 ns | 100 | 0 B | 0 B | 100 |
-| XxHash32 | 647.93 ns | 643.61 ns | 99.7 | 0 B | 0 B | 100 |
-| XxHash3 | 279.54 ns | 124.31 ns | 66.8 | 0 B | 0 B | 100 |
-| XxHash64 Streaming | — | 567.19 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | 82.15 μs | 82.15 μs | 100 | 0 B | 0 B | 100 |
-| Crc32 | — | 321.37 ns | 0 | — | 0 B | 0 |
+| XxHash64 | 291.25 ns | 291.25 ns | 100 | 0 B | 0 B | 100 |
+| XxHash32 | 577.93 ns | 575.85 ns | 99.8 | 0 B | 0 B | 100 |
+| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | 393.74 ns | 369.67 ns | 96.9 | 96 B | 96 B | 100 |
+| XxHash64 Large | 73.98 μs | 73.83 μs | 99.9 | 0 B | 0 B | 100 |
+| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
 
-#### 4. HashDepot — 492 of 1200
+#### 3. Standart.Hash.xxHash — 787 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 936.56 ns | 329.53 ns | 59.4 | 0 B | 0 B | 100 |
-| XxHash32 | 1.02 μs | 643.61 ns | 79.6 | 0 B | 0 B | 100 |
-| XxHash3 | — | 124.31 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | — | 567.19 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | 293.21 μs | 82.15 μs | 52.9 | 0 B | 0 B | 100 |
-| Crc32 | — | 321.37 ns | 0 | — | 0 B | 0 |
+| XxHash64 | 292.64 ns | 291.25 ns | 99.8 | 0 B | 0 B | 100 |
+| XxHash32 | 576.27 ns | 575.85 ns | 100 | 0 B | 0 B | 100 |
+| XxHash3 | 200.42 ns | 151.51 ns | 87 | 0 B | 0 B | 100 |
+| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | 73.84 μs | 73.83 μs | 100 | 0 B | 0 B | 100 |
+| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
+
+#### 4. HashDepot — 526 of 1200
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| XxHash64 | 728 ns | 291.25 ns | 63.3 | 0 B | 0 B | 100 |
+| XxHash32 | 587.39 ns | 575.85 ns | 99 | 0 B | 0 B | 100 |
+| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | 184.36 μs | 73.83 μs | 63.3 | 0 B | 0 B | 100 |
+| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
 
 #### 5. Crc32.NET — 200 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | — | 329.53 ns | 0 | — | 0 B | 0 |
-| XxHash32 | — | 643.61 ns | 0 | — | 0 B | 0 |
-| XxHash3 | — | 124.31 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | — | 567.19 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | — | 82.15 μs | 0 | — | 0 B | 0 |
-| Crc32 | 321.37 ns | 321.37 ns | 100 | 0 B | 0 B | 100 |
+| XxHash64 | — | 291.25 ns | 0 | — | 0 B | 0 |
+| XxHash32 | — | 575.85 ns | 0 | — | 0 B | 0 |
+| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | — | 73.83 μs | 0 | — | 0 B | 0 |
+| Crc32 | 143.61 ns | 143.35 ns | 99.9 | 0 B | 0 B | 100 |
 
 </details>
 

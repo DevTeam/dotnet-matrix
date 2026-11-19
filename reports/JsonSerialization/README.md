@@ -21,10 +21,10 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**SpanJson**](https://matrix.dev-team.org/?category=json-serialization&library=SpanJson) | 12/13 | 1117 | 1136 | 2254 | gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Advanced, silver in Prepare |
-| 2 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 13/13 | 770 | 1058 | 1828 | gold in Advanced, silver in Basic, silver in Collections, silver in Stream, bronze in Nested, bronze in Prepare |
-| 3 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 12/13 | 728 | 804 | 1532 | gold in Prepare, silver in Nested, bronze in Advanced, bronze in Basic, bronze in Collections, bronze in Stream |
-| 4 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) | 13/13 | 541 | 349 | 890 |  |
+| 1 | [**SpanJson**](https://matrix.dev-team.org/?category=json-serialization&library=SpanJson) | 12/13 | 1120 | 1136 | 2256 | gold in Basic, gold in Collections, gold in Nested, gold in Stream, silver in Advanced, silver in Prepare |
+| 2 | [**System.Text.Json**](https://matrix.dev-team.org/?category=json-serialization&library=System.Text.Json) | 13/13 | 806 | 1058 | 1864 | gold in Advanced, silver in Basic, silver in Collections, silver in Stream, bronze in Nested, bronze in Prepare |
+| 3 | [**ServiceStack.Text**](https://matrix.dev-team.org/?category=json-serialization&library=ServiceStack.Text) | 12/13 | 760 | 804 | 1564 | gold in Prepare, silver in Nested, bronze in Advanced, bronze in Basic, bronze in Collections, bronze in Stream |
+| 4 | [**Newtonsoft.Json**](https://matrix.dev-team.org/?category=json-serialization&library=Newtonsoft.Json) | 13/13 | 556 | 349 | 904 |  |
 
 
 <details>
@@ -38,77 +38,77 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=json-serialization).
 
-#### 1. SpanJson — 2254 of 2600
+#### 1. SpanJson — 2256 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 78.19 ns | 78.19 ns | 100 | 96 B | 96 B | 100 |
-| Deserialize Simple Object | 77.41 ns | 77.41 ns | 100 | 64 B | 64 B | 100 |
-| Serialize Nested Object | 141.17 ns | 141.17 ns | 100 | 192 B | 192 B | 100 |
-| Deserialize Nested Object | 206.26 ns | 206.26 ns | 100 | 296 B | 296 B | 100 |
-| Serialize Collection | 195.3 ns | 195.3 ns | 100 | 248 B | 248 B | 100 |
-| Deserialize Collection | 304.92 ns | 304.92 ns | 100 | 240 B | 240 B | 100 |
-| Serialize Dictionary | 150.7 ns | 150.7 ns | 100 | 144 B | 88 B | 81.6 |
-| Deserialize Dictionary | 158.37 ns | 158.37 ns | 100 | 312 B | 312 B | 100 |
-| Enum Round Trip | 84.58 ns | 84.58 ns | 100 | 88 B | 88 B | 100 |
-| Custom Converter Round Trip | 114.07 ns | 114.07 ns | 100 | 120 B | 120 B | 100 |
-| Polymorphic Round Trip | — | 1.77 μs | 0 | — | 1.32 KB | 0 |
-| UTF-8 Stream Round Trip | 198.34 ns | 198.34 ns | 100 | 280 B | 280 B | 100 |
-| Prepare Serializer | 31.96 ns | 0 ns | 17.4 | 56 B | 0 B | 54.8 |
+| Serialize Simple Object | 50.89 ns | 50.89 ns | 100 | 96 B | 96 B | 100 |
+| Deserialize Simple Object | 63.26 ns | 63.26 ns | 100 | 64 B | 64 B | 100 |
+| Serialize Nested Object | 93.41 ns | 93.41 ns | 100 | 192 B | 192 B | 100 |
+| Deserialize Nested Object | 158.53 ns | 158.53 ns | 100 | 296 B | 296 B | 100 |
+| Serialize Collection | 125.31 ns | 125.31 ns | 100 | 248 B | 248 B | 100 |
+| Deserialize Collection | 230 ns | 230 ns | 100 | 240 B | 240 B | 100 |
+| Serialize Dictionary | 107.25 ns | 107.25 ns | 100 | 144 B | 88 B | 81.6 |
+| Deserialize Dictionary | 117.16 ns | 117.16 ns | 100 | 312 B | 312 B | 100 |
+| Enum Round Trip | 67.14 ns | 67.14 ns | 100 | 88 B | 88 B | 100 |
+| Custom Converter Round Trip | 81.48 ns | 81.48 ns | 100 | 120 B | 120 B | 100 |
+| Polymorphic Round Trip | — | 1.33 μs | 0 | — | 1.32 KB | 0 |
+| UTF-8 Stream Round Trip | 185.42 ns | 185.42 ns | 100 | 280 B | 280 B | 100 |
+| Prepare Serializer | 23.93 ns | 0 ns | 20 | 56 B | 0 B | 54.8 |
 
-#### 2. System.Text.Json — 1828 of 2600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 201.86 ns | 78.19 ns | 62.5 | 96 B | 96 B | 100 |
-| Deserialize Simple Object | 257.99 ns | 77.41 ns | 55 | 64 B | 64 B | 100 |
-| Serialize Nested Object | 450.07 ns | 141.17 ns | 56.1 | 504 B | 192 B | 64 |
-| Deserialize Nested Object | 662.73 ns | 206.26 ns | 55.9 | 768 B | 296 B | 63.6 |
-| Serialize Collection | 564.56 ns | 195.3 ns | 58.9 | 560 B | 248 B | 68.2 |
-| Deserialize Collection | 863.57 ns | 304.92 ns | 59.5 | 800 B | 240 B | 56.6 |
-| Serialize Dictionary | 205.73 ns | 150.7 ns | 85.7 | 88 B | 88 B | 100 |
-| Deserialize Dictionary | 346.24 ns | 158.37 ns | 67.7 | 312 B | 312 B | 100 |
-| Enum Round Trip | 342.63 ns | 84.58 ns | 49.9 | 88 B | 88 B | 100 |
-| Custom Converter Round Trip | 330.45 ns | 114.07 ns | 58.9 | 120 B | 120 B | 100 |
-| Polymorphic Round Trip | 1.77 μs | 1.77 μs | 100 | 1.32 KB | 1.32 KB | 100 |
-| UTF-8 Stream Round Trip | 568.42 ns | 198.34 ns | 59.2 | 280 B | 280 B | 100 |
-| Prepare Serializer | 15.82 μs | 0 ns | 0.795 | 7.45 KB | 0 B | 5.599 |
-
-#### 3. ServiceStack.Text — 1532 of 2600
+#### 2. System.Text.Json — 1864 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 341.74 ns | 78.19 ns | 48.1 | 336 B | 96 B | 57.7 |
-| Deserialize Simple Object | 208.91 ns | 77.41 ns | 61.1 | 112 B | 64 B | 80.4 |
-| Serialize Nested Object | 696.1 ns | 141.17 ns | 45.2 | 792 B | 192 B | 51.4 |
-| Deserialize Nested Object | 591.48 ns | 206.26 ns | 59.1 | 320 B | 296 B | 96.4 |
-| Serialize Collection | 897.47 ns | 195.3 ns | 46.7 | 1000 B | 248 B | 51.5 |
-| Deserialize Collection | 817.45 ns | 304.92 ns | 61.1 | 472 B | 240 B | 73 |
-| Serialize Dictionary | 210.2 ns | 150.7 ns | 84.8 | 288 B | 88 B | 59.9 |
-| Deserialize Dictionary | 296.93 ns | 158.37 ns | 73.1 | 424 B | 312 B | 86.6 |
-| Enum Round Trip | 339.78 ns | 84.58 ns | 50.1 | 336 B | 88 B | 55.8 |
-| Custom Converter Round Trip | 346.67 ns | 114.07 ns | 57.5 | 392 B | 120 B | 58.8 |
-| Polymorphic Round Trip | — | 1.77 μs | 0 | — | 1.32 KB | 0 |
-| UTF-8 Stream Round Trip | 1.19 μs | 198.34 ns | 40.8 | 2.8 KB | 280 B | 32.4 |
+| Serialize Simple Object | 136.82 ns | 50.89 ns | 61.4 | 96 B | 96 B | 100 |
+| Deserialize Simple Object | 173.72 ns | 63.26 ns | 60.6 | 64 B | 64 B | 100 |
+| Serialize Nested Object | 277.24 ns | 93.41 ns | 58.2 | 504 B | 192 B | 64 |
+| Deserialize Nested Object | 431.48 ns | 158.53 ns | 60.7 | 768 B | 296 B | 63.6 |
+| Serialize Collection | 371 ns | 125.31 ns | 58.3 | 560 B | 248 B | 68.2 |
+| Deserialize Collection | 636.75 ns | 230 ns | 60.2 | 800 B | 240 B | 56.6 |
+| Serialize Dictionary | 142.1 ns | 107.25 ns | 87 | 88 B | 88 B | 100 |
+| Deserialize Dictionary | 228.6 ns | 117.16 ns | 71.7 | 312 B | 312 B | 100 |
+| Enum Round Trip | 224.24 ns | 67.14 ns | 55 | 88 B | 88 B | 100 |
+| Custom Converter Round Trip | 217.4 ns | 81.48 ns | 61.5 | 120 B | 120 B | 100 |
+| Polymorphic Round Trip | 1.33 μs | 1.33 μs | 100 | 1.32 KB | 1.32 KB | 100 |
+| UTF-8 Stream Round Trip | 373 ns | 185.42 ns | 70.6 | 280 B | 280 B | 100 |
+| Prepare Serializer | 14.64 μs | 0 ns | 0.826 | 7.46 KB | 0 B | 5.598 |
+
+#### 3. ServiceStack.Text — 1564 of 2600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Serialize Simple Object | 205.76 ns | 50.89 ns | 50.1 | 336 B | 96 B | 57.7 |
+| Deserialize Simple Object | 146.62 ns | 63.26 ns | 66 | 112 B | 64 B | 80.4 |
+| Serialize Nested Object | 447.07 ns | 93.41 ns | 45.9 | 792 B | 192 B | 51.4 |
+| Deserialize Nested Object | 404.53 ns | 158.53 ns | 62.7 | 320 B | 296 B | 96.4 |
+| Serialize Collection | 644.84 ns | 125.31 ns | 44.2 | 1000 B | 248 B | 51.5 |
+| Deserialize Collection | 580.62 ns | 230 ns | 63 | 472 B | 240 B | 73 |
+| Serialize Dictionary | 153.31 ns | 107.25 ns | 83.8 | 288 B | 88 B | 59.9 |
+| Deserialize Dictionary | 182.34 ns | 117.16 ns | 80.3 | 424 B | 312 B | 86.6 |
+| Enum Round Trip | 243.08 ns | 67.14 ns | 52.8 | 336 B | 88 B | 55.8 |
+| Custom Converter Round Trip | 218.48 ns | 81.48 ns | 61.3 | 392 B | 120 B | 58.8 |
+| Polymorphic Round Trip | — | 1.33 μs | 0 | — | 1.32 KB | 0 |
+| UTF-8 Stream Round Trip | 737.47 ns | 185.42 ns | 50.2 | 2.8 KB | 280 B | 32.4 |
 | Prepare Serializer | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 4. Newtonsoft.Json — 890 of 2600
+#### 4. Newtonsoft.Json — 904 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 384.51 ns | 78.19 ns | 45.3 | 1.41 KB | 96 B | 28.6 |
-| Deserialize Simple Object | 630.25 ns | 77.41 ns | 35.2 | 2.61 KB | 64 B | 18.1 |
-| Serialize Nested Object | 653.34 ns | 141.17 ns | 46.6 | 1.63 KB | 192 B | 35.8 |
-| Deserialize Nested Object | 1.15 μs | 206.26 ns | 42.5 | 2.89 KB | 296 B | 32.7 |
-| Serialize Collection | 951.61 ns | 195.3 ns | 45.4 | 1.83 KB | 248 B | 37.9 |
-| Deserialize Collection | 1.61 μs | 304.92 ns | 43.6 | 2.99 KB | 240 B | 29.2 |
-| Serialize Dictionary | 384.69 ns | 150.7 ns | 62.7 | 1.48 KB | 88 B | 27 |
-| Deserialize Dictionary | 673.17 ns | 158.37 ns | 48.6 | 2.83 KB | 312 B | 33.9 |
-| Enum Round Trip | 1.05 μs | 84.58 ns | 28.6 | 4.68 KB | 88 B | 15.2 |
-| Custom Converter Round Trip | 981.23 ns | 114.07 ns | 34.2 | 4.68 KB | 120 B | 17.3 |
-| Polymorphic Round Trip | 3.88 μs | 1.77 μs | 67.5 | 7.79 KB | 1.32 KB | 41.5 |
-| UTF-8 Stream Round Trip | 1.22 μs | 198.34 ns | 40.3 | 4.13 KB | 280 B | 26.8 |
-| Prepare Serializer | 53.76 μs | 0 ns | 0.431 | 11.64 KB | 0 B | 4.482 |
+| Serialize Simple Object | 279.83 ns | 50.89 ns | 43 | 1.41 KB | 96 B | 28.6 |
+| Deserialize Simple Object | 401.59 ns | 63.26 ns | 40 | 2.61 KB | 64 B | 18.1 |
+| Serialize Nested Object | 490.21 ns | 93.41 ns | 43.8 | 1.63 KB | 192 B | 35.8 |
+| Deserialize Nested Object | 777.29 ns | 158.53 ns | 45.3 | 2.89 KB | 296 B | 32.7 |
+| Serialize Collection | 716.7 ns | 125.31 ns | 42 | 1.83 KB | 248 B | 37.9 |
+| Deserialize Collection | 1.23 μs | 230 ns | 43.3 | 2.99 KB | 240 B | 29.2 |
+| Serialize Dictionary | 269.48 ns | 107.25 ns | 63.3 | 1.48 KB | 88 B | 27 |
+| Deserialize Dictionary | 420.9 ns | 117.16 ns | 52.9 | 2.83 KB | 312 B | 33.9 |
+| Enum Round Trip | 732.71 ns | 67.14 ns | 30.5 | 4.68 KB | 88 B | 15.2 |
+| Custom Converter Round Trip | 664.9 ns | 81.48 ns | 35.2 | 4.68 KB | 120 B | 17.3 |
+| Polymorphic Round Trip | 2.74 μs | 1.33 μs | 69.6 | 7.79 KB | 1.32 KB | 41.5 |
+| UTF-8 Stream Round Trip | 862.58 ns | 185.42 ns | 46.5 | 4.13 KB | 280 B | 26.8 |
+| Prepare Serializer | 25.53 μs | 0 ns | 0.626 | 11.57 KB | 0 B | 4.496 |
 
 </details>
 

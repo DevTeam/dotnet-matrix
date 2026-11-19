@@ -21,13 +21,13 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**ZstdNet**](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdNet) | 6/6 | 420 | 600 | 1020 | gold in Compress, bronze in Decompress, bronze in Round Trip |
-| 2 | [**Snappier**](https://matrix.dev-team.org/?category=compression-codecs&library=Snappier) | 5/6 | 495 | 411 | 906 | gold in Decompress, gold in Round Trip, bronze in Compress |
-| 3 | [**K4os.Compression.LZ4**](https://matrix.dev-team.org/?category=compression-codecs&library=K4os.Compression.LZ4) | 6/6 | 470 | 353 | 824 | silver in Compress, silver in Decompress, silver in Round Trip |
-| 4 | [**ZstdSharp.Port**](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdSharp.Port) | 6/6 | 310 | 272 | 582 |  |
-| 5 | [**System.IO.Compression**](https://matrix.dev-team.org/?category=compression-codecs&library=System.IO.Compression) | 6/6 | 181 | 366 | 546 |  |
-| 6 | [**BrotliSharpLib**](https://matrix.dev-team.org/?category=compression-codecs&library=BrotliSharpLib) | 6/6 | 218 | 180 | 398 |  |
-| 7 | [**LZMA-SDK**](https://matrix.dev-team.org/?category=compression-codecs&library=LZMA-SDK) | 6/6 | 28 | 139 | 167 |  |
+| 1 | [**ZstdNet**](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdNet) | 6/6 | 422 | 600 | 1022 | gold in Compress, silver in Decompress, bronze in Round Trip |
+| 2 | [**Snappier**](https://matrix.dev-team.org/?category=compression-codecs&library=Snappier) | 5/6 | 494 | 411 | 905 | gold in Decompress, gold in Round Trip, bronze in Compress |
+| 3 | [**K4os.Compression.LZ4**](https://matrix.dev-team.org/?category=compression-codecs&library=K4os.Compression.LZ4) | 6/6 | 484 | 353 | 837 | silver in Compress, silver in Round Trip, bronze in Decompress |
+| 4 | [**ZstdSharp.Port**](https://matrix.dev-team.org/?category=compression-codecs&library=ZstdSharp.Port) | 6/6 | 311 | 272 | 583 |  |
+| 5 | [**System.IO.Compression**](https://matrix.dev-team.org/?category=compression-codecs&library=System.IO.Compression) | 6/6 | 184 | 365 | 550 |  |
+| 6 | [**BrotliSharpLib**](https://matrix.dev-team.org/?category=compression-codecs&library=BrotliSharpLib) | 6/6 | 224 | 180 | 404 |  |
+| 7 | [**LZMA-SDK**](https://matrix.dev-team.org/?category=compression-codecs&library=LZMA-SDK) | 6/6 | 27 | 139 | 167 |  |
 
 
 <details>
@@ -41,82 +41,82 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=compression-codecs).
 
-#### 1. ZstdNet — 1020 of 1200
+#### 1. ZstdNet — 1022 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 22.57 μs | 21.88 μs | 98.5 | 200 B | 200 B | 100 |
-| Compress Text Max Effort | 223.87 μs | 41.57 μs | 43.1 | 200 B | 200 B | 100 |
-| Compress Incompressible | 152.24 μs | 128.62 μs | 91.9 | 256.17 KB | 256.17 KB | 100 |
-| Decompress Text | 127.14 μs | 42.13 μs | 57.6 | 256.15 KB | 256.08 KB | 100 |
-| Decompress Incompressible | 25.72 μs | 25.72 μs | 100 | 256.63 KB | 256.07 KB | 99.9 |
-| Round Trip Small | 4.74 μs | 391.97 ns | 28.8 | 1.27 KB | 1.27 KB | 100 |
+| Compress Text | 26.91 μs | 25.29 μs | 97 | 200 B | 200 B | 100 |
+| Compress Text Max Effort | 290.15 μs | 51.41 μs | 42.1 | 200 B | 200 B | 100 |
+| Compress Incompressible | 178.23 μs | 153 μs | 92.7 | 256.17 KB | 256.17 KB | 100 |
+| Decompress Text | 154.72 μs | 54.2 μs | 59.2 | 256.15 KB | 256.08 KB | 100 |
+| Decompress Incompressible | 35 μs | 35 μs | 100 | 256.62 KB | 256.07 KB | 99.9 |
+| Round Trip Small | 6.05 μs | 597.25 ns | 31.4 | 1.27 KB | 1.27 KB | 100 |
 
-#### 2. Snappier — 906 of 1200
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 21.88 μs | 21.88 μs | 100 | 12.34 KB | 200 B | 13.3 |
-| Compress Text Max Effort | — | 41.57 μs | 0 | — | 200 B | 0 |
-| Compress Incompressible | 128.62 μs | 128.62 μs | 100 | 256.21 KB | 256.17 KB | 100 |
-| Decompress Text | 42.13 μs | 42.13 μs | 100 | 256.76 KB | 256.08 KB | 99.9 |
-| Decompress Incompressible | 28.69 μs | 25.72 μs | 94.7 | 256.73 KB | 256.07 KB | 99.9 |
-| Round Trip Small | 391.97 ns | 391.97 ns | 100 | 1.32 KB | 1.27 KB | 98.2 |
-
-#### 3. K4os.Compression.LZ4 — 824 of 1200
+#### 2. Snappier — 905 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 36.99 μs | 21.88 μs | 76.9 | 258.17 KB | 200 B | 2.911 |
-| Compress Text Max Effort | 41.57 μs | 41.57 μs | 100 | 258.2 KB | 200 B | 2.911 |
-| Compress Incompressible | 240.17 μs | 128.62 μs | 73.2 | 514.13 KB | 256.17 KB | 70.6 |
-| Decompress Text | 101.58 μs | 42.13 μs | 64.4 | 256.08 KB | 256.08 KB | 100 |
-| Decompress Incompressible | 28.5 μs | 25.72 μs | 95 | 256.07 KB | 256.07 KB | 100 |
-| Round Trip Small | 1.06 μs | 391.97 ns | 60.9 | 2.16 KB | 1.27 KB | 77 |
+| Compress Text | 25.29 μs | 25.29 μs | 100 | 12.34 KB | 200 B | 13.3 |
+| Compress Text Max Effort | — | 51.41 μs | 0 | — | 200 B | 0 |
+| Compress Incompressible | 153 μs | 153 μs | 100 | 256.21 KB | 256.17 KB | 100 |
+| Decompress Text | 54.2 μs | 54.2 μs | 100 | 256.74 KB | 256.08 KB | 99.9 |
+| Decompress Incompressible | 40 μs | 35 μs | 93.5 | 256.72 KB | 256.07 KB | 99.9 |
+| Round Trip Small | 597.25 ns | 597.25 ns | 100 | 1.32 KB | 1.27 KB | 98.2 |
 
-#### 4. ZstdSharp.Port — 582 of 1200
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 32.64 μs | 21.88 μs | 81.9 | 257.23 KB | 200 B | 2.916 |
-| Compress Text Max Effort | 293.66 μs | 41.57 μs | 37.6 | 257.23 KB | 200 B | 2.916 |
-| Compress Incompressible | 258.86 μs | 128.62 μs | 70.5 | 513.18 KB | 256.17 KB | 70.7 |
-| Decompress Text | 237.19 μs | 42.13 μs | 42.1 | 513.16 KB | 256.08 KB | 70.6 |
-| Decompress Incompressible | 215.25 μs | 25.72 μs | 34.6 | 513.16 KB | 256.07 KB | 70.6 |
-| Round Trip Small | 2.07 μs | 391.97 ns | 43.6 | 4.36 KB | 1.27 KB | 54.4 |
-
-#### 5. System.IO.Compression — 546 of 1200
+#### 3. K4os.Compression.LZ4 — 837 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 225.13 μs | 21.88 μs | 31.2 | 608 B | 200 B | 59.5 |
-| Compress Text Max Effort | 10.05 ms | 41.57 μs | 6.432 | 575 B | 200 B | 61.2 |
-| Compress Incompressible | 509.53 μs | 128.62 μs | 50.2 | 1.19 MB | 256.17 KB | 45.9 |
-| Decompress Text | 400.26 μs | 42.13 μs | 32.4 | 513.43 KB | 256.08 KB | 70.6 |
-| Decompress Incompressible | 214.15 μs | 25.72 μs | 34.7 | 513.43 KB | 256.07 KB | 70.6 |
-| Round Trip Small | 5.88 μs | 391.97 ns | 25.8 | 3.85 KB | 1.27 KB | 57.9 |
+| Compress Text | 36.49 μs | 25.29 μs | 83.3 | 258.17 KB | 200 B | 2.911 |
+| Compress Text Max Effort | 51.41 μs | 51.41 μs | 100 | 258.2 KB | 200 B | 2.911 |
+| Compress Incompressible | 286.79 μs | 153 μs | 73 | 514.13 KB | 256.17 KB | 70.6 |
+| Decompress Text | 130.15 μs | 54.2 μs | 64.5 | 256.08 KB | 256.08 KB | 100 |
+| Decompress Incompressible | 39.71 μs | 35 μs | 93.9 | 256.07 KB | 256.07 KB | 100 |
+| Round Trip Small | 1.26 μs | 597.25 ns | 68.8 | 2.16 KB | 1.27 KB | 77 |
 
-#### 6. BrotliSharpLib — 398 of 1200
+#### 4. ZstdSharp.Port — 583 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 52.16 μs | 21.88 μs | 64.8 | 71.13 KB | 200 B | 5.545 |
-| Compress Text Max Effort | 13.94 ms | 41.57 μs | 5.461 | 87.47 KB | 200 B | 5 |
-| Compress Incompressible | 220.25 μs | 128.62 μs | 76.4 | 1.26 MB | 256.17 KB | 44.6 |
-| Decompress Text | 924.22 μs | 42.13 μs | 21.4 | 773.58 KB | 256.08 KB | 57.5 |
-| Decompress Incompressible | 253.03 μs | 25.72 μs | 31.9 | 773.52 KB | 256.07 KB | 57.5 |
-| Round Trip Small | 12 μs | 391.97 ns | 18.1 | 141.87 KB | 1.27 KB | 9.56 |
+| Compress Text | 42.36 μs | 25.29 μs | 77.3 | 257.23 KB | 200 B | 2.916 |
+| Compress Text Max Effort | 366.76 μs | 51.41 μs | 37.4 | 257.23 KB | 200 B | 2.916 |
+| Compress Incompressible | 312.52 μs | 153 μs | 70 | 513.18 KB | 256.17 KB | 70.7 |
+| Decompress Text | 289.79 μs | 54.2 μs | 43.2 | 513.16 KB | 256.08 KB | 70.6 |
+| Decompress Incompressible | 255.48 μs | 35 μs | 37 | 513.16 KB | 256.07 KB | 70.6 |
+| Round Trip Small | 2.8 μs | 597.25 ns | 46.2 | 4.36 KB | 1.27 KB | 54.4 |
+
+#### 5. System.IO.Compression — 550 of 1200
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Compress Text | 271.52 μs | 25.29 μs | 30.5 | 608 B | 200 B | 59.5 |
+| Compress Text Max Effort | 13.38 ms | 51.41 μs | 6.2 | 580 B | 200 B | 60.9 |
+| Compress Incompressible | 622.23 μs | 153 μs | 49.6 | 1.19 MB | 256.17 KB | 45.9 |
+| Decompress Text | 488.91 μs | 54.2 μs | 33.3 | 513.43 KB | 256.08 KB | 70.6 |
+| Decompress Incompressible | 259.84 μs | 35 μs | 36.7 | 513.43 KB | 256.07 KB | 70.6 |
+| Round Trip Small | 7.71 μs | 597.25 ns | 27.9 | 3.85 KB | 1.27 KB | 57.9 |
+
+#### 6. BrotliSharpLib — 404 of 1200
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Compress Text | 51.6 μs | 25.29 μs | 70 | 71.13 KB | 200 B | 5.545 |
+| Compress Text Max Effort | 17.92 ms | 51.41 μs | 5.357 | 87.52 KB | 200 B | 4.999 |
+| Compress Incompressible | 294.95 μs | 153 μs | 72 | 1.26 MB | 256.17 KB | 44.6 |
+| Decompress Text | 900.52 μs | 54.2 μs | 24.5 | 773.58 KB | 256.08 KB | 57.5 |
+| Decompress Incompressible | 303.36 μs | 35 μs | 34 | 773.52 KB | 256.07 KB | 57.5 |
+| Round Trip Small | 17.96 μs | 597.25 ns | 18.2 | 141.87 KB | 1.27 KB | 9.56 |
 
 #### 7. LZMA-SDK — 167 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Compress Text | 33.89 ms | 21.88 μs | 2.541 | 3.49 MB | 200 B | 0.782 |
-| Compress Text Max Effort | 200.11 ms | 41.57 μs | 1.441 | 3.49 MB | 200 B | 0.782 |
-| Compress Incompressible | 97.47 ms | 128.62 μs | 3.633 | 4.74 MB | 256.17 KB | 23 |
-| Decompress Text | 1.69 ms | 42.13 μs | 15.8 | 800.52 KB | 256.08 KB | 56.6 |
-| Decompress Incompressible | 40.4 ms | 25.72 μs | 2.523 | 800.5 KB | 256.07 KB | 56.6 |
-| Round Trip Small | 1.04 ms | 391.97 ns | 1.947 | 3.77 MB | 1.27 KB | 1.832 |
+| Compress Text | 48.16 ms | 25.29 μs | 2.292 | 3.49 MB | 200 B | 0.782 |
+| Compress Text Max Effort | 258.89 ms | 51.41 μs | 1.409 | 3.49 MB | 200 B | 0.782 |
+| Compress Incompressible | 184.59 ms | 153 μs | 2.879 | 4.74 MB | 256.17 KB | 23 |
+| Decompress Text | 2.12 ms | 54.2 μs | 16 | 800.52 KB | 256.08 KB | 56.6 |
+| Decompress Incompressible | 60.88 ms | 35 μs | 2.398 | 800.45 KB | 256.07 KB | 56.6 |
+| Round Trip Small | 1.38 ms | 597.25 ns | 2.078 | 3.77 MB | 1.27 KB | 1.832 |
 
 </details>
 

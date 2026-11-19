@@ -21,10 +21,10 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**System.IO.Compression**](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 12/13 | 1157 | 968 | 2125 | gold in Read, gold in Write, silver in Metadata, bronze in Advanced |
-| 2 | [**SharpZipLib**](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 13/13 | 1098 | 1005 | 2103 | gold in Advanced, gold in Metadata, silver in Read, silver in Write |
-| 3 | [**SharpCompress**](https://matrix.dev-team.org/?category=zip-archives&library=SharpCompress) | 13/13 | 871 | 916 | 1787 | silver in Advanced, bronze in Read, bronze in Write |
-| 4 | [**DotNetZip**](https://matrix.dev-team.org/?category=zip-archives&library=DotNetZip) | 12/13 | 678 | 526 | 1203 | bronze in Metadata |
+| 1 | [**System.IO.Compression**](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 12/13 | 1170 | 968 | 2137 | gold in Read, gold in Write, silver in Metadata, bronze in Advanced |
+| 2 | [**SharpZipLib**](https://matrix.dev-team.org/?category=zip-archives&library=SharpZipLib) | 13/13 | 1120 | 1005 | 2126 | gold in Advanced, gold in Metadata, silver in Read, silver in Write |
+| 3 | [**SharpCompress**](https://matrix.dev-team.org/?category=zip-archives&library=SharpCompress) | 13/13 | 886 | 916 | 1802 | silver in Advanced, bronze in Read, bronze in Write |
+| 4 | [**DotNetZip**](https://matrix.dev-team.org/?category=zip-archives&library=DotNetZip) | 12/13 | 741 | 526 | 1267 | bronze in Metadata |
 
 
 <details>
@@ -38,77 +38,77 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=zip-archives).
 
-#### 1. System.IO.Compression — 2125 of 2600
+#### 1. System.IO.Compression — 2137 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| List Entries | 100.06 μs | 100.06 μs | 100 | 659.41 KB | 305.15 KB | 68 |
-| Find Entry By Name | 103.38 μs | 103.38 μs | 100 | 659.37 KB | 305.23 KB | 68 |
-| Read Stored Entry | 3.81 ms | 3.81 ms | 100 | 5.12 KB | 1.01 KB | 44.9 |
-| Decompress Entry | 3.85 ms | 3.85 ms | 100 | 5.38 KB | 5.38 KB | 100 |
-| Extract Many Small Entries | 4.29 ms | 4.29 ms | 100 | 987.53 KB | 987.53 KB | 100 |
-| Create Stored Archive | 134.08 μs | 134.08 μs | 100 | 645.86 KB | 645.86 KB | 100 |
-| Create Deflate Fast Archive | 312.1 μs | 312.1 μs | 100 | 329.69 KB | 329.69 KB | 100 |
-| Create Deflate Optimal Archive | 699.07 μs | 699.07 μs | 100 | 193.67 KB | 193.67 KB | 100 |
-| Create Many Small Entries | 4.36 ms | 4.36 ms | 100 | 12.66 MB | 12.66 MB | 100 |
-| Append Entry | 134.73 μs | 134.73 μs | 100 | 394.87 KB | 394.87 KB | 100 |
-| Sequential Non-Seekable Read | 7.66 ms | 5.1 ms | 81.6 | 16.84 MB | 458.65 KB | 16.3 |
-| Read Zip64 Archive | 36.64 ms | 20.9 ms | 75.5 | 39.39 MB | 19.5 MB | 70.4 |
-| Read AES Encrypted Entry | — | 587.08 μs | 0 | — | 9.81 KB | 0 |
+| List Entries | 144.13 μs | 144.13 μs | 100 | 659.41 KB | 305.15 KB | 68 |
+| Find Entry By Name | 136.93 μs | 136.93 μs | 100 | 659.37 KB | 305.23 KB | 68 |
+| Read Stored Entry | 11.93 ms | 11.93 ms | 100 | 5.12 KB | 1.02 KB | 45 |
+| Decompress Entry | 12.16 ms | 12.16 ms | 100 | 5.38 KB | 5.38 KB | 100 |
+| Extract Many Small Entries | 12.47 ms | 12.47 ms | 100 | 987.53 KB | 987.53 KB | 100 |
+| Create Stored Archive | 171.52 μs | 171.52 μs | 100 | 645.86 KB | 645.86 KB | 100 |
+| Create Deflate Fast Archive | 503.43 μs | 503.43 μs | 100 | 329.69 KB | 329.69 KB | 100 |
+| Create Deflate Optimal Archive | 927.06 μs | 927.06 μs | 100 | 193.67 KB | 193.67 KB | 100 |
+| Create Many Small Entries | 5.32 ms | 5.32 ms | 100 | 12.66 MB | 12.66 MB | 100 |
+| Append Entry | 171.51 μs | 171.51 μs | 100 | 394.87 KB | 394.87 KB | 100 |
+| Sequential Non-Seekable Read | 15.4 ms | 14.01 ms | 95.4 | 16.84 MB | 458.66 KB | 16.3 |
+| Read Zip64 Archive | 46.62 ms | 25.77 ms | 74.3 | 39.39 MB | 19.5 MB | 70.4 |
+| Read AES Encrypted Entry | — | 915.88 μs | 0 | — | 9.81 KB | 0 |
 
-#### 2. SharpZipLib — 2103 of 2600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| List Entries | 146.87 μs | 100.06 μs | 82.5 | 305.15 KB | 305.15 KB | 100 |
-| Find Entry By Name | 148.63 μs | 103.38 μs | 83.4 | 305.23 KB | 305.23 KB | 100 |
-| Read Stored Entry | 3.81 ms | 3.81 ms | 99.9 | 1.01 KB | 1.01 KB | 100 |
-| Decompress Entry | 4.1 ms | 3.85 ms | 96.9 | 41.04 KB | 5.38 KB | 36.3 |
-| Extract Many Small Entries | 5.49 ms | 4.29 ms | 88.4 | 35.98 MB | 987.53 KB | 16.4 |
-| Create Stored Archive | 196.93 μs | 134.08 μs | 82.5 | 957.7 KB | 645.86 KB | 82.1 |
-| Create Deflate Fast Archive | 1.37 ms | 312.1 μs | 47.7 | 622.91 KB | 329.69 KB | 72.8 |
-| Create Deflate Optimal Archive | 1.59 ms | 699.07 μs | 66.3 | 621.27 KB | 193.67 KB | 55.8 |
-| Create Many Small Entries | 5.45 ms | 4.36 ms | 89.4 | 13.99 MB | 12.66 MB | 95.1 |
-| Append Entry | 141.4 μs | 134.73 μs | 97.6 | 398.18 KB | 394.87 KB | 99.6 |
-| Sequential Non-Seekable Read | 5.1 ms | 5.1 ms | 100 | 458.65 KB | 458.65 KB | 100 |
-| Read Zip64 Archive | 20.9 ms | 20.9 ms | 100 | 19.5 MB | 19.5 MB | 100 |
-| Read AES Encrypted Entry | 1.46 ms | 587.08 μs | 63.4 | 43.91 KB | 9.81 KB | 47.3 |
-
-#### 3. SharpCompress — 1787 of 2600
+#### 2. SharpZipLib — 2126 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| List Entries | 425.74 μs | 100.06 μs | 48.5 | 660.69 KB | 305.15 KB | 68 |
-| Find Entry By Name | 422.06 μs | 103.38 μs | 49.5 | 660.55 KB | 305.23 KB | 68 |
-| Read Stored Entry | 3.82 ms | 3.81 ms | 99.9 | 67.85 KB | 1.01 KB | 12.3 |
-| Decompress Entry | 4.1 ms | 3.85 ms | 96.9 | 33.56 KB | 5.38 KB | 40.1 |
-| Extract Many Small Entries | 5.38 ms | 4.29 ms | 89.3 | 2.27 MB | 987.53 KB | 65.2 |
-| Create Stored Archive | 761.23 μs | 134.08 μs | 42 | 646.26 KB | 645.86 KB | 100 |
-| Create Deflate Fast Archive | 1.99 ms | 312.1 μs | 39.6 | 345.05 KB | 329.69 KB | 97.7 |
-| Create Deflate Optimal Archive | 2.19 ms | 699.07 μs | 56.5 | 344.6 KB | 193.67 KB | 75 |
-| Create Many Small Entries | 16.68 ms | 4.36 ms | 51.1 | 12.69 MB | 12.66 MB | 99.9 |
-| Append Entry | 764.16 μs | 134.73 μs | 42 | 721.96 KB | 394.87 KB | 74 |
-| Sequential Non-Seekable Read | 5.45 ms | 5.1 ms | 96.7 | 2.28 MB | 458.65 KB | 44.3 |
-| Read Zip64 Archive | 60.66 ms | 20.9 ms | 58.7 | 38.07 MB | 19.5 MB | 71.6 |
-| Read AES Encrypted Entry | 587.08 μs | 587.08 μs | 100 | 9.81 KB | 9.81 KB | 100 |
+| List Entries | 177.58 μs | 144.13 μs | 90.1 | 305.15 KB | 305.15 KB | 100 |
+| Find Entry By Name | 186.63 μs | 136.93 μs | 85.7 | 305.23 KB | 305.23 KB | 100 |
+| Read Stored Entry | 12.12 ms | 11.93 ms | 99.2 | 1.02 KB | 1.02 KB | 100 |
+| Decompress Entry | 12.46 ms | 12.16 ms | 98.8 | 41.05 KB | 5.38 KB | 36.3 |
+| Extract Many Small Entries | 13.78 ms | 12.47 ms | 95.1 | 35.98 MB | 987.53 KB | 16.4 |
+| Create Stored Archive | 286.99 μs | 171.52 μs | 77.3 | 957.7 KB | 645.86 KB | 82.1 |
+| Create Deflate Fast Archive | 1.8 ms | 503.43 μs | 52.9 | 622.91 KB | 329.69 KB | 72.8 |
+| Create Deflate Optimal Archive | 2.12 ms | 927.06 μs | 66.1 | 621.27 KB | 193.67 KB | 55.8 |
+| Create Many Small Entries | 7.02 ms | 5.32 ms | 87.1 | 13.99 MB | 12.66 MB | 95.1 |
+| Append Entry | 175.82 μs | 171.51 μs | 98.8 | 398.18 KB | 394.87 KB | 99.6 |
+| Sequential Non-Seekable Read | 14.01 ms | 14.01 ms | 100 | 458.66 KB | 458.66 KB | 100 |
+| Read Zip64 Archive | 25.77 ms | 25.77 ms | 100 | 19.5 MB | 19.5 MB | 100 |
+| Read AES Encrypted Entry | 1.91 ms | 915.88 μs | 69.2 | 43.91 KB | 9.81 KB | 47.3 |
 
-#### 4. DotNetZip — 1203 of 2600
+#### 3. SharpCompress — 1802 of 2600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| List Entries | 184.14 μs | 100.06 μs | 73.7 | 1.01 MB | 305.15 KB | 54.3 |
-| Find Entry By Name | 183.32 μs | 103.38 μs | 75.1 | 1.01 MB | 305.23 KB | 54.3 |
-| Read Stored Entry | 16.96 ms | 3.81 ms | 47.4 | 67.17 KB | 1.01 KB | 12.4 |
-| Decompress Entry | 17.13 ms | 3.85 ms | 47.4 | 135.77 KB | 5.38 KB | 20 |
-| Extract Many Small Entries | 20.6 ms | 4.29 ms | 45.6 | 66.27 MB | 987.53 KB | 12.1 |
-| Create Stored Archive | 778.7 μs | 134.08 μs | 41.5 | 895.61 KB | 645.86 KB | 84.9 |
-| Create Deflate Fast Archive | 2.2 ms | 312.1 μs | 37.7 | 1.7 MB | 329.69 KB | 43.5 |
-| Create Deflate Optimal Archive | 2.44 ms | 699.07 μs | 53.5 | 1.57 MB | 193.67 KB | 34.7 |
-| Create Many Small Entries | 21.66 ms | 4.36 ms | 44.8 | 54.38 MB | 12.66 MB | 48.2 |
-| Append Entry | 149.57 μs | 134.73 μs | 94.9 | 700.79 KB | 394.87 KB | 75.1 |
-| Sequential Non-Seekable Read | — | 5.1 ms | 0 | — | 458.65 KB | 0 |
-| Read Zip64 Archive | 64.73 ms | 20.9 ms | 56.8 | 54.71 MB | 19.5 MB | 59.7 |
-| Read AES Encrypted Entry | 1.67 ms | 587.08 μs | 59.2 | 138.11 KB | 9.81 KB | 26.7 |
+| List Entries | 641.43 μs | 144.13 μs | 47.4 | 660.69 KB | 305.15 KB | 68 |
+| Find Entry By Name | 653.02 μs | 136.93 μs | 45.8 | 660.55 KB | 305.23 KB | 68 |
+| Read Stored Entry | 11.95 ms | 11.93 ms | 99.9 | 67.82 KB | 1.02 KB | 12.4 |
+| Decompress Entry | 12.63 ms | 12.16 ms | 98.1 | 33.56 KB | 5.38 KB | 40.1 |
+| Extract Many Small Entries | 14.36 ms | 12.47 ms | 93.2 | 2.27 MB | 987.53 KB | 65.2 |
+| Create Stored Archive | 882.3 μs | 171.52 μs | 44.1 | 646.26 KB | 645.86 KB | 100 |
+| Create Deflate Fast Archive | 2.46 ms | 503.43 μs | 45.3 | 345.05 KB | 329.69 KB | 97.7 |
+| Create Deflate Optimal Archive | 2.83 ms | 927.06 μs | 57.3 | 344.6 KB | 193.67 KB | 75 |
+| Create Many Small Entries | 19.49 ms | 5.32 ms | 52.2 | 12.69 MB | 12.66 MB | 99.9 |
+| Append Entry | 904.76 μs | 171.51 μs | 43.5 | 721.95 KB | 394.87 KB | 74 |
+| Sequential Non-Seekable Read | 14.61 ms | 14.01 ms | 97.9 | 2.28 MB | 458.66 KB | 44.3 |
+| Read Zip64 Archive | 68.01 ms | 25.77 ms | 61.6 | 38.07 MB | 19.5 MB | 71.6 |
+| Read AES Encrypted Entry | 915.88 μs | 915.88 μs | 100 | 9.81 KB | 9.81 KB | 100 |
+
+#### 4. DotNetZip — 1267 of 2600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| List Entries | 259.18 μs | 144.13 μs | 74.6 | 1.01 MB | 305.15 KB | 54.3 |
+| Find Entry By Name | 255.78 μs | 136.93 μs | 73.2 | 1.01 MB | 305.23 KB | 54.3 |
+| Read Stored Entry | 26.86 ms | 11.93 ms | 66.6 | 67.19 KB | 1.02 KB | 12.5 |
+| Decompress Entry | 27.15 ms | 12.16 ms | 66.9 | 135.79 KB | 5.38 KB | 20 |
+| Extract Many Small Entries | 32.27 ms | 12.47 ms | 62.2 | 66.27 MB | 987.53 KB | 12.1 |
+| Create Stored Archive | 914.1 μs | 171.52 μs | 43.3 | 895.61 KB | 645.86 KB | 84.9 |
+| Create Deflate Fast Archive | 2.76 ms | 503.43 μs | 42.7 | 1.7 MB | 329.69 KB | 43.5 |
+| Create Deflate Optimal Archive | 3.07 ms | 927.06 μs | 55 | 1.57 MB | 193.67 KB | 34.7 |
+| Create Many Small Entries | 26.91 ms | 5.32 ms | 44.5 | 54.39 MB | 12.66 MB | 48.2 |
+| Append Entry | 195.87 μs | 171.51 μs | 93.6 | 700.79 KB | 394.87 KB | 75.1 |
+| Sequential Non-Seekable Read | — | 14.01 ms | 0 | — | 458.66 KB | 0 |
+| Read Zip64 Archive | 77.34 ms | 25.77 ms | 57.7 | 54.71 MB | 19.5 MB | 59.7 |
+| Read AES Encrypted Entry | 2.5 ms | 915.88 μs | 60.5 | 138.1 KB | 9.81 KB | 26.7 |
 
 </details>
 
