@@ -622,8 +622,10 @@ shared category-neutral view.
 
 Local Web runs load checked-in data from `reports` and `metadata`. Production
 runs load the same paths from GitHub for the selected semantic-version tag and
-commit. A production version appears only when an exact `x.y.z` tag and the
-corresponding generated data are available.
+commit. A production version appears only when a release tag — `x.y.z`, or
+`x.y.z-xxx` for a prerelease of it — and the corresponding generated data are available.
+Pushing a release tag builds and publishes the application; pushing a prerelease tag
+builds it and uploads the site as an artifact without replacing the published one.
 
 ## 13. Verify automatic build targets
 

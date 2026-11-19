@@ -1,6 +1,12 @@
-name: Deploy .NET Matrix
+name: Build and deploy .NET Matrix
 
+# A release is a tag with no "v" prefix: 1.2.3 publishes the application, and
+# 1.2.3-rc1 builds it and keeps the site unchanged. The build is the same in both
+# cases, so a prerelease verifies exactly what the release will publish.
 on:
+  push:
+    tags:
+      - "*.*.*"
   workflow_dispatch:
 
 permissions:
@@ -9,11 +15,48 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  # A release deploy must not be cancelled halfway; a branch build may be.
+  group: pages-${{ github.repository }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
+  resolve:
+    name: Resolve the release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release.outputs.version }}
+      prerelease: ${{ steps.release.outputs.prerelease }}
+
+    steps:
+      - name: Read the tag
+        id: release
+        env:
+          REF: ${{ github.ref }}
+        run: |
+          if [[ "$REF" != refs/tags/* ]]; then
+            # A manual run has no tag of its own; it publishes the newest release.
+            echo "version=" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          tag="${REF#refs/tags/}"
+          if [[ ! "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Tag '$tag' is not a release: use 1.2.3 or 1.2.3-rc1."
+            exit 1
+          fi
+
+          echo "version=$tag" >> "$GITHUB_OUTPUT"
+          if [[ "$tag" == *-* ]]; then
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Tag '$tag' is a prerelease: it is built and uploaded, and the published site keeps the newest release."
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    name: Build .NET Matrix
+    needs: resolve
     runs-on: ubuntu-latest
 
     steps:
@@ -38,8 +81,24 @@ jobs:
         with:
           path: artifacts/web/wwwroot
 
+      # The Pages artifact exists only for the duration of a deployment and is not
+      # downloadable, so a prerelease gets its own copy to inspect.
+      - name: Upload prerelease site
+        if: needs.resolve.outputs.prerelease == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: matrix-web-${{ needs.resolve.outputs.version }}
+          path: artifacts/web/wwwroot
+          if-no-files-found: error
+          retention-days: 30
+
   deploy:
-    needs: build
+    name: Deploy .NET Matrix
+    # A prerelease is built, never published: the site keeps the newest release.
+    if: needs.resolve.outputs.prerelease == 'false'
+    needs:
+      - resolve
+      - build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -60,8 +119,14 @@ jobs:
       - name: Verify the published catalog
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+          RELEASE: ${{ needs.resolve.outputs.version }}
         run: |
-          expected="$(git tag --list '[0-9]*' --sort=-v:refname | head -n 1)"
+          if [[ -n "$RELEASE" ]]; then
+            expected="$RELEASE"
+          else
+            # A manual run publishes the newest release, and a prerelease tag is not one.
+            expected="$(git tag --list '[0-9]*' --sort=-v:refname | grep -v -- '-' | head -n 1)"
+          fi
           if [[ -z "$expected" ]]; then
             echo "::error::No release tag is present, so there is nothing to compare the catalog with."
             exit 1
@@ -70,9 +135,12 @@ jobs:
           catalog="${PAGE_URL%/}/data/catalog.json"
           # Pages serves the previous release from its own cache for up to ten minutes, so
           # a mismatch is retried rather than reported as a failure on the first attempt.
+          # The catalog lists the newest tag first, and that tag may be a prerelease,
+          # which is built but never published; the newest plain release is the one the
+          # site shows, and it is what this waits for.
           for attempt in $(seq 1 15); do
             served="$(curl -fsS -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' "$catalog" \
-                      | jq -r '.versions[0].version // empty')" || served=""
+                      | jq -r '[.versions[].version | select(contains("-") | not)][0] // empty')" || served=""
             if [[ "$served" == "$expected" ]]; then
               echo "Published catalog names release $served."
               exit 0

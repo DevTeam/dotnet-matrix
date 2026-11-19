@@ -171,11 +171,11 @@ internal sealed partial class WebTarget(
                 "refs/tags"
             ],
             cancellationToken);
-        var versions = new List<(MatrixVersion Value, Version SortKey)>();
+        var versions = new List<(MatrixVersion Value, MatrixReleaseTag SortKey)>();
         foreach (var line in output.Split('\n', StringSplitOptions.RemoveEmptyEntries))
         {
             var parts = line.Trim().Split('\t');
-            if (parts.Length < 4 || !VersionRegex().IsMatch(parts[0]))
+            if (parts.Length < 4 || !MatrixReleaseTag.TryParse(parts[0], out var tag))
             {
                 continue;
             }
@@ -190,7 +190,7 @@ internal sealed partial class WebTarget(
 
             versions.Add((
                 new MatrixVersion(parts[0], date, commit, true),
-                Version.Parse(parts[0])));
+                tag));
         }
 
         return versions
@@ -261,6 +261,4 @@ internal sealed partial class WebTarget(
     [GeneratedRegex(@"github\.com[/:](?<owner>[^/]+)/(?<name>[^/]+?)(?:\.git)?$", RegexOptions.IgnoreCase, "ru-RU")]
     private static partial Regex GitHubRegex();
 
-    [GeneratedRegex(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant)]
-    private static partial Regex VersionRegex();
 }

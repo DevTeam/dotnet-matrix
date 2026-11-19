@@ -22,6 +22,10 @@
             @ref="_trigger"
             @onclick="Toggle">
         <span id="release-value">@Label(Selected)</span>
+        @if (Selected is { } selected && IsPrerelease(selected.Version))
+        {
+            <span class="release-badge">pre</span>
+        }
         <svg class="release-chevron"
              viewBox="0 0 16 16"
              fill="none"
@@ -51,6 +55,10 @@
                             title="@Hint(version)"
                             @onclick="() => SelectAsync(version)">
                         <span>@Label(version)</span>
+                        @if (IsPrerelease(version.Version))
+                        {
+                            <span class="release-badge">pre</span>
+                        }
                         @if (isSelected)
                         {
                             <svg viewBox="0 0 16 16"
@@ -167,6 +175,15 @@
     {
         null => null,
         { Version: "local" } => "Local workspace",
+        _ when IsPrerelease(version.Version) => $"Prerelease {version.Version}",
         _ => $"Version {version.Version}"
     };
+
+    /// <summary>
+    /// A prerelease is dated like any other release, so the date alone would not tell a
+    /// reader that <c>1.2.3-rc1</c> came before <c>1.2.3</c>. The badge says it, and the
+    /// number stays in the tooltip beside it.
+    /// </summary>
+    private static bool IsPrerelease(string version) =>
+        MatrixReleaseTag.TryParse(version, out var tag) && tag.IsPrerelease;
 }

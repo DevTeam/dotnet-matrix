@@ -1,17 +1,15 @@
-using System.Text.RegularExpressions;
 // ReSharper disable CheckNamespace
 // ReSharper disable UseCollectionExpression
 
 namespace Matrix.Web;
 
-internal sealed partial class GitHubMatrixDataSource(
+internal sealed class GitHubMatrixDataSource(
     HttpClient httpClient,
     IWebAssemblyHostEnvironment hostEnvironment,
     NavigationManager navigationManager,
     IJsonSerializer jsonSerializer) : IMatrixDataSource
 {
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
-    private static readonly Regex VersionPattern = VersionRegex();
 
     public async Task<MatrixCatalogResult> LoadCatalogAsync(
         CancellationToken cancellationToken = default)
@@ -173,7 +171,7 @@ internal sealed partial class GitHubMatrixDataSource(
                 $"https://api.github.com/repos/{repository.Owner}/{repository.Name}/tags"
                 + $"?per_page=100&page={page}";
             var pageTags = await GetRequiredAsync<GitHubTag[]>(uri, cancellationToken);
-            tags.AddRange(pageTags.Where(tag => VersionPattern.IsMatch(tag.Name)));
+            tags.AddRange(pageTags.Where(tag => MatrixReleaseTag.TryParse(tag.Name, out _)));
             if (pageTags.Length < 100)
             {
                 break;
@@ -181,9 +179,13 @@ internal sealed partial class GitHubMatrixDataSource(
         }
 
         return tags
-            .Select(tag => (
-                Value: new MatrixVersion(tag.Name, null, tag.Commit.Sha, true),
-                SortKey: Version.Parse(tag.Name)))
+            .Select(tag =>
+            {
+                MatrixReleaseTag.TryParse(tag.Name, out var release);
+                return (
+                    Value: new MatrixVersion(tag.Name, null, tag.Commit.Sha, true),
+                    SortKey: release);
+            })
             .OrderByDescending(version => version.SortKey)
             .Select(version => version.Value)
             .ToArray();
@@ -346,7 +348,4 @@ internal sealed partial class GitHubMatrixDataSource(
 
         return string.Empty;
     }
-
-    [GeneratedRegex(@"^\d+\.\d+\.\d+$", RegexOptions.CultureInvariant)]
-    private static partial Regex VersionRegex();
 }

@@ -65,7 +65,8 @@ scenario of the category — that is the default view.
 
 Pins the reports to one release. It takes the release number, for example
 `?version=1.2.0`, or the word `latest` — not the date the picker shows, which names a
-release to a reader but is not its identifier. Unlike the other two, the value is
+release to a reader but is not its identifier. A prerelease is named by its whole tag,
+as in `?version=1.2.3-rc1`. Unlike the other two, the value is
 matched exactly: dropping punctuation would make `1.2.3` and `12.3`
 indistinguishable.
 

@@ -2,6 +2,11 @@ name: CI
 
 on:
   push:
+    # Tag pushes belong to the release workflow, which builds the same solution. Running
+    # the whole category matrix again for a tag would only repeat that work.
+    branches:
+      - "**"
+  workflow_dispatch:
 
 permissions:
   contents: read

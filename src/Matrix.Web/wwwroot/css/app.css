@@ -438,6 +438,33 @@ a {
     color: var(--accent);
 }
 
+/* Marks a prerelease in a list where every row is otherwise just a date. It sits
+   between the date and the checkmark, so the checkmark keeps its column. */
+.release-badge {
+    padding: 1px 5px;
+    border-radius: var(--radius-chip);
+    background: var(--surface-3);
+    color: var(--muted);
+    flex: 0 0 auto;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.release-option.is-selected .release-badge {
+    background: var(--surface-2);
+    color: var(--accent);
+}
+
+/* The label takes the remaining width, so the badge and the checkmark stay against
+   the right edge and the date is what gets shortened in a narrow trigger. */
+.release-trigger > span:first-child,
+.release-option > span:first-child {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .release-option svg {
     width: 14px;
     height: 14px;

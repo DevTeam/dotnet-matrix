@@ -155,7 +155,7 @@
             <h1>@(_catalogWarning is null ? "No releases yet" : "Unable to list releases")</h1>
             <p>
                 @(_catalogWarning
-                  ?? "Create a Git tag in the 1.0.0 format and reload the page.")
+                  ?? "Create a Git tag in the 1.0.0 or 1.0.0-rc1 format and reload the page.")
             </p>
         </main>
     }
@@ -1049,7 +1049,18 @@
     private void SelectVersionAsync(MatrixVersion version) =>
         Navigation.NavigateTo(VersionLink(version.Version), replace: true);
 
-    private string? LatestVersionId => _catalog?.Versions.FirstOrDefault()?.Version;
+    /// <summary>
+    /// The version the application opens without being told which one: the newest
+    /// release, not the newest tag. A prerelease is listed and can be chosen, but it is
+    /// not published by the release workflow, so the newest tag may name reports that
+    /// were never deployed.
+    /// </summary>
+    private string? LatestVersionId =>
+        _catalog?.Versions.FirstOrDefault(version => IsRelease(version.Version))?.Version
+        ?? _catalog?.Versions.FirstOrDefault()?.Version;
+
+    private static bool IsRelease(string version) =>
+        version == "local" || (MatrixReleaseTag.TryParse(version, out var tag) && !tag.IsPrerelease);
 
     /// <summary>
     /// Unlike a category, a version is matched exactly: dropping the punctuation of

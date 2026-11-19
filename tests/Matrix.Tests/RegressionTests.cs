@@ -22,7 +22,8 @@ internal static class RegressionTests
             ("Unsuccessful measurements produce a failed report", () => Sync(FailedMeasurement)),
             ("Presentation targets read injected reports", PresentationReadsAsync),
             ("Malformed SVG logos warn without blocking other logos", () => Sync(MalformedLogos)),
-            ("A lost deployment capability is detected, not ignored", () => Sync(DeploymentCapabilityGuard))
+            ("A lost deployment capability is detected, not ignored", () => Sync(DeploymentCapabilityGuard)),
+            ("Release tags are read and ordered by semantic version", () => Sync(ReleaseTags))
         ];
         var failed = 0;
         foreach (var (name, run) in tests)
@@ -266,6 +267,51 @@ internal static class RegressionTests
         finally
         {
             Directory.Delete(directory, true);
+        }
+    }
+
+    /// <summary>
+    /// The tags a release workflow and the Web catalog both accept: <c>x.y.z</c> and
+    /// <c>x.y.z-xxx</c>, with no prefix. A prerelease sorts below the release of the
+    /// same number, although it was tagged first, and <c>rc10</c> sorts above
+    /// <c>rc2</c> because a numeric identifier compares as a number.
+    /// </summary>
+    private static void ReleaseTags()
+    {
+        Check(MatrixReleaseTag.TryParse("1.2.3", out var release) && !release.IsPrerelease,
+            "A plain x.y.z tag must be a release.");
+        Check(MatrixReleaseTag.TryParse("1.2.3-rc1", out var candidate) && candidate.IsPrerelease,
+            "An x.y.z-xxx tag must be a prerelease.");
+
+        // Newest first. 1.0.10-rc1 sits above 1.0.9: the number decides before the
+        // suffix does, and only equal numbers are compared by prerelease at all.
+        string[] newestFirst =
+        [
+            "1.0.13", "1.0.13-rc10", "1.0.13-rc2", "1.0.13-beta", "1.0.12", "1.0.10-rc1", "1.0.9"
+        ];
+        var parsed = newestFirst
+            .Select(name =>
+            {
+                Check(MatrixReleaseTag.TryParse(name, out var tag), $"'{name}' must be a tag.");
+                return tag;
+            })
+            .ToArray();
+
+        var shuffled = newestFirst
+            .OrderBy(name => name.Length)
+            .ThenByDescending(name => name, StringComparer.Ordinal)
+            .Select(name => parsed.First(tag => tag.Name == name))
+            .ToArray();
+        Check(shuffled.Select(tag => tag.Name).SequenceEqual(newestFirst) == false,
+            "The shuffled input must differ from the expected order, or this test proves nothing.");
+
+        var sorted = shuffled.OrderByDescending(tag => tag).Select(tag => tag.Name).ToArray();
+        Check(sorted.SequenceEqual(newestFirst),
+            $"Tags must sort newest first, but were {string.Join(", ", sorted)}.");
+
+        foreach (var rejected in new[] { "v1.2.3", "1.2", "1.2.3.4", "01.2.3", "1.2.3-", "1.2.3 ", "release-1.2.3" })
+        {
+            Check(!MatrixReleaseTag.TryParse(rejected, out _), $"'{rejected}' must not be a release tag.");
         }
     }
 
