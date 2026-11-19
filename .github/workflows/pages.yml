@@ -100,10 +100,9 @@ jobs:
       - resolve
       - build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
+    # No 'environment' here, as in DevTeam/Pure.DI: that environment allows only the
+    # master branch, so a deployment from a tag would be rejected before its first step.
+    # The deploy step reports its page URL itself, and the check below reads it from there.
     steps:
       # The published catalog is what decides which release the application reads its
       # reports from, so the deployment is not done until that catalog names the newest tag.
