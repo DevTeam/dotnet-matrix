@@ -21,4 +21,8 @@ namespace Matrix.TemplateEngines.Benchmarks;
     LibraryCatalog.RazorTemplating,
     FeatureStatus.Unsupported,
     "Razor.Templating.Core renders a view by name through the ASP.NET Core view engine and has no template string API.")]
+[FeatureUnavailable(
+    LibraryCatalog.RazorBlade,
+    FeatureStatus.Unsupported,
+    "RazorBlade compiles .cshtml files into C# classes at build time and has no runtime API that turns template text into a reusable template.")]
 public partial class Parse;

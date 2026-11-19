@@ -51,7 +51,7 @@ which is scored across every scenario; see [rating.md](rating.md).
 | Compression Codecs | `compression-codecs` | `src/Matrix.CompressionCodecs` | 6 | 6 | Compress, Decompress, Round Trip |
 | Binary Serialization | `binary-serialization` | `src/Matrix.BinarySerialization` | 8 | 7 | Serialize, Deserialize, Round Trip |
 | Identifiers | `identifiers` | `src/Matrix.Identifiers` | 10 | 8 | Generate, Convert, Time, Codec |
-| Template Engines | `template-engines` | `src/Matrix.TemplateEngines` | 10 | 3 | Parse, Render |
+| Template Engines | `template-engines` | `src/Matrix.TemplateEngines` | 11 | 3 | Parse, Render |
 | Hashing | `hashing` | `src/Matrix.Hashing` | 8 | 9 | Hash, Large Input, Streaming, Checksum, Wide Hash |
 | Caching | `caching` | `src/Matrix.Caching` | 7 | 8 | Reads, Writes, Read Through, Lifetime |
 | CLI Parsing | `cli-parsing` | `src/Matrix.CliParsing` | 10 | 10 | Parse, Options, Help, Errors |
