@@ -22,8 +22,8 @@ See [workflows/rating.md](../../workflows/rating.md).
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | [**Mapperly**](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 10/10 | 1000 | 1000 | 2000 | gold in Advanced, gold in Basic, gold in Prepare |
-| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 579 | 792 | 1371 | silver in Advanced, silver in Basic, bronze in Prepare |
-| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 401 | 802 | 1202 | silver in Prepare, bronze in Advanced, bronze in Basic |
+| 2 | [**Mapster**](https://matrix.dev-team.org/?category=object-mapping&library=Mapster) | 10/10 | 571 | 792 | 1362 | silver in Advanced, silver in Basic, bronze in Prepare |
+| 3 | [**AutoMapper**](https://matrix.dev-team.org/?category=object-mapping&library=AutoMapper) | 10/10 | 390 | 802 | 1192 | silver in Prepare, bronze in Advanced, bronze in Basic |
 
 
 <details>
@@ -41,46 +41,46 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 9.77 ns | 9.77 ns | 100 | 56 B | 56 B | 100 |
-| Nested Object | 48.49 ns | 48.49 ns | 100 | 248 B | 248 B | 100 |
-| Collection | 1.05 μs | 1.05 μs | 100 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 10.02 ns | 10.02 ns | 100 | 56 B | 56 B | 100 |
-| Map To Existing | 3.91 ns | 3.91 ns | 100 | 0 B | 0 B | 100 |
-| Null Handling | 9 ns | 9 ns | 100 | 40 B | 40 B | 100 |
-| Custom Conversion | 78.52 ns | 78.52 ns | 100 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 36.96 ns | 36.96 ns | 100 | 144 B | 144 B | 100 |
+| Simple Object | 8.67 ns | 8.67 ns | 100 | 56 B | 56 B | 100 |
+| Nested Object | 41.98 ns | 41.98 ns | 100 | 248 B | 248 B | 100 |
+| Collection | 955.79 ns | 955.79 ns | 100 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 9.62 ns | 9.62 ns | 100 | 56 B | 56 B | 100 |
+| Map To Existing | 3.79 ns | 3.79 ns | 100 | 0 B | 0 B | 100 |
+| Null Handling | 8.49 ns | 8.49 ns | 100 | 40 B | 40 B | 100 |
+| Custom Conversion | 76.33 ns | 76.33 ns | 100 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 33.43 ns | 33.43 ns | 100 | 144 B | 144 B | 100 |
 | Prepare Configuration | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
-| Prepare And Simple Map | 10.03 ns | 10.03 ns | 100 | 56 B | 56 B | 100 |
+| Prepare And Simple Map | 8.58 ns | 8.58 ns | 100 | 56 B | 56 B | 100 |
 
-#### 2. Mapster — 1371 of 2000
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 23.95 ns | 9.77 ns | 65.7 | 56 B | 56 B | 100 |
-| Nested Object | 64.6 ns | 48.49 ns | 86.9 | 248 B | 248 B | 100 |
-| Collection | 1.21 μs | 1.05 μs | 93.2 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 19.29 ns | 10.02 ns | 73.7 | 56 B | 56 B | 100 |
-| Map To Existing | 12.66 ns | 3.91 ns | 60 | 0 B | 0 B | 100 |
-| Null Handling | 29.93 ns | 9 ns | 56.9 | 40 B | 40 B | 100 |
-| Custom Conversion | 104.39 ns | 78.52 ns | 86.9 | 112 B | 88 B | 90.7 |
-| Polymorphic Mapping | 120.32 ns | 36.96 ns | 55.9 | 144 B | 144 B | 100 |
-| Prepare Configuration | 24.04 ms | 0 ns | 0.02 | 2.44 MB | 0 B | 0.306 |
-| Prepare And Simple Map | 24.05 ms | 10.03 ns | 0.068 | 2.57 MB | 56 B | 0.545 |
-
-#### 3. AutoMapper — 1202 of 2000
+#### 2. Mapster — 1362 of 2000
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Simple Object | 75.07 ns | 9.77 ns | 37.6 | 56 B | 56 B | 100 |
-| Nested Object | 117.5 ns | 48.49 ns | 64.6 | 248 B | 248 B | 100 |
-| Collection | 1.24 μs | 1.05 μs | 92.1 | 6.27 KB | 6.27 KB | 100 |
-| Flattening | 75.06 ns | 10.02 ns | 38.1 | 56 B | 56 B | 100 |
-| Map To Existing | 68.51 ns | 3.91 ns | 26.6 | 0 B | 0 B | 100 |
-| Null Handling | 77.96 ns | 9 ns | 35.6 | 40 B | 40 B | 100 |
-| Custom Conversion | 145.06 ns | 78.52 ns | 73.8 | 88 B | 88 B | 100 |
-| Polymorphic Mapping | 361.59 ns | 36.96 ns | 32.4 | 144 B | 144 B | 100 |
-| Prepare Configuration | 15.42 ms | 0 ns | 0.025 | 650.15 KB | 0 B | 0.6 |
-| Prepare And Simple Map | 16.02 ms | 10.03 ns | 0.083 | 684.84 KB | 56 B | 1.068 |
+| Simple Object | 22.45 ns | 8.67 ns | 64.2 | 56 B | 56 B | 100 |
+| Nested Object | 58.17 ns | 41.98 ns | 85.2 | 248 B | 248 B | 100 |
+| Collection | 1.08 μs | 955.79 ns | 94.1 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 18.74 ns | 9.62 ns | 73.4 | 56 B | 56 B | 100 |
+| Map To Existing | 12.33 ns | 3.79 ns | 60 | 0 B | 0 B | 100 |
+| Null Handling | 28.54 ns | 8.49 ns | 56.7 | 40 B | 40 B | 100 |
+| Custom Conversion | 110.74 ns | 76.33 ns | 83.2 | 112 B | 88 B | 90.7 |
+| Polymorphic Mapping | 118.23 ns | 33.43 ns | 53.7 | 144 B | 144 B | 100 |
+| Prepare Configuration | 23.07 ms | 0 ns | 0.021 | 2.44 MB | 0 B | 0.306 |
+| Prepare And Simple Map | 23.94 ms | 8.58 ns | 0.063 | 2.57 MB | 56 B | 0.545 |
+
+#### 3. AutoMapper — 1192 of 2000
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Simple Object | 79.99 ns | 8.67 ns | 34.5 | 56 B | 56 B | 100 |
+| Nested Object | 110.93 ns | 41.98 ns | 62 | 248 B | 248 B | 100 |
+| Collection | 1.11 μs | 955.79 ns | 92.8 | 6.27 KB | 6.27 KB | 100 |
+| Flattening | 82.36 ns | 9.62 ns | 35.7 | 56 B | 56 B | 100 |
+| Map To Existing | 73.53 ns | 3.79 ns | 25.4 | 0 B | 0 B | 100 |
+| Null Handling | 77.64 ns | 8.49 ns | 34.7 | 40 B | 40 B | 100 |
+| Custom Conversion | 140.21 ns | 76.33 ns | 74 | 88 B | 88 B | 100 |
+| Polymorphic Mapping | 365.16 ns | 33.43 ns | 30.7 | 144 B | 144 B | 100 |
+| Prepare Configuration | 15.62 ms | 0 ns | 0.025 | 649.67 KB | 0 B | 0.601 |
+| Prepare And Simple Map | 15.8 ms | 8.58 ns | 0.078 | 690.08 KB | 56 B | 1.064 |
 
 </details>
 

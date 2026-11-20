@@ -22,8 +22,8 @@ See [workflows/rating.md](../../workflows/rating.md).
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | [**System.IO.Hashing**](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 6/6 | 599 | 600 | 1199 | gold in Checksum, gold in Large Input, gold in Streaming, gold in Wide Hash, bronze in Hash |
-| 2 | [**K4os Hash xxHash**](https://matrix.dev-team.org/?category=hashing&library=K4os.Hash.xxHash) | 4/6 | 397 | 400 | 797 | gold in Hash, silver in Streaming, bronze in Checksum, bronze in Large Input, bronze in Wide Hash |
-| 3 | [**Standart.Hash.xxHash**](https://matrix.dev-team.org/?category=hashing&library=Standart.Hash.xxHash) | 4/6 | 387 | 400 | 787 | silver in Hash, silver in Large Input, silver in Wide Hash, bronze in Checksum, bronze in Streaming |
+| 2 | [**K4os Hash xxHash**](https://matrix.dev-team.org/?category=hashing&library=K4os.Hash.xxHash) | 4/6 | 398 | 400 | 798 | silver in Hash, silver in Large Input, silver in Streaming, bronze in Checksum, bronze in Wide Hash |
+| 3 | [**Standart.Hash.xxHash**](https://matrix.dev-team.org/?category=hashing&library=Standart.Hash.xxHash) | 4/6 | 372 | 400 | 772 | gold in Hash, silver in Wide Hash, bronze in Checksum, bronze in Large Input, bronze in Streaming |
 | 4 | [**HashDepot**](https://matrix.dev-team.org/?category=hashing&library=HashDepot) | 3/6 | 226 | 300 | 526 | bronze in Checksum, bronze in Streaming, bronze in Wide Hash |
 | 5 | [**Crc32.NET**](https://matrix.dev-team.org/?category=hashing&library=Crc32.NET) | 1/6 | 100 | 100 | 200 | silver in Checksum, bronze in Streaming, bronze in Wide Hash |
 
@@ -43,56 +43,56 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 295.43 ns | 291.25 ns | 99.3 | 0 B | 0 B | 100 |
-| XxHash32 | 575.85 ns | 575.85 ns | 100 | 0 B | 0 B | 100 |
-| XxHash3 | 151.51 ns | 151.51 ns | 100 | 0 B | 0 B | 100 |
-| XxHash64 Streaming | 369.67 ns | 369.67 ns | 100 | 96 B | 96 B | 100 |
-| XxHash64 Large | 73.83 μs | 73.83 μs | 100 | 0 B | 0 B | 100 |
-| Crc32 | 143.35 ns | 143.35 ns | 100 | 0 B | 0 B | 100 |
+| XxHash64 | 272.44 ns | 267.91 ns | 99.2 | 0 B | 0 B | 100 |
+| XxHash32 | 531.81 ns | 531.81 ns | 100 | 0 B | 0 B | 100 |
+| XxHash3 | 93.44 ns | 93.44 ns | 100 | 0 B | 0 B | 100 |
+| XxHash64 Streaming | 338.83 ns | 338.83 ns | 100 | 96 B | 96 B | 100 |
+| XxHash64 Large | 67.98 μs | 67.98 μs | 100 | 0 B | 0 B | 100 |
+| Crc32 | 132.03 ns | 132.03 ns | 100 | 0 B | 0 B | 100 |
 
-#### 2. K4os Hash xxHash — 797 of 1200
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 291.25 ns | 291.25 ns | 100 | 0 B | 0 B | 100 |
-| XxHash32 | 577.93 ns | 575.85 ns | 99.8 | 0 B | 0 B | 100 |
-| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | 393.74 ns | 369.67 ns | 96.9 | 96 B | 96 B | 100 |
-| XxHash64 Large | 73.98 μs | 73.83 μs | 99.9 | 0 B | 0 B | 100 |
-| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
-
-#### 3. Standart.Hash.xxHash — 787 of 1200
+#### 2. K4os Hash xxHash — 798 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 292.64 ns | 291.25 ns | 99.8 | 0 B | 0 B | 100 |
-| XxHash32 | 576.27 ns | 575.85 ns | 100 | 0 B | 0 B | 100 |
-| XxHash3 | 200.42 ns | 151.51 ns | 87 | 0 B | 0 B | 100 |
-| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | 73.84 μs | 73.83 μs | 100 | 0 B | 0 B | 100 |
-| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
+| XxHash64 | 269.47 ns | 267.91 ns | 99.7 | 0 B | 0 B | 100 |
+| XxHash32 | 536.06 ns | 531.81 ns | 99.6 | 0 B | 0 B | 100 |
+| XxHash3 | — | 93.44 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | 348.73 ns | 338.83 ns | 98.6 | 96 B | 96 B | 100 |
+| XxHash64 Large | 68.14 μs | 67.98 μs | 99.9 | 0 B | 0 B | 100 |
+| Crc32 | — | 132.03 ns | 0 | — | 0 B | 0 |
+
+#### 3. Standart.Hash.xxHash — 772 of 1200
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| XxHash64 | 267.91 ns | 267.91 ns | 100 | 0 B | 0 B | 100 |
+| XxHash32 | 534.22 ns | 531.81 ns | 99.8 | 0 B | 0 B | 100 |
+| XxHash3 | 179.2 ns | 93.44 ns | 72.4 | 0 B | 0 B | 100 |
+| XxHash64 Streaming | — | 338.83 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | 68.21 μs | 67.98 μs | 99.8 | 0 B | 0 B | 100 |
+| Crc32 | — | 132.03 ns | 0 | — | 0 B | 0 |
 
 #### 4. HashDepot — 526 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | 728 ns | 291.25 ns | 63.3 | 0 B | 0 B | 100 |
-| XxHash32 | 587.39 ns | 575.85 ns | 99 | 0 B | 0 B | 100 |
-| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | 184.36 μs | 73.83 μs | 63.3 | 0 B | 0 B | 100 |
-| Crc32 | — | 143.35 ns | 0 | — | 0 B | 0 |
+| XxHash64 | 668.21 ns | 267.91 ns | 63.4 | 0 B | 0 B | 100 |
+| XxHash32 | 538.75 ns | 531.81 ns | 99.4 | 0 B | 0 B | 100 |
+| XxHash3 | — | 93.44 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | — | 338.83 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | 171.04 μs | 67.98 μs | 63 | 0 B | 0 B | 100 |
+| Crc32 | — | 132.03 ns | 0 | — | 0 B | 0 |
 
 #### 5. Crc32.NET — 200 of 1200
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| XxHash64 | — | 291.25 ns | 0 | — | 0 B | 0 |
-| XxHash32 | — | 575.85 ns | 0 | — | 0 B | 0 |
-| XxHash3 | — | 151.51 ns | 0 | — | 0 B | 0 |
-| XxHash64 Streaming | — | 369.67 ns | 0 | — | 96 B | 0 |
-| XxHash64 Large | — | 73.83 μs | 0 | — | 0 B | 0 |
-| Crc32 | 143.61 ns | 143.35 ns | 99.9 | 0 B | 0 B | 100 |
+| XxHash64 | — | 267.91 ns | 0 | — | 0 B | 0 |
+| XxHash32 | — | 531.81 ns | 0 | — | 0 B | 0 |
+| XxHash3 | — | 93.44 ns | 0 | — | 0 B | 0 |
+| XxHash64 Streaming | — | 338.83 ns | 0 | — | 96 B | 0 |
+| XxHash64 Large | — | 67.98 μs | 0 | — | 0 B | 0 |
+| Crc32 | 132.85 ns | 132.03 ns | 99.7 | 0 B | 0 B | 100 |
 
 </details>
 

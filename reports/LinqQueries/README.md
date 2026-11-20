@@ -21,11 +21,11 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**ZLinq**](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 17/17 | 1595 | 1697 | 3292 | gold in Advanced, gold in Core, gold in Sequences, gold in Sources, silver in Partitioning |
-| 2 | [**System.Linq**](https://matrix.dev-team.org/?category=linq-queries&library=System.Linq) | 16/17 | 1434 | 1373 | 2806 | gold in Partitioning, silver in Advanced, silver in Core, bronze in Sequences, bronze in Sources |
-| 3 | [**StructLinq**](https://matrix.dev-team.org/?category=linq-queries&library=StructLinq) | 14/17 | 985 | 1229 | 2215 | silver in Sequences |
-| 4 | [**LinqAF**](https://matrix.dev-team.org/?category=linq-queries&library=LinqAF) | 16/17 | 1077 | 1072 | 2149 | bronze in Advanced, bronze in Partitioning |
-| 5 | [**NetFabric.Hyperlinq**](https://matrix.dev-team.org/?category=linq-queries&library=NetFabric.Hyperlinq) | 12/17 | 950 | 900 | 1850 | silver in Sources, bronze in Core |
+| 1 | [**ZLinq**](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 17/17 | 1571 | 1697 | 3268 | gold in Advanced, gold in Core, gold in Sequences, gold in Sources, silver in Partitioning |
+| 2 | [**System.Linq**](https://matrix.dev-team.org/?category=linq-queries&library=System.Linq) | 16/17 | 1441 | 1373 | 2813 | gold in Partitioning, silver in Advanced, silver in Core, bronze in Sequences, bronze in Sources |
+| 3 | [**StructLinq**](https://matrix.dev-team.org/?category=linq-queries&library=StructLinq) | 14/17 | 955 | 1229 | 2185 | silver in Sequences |
+| 4 | [**LinqAF**](https://matrix.dev-team.org/?category=linq-queries&library=LinqAF) | 16/17 | 1080 | 1072 | 2152 | bronze in Advanced, bronze in Partitioning |
+| 5 | [**NetFabric.Hyperlinq**](https://matrix.dev-team.org/?category=linq-queries&library=NetFabric.Hyperlinq) | 12/17 | 940 | 900 | 1841 | silver in Sources, bronze in Core |
 
 
 <details>
@@ -39,115 +39,115 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=linq-queries).
 
-#### 1. ZLinq — 3292 of 3400
+#### 1. ZLinq — 3268 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 6.06 μs | 6.06 μs | 100 | 0 B | 0 B | 100 |
-| Project To Array | 3.57 μs | 3.57 μs | 100 | 39.09 KB | 39.09 KB | 100 |
-| Filter, Project, Materialize | 6.34 μs | 5.89 μs | 96.4 | 9.83 KB | 9.83 KB | 100 |
-| Chained Pipeline | 7.81 μs | 6.51 μs | 91.3 | 3.93 KB | 3.93 KB | 100 |
-| List Source | 15.17 μs | 13.14 μs | 93.1 | 13.07 KB | 13.07 KB | 100 |
-| Opaque Source | 27.92 μs | 18.4 μs | 81.2 | 13.1 KB | 13.1 KB | 100 |
-| Span Source | 12.19 μs | 11.98 μs | 99.1 | 13.07 KB | 13.07 KB | 100 |
-| Paged Slice | 233.19 ns | 205.05 ns | 93.8 | 3.93 KB | 3.93 KB | 100 |
-| Any Match | 2.48 μs | 2.48 μs | 100 | 0 B | 0 B | 100 |
-| First Match | 1.79 μs | 1.79 μs | 99.9 | 0 B | 0 B | 100 |
-| Flatten Nested Sequences | 25.41 μs | 4.77 μs | 43.3 | 39.09 KB | 39.09 KB | 100 |
-| Distinct Values | 26.16 μs | 24.61 μs | 97 | 3.98 KB | 3.98 KB | 100 |
-| Zip Pairs | 8.35 μs | 8.35 μs | 100 | 39.09 KB | 39.09 KB | 100 |
-| Aggregate | 2.64 μs | 2.64 μs | 100 | 0 B | 0 B | 100 |
-| Ordered Top N | 31.46 μs | 31.34 μs | 99.8 | 264 B | 248 B | 97.2 |
-| Group and Aggregate | 69.73 μs | 69.73 μs | 100 | 130.59 KB | 130.59 KB | 100 |
-| Join and Project | 56.36 μs | 56.36 μs | 100 | 129.19 KB | 129.19 KB | 100 |
+| Filter and Count | 9.16 μs | 9.02 μs | 99.2 | 0 B | 0 B | 100 |
+| Project To Array | 4.61 μs | 4.61 μs | 100 | 39.09 KB | 39.09 KB | 100 |
+| Filter, Project, Materialize | 7.94 μs | 6.09 μs | 87.6 | 9.83 KB | 9.83 KB | 100 |
+| Chained Pipeline | 12.44 μs | 9.14 μs | 85.7 | 3.93 KB | 3.93 KB | 100 |
+| List Source | 21.22 μs | 12.56 μs | 76.9 | 13.07 KB | 13.07 KB | 100 |
+| Opaque Source | 32.57 μs | 25.59 μs | 88.6 | 13.1 KB | 13.1 KB | 100 |
+| Span Source | 13.86 μs | 13.86 μs | 100 | 13.07 KB | 13.07 KB | 100 |
+| Paged Slice | 257.75 ns | 244.32 ns | 97.4 | 3.93 KB | 3.93 KB | 100 |
+| Any Match | 2.98 μs | 2.98 μs | 100 | 0 B | 0 B | 100 |
+| First Match | 2.35 μs | 2.35 μs | 100 | 0 B | 0 B | 100 |
+| Flatten Nested Sequences | 25.97 μs | 6.77 μs | 51.1 | 39.09 KB | 39.09 KB | 100 |
+| Distinct Values | 39.77 μs | 31.17 μs | 88.5 | 3.98 KB | 3.98 KB | 100 |
+| Zip Pairs | 13.69 μs | 13.69 μs | 100 | 39.09 KB | 39.09 KB | 100 |
+| Aggregate | 3.4 μs | 3.4 μs | 100 | 0 B | 0 B | 100 |
+| Ordered Top N | 43.5 μs | 40.03 μs | 95.9 | 264 B | 248 B | 97.2 |
+| Group and Aggregate | 92.57 μs | 92.57 μs | 100 | 130.59 KB | 130.59 KB | 100 |
+| Join and Project | 75.56 μs | 75.56 μs | 100 | 129.19 KB | 129.19 KB | 100 |
 
-#### 2. System.Linq — 2806 of 3400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 9.58 μs | 6.06 μs | 79.6 | 48 B | 0 B | 57.7 |
-| Project To Array | 4.15 μs | 3.57 μs | 92.7 | 39.13 KB | 39.09 KB | 99.9 |
-| Filter, Project, Materialize | 5.89 μs | 5.89 μs | 100 | 9.93 KB | 9.83 KB | 99.5 |
-| Chained Pipeline | 10.09 μs | 6.51 μs | 80.3 | 4.14 KB | 3.93 KB | 97.4 |
-| List Source | 13.14 μs | 13.14 μs | 100 | 13.22 KB | 13.07 KB | 99.4 |
-| Opaque Source | 18.4 μs | 18.4 μs | 100 | 13.22 KB | 13.1 KB | 99.6 |
-| Span Source | — | 11.98 μs | 0 | — | 13.07 KB | 0 |
-| Paged Slice | 205.05 ns | 205.05 ns | 100 | 4.02 KB | 3.93 KB | 98.8 |
-| Any Match | 2.48 μs | 2.48 μs | 100 | 0 B | 0 B | 100 |
-| First Match | 1.79 μs | 1.79 μs | 100 | 0 B | 0 B | 100 |
-| Flatten Nested Sequences | 4.77 μs | 4.77 μs | 100 | 39.18 KB | 39.09 KB | 99.9 |
-| Distinct Values | 64.38 μs | 24.61 μs | 61.8 | 179.3 KB | 3.98 KB | 14.9 |
-| Zip Pairs | 59.12 μs | 8.35 μs | 37.6 | 39.24 KB | 39.09 KB | 99.8 |
-| Aggregate | 2.64 μs | 2.64 μs | 100 | 0 B | 0 B | 100 |
-| Ordered Top N | 31.34 μs | 31.34 μs | 100 | 78.56 KB | 248 B | 5.814 |
-| Group and Aggregate | 74.36 μs | 69.73 μs | 96.8 | 131.27 KB | 130.59 KB | 99.7 |
-| Join and Project | 78.6 μs | 56.36 μs | 84.7 | 129.45 KB | 129.19 KB | 99.9 |
-
-#### 3. StructLinq — 2215 of 3400
+#### 2. System.Linq — 2813 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 8.35 μs | 6.06 μs | 85.2 | 64 B | 0 B | 52.2 |
-| Project To Array | 6.47 μs | 3.57 μs | 74.3 | 39.09 KB | 39.09 KB | 100 |
-| Filter, Project, Materialize | 24.62 μs | 5.89 μs | 48.9 | 9.9 KB | 9.83 KB | 99.6 |
-| Chained Pipeline | 8.29 μs | 6.51 μs | 88.6 | 4.06 KB | 3.93 KB | 98.4 |
-| List Source | 14.23 μs | 13.14 μs | 96.1 | 13.14 KB | 13.07 KB | 99.7 |
-| Opaque Source | 24.85 μs | 18.4 μs | 86.1 | 13.16 KB | 13.1 KB | 99.8 |
-| Span Source | — | 11.98 μs | 0 | — | 13.07 KB | 0 |
-| Paged Slice | 618.47 ns | 205.05 ns | 57.7 | 3.99 KB | 3.93 KB | 99.2 |
-| Any Match | 5.08 μs | 2.48 μs | 69.8 | 32 B | 0 B | 65.5 |
-| First Match | 3.72 μs | 1.79 μs | 69.3 | 32 B | 0 B | 65.5 |
-| Flatten Nested Sequences | 36.39 μs | 4.77 μs | 36.2 | 54.77 KB | 39.09 KB | 84.5 |
-| Distinct Values | 24.61 μs | 24.61 μs | 100 | 4.01 KB | 3.98 KB | 99.7 |
-| Zip Pairs | 17.86 μs | 8.35 μs | 68.4 | 39.19 KB | 39.09 KB | 99.9 |
-| Aggregate | 4.38 μs | 2.64 μs | 77.6 | 32 B | 0 B | 65.5 |
-| Ordered Top N | 429.46 μs | 31.34 μs | 27 | 248 B | 248 B | 100 |
-| Group and Aggregate | — | 69.73 μs | 0 | — | 130.59 KB | 0 |
-| Join and Project | — | 56.36 μs | 0 | — | 129.19 KB | 0 |
+| Filter and Count | 9.02 μs | 9.02 μs | 100 | 48 B | 0 B | 57.7 |
+| Project To Array | 4.96 μs | 4.61 μs | 96.5 | 39.13 KB | 39.09 KB | 99.9 |
+| Filter, Project, Materialize | 6.09 μs | 6.09 μs | 100 | 9.93 KB | 9.83 KB | 99.5 |
+| Chained Pipeline | 15.05 μs | 9.14 μs | 77.9 | 4.14 KB | 3.93 KB | 97.4 |
+| List Source | 12.56 μs | 12.56 μs | 100 | 13.22 KB | 13.07 KB | 99.4 |
+| Opaque Source | 25.59 μs | 25.59 μs | 100 | 13.22 KB | 13.1 KB | 99.6 |
+| Span Source | — | 13.86 μs | 0 | — | 13.07 KB | 0 |
+| Paged Slice | 244.32 ns | 244.32 ns | 100 | 4.02 KB | 3.93 KB | 98.8 |
+| Any Match | 2.99 μs | 2.98 μs | 99.8 | 0 B | 0 B | 100 |
+| First Match | 2.39 μs | 2.35 μs | 99.3 | 0 B | 0 B | 100 |
+| Flatten Nested Sequences | 6.77 μs | 6.77 μs | 100 | 39.18 KB | 39.09 KB | 99.9 |
+| Distinct Values | 83.9 μs | 31.17 μs | 61 | 179.3 KB | 3.98 KB | 14.9 |
+| Zip Pairs | 79.8 μs | 13.69 μs | 41.4 | 39.24 KB | 39.09 KB | 99.8 |
+| Aggregate | 3.4 μs | 3.4 μs | 99.9 | 0 B | 0 B | 100 |
+| Ordered Top N | 40.03 μs | 40.03 μs | 100 | 78.56 KB | 248 B | 5.814 |
+| Group and Aggregate | 117.45 μs | 92.57 μs | 88.8 | 131.27 KB | 130.59 KB | 99.7 |
+| Join and Project | 130.97 μs | 75.56 μs | 76 | 129.45 KB | 129.19 KB | 99.9 |
 
-#### 4. LinqAF — 2149 of 3400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 10.66 μs | 6.06 μs | 75.4 | 0 B | 0 B | 100 |
-| Project To Array | 20.11 μs | 3.57 μs | 42.2 | 151.38 KB | 39.09 KB | 50.8 |
-| Filter, Project, Materialize | 7.37 μs | 5.89 μs | 89.4 | 32.27 KB | 9.83 KB | 55.2 |
-| Chained Pipeline | 6.51 μs | 6.51 μs | 100 | 3.93 KB | 3.93 KB | 100 |
-| List Source | 18.49 μs | 13.14 μs | 84.3 | 45.31 KB | 13.07 KB | 53.7 |
-| Opaque Source | 33 μs | 18.4 μs | 74.7 | 45.34 KB | 13.1 KB | 53.8 |
-| Span Source | — | 11.98 μs | 0 | — | 13.07 KB | 0 |
-| Paged Slice | 2.04 μs | 205.05 ns | 31.8 | 3.93 KB | 3.93 KB | 100 |
-| Any Match | 2.48 μs | 2.48 μs | 99.9 | 0 B | 0 B | 100 |
-| First Match | 1.87 μs | 1.79 μs | 97.8 | 0 B | 0 B | 100 |
-| Flatten Nested Sequences | 80.4 μs | 4.77 μs | 24.4 | 151.38 KB | 39.09 KB | 50.8 |
-| Distinct Values | 162.69 μs | 24.61 μs | 38.9 | 246.72 KB | 3.98 KB | 12.7 |
-| Zip Pairs | 23.07 μs | 8.35 μs | 60.2 | 151.38 KB | 39.09 KB | 50.8 |
-| Aggregate | 2.64 μs | 2.64 μs | 100 | 0 B | 0 B | 100 |
-| Ordered Top N | 223.28 μs | 31.34 μs | 37.5 | 257.14 KB | 248 B | 3.214 |
-| Group and Aggregate | 166.28 μs | 69.73 μs | 64.8 | 194.7 KB | 130.59 KB | 81.9 |
-| Join and Project | 182.01 μs | 56.36 μs | 55.6 | 374.56 KB | 129.19 KB | 58.7 |
-
-#### 5. NetFabric.Hyperlinq — 1850 of 3400
+#### 3. StructLinq — 2185 of 3400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Filter and Count | 10.1 μs | 6.06 μs | 77.5 | 0 B | 0 B | 100 |
-| Project To Array | 6.99 μs | 3.57 μs | 71.5 | 39.09 KB | 39.09 KB | 100 |
-| Filter, Project, Materialize | 8.46 μs | 5.89 μs | 83.5 | 32.27 KB | 9.83 KB | 55.2 |
-| Chained Pipeline | 7.9 μs | 6.51 μs | 90.8 | 8.3 KB | 3.93 KB | 68.9 |
-| List Source | 15.99 μs | 13.14 μs | 90.6 | 29.48 KB | 13.07 KB | 66.6 |
-| Opaque Source | 21.12 μs | 18.4 μs | 93.4 | 29.52 KB | 13.1 KB | 66.7 |
-| Span Source | 11.98 μs | 11.98 μs | 100 | 29.48 KB | 13.07 KB | 66.6 |
-| Paged Slice | 784.29 ns | 205.05 ns | 51.2 | 3.93 KB | 3.93 KB | 100 |
-| Any Match | 3.71 μs | 2.48 μs | 81.7 | 0 B | 0 B | 100 |
-| First Match | 2.14 μs | 1.79 μs | 91.3 | 0 B | 0 B | 100 |
-| Flatten Nested Sequences | 28.78 μs | 4.77 μs | 40.7 | 103.7 KB | 39.09 KB | 61.4 |
-| Distinct Values | 40.98 μs | 24.61 μs | 77.5 | 179.21 KB | 3.98 KB | 15 |
-| Zip Pairs | — | 8.35 μs | 0 | — | 39.09 KB | 0 |
-| Aggregate | — | 2.64 μs | 0 | — | 0 B | 0 |
-| Ordered Top N | — | 31.34 μs | 0 | — | 248 B | 0 |
-| Group and Aggregate | — | 69.73 μs | 0 | — | 130.59 KB | 0 |
-| Join and Project | — | 56.36 μs | 0 | — | 129.19 KB | 0 |
+| Filter and Count | 12.77 μs | 9.02 μs | 84.1 | 64 B | 0 B | 52.2 |
+| Project To Array | 10.62 μs | 4.61 μs | 65.9 | 39.09 KB | 39.09 KB | 100 |
+| Filter, Project, Materialize | 26.87 μs | 6.09 μs | 47.6 | 9.9 KB | 9.83 KB | 99.6 |
+| Chained Pipeline | 11.41 μs | 9.14 μs | 89.5 | 4.06 KB | 3.93 KB | 98.4 |
+| List Source | 16.96 μs | 12.56 μs | 86.1 | 13.14 KB | 13.07 KB | 99.7 |
+| Opaque Source | 29.93 μs | 25.59 μs | 92.5 | 13.16 KB | 13.1 KB | 99.8 |
+| Span Source | — | 13.86 μs | 0 | — | 13.07 KB | 0 |
+| Paged Slice | 920.76 ns | 244.32 ns | 51.6 | 3.99 KB | 3.93 KB | 99.2 |
+| Any Match | 8.44 μs | 2.98 μs | 59.4 | 32 B | 0 B | 65.5 |
+| First Match | 5.3 μs | 2.35 μs | 66.6 | 32 B | 0 B | 65.5 |
+| Flatten Nested Sequences | 42.74 μs | 6.77 μs | 39.8 | 54.77 KB | 39.09 KB | 84.5 |
+| Distinct Values | 31.17 μs | 31.17 μs | 100 | 4.01 KB | 3.98 KB | 99.7 |
+| Zip Pairs | 27.26 μs | 13.69 μs | 70.9 | 39.19 KB | 39.09 KB | 99.9 |
+| Aggregate | 6.26 μs | 3.4 μs | 73.6 | 32 B | 0 B | 65.5 |
+| Ordered Top N | 520.05 μs | 40.03 μs | 27.7 | 248 B | 248 B | 100 |
+| Group and Aggregate | — | 92.57 μs | 0 | — | 130.59 KB | 0 |
+| Join and Project | — | 75.56 μs | 0 | — | 129.19 KB | 0 |
+
+#### 4. LinqAF — 2152 of 3400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Filter and Count | 10.37 μs | 9.02 μs | 93.3 | 0 B | 0 B | 100 |
+| Project To Array | 27.94 μs | 4.61 μs | 40.6 | 151.38 KB | 39.09 KB | 50.8 |
+| Filter, Project, Materialize | 8.78 μs | 6.09 μs | 83.3 | 32.27 KB | 9.83 KB | 55.2 |
+| Chained Pipeline | 9.14 μs | 9.14 μs | 100 | 3.93 KB | 3.93 KB | 100 |
+| List Source | 24.24 μs | 12.56 μs | 72 | 45.31 KB | 13.07 KB | 53.7 |
+| Opaque Source | 41.12 μs | 25.59 μs | 78.9 | 45.34 KB | 13.1 KB | 53.8 |
+| Span Source | — | 13.86 μs | 0 | — | 13.07 KB | 0 |
+| Paged Slice | 2.49 μs | 244.32 ns | 31.4 | 3.93 KB | 3.93 KB | 100 |
+| Any Match | 3.02 μs | 2.98 μs | 99.3 | 0 B | 0 B | 100 |
+| First Match | 2.43 μs | 2.35 μs | 98.4 | 0 B | 0 B | 100 |
+| Flatten Nested Sequences | 86.54 μs | 6.77 μs | 28 | 151.38 KB | 39.09 KB | 50.8 |
+| Distinct Values | 248.33 μs | 31.17 μs | 35.4 | 246.72 KB | 3.98 KB | 12.7 |
+| Zip Pairs | 34.48 μs | 13.69 μs | 63 | 151.38 KB | 39.09 KB | 50.8 |
+| Aggregate | 3.4 μs | 3.4 μs | 100 | 0 B | 0 B | 100 |
+| Ordered Top N | 305.9 μs | 40.03 μs | 36.2 | 257.14 KB | 248 B | 3.214 |
+| Group and Aggregate | 225.12 μs | 92.57 μs | 64.1 | 194.7 KB | 130.59 KB | 81.9 |
+| Join and Project | 242.84 μs | 75.56 μs | 55.8 | 374.56 KB | 129.19 KB | 58.7 |
+
+#### 5. NetFabric.Hyperlinq — 1841 of 3400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Filter and Count | 12.99 μs | 9.02 μs | 83.3 | 0 B | 0 B | 100 |
+| Project To Array | 9.49 μs | 4.61 μs | 69.7 | 39.09 KB | 39.09 KB | 100 |
+| Filter, Project, Materialize | 8.64 μs | 6.09 μs | 84 | 32.27 KB | 9.83 KB | 55.2 |
+| Chained Pipeline | 11.03 μs | 9.14 μs | 91 | 8.3 KB | 3.93 KB | 68.9 |
+| List Source | 18.23 μs | 12.56 μs | 83 | 29.48 KB | 13.07 KB | 66.6 |
+| Opaque Source | 27.51 μs | 25.59 μs | 96.4 | 29.52 KB | 13.1 KB | 66.7 |
+| Span Source | 14.42 μs | 13.86 μs | 98 | 29.48 KB | 13.07 KB | 66.6 |
+| Paged Slice | 878.17 ns | 244.32 ns | 52.8 | 3.93 KB | 3.93 KB | 100 |
+| Any Match | 5.97 μs | 2.98 μs | 70.7 | 0 B | 0 B | 100 |
+| First Match | 2.39 μs | 2.35 μs | 99.1 | 0 B | 0 B | 100 |
+| Flatten Nested Sequences | 36.58 μs | 6.77 μs | 43 | 103.7 KB | 39.09 KB | 61.4 |
+| Distinct Values | 65.48 μs | 31.17 μs | 69 | 179.21 KB | 3.98 KB | 15 |
+| Zip Pairs | — | 13.69 μs | 0 | — | 39.09 KB | 0 |
+| Aggregate | — | 3.4 μs | 0 | — | 0 B | 0 |
+| Ordered Top N | — | 40.03 μs | 0 | — | 248 B | 0 |
+| Group and Aggregate | — | 92.57 μs | 0 | — | 130.59 KB | 0 |
+| Join and Project | — | 75.56 μs | 0 | — | 129.19 KB | 0 |
 
 </details>
 

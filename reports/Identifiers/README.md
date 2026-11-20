@@ -21,15 +21,15 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**FlakeId**](https://matrix.dev-team.org/?category=identifiers&library=FlakeId) | 5/8 | 428 | 452 | 881 | gold in Convert, gold in Generate, bronze in Codec |
-| 2 | [**Ulid**](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 6/8 | 329 | 548 | 877 | gold in Time, silver in Convert, silver in Generate, bronze in Codec |
-| 3 | [**IdGen**](https://matrix.dev-team.org/?category=identifiers&library=IdGen) | 5/8 | 189 | 396 | 585 | bronze in Codec |
-| 4 | [**Medo.Uuid7**](https://matrix.dev-team.org/?category=identifiers&library=Medo.Uuid7) | 6/8 | 237 | 320 | 557 | silver in Time, bronze in Codec |
-| 5 | [**NUlid**](https://matrix.dev-team.org/?category=identifiers&library=NUlid) | 6/8 | 113 | 403 | 516 | bronze in Codec, bronze in Generate |
-| 6 | [**Hashids.net**](https://matrix.dev-team.org/?category=identifiers&library=Hashids.net) | 2/8 | 190 | 200 | 390 | gold in Codec |
-| 7 | [**KSUID**](https://matrix.dev-team.org/?category=identifiers&library=Ksuid) | 5/8 | 195 | 164 | 358 | bronze in Codec |
-| 8 | [**UUIDNext**](https://matrix.dev-team.org/?category=identifiers&library=UUIDNext) | 4/8 | 123 | 185 | 309 | bronze in Codec, bronze in Time |
-| 9 | [**Cuid.Net**](https://matrix.dev-team.org/?category=identifiers&library=Cuid.Net) | 3/8 | 104 | 125 | 228 | bronze in Codec, bronze in Convert |
+| 1 | [**FlakeId**](https://matrix.dev-team.org/?category=identifiers&library=FlakeId) | 5/8 | 429 | 452 | 881 | gold in Convert, gold in Generate, bronze in Codec |
+| 2 | [**Ulid**](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 6/8 | 331 | 548 | 879 | gold in Time, silver in Convert, silver in Generate, bronze in Codec |
+| 3 | [**IdGen**](https://matrix.dev-team.org/?category=identifiers&library=IdGen) | 5/8 | 188 | 397 | 586 | bronze in Codec |
+| 4 | [**Medo.Uuid7**](https://matrix.dev-team.org/?category=identifiers&library=Medo.Uuid7) | 6/8 | 240 | 320 | 560 | silver in Time, bronze in Codec |
+| 5 | [**NUlid**](https://matrix.dev-team.org/?category=identifiers&library=NUlid) | 6/8 | 118 | 403 | 521 | bronze in Codec, bronze in Generate |
+| 6 | [**Hashids.net**](https://matrix.dev-team.org/?category=identifiers&library=Hashids.net) | 2/8 | 192 | 200 | 392 | gold in Codec |
+| 7 | [**KSUID**](https://matrix.dev-team.org/?category=identifiers&library=Ksuid) | 5/8 | 197 | 164 | 361 | bronze in Codec |
+| 8 | [**UUIDNext**](https://matrix.dev-team.org/?category=identifiers&library=UUIDNext) | 4/8 | 125 | 185 | 310 | bronze in Codec, bronze in Time |
+| 9 | [**Cuid.Net**](https://matrix.dev-team.org/?category=identifiers&library=Cuid.Net) | 3/8 | 104 | 125 | 229 | bronze in Codec, bronze in Convert |
 | 10 | [**Sqids**](https://matrix.dev-team.org/?category=identifiers&library=Sqids) | 2/8 | 120 | 75 | 195 | silver in Codec |
 | 11 | [**Nanoid**](https://matrix.dev-team.org/?category=identifiers&library=Nanoid) | 2/8 | 22 | 34 | 56 | bronze in Codec |
 
@@ -49,144 +49,144 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 9.97 ns | 9.97 ns | 100 | 0 B | 0 B | 100 |
+| Generate One | 9.96 ns | 9.96 ns | 100 | 0 B | 0 B | 100 |
 | Generate Batch | 10.58 μs | 10.58 μs | 100 | 0 B | 0 B | 100 |
-| Format | 23.06 ns | 0.93 ns | 28.3 | 64 B | 0 B | 52.2 |
-| Parse | 0.33 ns | 0.33 ns | 100 | 0 B | 0 B | 100 |
+| Format | 21.52 ns | 0.93 ns | 29.2 | 64 B | 0 B | 52.2 |
+| Parse | 0.31 ns | 0.31 ns | 100 | 0 B | 0 B | 100 |
 | Extract Timestamp | — | 0 ns | 0 | — | 0 B | 0 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | 244.76 ns | 244.76 ns | 100 | 0 B | 0 B | 100 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | 245.38 ns | 245.38 ns | 100 | 0 B | 0 B | 100 |
 
-#### 2. Ulid — 877 of 1600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Generate One | 15.21 ns | 9.97 ns | 82.3 | 0 B | 0 B | 100 |
-| Generate Batch | 17.87 μs | 10.58 μs | 76.9 | 0 B | 0 B | 100 |
-| Format | 24.88 ns | 0.93 ns | 27.3 | 80 B | 0 B | 48 |
-| Parse | 17.16 ns | 0.33 ns | 27.1 | 0 B | 0 B | 100 |
-| Extract Timestamp | 1.14 ns | 0 ns | 68.4 | 0 B | 0 B | 100 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | 1.13 μs | 244.76 ns | 46.7 | 0 B | 0 B | 100 |
-
-#### 3. IdGen — 585 of 1600
+#### 2. Ulid — 879 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 269.74 ns | 9.97 ns | 20.1 | 0 B | 0 B | 100 |
-| Generate Batch | 278.71 μs | 10.58 μs | 19.5 | 14 B | 0 B | 79.5 |
-| Format | 278.41 ns | 0.93 ns | 8.316 | 824 B | 0 B | 16.8 |
-| Parse | 3.67 ns | 0.33 ns | 53.4 | 0 B | 0 B | 100 |
-| Extract Timestamp | 0.31 ns | 0 ns | 87.2 | 0 B | 0 B | 100 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Generate One | 15.2 ns | 9.96 ns | 82.2 | 0 B | 0 B | 100 |
+| Generate Batch | 17.93 μs | 10.58 μs | 76.8 | 0 B | 0 B | 100 |
+| Format | 22.07 ns | 0.93 ns | 28.9 | 80 B | 0 B | 48 |
+| Parse | 16.66 ns | 0.31 ns | 27.3 | 0 B | 0 B | 100 |
+| Extract Timestamp | 1.13 ns | 0 ns | 68.6 | 0 B | 0 B | 100 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | 1.12 μs | 245.38 ns | 46.8 | 0 B | 0 B | 100 |
 
-#### 4. Medo.Uuid7 — 557 of 1600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Generate One | 36.02 ns | 9.97 ns | 54.4 | 40 B | 0 B | 61.2 |
-| Generate Batch | 36.48 μs | 10.58 μs | 53.8 | 40 KB | 0 B | 2.42 |
-| Format | 21.55 ns | 0.93 ns | 29.3 | 96 B | 0 B | 44.7 |
-| Parse | 1.55 μs | 0.33 ns | 2.932 | 1.71 KB | 0 B | 11.6 |
-| Extract Timestamp | 3.35 ns | 0 ns | 48 | 0 B | 0 B | 100 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | 1.04 μs | 244.76 ns | 48.5 | 0 B | 0 B | 100 |
-
-#### 5. NUlid — 516 of 1600
+#### 3. IdGen — 586 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 807.38 ns | 9.97 ns | 11.6 | 0 B | 0 B | 100 |
-| Generate Batch | 822.4 μs | 10.58 μs | 11.3 | 0 B | 0 B | 100 |
-| Format | 28.78 ns | 0.93 ns | 25.5 | 80 B | 0 B | 48 |
-| Parse | 59.96 ns | 0.33 ns | 14.8 | 72 B | 0 B | 50 |
-| Extract Timestamp | 12.9 ns | 0 ns | 26.8 | 0 B | 0 B | 100 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | 4.52 μs | 244.76 ns | 23.3 | 9.96 KB | 0 B | 4.845 |
+| Generate One | 270.49 ns | 9.96 ns | 20.1 | 0 B | 0 B | 100 |
+| Generate Batch | 276.18 μs | 10.58 μs | 19.6 | 13 B | 0 B | 80.5 |
+| Format | 245.32 ns | 0.93 ns | 8.841 | 824 B | 0 B | 16.8 |
+| Parse | 3.75 ns | 0.31 ns | 52.6 | 0 B | 0 B | 100 |
+| Extract Timestamp | 0.31 ns | 0 ns | 87.3 | 0 B | 0 B | 100 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
-#### 6. Hashids.net — 390 of 1600
+#### 4. Medo.Uuid7 — 560 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | — | 9.97 ns | 0 | — | 0 B | 0 |
+| Generate One | 35.13 ns | 9.96 ns | 55.1 | 40 B | 0 B | 61.2 |
+| Generate Batch | 37.69 μs | 10.58 μs | 53 | 40 KB | 0 B | 2.42 |
+| Format | 19.09 ns | 0.93 ns | 31 | 96 B | 0 B | 44.7 |
+| Parse | 1.57 μs | 0.31 ns | 2.896 | 1.71 KB | 0 B | 11.6 |
+| Extract Timestamp | 3.39 ns | 0 ns | 47.7 | 0 B | 0 B | 100 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | 983.3 ns | 245.38 ns | 50 | 0 B | 0 B | 100 |
+
+#### 5. NUlid — 521 of 1600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Generate One | 812.88 ns | 9.96 ns | 11.6 | 0 B | 0 B | 100 |
+| Generate Batch | 825.17 μs | 10.58 μs | 11.3 | 0 B | 0 B | 100 |
+| Format | 25.98 ns | 0.93 ns | 26.7 | 80 B | 0 B | 48 |
+| Parse | 58.45 ns | 0.31 ns | 14.9 | 72 B | 0 B | 50 |
+| Extract Timestamp | 10.78 ns | 0 ns | 29.2 | 0 B | 0 B | 100 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | 4.1 μs | 245.38 ns | 24.5 | 9.96 KB | 0 B | 4.845 |
+
+#### 6. Hashids.net — 392 of 1600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Generate One | — | 9.96 ns | 0 | — | 0 B | 0 |
 | Generate Batch | — | 10.58 μs | 0 | — | 0 B | 0 |
 | Format | — | 0.93 ns | 0 | — | 0 B | 0 |
-| Parse | — | 0.33 ns | 0 | — | 0 B | 0 |
+| Parse | — | 0.31 ns | 0 | — | 0 B | 0 |
 | Extract Timestamp | — | 0 ns | 0 | — | 0 B | 0 |
-| Encode Numbers | 939.1 ns | 939.1 ns | 100 | 48 B | 48 B | 100 |
-| Decode Numbers | 1.94 μs | 1.56 μs | 89.8 | 56 B | 56 B | 100 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Encode Numbers | 942.35 ns | 942.35 ns | 100 | 48 B | 48 B | 100 |
+| Decode Numbers | 1.92 μs | 1.64 μs | 92.3 | 56 B | 56 B | 100 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
-#### 7. KSUID — 358 of 1600
+#### 7. KSUID — 361 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 51 ns | 9.97 ns | 45.9 | 72 B | 0 B | 50 |
-| Generate Batch | 55.09 μs | 10.58 μs | 43.8 | 72 KB | 0 B | 1.804 |
-| Format | 2.59 μs | 0.93 ns | 2.729 | 6.3 KB | 0 B | 6.09 |
-| Parse | 2.65 μs | 0.33 ns | 2.241 | 6.87 KB | 0 B | 5.832 |
+| Generate One | 48.15 ns | 9.96 ns | 47.2 | 72 B | 0 B | 50 |
+| Generate Batch | 52.91 μs | 10.58 μs | 44.7 | 72 KB | 0 B | 1.804 |
+| Format | 2.5 μs | 0.93 ns | 2.776 | 6.3 KB | 0 B | 6.09 |
+| Parse | 2.62 μs | 0.31 ns | 2.242 | 6.87 KB | 0 B | 5.832 |
 | Extract Timestamp | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
-#### 8. UUIDNext — 309 of 1600
+#### 8. UUIDNext — 310 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 192.59 ns | 9.97 ns | 23.8 | 112 B | 0 B | 42 |
-| Generate Batch | 193.86 μs | 10.58 μs | 23.4 | 128 KB | 0 B | 1.353 |
+| Generate One | 189.02 ns | 9.96 ns | 24 | 112 B | 0 B | 42 |
+| Generate Batch | 188.55 μs | 10.58 μs | 23.7 | 128 KB | 0 B | 1.353 |
 | Format | — | 0.93 ns | 0 | — | 0 B | 0 |
-| Parse | — | 0.33 ns | 0 | — | 0 B | 0 |
-| Extract Timestamp | 36.33 ns | 0 ns | 16.4 | 112 B | 0 B | 42 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | 685.41 ns | 244.76 ns | 59.8 | 0 B | 0 B | 100 |
+| Parse | — | 0.31 ns | 0 | — | 0 B | 0 |
+| Extract Timestamp | 33.02 ns | 0 ns | 17.1 | 112 B | 0 B | 42 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | 688.79 ns | 245.38 ns | 59.8 | 0 B | 0 B | 100 |
 
-#### 9. Cuid.Net — 228 of 1600
+#### 9. Cuid.Net — 229 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 27.57 μs | 9.97 ns | 1.995 | 400 B | 0 B | 23.8 |
-| Generate Batch | 27.94 ms | 10.58 μs | 1.946 | 400 KB | 0 B | 0.765 |
+| Generate One | 27.46 μs | 9.96 ns | 1.998 | 400 B | 0 B | 23.8 |
+| Generate Batch | 27.92 ms | 10.58 μs | 1.947 | 400 KB | 0 B | 0.765 |
 | Format | 0.93 ns | 0.93 ns | 100 | 0 B | 0 B | 100 |
-| Parse | — | 0.33 ns | 0 | — | 0 B | 0 |
+| Parse | — | 0.31 ns | 0 | — | 0 B | 0 |
 | Extract Timestamp | — | 0 ns | 0 | — | 0 B | 0 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
 #### 10. Sqids — 195 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | — | 9.97 ns | 0 | — | 0 B | 0 |
+| Generate One | — | 9.96 ns | 0 | — | 0 B | 0 |
 | Generate Batch | — | 10.58 μs | 0 | — | 0 B | 0 |
 | Format | — | 0.93 ns | 0 | — | 0 B | 0 |
-| Parse | — | 0.33 ns | 0 | — | 0 B | 0 |
+| Parse | — | 0.31 ns | 0 | — | 0 B | 0 |
 | Extract Timestamp | — | 0 ns | 0 | — | 0 B | 0 |
-| Encode Numbers | 24.07 μs | 939.1 ns | 19.8 | 18.04 KB | 48 B | 6.239 |
-| Decode Numbers | 1.56 μs | 1.56 μs | 100 | 144 B | 56 B | 69 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Encode Numbers | 23.62 μs | 942.35 ns | 20 | 18.04 KB | 48 B | 6.239 |
+| Decode Numbers | 1.64 μs | 1.64 μs | 100 | 144 B | 56 B | 69 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
 #### 11. Nanoid — 56 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Generate One | 916.19 ns | 9.97 ns | 10.9 | 200 B | 0 B | 32.7 |
-| Generate Batch | 869.16 μs | 10.58 μs | 11 | 200 KB | 0 B | 1.082 |
+| Generate One | 881.58 ns | 9.96 ns | 11.1 | 200 B | 0 B | 32.7 |
+| Generate Batch | 883.06 μs | 10.58 μs | 10.9 | 200 KB | 0 B | 1.082 |
 | Format | — | 0.93 ns | 0 | — | 0 B | 0 |
-| Parse | — | 0.33 ns | 0 | — | 0 B | 0 |
+| Parse | — | 0.31 ns | 0 | — | 0 B | 0 |
 | Extract Timestamp | — | 0 ns | 0 | — | 0 B | 0 |
-| Encode Numbers | — | 939.1 ns | 0 | — | 48 B | 0 |
-| Decode Numbers | — | 1.56 μs | 0 | — | 56 B | 0 |
-| Sortable Order | — | 244.76 ns | 0 | — | 0 B | 0 |
+| Encode Numbers | — | 942.35 ns | 0 | — | 48 B | 0 |
+| Decode Numbers | — | 1.64 μs | 0 | — | 56 B | 0 |
+| Sortable Order | — | 245.38 ns | 0 | — | 0 B | 0 |
 
 </details>
 

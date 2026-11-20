@@ -27,7 +27,7 @@
 <table align="center">
 <tr>
 <td width="180" align="center"><strong>16</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>126</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>127</strong><br><sub>LIBRARIES</sub></td>
 <td width="180" align="center"><strong>158</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
@@ -49,7 +49,7 @@
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
 | [**Message Dispatch**](#message-dispatch) | [Mediator](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 7 | 8 | [Every scenario →](reports/MessageDispatch/README.md) |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 | [Every scenario →](reports/ObjectMapping/README.md) |
-| [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 10 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
+| [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 11 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
 | [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 6 | 10 | [Every scenario →](reports/Validation/README.md) |
 | [**ZIP Archives**](#zip-archives) | [System.IO.Compression](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 4 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
 
@@ -210,7 +210,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Template Engines](https://matrix.dev-team.org/?category=template-engines)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=template-engines&amp;library=Handlebars.Net">Handlebars.Net</a></strong> leads the current rating · 10 libraries · 3 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=template-engines&amp;library=Handlebars.Net">Handlebars.Net</a></strong> leads the current rating · 11 libraries · 3 scenarios
 </blockquote>
 
 [![Template Engines rating](reports/TemplateEngines/charts/rating.png)](https://matrix.dev-team.org/?category=template-engines)
