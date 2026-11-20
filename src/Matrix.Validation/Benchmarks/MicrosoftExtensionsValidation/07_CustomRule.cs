@@ -4,16 +4,16 @@ namespace Matrix.Validation.Benchmarks;
 
 public partial class CustomRule
 {
-    private readonly IValidatableInfo _microsoftCustomRule =
+    private readonly IValidatableTypeInfo _microsoftCustomRule =
         MicrosoftExtensionsValidationConfiguration.For<CustomInput>();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsValidation)]
-    public IDictionary<string, string[]>? MicrosoftExtensionsValidation()
+    public IReadOnlyDictionary<string, IReadOnlyList<ValidationError>>? MicrosoftExtensionsValidation()
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(_input),
+            ServiceProvider = MicrosoftExtensionsValidationConfiguration.ServiceProvider,
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
         _microsoftCustomRule.ValidateAsync(_input, context, CancellationToken.None)

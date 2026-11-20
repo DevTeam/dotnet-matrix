@@ -4,16 +4,16 @@ namespace Matrix.Validation.Benchmarks;
 
 public partial class Collection
 {
-    private readonly IValidatableInfo _microsoftCollection =
+    private readonly IValidatableTypeInfo _microsoftCollection =
         MicrosoftExtensionsValidationConfiguration.For<CollectionInput>();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsValidation)]
-    public IDictionary<string, string[]>? MicrosoftExtensionsValidation()
+    public IReadOnlyDictionary<string, IReadOnlyList<ValidationError>>? MicrosoftExtensionsValidation()
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(_input),
+            ServiceProvider = MicrosoftExtensionsValidationConfiguration.ServiceProvider,
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
         _microsoftCollection.ValidateAsync(_input, context, CancellationToken.None)

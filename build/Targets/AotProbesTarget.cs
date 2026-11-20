@@ -39,7 +39,7 @@ internal sealed partial class AotProbesTarget(
 
     private const string ProbeProjectSuffix = ".Aot";
 
-    private const string TargetFramework = "net10.0";
+    private const string TargetFramework = "net11.0";
 
     /// <summary>
     /// Native AOT has no cross-OS publish, so the probe always targets the machine it runs on.

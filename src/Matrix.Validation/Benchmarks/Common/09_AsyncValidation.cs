@@ -14,7 +14,7 @@ namespace Matrix.Validation.Benchmarks;
 [FeatureUnavailable(
     LibraryCatalog.MicrosoftExtensionsValidation,
     FeatureStatus.Unsupported,
-    "Microsoft.Extensions.Validation 10 does not support asynchronous validation rules.")]
+    "Microsoft.Extensions.Validation has no asynchronous validation rules in its public API.")]
 [FeatureUnavailable(
     LibraryCatalog.Validot,
     FeatureStatus.Unsupported,

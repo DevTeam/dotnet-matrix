@@ -4,16 +4,16 @@ namespace Matrix.Validation.Benchmarks;
 
 public partial class ValidObject
 {
-    private readonly IValidatableInfo _microsoftValidObject =
+    private readonly IValidatableTypeInfo _microsoftValidObject =
         MicrosoftExtensionsValidationConfiguration.For<BasicInput>();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsValidation)]
-    public IDictionary<string, string[]>? MicrosoftExtensionsValidation()
+    public IReadOnlyDictionary<string, IReadOnlyList<ValidationError>>? MicrosoftExtensionsValidation()
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(_input),
+            ServiceProvider = MicrosoftExtensionsValidationConfiguration.ServiceProvider,
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
         _microsoftValidObject.ValidateAsync(_input, context, CancellationToken.None)

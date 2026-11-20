@@ -566,7 +566,7 @@ the library explicitly — never silently.
 
 - The exact literal pin `3.0.0-beta9` restores deterministically and satisfies
   `MatrixMetadata`, which rejects only `$()`, `*`, `[`, `]`, `(`, `)` and `,`.
-- `netstandard2.1` is a supported asset for `net10.0`; restore is clean with no
+- `netstandard2.1` is a supported asset for `net11.0`; restore is clean with no
   `NU1701` and no vulnerability warnings.
 - The undeclared `Microsoft.Bcl.AsyncInterfaces` dependency is handled in §2.
 - Its published API does not match its documentation. §4 is the authority.
@@ -610,7 +610,7 @@ with 0 errors and 0 warnings.** Restore is clean; `dotnet list package
 
 Done:
 
-- `Matrix.LinqQueries.csproj` — five `MatrixModule*` properties, `net10.0`,
+- `Matrix.LinqQueries.csproj` — five `MatrixModule*` properties, `net11.0`,
   `BenchmarkDotNet 0.15.8`, `ProjectReference` to `Matrix.csproj`,
   `Import` of `Matrix.Module.targets`, `<Using Remove="System.Linq"/>`, all six
   libraries with complete metadata, and the `Microsoft.Bcl.AsyncInterfaces`

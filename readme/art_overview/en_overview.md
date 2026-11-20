@@ -170,7 +170,7 @@ dotnet run --project .\build -- csv-processing-validate
 dotnet run --project .\build -- csv-processing-benchmarks
 ```
 
-What a full run needs: a 64-bit OS, the .NET 10 SDK on `PATH`, several gigabytes of free space, and 8 GB of RAM as a practical minimum. And, more important than the technical requirements, an otherwise idle machine, connected to power, without a debugger and with a fixed performance power profile. The complete benchmark matrix takes a long time to compute; that is normal.
+What a full run needs: a 64-bit OS, the .NET 11 SDK on `PATH`, several gigabytes of free space, and 8 GB of RAM as a practical minimum. And, more important than the technical requirements, an otherwise idle machine, connected to power, without a debugger and with a fixed performance power profile. The complete benchmark matrix takes a long time to compute; that is normal.
 
 The reports and the recorded environment are in the repository, so you can compare your own numbers with the published ones and see where they diverge.
 

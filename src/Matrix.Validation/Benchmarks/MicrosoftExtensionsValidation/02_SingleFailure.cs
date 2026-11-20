@@ -4,16 +4,16 @@ namespace Matrix.Validation.Benchmarks;
 
 public partial class SingleFailure
 {
-    private readonly IValidatableInfo _microsoftSingleFailure =
+    private readonly IValidatableTypeInfo _microsoftSingleFailure =
         MicrosoftExtensionsValidationConfiguration.For<BasicInput>();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsValidation)]
-    public IDictionary<string, string[]>? MicrosoftExtensionsValidation()
+    public IReadOnlyDictionary<string, IReadOnlyList<ValidationError>>? MicrosoftExtensionsValidation()
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(_input),
+            ServiceProvider = MicrosoftExtensionsValidationConfiguration.ServiceProvider,
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
         _microsoftSingleFailure.ValidateAsync(_input, context, CancellationToken.None)

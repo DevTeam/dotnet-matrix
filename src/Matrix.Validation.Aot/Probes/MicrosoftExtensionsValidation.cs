@@ -13,7 +13,7 @@ internal static class AotProbe
 
     /// <summary>
     /// Validates one valid object and one invalid object through the source-generated
-    /// <c>IValidatableInfo</c>, exactly like the benchmarks' <c>ValidObject</c>/<c>SingleFailure</c>
+    /// <c>IValidatableTypeInfo</c>, exactly like the benchmarks' <c>ValidObject</c>/<c>SingleFailure</c>
     /// scenarios minus the shared fixture, and checks both outcomes. The generator only emits
     /// metadata for a type explicitly marked <c>[ValidatableType]</c>, so <see cref="ProbeInput"/>
     /// carries it, exactly like <c>Matrix.Validation.Models.BasicInput</c> does.
@@ -27,26 +27,28 @@ internal static class AotProbe
             return 0;
         }
 
-        var valid = Validate(validatableInfo, options, new ProbeInput { Name = "probe" });
-        var invalid = Validate(validatableInfo, options, new ProbeInput { Name = string.Empty });
+        var valid = Validate(services, validatableInfo, options, new ProbeInput { Name = "probe" });
+        var invalid = Validate(services, validatableInfo, options, new ProbeInput { Name = string.Empty });
 
         return valid.Count == 0 && invalid.Count == 1 ? 1 : 0;
     }
 
-    private static IDictionary<string, string[]> Validate(
-        IValidatableInfo validatableInfo,
+    private static IReadOnlyDictionary<string, IReadOnlyList<ValidationError>> Validate(
+        IServiceProvider serviceProvider,
+        IValidatableTypeInfo validatableInfo,
         ValidationOptions options,
         ProbeInput input)
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(input),
+            ServiceProvider = serviceProvider,
             ValidationOptions = options
         };
         validatableInfo.ValidateAsync(input, context, CancellationToken.None)
             .GetAwaiter()
             .GetResult();
-        return context.ValidationErrors ?? new Dictionary<string, string[]>();
+        return context.ValidationErrors
+            ?? new Dictionary<string, IReadOnlyList<ValidationError>>();
     }
 }
 

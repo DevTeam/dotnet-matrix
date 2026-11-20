@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutputType>Exe</OutputType>
@@ -15,6 +15,11 @@
         <MatrixRunConfigurationPrefix>Mapping</MatrixRunConfigurationPrefix>
         <MatrixReportDirectory>ObjectMapping</MatrixReportDirectory>
         <MatrixLibraryCatalogNamespace>Matrix.ObjectMapping.Infrastructure</MatrixLibraryCatalogNamespace>
+        <!-- The Logging.Abstractions reference below is redundant for compilation on .NET 11, which
+             ships that assembly in the shared framework (NU1510). It is kept on purpose: its Version
+             is what AutoMapper's AOT companion publishes, and dropping it would leave the probe
+             without a version to restore. -->
+        <NoWarn>$(NoWarn);NU1510</NoWarn>
     </PropertyGroup>
 
     <ItemGroup>

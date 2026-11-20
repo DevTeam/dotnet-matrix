@@ -8,10 +8,12 @@ internal static class MicrosoftExtensionsValidationConfiguration
 {
     private static readonly ServiceProvider Services = CreateServices();
 
+    public static IServiceProvider ServiceProvider { get; } = Services;
+
     public static ValidationOptions Options { get; } =
         Services.GetRequiredService<IOptions<ValidationOptions>>().Value;
 
-    public static IValidatableInfo For<T>()
+    public static IValidatableTypeInfo For<T>()
     {
         if (Options.TryGetValidatableTypeInfo(typeof(T), out var validatableInfo))
         {

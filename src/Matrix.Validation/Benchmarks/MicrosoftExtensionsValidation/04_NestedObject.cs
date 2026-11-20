@@ -4,16 +4,16 @@ namespace Matrix.Validation.Benchmarks;
 
 public partial class NestedObject
 {
-    private readonly IValidatableInfo _microsoftNestedObject =
+    private readonly IValidatableTypeInfo _microsoftNestedObject =
         MicrosoftExtensionsValidationConfiguration.For<NestedInput>();
 
     [Benchmark]
     [LibraryBenchmark(LibraryCatalog.MicrosoftExtensionsValidation)]
-    public IDictionary<string, string[]>? MicrosoftExtensionsValidation()
+    public IReadOnlyDictionary<string, IReadOnlyList<ValidationError>>? MicrosoftExtensionsValidation()
     {
         var context = new ValidateContext
         {
-            ValidationContext = new ValidationContext(_input),
+            ServiceProvider = MicrosoftExtensionsValidationConfiguration.ServiceProvider,
             ValidationOptions = MicrosoftExtensionsValidationConfiguration.Options
         };
         _microsoftNestedObject.ValidateAsync(_input, context, CancellationToken.None)
