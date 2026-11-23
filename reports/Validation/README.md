@@ -164,7 +164,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Validation/logos/microsoft-extensions-validation.svg" width="48" height="48" alt="Microsoft.Extensions.Validation logo"></td>
-<td><strong><a href="https://learn.microsoft.com/aspnet/core/validation/overview">Microsoft.Extensions.Validation</a></strong> 10.0.15<br>The official source-generated validation infrastructure for DataAnnotations-based object graph validation outside ASP.NET Core.</td>
+<td><strong><a href="https://learn.microsoft.com/aspnet/core/validation/overview">Microsoft.Extensions.Validation</a></strong> 11.0.0<br>The official source-generated validation infrastructure for DataAnnotations-based object graph validation outside ASP.NET Core.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=validation&amp;library=Microsoft.Extensions.Validation">Compare →</a></td>
 </tr>
 <tr>

@@ -194,7 +194,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/BinarySerialization/logos/mongo-bson.svg" width="48" height="48" alt="MongoDB.Bson logo"></td>
-<td><strong><a href="https://www.mongodb.com/docs/drivers/csharp/">MongoDB.Bson</a></strong> 3.14.0<br>The BSON document serializer used by the MongoDB .NET driver, usable independently of a database.</td>
+<td><strong><a href="https://www.mongodb.com/docs/drivers/csharp/">MongoDB.Bson</a></strong> 3.14.1<br>The BSON document serializer used by the MongoDB .NET driver, usable independently of a database.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=binary-serialization&amp;library=MongoDB.Bson">Compare →</a></td>
 </tr>
 <tr>

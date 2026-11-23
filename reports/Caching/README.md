@@ -183,7 +183,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Caching/logos/fusion-cache.svg" width="48" height="48" alt="FusionCache logo"></td>
-<td><strong><a href="https://github.com/ZiggyCreatures/FusionCache">FusionCache</a></strong> 2.9.0<br>An in-memory cache with read-through, stampede protection, fail-safe stale values, and optional distributed backing.</td>
+<td><strong><a href="https://github.com/ZiggyCreatures/FusionCache">FusionCache</a></strong> 2.10.0<br>An in-memory cache with read-through, stampede protection, fail-safe stale values, and optional distributed backing.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=caching&amp;library=ZiggyCreatures.FusionCache">Compare →</a></td>
 </tr>
 <tr>
@@ -193,7 +193,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Caching/logos/hybrid-cache.svg" width="48" height="48" alt="Microsoft.Extensions.Caching.Hybrid logo"></td>
-<td><strong><a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.hybrid.hybridcache">Microsoft.Extensions.Caching.Hybrid</a></strong> 11.0.0<br>The .NET two-level cache that serves reads from a fast in-process copy in front of an optional serialized distributed store, with stampede-protected read-through.</td>
+<td><strong><a href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.caching.hybrid.hybridcache">Microsoft.Extensions.Caching.Hybrid</a></strong> 11.0.1<br>The .NET two-level cache that serves reads from a fast in-process copy in front of an optional serialized distributed store, with stampede-protected read-through.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=caching&amp;library=Microsoft.Extensions.Caching.Hybrid">Compare →</a></td>
 </tr>
 <tr>

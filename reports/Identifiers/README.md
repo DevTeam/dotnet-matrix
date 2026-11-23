@@ -243,7 +243,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/Identifiers/logos/medo-uuid7.svg" width="48" height="48" alt="Medo.Uuid7 logo"></td>
-<td><strong><a href="https://github.com/Medo64/Medo.Uuid7">Medo.Uuid7</a></strong> 3.3.1<br>A small RFC 9562 UUID version 7 implementation with timestamp extraction and monotonic generation.</td>
+<td><strong><a href="https://github.com/Medo64/Medo.Uuid7">Medo.Uuid7</a></strong> 3.4.0<br>A small RFC 9562 UUID version 7 implementation with timestamp extraction and monotonic generation.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=Medo.Uuid7">Compare →</a></td>
 </tr>
 <tr>

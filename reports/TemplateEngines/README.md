@@ -170,7 +170,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/TemplateEngines/logos/handlebars.svg" width="48" height="48" alt="Handlebars.Net logo"></td>
-<td><strong><a href="https://github.com/Handlebars-Net/Handlebars.Net">Handlebars.Net</a></strong> 2.4.3<br>A Mustache-compatible Handlebars implementation with a compiled template delegate and HTML escaping by default.</td>
+<td><strong><a href="https://github.com/Handlebars-Net/Handlebars.Net">Handlebars.Net</a></strong> 2.5.0<br>A Mustache-compatible Handlebars implementation with a compiled template delegate and HTML escaping by default.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=template-engines&amp;library=Handlebars.Net">Compare →</a></td>
 </tr>
 <tr>

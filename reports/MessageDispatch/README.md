@@ -176,7 +176,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/MessageDispatch/logos/immediate-handlers.svg" width="48" height="48" alt="Immediate.Handlers logo"></td>
-<td><strong><a href="https://github.com/ImmediatePlatform/Immediate.Handlers">Immediate.Handlers</a></strong> 4.3.0<br>A source generator that turns annotated handler methods into a dispatcher resolved from dependency injection, with no runtime reflection.</td>
+<td><strong><a href="https://github.com/ImmediatePlatform/Immediate.Handlers">Immediate.Handlers</a></strong> 4.4.0<br>A source generator that turns annotated handler methods into a dispatcher resolved from dependency injection, with no runtime reflection.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=message-dispatch&amp;library=Immediate.Handlers">Compare →</a></td>
 </tr>
 <tr>
@@ -196,7 +196,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/MessageDispatch/logos/wolverine.svg" width="48" height="48" alt="WolverineFx logo"></td>
-<td><strong><a href="https://wolverinefx.net/">WolverineFx</a></strong> 6.64.2<br>A message bus and mediator whose in-process invocation path runs handlers without a transport.</td>
+<td><strong><a href="https://wolverinefx.net/">WolverineFx</a></strong> 6.65.1<br>A message bus and mediator whose in-process invocation path runs handlers without a transport.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=message-dispatch&amp;library=WolverineFx">Compare →</a></td>
 </tr>
 </table>

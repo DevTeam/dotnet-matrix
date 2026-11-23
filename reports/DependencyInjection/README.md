@@ -545,7 +545,7 @@ rating above. The same breakdown appears as a hint on any points value in the
 </tr>
 <tr>
 <td width="64"><img src="../../metadata/DependencyInjection/logos/pure-di.png" width="48" height="48" alt="Pure.DI logo"></td>
-<td><strong><a href="https://github.com/DevTeam/Pure.DI#readme">Pure.DI</a></strong> 2.5.9<br>A compile-time dependency injection framework that generates strongly typed compositions.</td>
+<td><strong><a href="https://github.com/DevTeam/Pure.DI#readme">Pure.DI</a></strong> 2.5.10<br>A compile-time dependency injection framework that generates strongly typed compositions.</td>
 <td width="100" align="right"><a href="https://matrix.dev-team.org/?category=dependency-injection&amp;library=Pure.DI">Compare →</a></td>
 </tr>
 <tr>
