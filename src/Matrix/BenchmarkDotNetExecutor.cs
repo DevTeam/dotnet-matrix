@@ -98,7 +98,7 @@ public sealed class BenchmarkDotNetExecutor(IBenchmarkEnvironmentProvider enviro
     }
 
     private static BenchmarkJobEnvironment Describe(Job job) => new(
-        job.Environment.HasValue(EnvironmentMode.RuntimeCharacteristic) ? job.Environment.Runtime?.Name : null,
+        job.Infrastructure.HasValue(InfrastructureMode.RuntimeCharacteristic) ? job.Infrastructure.Runtime?.Name : null,
         job.Environment.HasValue(EnvironmentMode.PlatformCharacteristic) ? job.Environment.Platform.ToString() : null,
         job.Environment.Gc.HasValue(GcMode.ServerCharacteristic) ? job.Environment.Gc.Server : null);
 }
