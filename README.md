@@ -43,7 +43,7 @@
 | [**CSV Processing**](#csv-processing) | [Sep](https://matrix.dev-team.org/?category=csv-processing&library=Sep) | 6 | 10 | [Every scenario →](reports/CsvProcessing/README.md) |
 | [**Dependency Injection**](#dependency-injection) | [Pure.DI](https://matrix.dev-team.org/?category=dependency-injection&library=Pure.DI) | 22 | 15 | [Every scenario →](reports/DependencyInjection/README.md) |
 | [**Hashing**](#hashing) | [System.IO.Hashing](https://matrix.dev-team.org/?category=hashing&library=System.IO.Hashing) | 8 | 9 | [Every scenario →](reports/Hashing/README.md) |
-| [**Identifiers**](#identifiers) | [FlakeId](https://matrix.dev-team.org/?category=identifiers&library=FlakeId) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
+| [**Identifiers**](#identifiers) | [Ulid](https://matrix.dev-team.org/?category=identifiers&library=Ulid) | 11 | 8 | [Every scenario →](reports/Identifiers/README.md) |
 | [**JSON Serialization**](#json-serialization) | [SpanJson](https://matrix.dev-team.org/?category=json-serialization&library=SpanJson) | 4 | 14 | [Every scenario →](reports/JsonSerialization/README.md) |
 | [**LINQ Queries**](#linq-queries) | [ZLinq](https://matrix.dev-team.org/?category=linq-queries&library=ZLinq) | 6 | 18 | [Every scenario →](reports/LinqQueries/README.md) |
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
@@ -144,7 +144,7 @@ The README is a generated snapshot of the reports committed to this repository.
 ## [Identifiers](https://matrix.dev-team.org/?category=identifiers)
 
 <blockquote>
-<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=FlakeId">FlakeId</a></strong> leads the current rating · 11 libraries · 8 scenarios
+<strong><a href="https://matrix.dev-team.org/?category=identifiers&amp;library=Ulid">Ulid</a></strong> leads the current rating · 11 libraries · 8 scenarios
 </blockquote>
 
 [![Identifiers rating](reports/Identifiers/charts/rating.png)](https://matrix.dev-team.org/?category=identifiers)

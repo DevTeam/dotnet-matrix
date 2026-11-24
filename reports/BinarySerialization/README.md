@@ -21,14 +21,14 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**MemoryPack**](https://matrix.dev-team.org/?category=binary-serialization&library=MemoryPack) | 7/7 | 611 | 654 | 1265 | gold in Deserialize, gold in Serialize, silver in Round Trip |
-| 2 | [**MessagePack**](https://matrix.dev-team.org/?category=binary-serialization&library=MessagePack) | 7/7 | 438 | 695 | 1133 | silver in Serialize, bronze in Deserialize, bronze in Round Trip |
-| 3 | [**FlatSharp**](https://matrix.dev-team.org/?category=binary-serialization&library=FlatSharp) | 7/7 | 482 | 501 | 983 | silver in Deserialize |
-| 4 | [**Google.Protobuf**](https://matrix.dev-team.org/?category=binary-serialization&library=Google.Protobuf) | 7/7 | 466 | 482 | 947 | bronze in Serialize |
-| 5 | [**protobuf-net**](https://matrix.dev-team.org/?category=binary-serialization&library=protobuf-net) | 7/7 | 312 | 493 | 805 |  |
-| 6 | [**HyperSerializer**](https://matrix.dev-team.org/?category=binary-serialization&library=HyperSerializer) | 3/7 | 300 | 258 | 558 | gold in Round Trip |
-| 7 | [**Apache.Avro**](https://matrix.dev-team.org/?category=binary-serialization&library=Apache.Avro) | 7/7 | 201 | 307 | 508 |  |
-| 8 | [**MongoDB.Bson**](https://matrix.dev-team.org/?category=binary-serialization&library=MongoDB.Bson) | 7/7 | 180 | 232 | 412 |  |
+| 1 | [**MemoryPack**](https://matrix.dev-team.org/?category=binary-serialization&library=MemoryPack) | 7/7 | 661 | 654 | 1315 | gold in Deserialize, gold in Round Trip, gold in Serialize |
+| 2 | [**MessagePack**](https://matrix.dev-team.org/?category=binary-serialization&library=MessagePack) | 7/7 | 502 | 695 | 1197 | silver in Serialize, bronze in Deserialize, bronze in Round Trip |
+| 3 | [**FlatSharp**](https://matrix.dev-team.org/?category=binary-serialization&library=FlatSharp) | 7/7 | 526 | 501 | 1027 | silver in Deserialize |
+| 4 | [**Google.Protobuf**](https://matrix.dev-team.org/?category=binary-serialization&library=Google.Protobuf) | 7/7 | 507 | 482 | 989 | bronze in Serialize |
+| 5 | [**protobuf-net**](https://matrix.dev-team.org/?category=binary-serialization&library=protobuf-net) | 7/7 | 336 | 493 | 829 |  |
+| 6 | [**HyperSerializer**](https://matrix.dev-team.org/?category=binary-serialization&library=HyperSerializer) | 3/7 | 300 | 258 | 558 | silver in Round Trip |
+| 7 | [**Apache.Avro**](https://matrix.dev-team.org/?category=binary-serialization&library=Apache.Avro) | 7/7 | 241 | 310 | 550 |  |
+| 8 | [**MongoDB.Bson**](https://matrix.dev-team.org/?category=binary-serialization&library=MongoDB.Bson) | 7/7 | 201 | 232 | 433 |  |
 
 
 <details>
@@ -42,101 +42,101 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=binary-serialization).
 
-#### 1. MemoryPack — 1265 of 1400
+#### 1. MemoryPack — 1315 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 53.97 ns | 20.64 ns | 62.7 | 48 B | 32 B | 88.2 |
-| Deserialize Simple Object | 39.9 ns | 19.87 ns | 71.4 | 64 B | 64 B | 100 |
-| Serialize Nested Object | 79.62 ns | 79.62 ns | 100 | 72 B | 48 B | 86.6 |
-| Deserialize Nested Object | 106.37 ns | 106.37 ns | 100 | 296 B | 264 B | 94.9 |
-| Serialize Collection | 93.15 ns | 93.15 ns | 100 | 88 B | 56 B | 84.5 |
-| Deserialize Collection | 150.81 ns | 150.81 ns | 100 | 328 B | 328 B | 100 |
-| Enum Round Trip | 37.74 ns | 21.92 ns | 76.9 | 56 B | 56 B | 100 |
+| Serialize Simple Object | 30.17 ns | 19.04 ns | 80.2 | 48 B | 32 B | 88.2 |
+| Deserialize Simple Object | 23.71 ns | 17.44 ns | 86.4 | 64 B | 64 B | 100 |
+| Serialize Nested Object | 45.33 ns | 45.33 ns | 100 | 72 B | 48 B | 86.6 |
+| Deserialize Nested Object | 86.85 ns | 78.85 ns | 95.3 | 296 B | 264 B | 94.9 |
+| Serialize Collection | 55.17 ns | 55.17 ns | 100 | 88 B | 56 B | 84.5 |
+| Deserialize Collection | 101.77 ns | 101.77 ns | 100 | 328 B | 328 B | 100 |
+| Enum Round Trip | 23.28 ns | 22.86 ns | 99.1 | 56 B | 56 B | 100 |
 
-#### 2. MessagePack — 1133 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 69.8 ns | 20.64 ns | 55.3 | 32 B | 32 B | 100 |
-| Deserialize Simple Object | 99.14 ns | 19.87 ns | 45.7 | 64 B | 64 B | 100 |
-| Serialize Nested Object | 131.7 ns | 79.62 ns | 77.9 | 48 B | 48 B | 100 |
-| Deserialize Nested Object | 239.33 ns | 106.37 ns | 66.8 | 296 B | 264 B | 94.9 |
-| Serialize Collection | 159.4 ns | 93.15 ns | 76.6 | 56 B | 56 B | 100 |
-| Deserialize Collection | 289.95 ns | 150.81 ns | 72.2 | 328 B | 328 B | 100 |
-| Enum Round Trip | 121.05 ns | 21.92 ns | 43.3 | 56 B | 56 B | 100 |
-
-#### 3. FlatSharp — 983 of 1400
+#### 2. MessagePack — 1197 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 87.91 ns | 20.64 ns | 49.3 | 152 B | 32 B | 56.4 |
-| Deserialize Simple Object | 49.31 ns | 19.87 ns | 64.4 | 80 B | 64 B | 92 |
-| Serialize Nested Object | 180.03 ns | 79.62 ns | 66.7 | 304 B | 48 B | 46.9 |
-| Deserialize Nested Object | 121.3 ns | 106.37 ns | 93.7 | 264 B | 264 B | 100 |
-| Serialize Collection | 219.89 ns | 93.15 ns | 65.3 | 392 B | 56 B | 43.9 |
-| Deserialize Collection | 165.7 ns | 150.81 ns | 95.4 | 400 B | 328 B | 91.1 |
-| Enum Round Trip | 100.21 ns | 21.92 ns | 47.6 | 136 B | 56 B | 70.7 |
+| Serialize Simple Object | 38.01 ns | 19.04 ns | 71.7 | 32 B | 32 B | 100 |
+| Deserialize Simple Object | 55.06 ns | 17.44 ns | 57.4 | 64 B | 64 B | 100 |
+| Serialize Nested Object | 67.62 ns | 45.33 ns | 82.2 | 48 B | 48 B | 100 |
+| Deserialize Nested Object | 147.54 ns | 78.85 ns | 73.3 | 296 B | 264 B | 94.9 |
+| Serialize Collection | 80.08 ns | 55.17 ns | 83.2 | 56 B | 56 B | 100 |
+| Deserialize Collection | 177.04 ns | 101.77 ns | 76 | 328 B | 328 B | 100 |
+| Enum Round Trip | 68.57 ns | 22.86 ns | 58.6 | 56 B | 56 B | 100 |
 
-#### 4. Google.Protobuf — 947 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 56.72 ns | 20.64 ns | 61.2 | 104 B | 32 B | 66.1 |
-| Deserialize Simple Object | 81.23 ns | 19.87 ns | 50.4 | 240 B | 64 B | 57.7 |
-| Serialize Nested Object | 139.7 ns | 79.62 ns | 75.7 | 112 B | 48 B | 72.8 |
-| Deserialize Nested Object | 172.42 ns | 106.37 ns | 78.7 | 392 B | 264 B | 83.2 |
-| Serialize Collection | 167.28 ns | 93.15 ns | 74.8 | 128 B | 56 B | 72.5 |
-| Deserialize Collection | 268.06 ns | 150.81 ns | 75.1 | 536 B | 328 B | 79.3 |
-| Enum Round Trip | 91.28 ns | 21.92 ns | 49.8 | 296 B | 56 B | 50 |
-
-#### 5. protobuf-net — 805 of 1400
+#### 3. FlatSharp — 1027 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 164.92 ns | 20.64 ns | 36.1 | 192 B | 32 B | 50.9 |
-| Deserialize Simple Object | 171.19 ns | 19.87 ns | 34.8 | 152 B | 64 B | 70.7 |
-| Serialize Nested Object | 317.13 ns | 79.62 ns | 50.3 | 200 B | 48 B | 56.7 |
-| Deserialize Nested Object | 364.69 ns | 106.37 ns | 54.2 | 288 B | 264 B | 96.1 |
-| Serialize Collection | 377.81 ns | 93.15 ns | 49.9 | 216 B | 56 B | 57.7 |
-| Deserialize Collection | 564.15 ns | 150.81 ns | 51.8 | 424 B | 328 B | 88.6 |
-| Enum Round Trip | 191.38 ns | 21.92 ns | 34.5 | 128 B | 56 B | 72.5 |
+| Serialize Simple Object | 46.47 ns | 19.04 ns | 65 | 152 B | 32 B | 56.4 |
+| Deserialize Simple Object | 37.08 ns | 17.44 ns | 69.6 | 80 B | 64 B | 92 |
+| Serialize Nested Object | 97.61 ns | 45.33 ns | 68.5 | 304 B | 48 B | 46.9 |
+| Deserialize Nested Object | 78.85 ns | 78.85 ns | 100 | 264 B | 264 B | 100 |
+| Serialize Collection | 129.3 ns | 55.17 ns | 65.7 | 392 B | 56 B | 43.9 |
+| Deserialize Collection | 119.82 ns | 101.77 ns | 92.2 | 400 B | 328 B | 91.1 |
+| Enum Round Trip | 55.95 ns | 22.86 ns | 64.7 | 136 B | 56 B | 70.7 |
+
+#### 4. Google.Protobuf — 989 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Serialize Simple Object | 32.85 ns | 19.04 ns | 77 | 104 B | 32 B | 66.1 |
+| Deserialize Simple Object | 59.08 ns | 17.44 ns | 55.4 | 240 B | 64 B | 57.7 |
+| Serialize Nested Object | 72.17 ns | 45.33 ns | 79.6 | 112 B | 48 B | 72.8 |
+| Deserialize Nested Object | 116.76 ns | 78.85 ns | 82.3 | 392 B | 264 B | 83.2 |
+| Serialize Collection | 82.59 ns | 55.17 ns | 82 | 128 B | 56 B | 72.5 |
+| Deserialize Collection | 188.54 ns | 101.77 ns | 73.6 | 536 B | 328 B | 79.3 |
+| Enum Round Trip | 71.37 ns | 22.86 ns | 57.4 | 296 B | 56 B | 50 |
+
+#### 5. protobuf-net — 829 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Serialize Simple Object | 102.58 ns | 19.04 ns | 44 | 192 B | 32 B | 50.9 |
+| Deserialize Simple Object | 113.46 ns | 17.44 ns | 40.1 | 152 B | 64 B | 70.7 |
+| Serialize Nested Object | 193.39 ns | 45.33 ns | 48.8 | 200 B | 48 B | 56.7 |
+| Deserialize Nested Object | 238.75 ns | 78.85 ns | 57.7 | 288 B | 264 B | 96.1 |
+| Serialize Collection | 234.09 ns | 55.17 ns | 48.9 | 216 B | 56 B | 57.7 |
+| Deserialize Collection | 373.17 ns | 101.77 ns | 52.4 | 424 B | 328 B | 88.6 |
+| Enum Round Trip | 124.52 ns | 22.86 ns | 43.6 | 128 B | 56 B | 72.5 |
 
 #### 6. HyperSerializer — 558 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 20.64 ns | 20.64 ns | 100 | 80 B | 32 B | 73.4 |
-| Deserialize Simple Object | 19.87 ns | 19.87 ns | 100 | 64 B | 64 B | 100 |
-| Serialize Nested Object | — | 79.62 ns | 0 | — | 48 B | 0 |
-| Deserialize Nested Object | — | 106.37 ns | 0 | — | 264 B | 0 |
-| Serialize Collection | — | 93.15 ns | 0 | — | 56 B | 0 |
-| Deserialize Collection | — | 150.81 ns | 0 | — | 328 B | 0 |
-| Enum Round Trip | 21.92 ns | 21.92 ns | 100 | 88 B | 56 B | 84.5 |
+| Serialize Simple Object | 19.04 ns | 19.04 ns | 100 | 80 B | 32 B | 73.4 |
+| Deserialize Simple Object | 17.44 ns | 17.44 ns | 100 | 64 B | 64 B | 100 |
+| Serialize Nested Object | — | 45.33 ns | 0 | — | 48 B | 0 |
+| Deserialize Nested Object | — | 78.85 ns | 0 | — | 264 B | 0 |
+| Serialize Collection | — | 55.17 ns | 0 | — | 56 B | 0 |
+| Deserialize Collection | — | 101.77 ns | 0 | — | 328 B | 0 |
+| Enum Round Trip | 22.86 ns | 22.86 ns | 100 | 88 B | 56 B | 84.5 |
 
-#### 7. Apache.Avro — 508 of 1400
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 272.82 ns | 20.64 ns | 28.1 | 480 B | 32 B | 33.3 |
-| Deserialize Simple Object | 365.11 ns | 19.87 ns | 23.9 | 280 B | 64 B | 53.8 |
-| Serialize Nested Object | 601.08 ns | 79.62 ns | 36.6 | 600 B | 48 B | 34 |
-| Deserialize Nested Object | 915.19 ns | 106.37 ns | 34.2 | 648 B | 264 B | 65.5 |
-| Serialize Collection | 1.28 μs | 93.15 ns | 27.1 | 1.39 KB | 56 B | 23.5 |
-| Deserialize Collection | 2.33 μs | 150.81 ns | 25.5 | 1.48 KB | 328 B | 47.9 |
-| Enum Round Trip | 350.9 ns | 21.92 ns | 25.5 | 304 B | 56 B | 49.4 |
-
-#### 8. MongoDB.Bson — 412 of 1400
+#### 7. Apache.Avro — 550 of 1400
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Serialize Simple Object | 450.27 ns | 20.64 ns | 21.9 | 1008 B | 32 B | 23.3 |
-| Deserialize Simple Object | 521.73 ns | 19.87 ns | 20 | 736 B | 64 B | 34 |
-| Serialize Nested Object | 780.49 ns | 79.62 ns | 32.1 | 1.02 KB | 48 B | 26 |
-| Deserialize Nested Object | 1.02 μs | 106.37 ns | 32.5 | 1008 B | 264 B | 52.8 |
-| Serialize Collection | 1.31 μs | 93.15 ns | 26.8 | 1.22 KB | 56 B | 25.1 |
-| Deserialize Collection | 1.8 μs | 150.81 ns | 29 | 1.45 KB | 328 B | 48.4 |
-| Enum Round Trip | 703.77 ns | 21.92 ns | 18 | 1.6 KB | 56 B | 21.9 |
+| Serialize Simple Object | 166.7 ns | 19.04 ns | 34.6 | 456 B | 32 B | 34.2 |
+| Deserialize Simple Object | 197.28 ns | 17.44 ns | 30.5 | 280 B | 64 B | 53.8 |
+| Serialize Nested Object | 287.12 ns | 45.33 ns | 40.1 | 568 B | 48 B | 34.9 |
+| Deserialize Nested Object | 448.89 ns | 78.85 ns | 42.1 | 648 B | 264 B | 65.5 |
+| Serialize Collection | 691.58 ns | 55.17 ns | 28.5 | 1.32 KB | 56 B | 24.1 |
+| Deserialize Collection | 1.21 μs | 101.77 ns | 29.1 | 1.48 KB | 328 B | 47.9 |
+| Enum Round Trip | 184.55 ns | 22.86 ns | 35.9 | 304 B | 56 B | 49.4 |
+
+#### 8. MongoDB.Bson — 433 of 1400
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Serialize Simple Object | 296.29 ns | 19.04 ns | 26 | 1008 B | 32 B | 23.3 |
+| Deserialize Simple Object | 308.56 ns | 17.44 ns | 24.4 | 736 B | 64 B | 34 |
+| Serialize Nested Object | 476.77 ns | 45.33 ns | 31.1 | 1.02 KB | 48 B | 26 |
+| Deserialize Nested Object | 571.73 ns | 78.85 ns | 37.3 | 1008 B | 264 B | 52.8 |
+| Serialize Collection | 786.55 ns | 55.17 ns | 26.7 | 1.22 KB | 56 B | 25.1 |
+| Deserialize Collection | 1.04 μs | 101.77 ns | 31.5 | 1.45 KB | 328 B | 48.4 |
+| Enum Round Trip | 407.37 ns | 22.86 ns | 24.2 | 1.6 KB | 56 B | 21.9 |
 
 </details>
 
