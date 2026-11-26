@@ -21,7 +21,7 @@ internal static class HashData
     public const ulong XxHash64LargeExpected = 0x9D79E17926422723;
     public const uint Crc32Expected = 0xD66510DA;
     public const ulong Blake3Expected = 0xC530EE8E61AB2D6A;
-    public const ulong Blake2bExpected = 0x66F2A98E1EA7D5C9;
+    public const ulong Blake2BExpected = 0x66F2A98E1EA7D5C9;
     public const ulong FarmHash64Expected = 0xAA31360635666EC3;
 
     public static byte[] Small => SmallValue.Value;

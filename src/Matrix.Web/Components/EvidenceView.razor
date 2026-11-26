@@ -1,3 +1,4 @@
+@using System.Globalization
 @if (Items.Length == 0)
 {
     <EmptyState Title="No evidence"
@@ -18,7 +19,7 @@ else
         <div class="evidence-summary" aria-label="Evidence summary">
             <div><strong>@Items.Length</strong><span>evidence set@(Items.Length == 1 ? "" : "s")</span></div>
             <div><strong>@ScenarioCount</strong><span>scenario@(ScenarioCount == 1 ? "" : "s") covered</span></div>
-            <div><strong>@LatestEvidence.GeneratedAtUtc.ToString("yyyy-MM-dd")</strong><span>last updated</span></div>
+            <div><strong>@LatestEvidence.GeneratedAtUtc.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)</strong><span>last updated</span></div>
         </div>
         <div class="evidence-grid">
             @foreach (var item in Items)

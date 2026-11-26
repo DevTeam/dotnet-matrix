@@ -1,5 +1,3 @@
-using Matrix.CliParsing.Models;
-
 namespace Matrix.CliParsing;
 
 /// <summary>

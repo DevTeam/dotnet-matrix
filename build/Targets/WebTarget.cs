@@ -1,6 +1,7 @@
 using HostApi;
 using Matrix;
 using System.Text.Json;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using HostCommandLine = HostApi.CommandLine;
 // ReSharper disable UseCollectionExpression
@@ -183,7 +184,11 @@ internal sealed partial class WebTarget(
             // An annotated tag points at a tag object; the dereferenced commit is
             // in the third column and is what the report URLs must use.
             var commit = parts[2].Length > 0 ? parts[2] : parts[1];
-            if (!DateTimeOffset.TryParse(parts[3], out var date))
+            if (!DateTimeOffset.TryParse(
+                    parts[3],
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind,
+                    out var date))
             {
                 continue;
             }

@@ -10,13 +10,6 @@ internal static class TemplateChecks
             $"Expected '{expected}', found '{actual}'.");
 
     [Conditional("MATRIX_VALIDATION")]
-    public static void NotEmpty(string library, string actual) =>
-        MatrixValidation.Require(
-            library,
-            !string.IsNullOrEmpty(actual),
-            "The produced template is empty.");
-
-    [Conditional("MATRIX_VALIDATION")]
     public static void NotNull(string library, object? value) =>
         MatrixValidation.Require(library, value is not null, "The parsed template is null.");
 }

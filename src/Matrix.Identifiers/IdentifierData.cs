@@ -15,10 +15,10 @@ internal static class IdentifierData
     // KSUID counts seconds from 2014-05-13T00:00:00Z.
     public const long KsuidEpochSeconds = 1_400_000_000;
 
-    public static readonly DateTimeOffset BaseTimestamp =
+    private static readonly DateTimeOffset BaseTimestamp =
         new(2024, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
-    public static readonly long FixedTimestampMilliseconds = BaseTimestamp.ToUnixTimeMilliseconds();
+    private static readonly long FixedTimestampMilliseconds = BaseTimestamp.ToUnixTimeMilliseconds();
 
     public static readonly long[] Numbers = [1, 42, 1000, 999999];
 

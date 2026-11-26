@@ -292,7 +292,7 @@ public static class SerializationData
 
 
 
-    public static global::Avro.Schema SimpleSchema { get; } = global::Avro.Schema.Parse(
+    public static Avro.Schema SimpleSchema { get; } = Avro.Schema.Parse(
 
         """
 
@@ -302,7 +302,7 @@ public static class SerializationData
 
 
 
-    public static global::Avro.Schema NestedSchema { get; } = global::Avro.Schema.Parse(
+    public static Avro.Schema NestedSchema { get; } = Avro.Schema.Parse(
 
         """
 
@@ -312,7 +312,7 @@ public static class SerializationData
 
 
 
-    public static global::Avro.Schema CollectionSchema { get; } = global::Avro.Schema.Parse(
+    public static Avro.Schema CollectionSchema { get; } = Avro.Schema.Parse(
 
         """
 
@@ -322,7 +322,7 @@ public static class SerializationData
 
 
 
-    public static global::Avro.Schema EnumSchema { get; } = global::Avro.Schema.Parse(
+    public static Avro.Schema EnumSchema { get; } = Avro.Schema.Parse(
 
         """
 
@@ -374,19 +374,19 @@ public static class SerializationData
 
 
 
-    private static byte[] WriteAvro<T>(T value, global::Avro.Schema schema)
+    private static byte[] WriteAvro<T>(T value, Avro.Schema schema)
 
     {
 
         using var stream = new MemoryStream(64);
 
-        var writer = new global::Avro.Reflect.ReflectWriter<T>(
+        var writer = new Avro.Reflect.ReflectWriter<T>(
 
             schema,
 
-            new global::Avro.Reflect.ClassCache());
+            new Avro.Reflect.ClassCache());
 
-        writer.Write(value, new global::Avro.IO.BinaryEncoder(stream));
+        writer.Write(value, new Avro.IO.BinaryEncoder(stream));
 
         return stream.ToArray();
 

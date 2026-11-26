@@ -38,8 +38,8 @@ internal static class HashChecks
         Equal(library, actual, HashData.Blake3Expected, "Blake3");
 
     [Conditional("MATRIX_VALIDATION")]
-    public static void Blake2b(string library, ulong actual) =>
-        Equal(library, actual, HashData.Blake2bExpected, "Blake2b");
+    public static void Blake2B(string library, ulong actual) =>
+        Equal(library, actual, HashData.Blake2BExpected, "Blake2b");
 
     [Conditional("MATRIX_VALIDATION")]
     public static void FarmHash64(string library, ulong actual) =>

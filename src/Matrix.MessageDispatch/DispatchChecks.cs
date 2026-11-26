@@ -1,5 +1,3 @@
-using Matrix.MessageDispatch.Models;
-
 namespace Matrix.MessageDispatch;
 
 /// <summary>

@@ -27,11 +27,4 @@ internal static class CompressionChecks
             library,
             actual.SequenceEqual(expected),
             $"Round trip differs: expected {expected.Length} bytes, found {actual.Length}.");
-
-    [Conditional("MATRIX_VALIDATION")]
-    public static void SmallerPayload(string library, ReadOnlySpan<byte> actual, ReadOnlySpan<byte> larger) =>
-        MatrixValidation.Require(
-            library,
-            actual.Length < larger.Length,
-            $"Compressed {actual.Length} bytes, which is not smaller than {larger.Length} measured for the same corpus.");
 }

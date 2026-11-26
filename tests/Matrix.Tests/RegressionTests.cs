@@ -96,10 +96,10 @@ internal static class RegressionTests
         deployment
             ?
             [
-                new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)], false),
+                new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)]),
                 new(1, "NativeAot", "Native AOT", [new("baseline", "Supported", null, 0, "0 trim warnings")], true)
             ]
-            : [new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)], false)]);
+            : [new(1, "scenario", "Scenario", [new("baseline", "Supported", null, 1)])]);
 
     /// <summary>
     /// The sibling project the guard derives from the module's own project path, which is also

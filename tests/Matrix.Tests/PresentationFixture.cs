@@ -1,5 +1,4 @@
 using Build.Targets;
-using System.Text;
 
 namespace Matrix.Tests;
 

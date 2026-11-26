@@ -62,8 +62,10 @@ internal sealed partial class AotProbesTarget(
         if (selectedModules.Count == 0)
         {
             await Console.Error.WriteLineAsync(
-                $"Unknown matrix category '{category}'. "
-                + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.");
+                ($"Unknown matrix category '{category}'. "
+                 + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.")
+                .AsMemory(),
+                cancellationToken);
             return 1;
         }
 
@@ -108,9 +110,11 @@ internal sealed partial class AotProbesTarget(
         if (report is null)
         {
             await Console.Error.WriteLineAsync(
-                $"ERROR: {reportPath} does not exist. Run feature validation for "
-                + $"{module.Metadata.Name} before probing Native AOT, because validation rewrites "
-                + "the report this target enriches.");
+                ($"ERROR: {reportPath} does not exist. Run feature validation for "
+                 + $"{module.Metadata.Name} before probing Native AOT, because validation rewrites "
+                 + "the report this target enriches.")
+                .AsMemory(),
+                cancellationToken);
             return 1;
         }
 
@@ -120,7 +124,9 @@ internal sealed partial class AotProbesTarget(
         if (librariesToProbe.Count == 0)
         {
             await Console.Error.WriteLineAsync(
-                $"ERROR: no library in {module.Metadata.Name} matches the --libraries filter.");
+                $"ERROR: no library in {module.Metadata.Name} matches the --libraries filter."
+                    .AsMemory(),
+                cancellationToken);
             return 1;
         }
 

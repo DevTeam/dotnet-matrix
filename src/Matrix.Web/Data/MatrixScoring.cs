@@ -19,8 +19,6 @@ internal sealed class MatrixScoring(
 
     public int MaximumPoints => MatrixRatings.MaximumPoints;
 
-    public int Maximum(int scenarios) => scores.Maximum(scenarios);
-
     public string Format(double points) => scores.Format(points);
 
     public string FormatExact(double points) => scores.FormatExact(points);

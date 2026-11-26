@@ -1,5 +1,4 @@
 using ZeroLog;
-using ZeroLog.Appenders;
 using ZeroLog.Configuration;
 
 namespace Matrix.Logging;

@@ -1,4 +1,3 @@
-global using System.Buffers;
 global using System.Diagnostics;
 global using BenchmarkDotNet.Attributes;
 global using BenchmarkDotNet.Order;

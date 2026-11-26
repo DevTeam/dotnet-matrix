@@ -22,19 +22,19 @@ internal static class LzmaSdkProperties
     /// compresses. A larger dictionary only reserves memory that a 256 KiB
     /// payload cannot use.
     /// </summary>
-    public const int DictionarySize = 1 << 18;
+    private const int DictionarySize = 1 << 18;
 
     /// <summary>LZMA fast mode, the encoder's <c>Algorithm</c> value 0.</summary>
-    public const int FastAlgorithm = 0;
+    private const int FastAlgorithm = 0;
 
     /// <summary>LZMA normal mode, the encoder's <c>Algorithm</c> value 1.</summary>
-    public const int NormalAlgorithm = 1;
+    private const int NormalAlgorithm = 1;
 
     /// <summary>The fast bytes count of the fastest level.</summary>
-    public const int FastBytesFastest = 32;
+    private const int FastBytesFastest = 32;
 
     /// <summary>The largest fast bytes count the encoder accepts.</summary>
-    public const int FastBytesMaximum = 273;
+    private const int FastBytesMaximum = 273;
 
     public static readonly SevenZip.CoderPropID[] EncoderPropertyIds =
     [

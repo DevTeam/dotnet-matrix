@@ -15,6 +15,6 @@ internal sealed class SpanJsonResolver<TSymbol> : ResolverBase<TSymbol, SpanJson
     public SpanJsonResolver()
         : base(new SpanJsonOptions())
     {
-        RegisterGlobalCustomFormatter<Models.Identifier, SpanJsonIdentifierFormatter>();
+        RegisterGlobalCustomFormatter<Identifier, SpanJsonIdentifierFormatter>();
     }
 }

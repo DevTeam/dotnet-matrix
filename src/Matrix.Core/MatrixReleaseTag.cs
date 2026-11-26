@@ -34,14 +34,14 @@ public sealed partial class MatrixReleaseTag : IComparable<MatrixReleaseTag>
     /// <summary>The tag exactly as it is spelled in the repository.</summary>
     public string Name { get; }
 
-    public int Major { get; }
+    private int Major { get; }
 
-    public int Minor { get; }
+    private int Minor { get; }
 
-    public int Patch { get; }
+    private int Patch { get; }
 
     /// <summary>Identifiers of the suffix, empty for a release.</summary>
-    public IReadOnlyList<string> Prerelease { get; }
+    private IReadOnlyList<string> Prerelease { get; }
 
     public bool IsPrerelease => Prerelease.Count > 0;
 

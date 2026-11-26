@@ -29,8 +29,7 @@ internal static class CompressionPayloads
             0,
             source.Length,
             CompressionLevels.BrotliMaximum,
-            22,
-            null!);
+            22);
 
     public static byte[] CreateZstdSharp(byte[] source)
     {

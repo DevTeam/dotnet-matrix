@@ -1,5 +1,6 @@
 // ReSharper disable CheckNamespace
 // ReSharper disable UseCollectionExpression
+using System.Globalization;
 
 namespace Matrix.Web;
 
@@ -251,8 +252,13 @@ internal sealed class GitHubMatrixDataSource(
         }
 
         var reset = response.Headers.TryGetValues("X-RateLimit-Reset", out var values)
-                    && long.TryParse(values.FirstOrDefault(), out var seconds)
-            ? DateTimeOffset.FromUnixTimeSeconds(seconds).ToLocalTime().ToString("HH:mm")
+                    && long.TryParse(
+                        values.FirstOrDefault(),
+                        NumberStyles.Integer,
+                        CultureInfo.InvariantCulture,
+                        out var seconds)
+            ? DateTimeOffset.FromUnixTimeSeconds(seconds).ToLocalTime()
+                .ToString("HH:mm", CultureInfo.InvariantCulture)
             : null;
         return "The GitHub API rate limit for this network has been reached"
                + (reset is null ? "." : $"; it resets at {reset}.")

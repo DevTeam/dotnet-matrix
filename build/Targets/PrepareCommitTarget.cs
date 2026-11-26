@@ -59,11 +59,13 @@ internal sealed class PrepareCommitTarget(
         if (lostCapabilities.Count > 0)
         {
             await Console.Error.WriteLineAsync(
-                "ERROR: The feature report of "
-                + string.Join(", ", lostCapabilities)
-                + " has no deployment capability, so the Deployment tab would be empty for it. "
-                + "Feature validation drops it and only 'aot-probes' writes it back: run "
-                + "'prepare-commit' rather than 'finalize-commit', or restore the report.");
+                ("ERROR: The feature report of "
+                 + string.Join(", ", lostCapabilities)
+                 + " has no deployment capability, so the Deployment tab would be empty for it. "
+                 + "Feature validation drops it and only 'aot-probes' writes it back: run "
+                 + "'prepare-commit' rather than 'finalize-commit', or restore the report.")
+                .AsMemory(),
+                cancellationToken);
             return 1;
         }
 

@@ -20,8 +20,6 @@ internal sealed class KeyPool
         }
     }
 
-    public IReadOnlyList<string> Keys => _keys;
-
     public string Next()
     {
         var index = Interlocked.Increment(ref _next) & int.MaxValue;

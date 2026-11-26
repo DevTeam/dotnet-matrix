@@ -1,5 +1,8 @@
 namespace Matrix;
 
+/// <summary>
+/// A library the matrix compares: its package, its version and its companions.
+/// </summary>
 /// <param name="Companions">
 /// Packages the library cannot run without but that are not its own primary package — for
 /// example an abstractions or hosting package the primary package references without declaring as
@@ -12,7 +15,7 @@ public sealed record MatrixLibrary(
     string? Package,
     string? Version,
     bool Baseline,
-    IReadOnlyList<MatrixPackage> Companions = null!)
+    IReadOnlyList<MatrixPackage>? Companions = null)
 {
     public IReadOnlyList<MatrixPackage> Companions { get; init; } = Companions ?? [];
 }

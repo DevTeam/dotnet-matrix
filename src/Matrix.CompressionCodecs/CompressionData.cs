@@ -18,16 +18,13 @@ internal static class CompressionData
     /// The same size, but incompressible. A codec that behaves well on text can
     /// still lose badly here, and that is the point of measuring it.
     /// </summary>
-    public const int IncompressibleLength = 256 * 1024;
+    private const int IncompressibleLength = 256 * 1024;
 
     public const int SmallLength = 1024;
 
     private static readonly Lazy<byte[]> CompressibleValue = new(() => CreateText(CompressibleLength));
     private static readonly Lazy<byte[]> IncompressibleValue = new(() => CreateRandom(IncompressibleLength, 73));
     private static readonly Lazy<byte[]> SmallValue = new(() => CreateText(SmallLength));
-
-    /// <summary>The corpus compressed at the <c>Fastest</c> level, for decompression.</summary>
-    private static readonly Lazy<byte[]> SmallPayloadValue = new(() => CreateText(SmallLength));
 
     public static byte[] Compressible => CompressibleValue.Value;
 

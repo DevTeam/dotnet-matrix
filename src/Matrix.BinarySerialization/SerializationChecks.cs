@@ -3,25 +3,8 @@ namespace Matrix.BinarySerialization;
 
 
 internal static class SerializationChecks
-
 {
-
     [Conditional("MATRIX_VALIDATION")]
-
-    public static void NonEmpty(string library, byte[] payload) =>
-
-        MatrixValidation.Require(
-
-            library,
-
-            payload.Length > 0,
-
-            "Serialized payload is empty.");
-
-
-
-    [Conditional("MATRIX_VALIDATION")]
-
     public static void Simple(string library, SimpleModel? actual)
 
     {
@@ -76,6 +59,8 @@ internal static class SerializationChecks
     {
         MatrixValidation.Require(library, actual is not null, "Collection model is null.");
         var items = actual!.Items;
+        // Guarded rather than dereferenced directly: a binary serializer may hand back an
+        // instance whose collection member it never wrote, so the null check still runs here.
         MatrixValidation.Require(library, items is not null, "Collection items are null.");
         MatrixValidation.Require(library, items!.Count == 3, "Collection length differs.");
         MatrixValidation.Require(library, items[0].Id == 1 && items[0].Name == "One", "Element 0 differs.");

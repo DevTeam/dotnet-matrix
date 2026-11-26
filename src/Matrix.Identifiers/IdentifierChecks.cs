@@ -3,13 +3,6 @@ namespace Matrix.Identifiers;
 internal static class IdentifierChecks
 {
     [Conditional("MATRIX_VALIDATION")]
-    public static void Generated(string library, int length, int expectedLength) =>
-        MatrixValidation.Require(
-            library,
-            length == expectedLength,
-            $"Expected a canonical length of {expectedLength}, found {length}.");
-
-    [Conditional("MATRIX_VALIDATION")]
     public static void Batch<T>(string library, T[] values, int expectedCount)
     {
         MatrixValidation.Require(

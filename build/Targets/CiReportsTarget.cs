@@ -24,8 +24,10 @@ internal sealed class CiReportsTarget(
         if (selectedModules.Count == 0)
         {
             await Console.Error.WriteLineAsync(
-                $"Unknown matrix category '{options.Category}'. "
-                + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.");
+                ($"Unknown matrix category '{options.Category}'. "
+                 + $"Available categories: {string.Join(", ", modules.Select(module => module.Metadata.Id))}.")
+                .AsMemory(),
+                cancellationToken);
             return 1;
         }
 
@@ -82,7 +84,9 @@ internal sealed class CiReportsTarget(
                     "> Benchmarks were skipped because feature validation failed. "
                     + "Only the feature report is published.");
             await Console.Error.WriteLineAsync(
-                "Feature validation failed, skipping benchmarks. Only the feature report is staged.");
+                "Feature validation failed, skipping benchmarks. Only the feature report is staged."
+                    .AsMemory(),
+                cancellationToken);
         }
         else if (options.SkipBenchmarks)
         {
@@ -123,8 +127,10 @@ internal sealed class CiReportsTarget(
             if (lostCapabilities.Count > 0)
             {
                 await Console.Error.WriteLineAsync(
-                    $"WARNING: {string.Join(", ", lostCapabilities)} published a feature report "
-                    + "without its deployment capability; the Deployment tab will be empty for it.");
+                    ($"WARNING: {string.Join(", ", lostCapabilities)} published a feature report "
+                     + "without its deployment capability; the Deployment tab will be empty for it.")
+                    .AsMemory(),
+                    cancellationToken);
                 summary
                     .AppendLine()
                     .AppendLine(

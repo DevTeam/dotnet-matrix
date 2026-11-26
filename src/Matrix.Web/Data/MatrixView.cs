@@ -98,7 +98,7 @@ internal sealed class MatrixView(IMatrixOverviews overviews) : IMatrixView
             .ToArray()
         ?? [];
 
-    public (int Supported, int Rated) FeatureCoverage(CategoryReport report, string featureId) =>
+    private (int Supported, int Rated) FeatureCoverage(CategoryReport report, string featureId) =>
         MatrixCoverage.Feature(report.Features, report.LibraryCatalog, featureId);
 
     public string? FeatureNotRatedReason(CategoryReport report, string featureId)

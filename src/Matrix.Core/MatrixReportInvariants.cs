@@ -4,7 +4,7 @@ namespace Matrix;
 /// <remarks>
 /// <see cref="MatrixScores"/> looks a library's result up by id alone and sums
 /// one entry per match, <see cref="MatrixOverviews"/> picks "the" result the
-/// same way, and <see cref="MatrixBenchmarkRunner"/>'s merge replaces by id. A
+/// same way, and <c>MatrixBenchmarkRunner</c>'s merge replaces by id. A
 /// second entry for the same library — e.g. from a benchmark configuration that
 /// resolves to more than one BenchmarkDotNet job — would be silently
 /// double-counted, silently picked, or silently dropped rather than reported.
