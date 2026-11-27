@@ -1,0 +1,299 @@
+{
+  "SchemaVersion": 1,
+  "ModuleId": "pdf-processing",
+  "GeneratedAtUtc": "2026-11-27T20:21:14.6308856+00:00",
+  "Framework": ".NET 11.0.0",
+  "OperatingSystem": "Microsoft Windows 10.0.19045",
+  "Libraries": [
+    {
+      "Id": "Docnet.Core",
+      "Name": "Docnet.Core",
+      "Package": "Docnet.Core",
+      "Version": "2.6.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "itext7",
+      "Name": "iText7",
+      "Package": "itext7",
+      "Version": "9.8.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "PdfPig",
+      "Name": "PdfPig",
+      "Package": "PdfPig",
+      "Version": "0.1.16",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "PDFsharp",
+      "Name": "PDFsharp",
+      "Package": "PDFsharp",
+      "Version": "6.5.0",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "PdfSharpCore",
+      "Name": "PdfSharpCore",
+      "Package": "PdfSharpCore",
+      "Version": "1.3.67",
+      "Baseline": false,
+      "Companions": []
+    },
+    {
+      "Id": "QuestPDF",
+      "Name": "QuestPDF",
+      "Package": "QuestPDF",
+      "Version": "2026.9.2",
+      "Baseline": false,
+      "Companions": []
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "ReadPageCount",
+      "Name": "Read Page Count",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.1866
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 20.3779
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.9663
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Supported",
+          "DurationMilliseconds": 24.5336
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Supported",
+          "DurationMilliseconds": 18.4446
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Unsupported",
+          "Reason": "QuestPDF is a document generator only: it composes and produces documents and exposes no PDF reader, so an existing document cannot be opened.",
+          "DurationMilliseconds": 0
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 2,
+      "Id": "ReadMetadata",
+      "Name": "Read Metadata",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Unsupported",
+          "Reason": "Docnet.Core exposes the PDFium text layer, page count and rendering, but no document information dictionary, so a title and author cannot be read through it.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 2.4981
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 0.9676
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.2494
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Supported",
+          "DurationMilliseconds": 1.215
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Unsupported",
+          "Reason": "QuestPDF is a document generator only: it accepts metadata when producing a document and exposes no reader, so an existing document\u0027s dictionary cannot be read.",
+          "DurationMilliseconds": 0
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 3,
+      "Id": "ExtractPageText",
+      "Name": "Extract Page Text",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Supported",
+          "DurationMilliseconds": 8.31
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 44.4942
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 7.011
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Unsupported",
+          "Reason": "PDFsharp 6 has no text extraction API; its XTextFormatter only lays text out when writing, so extraction would be an adapter implementing the parser itself.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Unsupported",
+          "Reason": "PdfSharpCore has no text extraction API; its XTextFormatter only lays text out when writing, so extraction would be an adapter implementing the parser itself.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Unsupported",
+          "Reason": "QuestPDF is a document generator only: it composes content when producing a document and exposes no reader or text extractor.",
+          "DurationMilliseconds": 0
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 4,
+      "Id": "WriteTextDocument",
+      "Name": "Write Text Document",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Unsupported",
+          "Reason": "Docnet.Core wraps the PDFium reader only: it exposes document readers, merging, splitting and rendering, but no document authoring API.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 306.4145
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 100.6926
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Supported",
+          "DurationMilliseconds": 100.2345
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Unsupported",
+          "Reason": "PdfSharpCore is compared as a reader only; its writer is the PDFsharp 1.x code it was forked from, so measuring it against PDFsharp 6 would compare a package with its own ancestor.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Supported",
+          "DurationMilliseconds": 195.2768
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 5,
+      "Id": "WriteTableDocument",
+      "Name": "Write Table Document",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Unsupported",
+          "Reason": "Docnet.Core wraps the PDFium reader only: it exposes document readers, merging, splitting and rendering, but no document authoring API.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 145.2453
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 29.7027
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Supported",
+          "DurationMilliseconds": 11.4265
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Unsupported",
+          "Reason": "PdfSharpCore is compared as a reader only; its writer is the PDFsharp 1.x code it was forked from, so measuring it against PDFsharp 6 would compare a package with its own ancestor.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Supported",
+          "DurationMilliseconds": 43.1115
+        }
+      ],
+      "IsDeployment": false
+    },
+    {
+      "Order": 6,
+      "Id": "WriteMultiPageDocument",
+      "Name": "Write Multi Page Document",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Status": "Unsupported",
+          "Reason": "Docnet.Core wraps the PDFium reader only: it exposes document readers, merging, splitting and rendering, but no document authoring API.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "itext7",
+          "Status": "Supported",
+          "DurationMilliseconds": 57.5503
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Status": "Supported",
+          "DurationMilliseconds": 202.0301
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Status": "Supported",
+          "DurationMilliseconds": 27.0395
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Status": "Unsupported",
+          "Reason": "PdfSharpCore is compared as a reader only; its writer is the PDFsharp 1.x code it was forked from, so measuring it against PDFsharp 6 would compare a package with its own ancestor.",
+          "DurationMilliseconds": 0
+        },
+        {
+          "LibraryId": "QuestPDF",
+          "Status": "Supported",
+          "DurationMilliseconds": 63.7706
+        }
+      ],
+      "IsDeployment": false
+    }
+  ]
+}
