@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net11.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Exe</OutputType>
+        <MatrixMode Condition="'$(MatrixMode)' == ''">Validation</MatrixMode>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Validation'">$(DefineConstants);MATRIX_VALIDATION</DefineConstants>
+        <DefineConstants Condition="'$(MatrixMode)' == 'Benchmark'">$(DefineConstants);MATRIX_BENCHMARK</DefineConstants>
+        <OutputPath>bin\$(MatrixMode)\$(Configuration)\</OutputPath>
+        <IntermediateOutputPath>obj\$(MatrixMode)\$(Configuration)\</IntermediateOutputPath>
+        <MatrixModuleId>pdf-processing</MatrixModuleId>
+        <MatrixModuleName>PDF Processing</MatrixModuleName>
+        <MatrixRunConfigurationPrefix>Pdf</MatrixRunConfigurationPrefix>
+        <MatrixReportDirectory>PdfProcessing</MatrixReportDirectory>
+        <MatrixLibraryCatalogNamespace>Matrix.PdfProcessing.Infrastructure</MatrixLibraryCatalogNamespace>
+        <NoWarn>$(NoWarn);NU1608;NU1902;NU1903;NU1904</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Matrix\Matrix.csproj"/>
+        <PackageReference Include="BenchmarkDotNet" Version="0.16.0-preview.2"/>
+        <PackageReference Include="PdfPig" Version="0.1.16">
+            <MatrixLibraryId>PdfPig</MatrixLibraryId>
+            <MatrixLibraryName>PdfPig</MatrixLibraryName>
+            <MatrixCodeName>PdfPig</MatrixCodeName>
+            <MatrixDescription>A managed PDF reader that exposes pages, letters and words as parsed objects.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/UglyToad/PdfPig</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/UglyToad/PdfPig</MatrixRepositoryUrl>
+            <MatrixLogo>logos/pdfpig.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="PDFsharp" Version="6.5.0">
+            <MatrixLibraryId>PDFsharp</MatrixLibraryId>
+            <MatrixLibraryName>PDFsharp</MatrixLibraryName>
+            <MatrixCodeName>PdfSharp</MatrixCodeName>
+            <MatrixDescription>A PDF document library with drawing, page and outline support for reading and writing.</MatrixDescription>
+            <MatrixDocumentationUrl>https://docs.pdfsharp.net</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/empira/PDFsharp</MatrixRepositoryUrl>
+            <MatrixLogo>logos/pdfsharp.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="PdfSharpCore" Version="1.3.67">
+            <MatrixLibraryId>PdfSharpCore</MatrixLibraryId>
+            <MatrixLibraryName>PdfSharpCore</MatrixLibraryName>
+            <MatrixCodeName>PdfSharpCore</MatrixCodeName>
+            <MatrixDescription>A cross-platform fork of PDFsharp 1.x for reading and drawing PDF documents.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/ststeiger/PdfSharpCore</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/ststeiger/PdfSharpCore</MatrixRepositoryUrl>
+            <MatrixLogo>logos/pdfsharpcore.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="Docnet.Core" Version="2.6.0">
+            <MatrixLibraryId>Docnet.Core</MatrixLibraryId>
+            <MatrixLibraryName>Docnet.Core</MatrixLibraryName>
+            <MatrixCodeName>DocnetCore</MatrixCodeName>
+            <MatrixDescription>A binding of the PDFium engine that reads page counts, text and rendered images.</MatrixDescription>
+            <MatrixDocumentationUrl>https://github.com/GowenGit/docnet</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/GowenGit/docnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/docnet.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="QuestPDF" Version="2026.9.2">
+            <MatrixLibraryId>QuestPDF</MatrixLibraryId>
+            <MatrixLibraryName>QuestPDF</MatrixLibraryName>
+            <MatrixCodeName>QuestPdf</MatrixCodeName>
+            <MatrixDescription>A code-first document generator with a layout engine, tables and a fluent composition API.</MatrixDescription>
+            <MatrixDocumentationUrl>https://www.questpdf.com</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/QuestPDF/QuestPDF</MatrixRepositoryUrl>
+            <MatrixLogo>logos/questpdf.svg</MatrixLogo>
+        </PackageReference>
+        <PackageReference Include="itext7" Version="9.8.0">
+            <MatrixLibraryId>itext7</MatrixLibraryId>
+            <MatrixLibraryName>iText7</MatrixLibraryName>
+            <MatrixCodeName>IText7</MatrixCodeName>
+            <MatrixDescription>A PDF toolkit with a layout engine, tables and text extraction for reading and writing.</MatrixDescription>
+            <MatrixDocumentationUrl>https://itextpdf.com</MatrixDocumentationUrl>
+            <MatrixRepositoryUrl>https://github.com/itext/itext-dotnet</MatrixRepositoryUrl>
+            <MatrixLogo>logos/itext7.svg</MatrixLogo>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\Matrix\Matrix.Module.targets"/>
+
+</Project>
