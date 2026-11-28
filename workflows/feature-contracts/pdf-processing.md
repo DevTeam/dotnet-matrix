@@ -3,11 +3,13 @@
 ## Scope
 
 The category compares .NET libraries that read and write PDF documents over the
-same in-memory bytes. PdfPig, PDFsharp and iText7 do both; Docnet.Core and
-PdfSharpCore read only. The split is the point of the category: a PDF library
-that only reads cannot be compared with one that only writes on a single
-operation, so every scenario names the libraries that can express it and the
-others record an explicit availability declaration.
+same in-memory bytes. PdfPig and PDFsharp do both; Docnet.Core and PdfSharpCore
+read only. iText7 also does both, but it is temporarily withdrawn from the
+comparison — see "iText7 temporarily withdrawn" below — while its package stays
+referenced because it writes the shared reading fixture. The split is the point
+of the category: a PDF library that only reads cannot be compared with one that
+only writes on a single operation, so every scenario names the libraries that
+can express it and the others record an explicit availability declaration.
 
 Disk and network I/O, rendering to raster images, digital signatures,
 certificates, form filling, PDF/A conversion, JavaScript actions, and any
@@ -24,7 +26,10 @@ would measure the storage device rather than the library.
 | PDFsharp | reader and writer | `PDFsharp` |
 | PdfSharpCore | reader | `PdfSharpCore` |
 | Docnet.Core | reader | `Docnet.Core` |
-| iText7 | reader and writer | `itext7` |
+
+`itext7` is still referenced by the project, because the shared fixture is
+written with it, but it is not a library of the comparison while it is
+withdrawn.
 
 ## Shared fixture
 
@@ -83,7 +88,7 @@ library performs for the same model, not on byte-identical output.
 
 ### Reading scenarios
 
-PdfPig, Docnet.Core and iText7 claim all three reading scenarios. PDFsharp and
+PdfPig and Docnet.Core claim all three reading scenarios. PDFsharp and
 PdfSharpCore claim the two document-level ones and cannot claim text extraction:
 neither package exposes any text extraction API (its `XTextFormatter` only lays
 text out when writing), so a wrapper would have to implement extraction itself,
@@ -105,7 +110,7 @@ merely that a call returned.
 
 ### Writing scenarios
 
-PdfPig, iText7 and PDFsharp claim all three writing scenarios. PdfPig
+PdfPig and PDFsharp claim all three writing scenarios. PdfPig
 writes with its standard-14 builder, so it needs no font program and is the one
 writer that behaves identically on a machine with no font at all; PDFsharp draws
 table cells itself and therefore pays for its own arithmetic exactly as the
@@ -150,6 +155,42 @@ The GitHub Actions reports runner is `ubuntu-latest`, whose base image ships the
 DejaVu and Liberation fonts at the paths the resolver searches, so the resolver
 is expected to find a font there. This is not asserted as a guarantee: the
 validation run is the authority.
+
+## iText7 temporarily withdrawn
+
+iText7 is not a participant of the comparison at present, although its package
+remains referenced and it still writes the shared reading fixture. Its layout
+engine cannot finish a writing scenario on runtime 11.0.0: the three writing
+benchmarks end in `System.NullReferenceException` inside
+`iText.Layout.Renderer.LineRenderer.Layout`, and the benchmark process exits
+before reporting any result, which failed the whole category job rather than the
+three scenarios.
+
+The cause is a runtime defect, not an adapter defect:
+[dotnet/runtime#133817](https://github.com/dotnet/runtime/issues/133817) — the JIT
+folds `Enum.Equals` into a direct payload comparison without checking its
+argument for null, so `ValueType.Equals(null)`, which must return `false`, throws
+instead. It was introduced by the `Enum.Equals` intrinsification in PR #122779,
+it affects FullOpts only (the same code is correct when optimized tiering is
+disabled, and it does not reproduce on .NET 10), and the fix is PR #133826,
+backported to `release/11.0` in PR #137392 and confirmed by Microsoft to ship in
+runtime **11.0.1**.
+
+Withdrawal was chosen over the alternatives because it is the only one that
+publishes no false claim. A `FeatureUnavailable` declaration would assert that
+iText7 cannot write PDF documents, which is untrue. Marking the three scenarios
+`rated: false` would leave them running, and the run still crashes. Publishing a
+report with the failing scenarios dropped would present a category iText7 does
+not enter as if it had been compared.
+
+**Return condition.** iText7 returns as a participant when the benchmark
+environment runs a runtime that carries the fix, which is runtime 11.0.1 or
+later. The restoration is the revert of the commit that withdrew it: the six
+adapters, the library declaration in `Matrix.PdfProcessing.csproj`, the metadata
+logo and the report artifacts come back together because they were removed
+together. Nothing has to be re-derived — the adapters validated as `Supported`
+for all six scenarios before the withdrawal, and the run configuration generator
+rebuilds its files from the library list.
 
 ## iText7 and the fixture's font encoding
 
@@ -211,10 +252,12 @@ it costs to do what it can.
 - **Extract Page Text is not an OCR scenario.** None of the participants performs
   character recognition, so a scanned document would yield no text for any of
   them; the fixture is a generated document with a real text layer.
-- **The fixture is written by a participant.** iText7 produces the reading
-  fixture, which means the reading comparison uses one of the participants'
-  output as its input. This is stated plainly rather than hidden: the choice is
-  forced by the font-encoding incompatibility described above, the fixture is
-  verified against every other reader during validation, and a reader that
-  disagrees with it fails validation instead of quietly measuring a different
-  document.
+- **The fixture is written by a library outside the comparison.** iText7 produces
+  the reading fixture and is currently withdrawn as a participant, so no
+  competing library's output serves as the reading input while it is out. That
+  was not the case before the withdrawal, when the reading comparison consumed
+  one participant's own output; either way it is stated plainly rather than
+  hidden. The choice is forced by the font-encoding incompatibility described
+  above, the fixture is verified against every other reader during validation,
+  and a reader that disagrees with it fails validation instead of quietly
+  measuring a different document.

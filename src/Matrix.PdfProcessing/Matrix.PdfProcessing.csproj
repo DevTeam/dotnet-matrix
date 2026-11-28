@@ -57,15 +57,17 @@
             <MatrixRepositoryUrl>https://github.com/GowenGit/docnet</MatrixRepositoryUrl>
             <MatrixLogo>logos/docnet.svg</MatrixLogo>
         </PackageReference>
-        <PackageReference Include="itext7" Version="9.8.0">
-            <MatrixLibraryId>itext7</MatrixLibraryId>
-            <MatrixLibraryName>iText7</MatrixLibraryName>
-            <MatrixCodeName>IText7</MatrixCodeName>
-            <MatrixDescription>A PDF toolkit with a layout engine, tables and text extraction for reading and writing.</MatrixDescription>
-            <MatrixDocumentationUrl>https://itextpdf.com</MatrixDocumentationUrl>
-            <MatrixRepositoryUrl>https://github.com/itext/itext-dotnet</MatrixRepositoryUrl>
-            <MatrixLogo>logos/itext7.svg</MatrixLogo>
-        </PackageReference>
+        <!--
+            iText7 is referenced but not declared as a matrix library: it writes the shared
+            reading fixture (see PdfFixture), so the package must still be present. It is
+            temporarily withdrawn from the comparison because its layout engine crashes on
+            this runtime: dotnet/runtime#133817 makes the JIT fold Enum.Equals into a payload
+            comparison without a null check, so the three iText7 writing benchmarks die with
+            a NullReferenceException in LineRenderer.Layout on .NET 11.0.0. The fix ships in
+            runtime 11.0.1, and workflows/feature-contracts/pdf-processing.md records the
+            condition for its return.
+        -->
+        <PackageReference Include="itext7" Version="9.8.0"/>
     </ItemGroup>
 
     <Import Project="..\Matrix\Matrix.Module.targets"/>
