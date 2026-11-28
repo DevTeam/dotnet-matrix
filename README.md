@@ -26,9 +26,9 @@
 
 <table align="center">
 <tr>
-<td width="180" align="center"><strong>16</strong><br><sub>CATEGORIES</sub></td>
-<td width="180" align="center"><strong>127</strong><br><sub>LIBRARIES</sub></td>
-<td width="180" align="center"><strong>158</strong><br><sub>SCENARIOS</sub></td>
+<td width="180" align="center"><strong>17</strong><br><sub>CATEGORIES</sub></td>
+<td width="180" align="center"><strong>131</strong><br><sub>LIBRARIES</sub></td>
+<td width="180" align="center"><strong>164</strong><br><sub>SCENARIOS</sub></td>
 </tr>
 </table>
 
@@ -49,6 +49,7 @@
 | [**Logging**](#logging) | [ZLogger](https://matrix.dev-team.org/?category=logging&library=ZLogger) | 7 | 9 | [Every scenario →](reports/Logging/README.md) |
 | [**Message Dispatch**](#message-dispatch) | [Mediator](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 7 | 8 | [Every scenario →](reports/MessageDispatch/README.md) |
 | [**Object Mapping**](#object-mapping) | [Mapperly](https://matrix.dev-team.org/?category=object-mapping&library=Mapperly) | 4 | 10 | [Every scenario →](reports/ObjectMapping/README.md) |
+| [**PDF Processing**](#pdf-processing) | [PDFsharp](https://matrix.dev-team.org/?category=pdf-processing&library=PDFsharp) | 4 | 6 | [Every scenario →](reports/PdfProcessing/README.md) |
 | [**Template Engines**](#template-engines) | [Handlebars.Net](https://matrix.dev-team.org/?category=template-engines&library=Handlebars.Net) | 11 | 3 | [Every scenario →](reports/TemplateEngines/README.md) |
 | [**Validation**](#validation) | [ValidationModules](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 6 | 10 | [Every scenario →](reports/Validation/README.md) |
 | [**ZIP Archives**](#zip-archives) | [System.IO.Compression](https://matrix.dev-team.org/?category=zip-archives&library=System.IO.Compression) | 4 | 13 | [Every scenario →](reports/ZipArchives/README.md) |
@@ -205,6 +206,17 @@ The README is a generated snapshot of the reports committed to this repository.
 [![Object Mapping rating](reports/ObjectMapping/charts/rating.png)](https://matrix.dev-team.org/?category=object-mapping)
 
 <p><a href="reports/ObjectMapping/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
+
+
+## [PDF Processing](https://matrix.dev-team.org/?category=pdf-processing)
+
+<blockquote>
+<strong><a href="https://matrix.dev-team.org/?category=pdf-processing&amp;library=PDFsharp">PDFsharp</a></strong> leads the current rating · 4 libraries · 6 scenarios
+</blockquote>
+
+[![PDF Processing rating](reports/PdfProcessing/charts/rating.png)](https://matrix.dev-team.org/?category=pdf-processing)
+
+<p><a href="reports/PdfProcessing/README.md"><strong>Full report →</strong></a> every scenario's measurements, the rating breakdown, every compared library and every benchmark chart.</p>
 
 
 ## [Template Engines](https://matrix.dev-team.org/?category=template-engines)

@@ -21,13 +21,13 @@ See [workflows/rating.md](../../workflows/rating.md).
 
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | [**Mediator**](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 8/8 | 692 | 747 | 1439 | gold in Notification, gold in Pipeline, silver in Dispatch, silver in Generated, silver in Setup |
-| 2 | [**Immediate.Handlers**](https://matrix.dev-team.org/?category=message-dispatch&library=Immediate.Handlers) | 7/8 | 662 | 648 | 1310 | gold in Dispatch, gold in Generated, gold in Setup, silver in Pipeline |
-| 3 | [**MediatR**](https://matrix.dev-team.org/?category=message-dispatch&library=MediatR) | 7/8 | 398 | 349 | 748 | bronze in Dispatch, bronze in Generated, bronze in Pipeline |
+| 1 | [**Mediator**](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator) | 8/8 | 691 | 747 | 1438 | gold in Notification, gold in Pipeline, silver in Dispatch, silver in Generated, silver in Setup |
+| 2 | [**Immediate.Handlers**](https://matrix.dev-team.org/?category=message-dispatch&library=Immediate.Handlers) | 7/8 | 665 | 648 | 1313 | gold in Dispatch, gold in Generated, gold in Setup, silver in Pipeline |
+| 3 | [**MediatR**](https://matrix.dev-team.org/?category=message-dispatch&library=MediatR) | 7/8 | 386 | 349 | 735 | bronze in Dispatch, bronze in Generated, bronze in Pipeline |
 | 4 | [**Cortex.Mediator**](https://matrix.dev-team.org/?category=message-dispatch&library=Cortex.Mediator) | 7/8 | 361 | 359 | 720 | bronze in Generated, bronze in Notification |
-| 5 | [**WolverineFx**](https://matrix.dev-team.org/?category=message-dispatch&library=WolverineFx) | 6/8 | 157 | 362 | 520 | silver in Notification, bronze in Generated |
-| 6 | [**Mediator.Net**](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator.Net) | 7/8 | 148 | 176 | 325 | bronze in Generated, bronze in Setup |
-| 7 | [**FastMediator**](https://matrix.dev-team.org/?category=message-dispatch&library=FastMediator) | 6/8 | 103 | 80 | 183 | bronze in Generated |
+| 5 | [**WolverineFx**](https://matrix.dev-team.org/?category=message-dispatch&library=WolverineFx) | 6/8 | 162 | 363 | 525 | silver in Notification, bronze in Generated |
+| 6 | [**Mediator.Net**](https://matrix.dev-team.org/?category=message-dispatch&library=Mediator.Net) | 7/8 | 149 | 176 | 325 | bronze in Generated, bronze in Setup |
+| 7 | [**FastMediator**](https://matrix.dev-team.org/?category=message-dispatch&library=FastMediator) | 6/8 | 98 | 80 | 177 | bronze in Generated |
 
 
 <details>
@@ -41,96 +41,96 @@ nothing for it. Add the two Points columns over every scenario and you get the
 rating above. The same breakdown appears as a hint on any points value in the
 [application](https://matrix.dev-team.org/?category=message-dispatch).
 
-#### 1. Mediator — 1439 of 1600
+#### 1. Mediator — 1438 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 29.73 ns | 21.54 ns | 85.7 | 96 B | 96 B | 100 |
-| Send Query | 27.86 ns | 21.13 ns | 87.6 | 96 B | 96 B | 100 |
-| Publish Notification | 14.72 ns | 14.72 ns | 100 | 96 B | 96 B | 100 |
-| Pipeline Behavior | 29.09 ns | 29.09 ns | 100 | 96 B | 96 B | 100 |
-| Exception Behavior | 1.14 μs | 1.14 μs | 100 | 392 B | 392 B | 100 |
-| Async Handler | 454.2 ns | 454.2 ns | 100 | 414 B | 414 B | 100 |
-| Source Generated Dispatch | 29.25 ns | 20.85 ns | 85 | 96 B | 96 B | 100 |
-| Register | 21.77 μs | 2.41 μs | 33.3 | 35.72 KB | 7.89 KB | 47.1 |
+| Send Command | 67.66 ns | 51.07 ns | 87.1 | 96 B | 96 B | 100 |
+| Send Query | 58.77 ns | 45.84 ns | 88.5 | 96 B | 96 B | 100 |
+| Publish Notification | 29.34 ns | 29.34 ns | 100 | 96 B | 96 B | 100 |
+| Pipeline Behavior | 59.49 ns | 55.19 ns | 96.4 | 96 B | 96 B | 100 |
+| Exception Behavior | 1.84 μs | 1.84 μs | 100 | 392 B | 392 B | 100 |
+| Async Handler | 751.78 ns | 751.78 ns | 100 | 415 B | 415 B | 100 |
+| Source Generated Dispatch | 57.41 ns | 43.84 ns | 87.6 | 96 B | 96 B | 100 |
+| Register | 43.99 μs | 4.41 μs | 31.7 | 35.72 KB | 7.89 KB | 47.1 |
 
-#### 2. Immediate.Handlers — 1310 of 1600
-
-| Scenario | Time | Best | Points | Memory | Best | Points |
-|---|---:|---:|---:|---:|---:|---:|
-| Send Command | 21.54 ns | 21.54 ns | 100 | 96 B | 96 B | 100 |
-| Send Query | 21.13 ns | 21.13 ns | 100 | 96 B | 96 B | 100 |
-| Publish Notification | — | 14.72 ns | 0 | — | 96 B | 0 |
-| Pipeline Behavior | 32.94 ns | 29.09 ns | 94.2 | 96 B | 96 B | 100 |
-| Exception Behavior | 2.48 μs | 1.14 μs | 67.9 | 1.25 KB | 392 B | 56.5 |
-| Async Handler | 455.34 ns | 454.2 ns | 99.9 | 499 B | 414 B | 91.5 |
-| Source Generated Dispatch | 20.85 ns | 20.85 ns | 100 | 96 B | 96 B | 100 |
-| Register | 2.41 μs | 2.41 μs | 100 | 7.89 KB | 7.89 KB | 100 |
-
-#### 3. MediatR — 748 of 1600
+#### 2. Immediate.Handlers — 1313 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 77.4 ns | 21.54 ns | 53.6 | 392 B | 96 B | 53.7 |
-| Send Query | 77.65 ns | 21.13 ns | 53 | 464 B | 96 B | 49.6 |
-| Publish Notification | 238.05 ns | 14.72 ns | 25.6 | 1.28 KB | 96 B | 30 |
-| Pipeline Behavior | 81.69 ns | 29.09 ns | 60.3 | 464 B | 96 B | 49.6 |
-| Exception Behavior | 1.19 μs | 1.14 μs | 97.8 | 928 B | 392 B | 66.1 |
-| Async Handler | 463.8 ns | 454.2 ns | 99 | 520 B | 414 B | 89.7 |
-| Source Generated Dispatch | — | 20.85 ns | 0 | — | 96 B | 0 |
-| Register | 295.53 μs | 2.41 μs | 9.039 | 719.91 KB | 7.89 KB | 10.5 |
+| Send Command | 51.07 ns | 51.07 ns | 100 | 96 B | 96 B | 100 |
+| Send Query | 45.84 ns | 45.84 ns | 100 | 96 B | 96 B | 100 |
+| Publish Notification | — | 29.34 ns | 0 | — | 96 B | 0 |
+| Pipeline Behavior | 55.19 ns | 55.19 ns | 100 | 96 B | 96 B | 100 |
+| Exception Behavior | 4.08 μs | 1.84 μs | 67.1 | 1.25 KB | 392 B | 56.5 |
+| Async Handler | 786.65 ns | 751.78 ns | 97.8 | 502 B | 415 B | 91.4 |
+| Source Generated Dispatch | 43.84 ns | 43.84 ns | 100 | 96 B | 96 B | 100 |
+| Register | 4.41 μs | 4.41 μs | 100 | 7.89 KB | 7.89 KB | 100 |
+
+#### 3. MediatR — 735 of 1600
+
+| Scenario | Time | Best | Points | Memory | Best | Points |
+|---|---:|---:|---:|---:|---:|---:|
+| Send Command | 213.37 ns | 51.07 ns | 49.3 | 392 B | 96 B | 53.7 |
+| Send Query | 172.32 ns | 45.84 ns | 52 | 464 B | 96 B | 49.6 |
+| Publish Notification | 496.42 ns | 29.34 ns | 24.7 | 1.28 KB | 96 B | 30 |
+| Pipeline Behavior | 159.35 ns | 55.19 ns | 59.2 | 464 B | 96 B | 49.6 |
+| Exception Behavior | 2.06 μs | 1.84 μs | 94.5 | 928 B | 392 B | 66.1 |
+| Async Handler | 780.73 ns | 751.78 ns | 98.1 | 520 B | 415 B | 89.8 |
+| Source Generated Dispatch | — | 43.84 ns | 0 | — | 96 B | 0 |
+| Register | 636.32 μs | 4.41 μs | 8.328 | 719.93 KB | 7.89 KB | 10.5 |
 
 #### 4. Cortex.Mediator — 720 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 43.99 ns | 21.54 ns | 70.8 | 96 B | 96 B | 100 |
-| Send Query | 142.78 ns | 21.13 ns | 39.2 | 832 B | 96 B | 37.4 |
-| Publish Notification | 115.54 ns | 14.72 ns | 36.7 | 512 B | 96 B | 47.3 |
-| Pipeline Behavior | 145.48 ns | 29.09 ns | 45.3 | 832 B | 96 B | 37.4 |
-| Exception Behavior | 1.48 μs | 1.14 μs | 87.9 | 1.17 KB | 392 B | 58.3 |
-| Async Handler | 809.26 ns | 454.2 ns | 75 | 1.06 KB | 414 B | 62.8 |
-| Source Generated Dispatch | — | 20.85 ns | 0 | — | 96 B | 0 |
-| Register | 593.78 μs | 2.41 μs | 6.377 | 332.16 KB | 7.89 KB | 15.4 |
+| Send Command | 100.39 ns | 51.07 ns | 71.7 | 96 B | 96 B | 100 |
+| Send Query | 264.65 ns | 45.84 ns | 42 | 832 B | 96 B | 37.4 |
+| Publish Notification | 220.85 ns | 29.34 ns | 37 | 512 B | 96 B | 47.3 |
+| Pipeline Behavior | 251.23 ns | 55.19 ns | 47.2 | 832 B | 96 B | 37.4 |
+| Exception Behavior | 2.5 μs | 1.84 μs | 85.8 | 1.17 KB | 392 B | 58.3 |
+| Async Handler | 1.49 μs | 751.78 ns | 71 | 1.06 KB | 415 B | 62.9 |
+| Source Generated Dispatch | — | 43.84 ns | 0 | — | 96 B | 0 |
+| Register | 1.06 ms | 4.41 μs | 6.439 | 332.14 KB | 7.89 KB | 15.4 |
 
-#### 5. WolverineFx — 520 of 1600
+#### 5. WolverineFx — 525 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 293.49 ns | 21.54 ns | 27.7 | 120 B | 96 B | 91.3 |
-| Send Query | 368.82 ns | 21.13 ns | 24.5 | 312 B | 96 B | 59.8 |
-| Publish Notification | 316.99 ns | 14.72 ns | 22.2 | 168 B | 96 B | 79.1 |
-| Pipeline Behavior | 388.16 ns | 29.09 ns | 27.8 | 312 B | 96 B | 59.8 |
-| Exception Behavior | — | 1.14 μs | 0 | — | 392 B | 0 |
-| Async Handler | 1.59 μs | 454.2 ns | 53.5 | 944 B | 414 B | 67.3 |
-| Source Generated Dispatch | — | 20.85 ns | 0 | — | 96 B | 0 |
-| Register | 7.7 ms | 2.41 μs | 1.771 | 2.98 MB | 7.89 KB | 5.095 |
+| Send Command | 501.4 ns | 51.07 ns | 32.2 | 120 B | 96 B | 91.3 |
+| Send Query | 755.14 ns | 45.84 ns | 24.9 | 312 B | 96 B | 59.8 |
+| Publish Notification | 572.93 ns | 29.34 ns | 23 | 168 B | 96 B | 79.1 |
+| Pipeline Behavior | 720.85 ns | 55.19 ns | 27.9 | 312 B | 96 B | 59.8 |
+| Exception Behavior | — | 1.84 μs | 0 | — | 392 B | 0 |
+| Async Handler | 2.73 μs | 751.78 ns | 52.5 | 940 B | 415 B | 67.5 |
+| Source Generated Dispatch | — | 43.84 ns | 0 | — | 96 B | 0 |
+| Register | 14.39 ms | 4.41 μs | 1.751 | 2.85 MB | 7.89 KB | 5.205 |
 
 #### 6. Mediator.Net — 325 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 1.1 μs | 21.54 ns | 14.3 | 1.88 KB | 96 B | 24.8 |
-| Send Query | 1.06 μs | 21.13 ns | 14.4 | 2.07 KB | 96 B | 23.7 |
-| Publish Notification | 1.44 μs | 14.72 ns | 10.5 | 2.36 KB | 96 B | 22.2 |
-| Pipeline Behavior | 1.12 μs | 29.09 ns | 16.4 | 2.07 KB | 96 B | 23.7 |
-| Exception Behavior | 10.2 μs | 1.14 μs | 33.5 | 6.14 KB | 392 B | 25.7 |
-| Async Handler | 2.85 μs | 454.2 ns | 40 | 2.66 KB | 414 B | 39.9 |
-| Source Generated Dispatch | — | 20.85 ns | 0 | — | 96 B | 0 |
-| Register | 63.92 μs | 2.41 μs | 19.4 | 304.68 KB | 7.89 KB | 16.1 |
+| Send Command | 2.05 μs | 51.07 ns | 15.9 | 1.88 KB | 96 B | 24.8 |
+| Send Query | 2.1 μs | 45.84 ns | 14.9 | 2.07 KB | 96 B | 23.7 |
+| Publish Notification | 2.96 μs | 29.34 ns | 10.1 | 2.36 KB | 96 B | 22.2 |
+| Pipeline Behavior | 2.02 μs | 55.19 ns | 16.7 | 2.07 KB | 96 B | 23.7 |
+| Exception Behavior | 17.11 μs | 1.84 μs | 32.8 | 6.14 KB | 392 B | 25.7 |
+| Async Handler | 4.79 μs | 751.78 ns | 39.6 | 2.66 KB | 415 B | 40 |
+| Source Generated Dispatch | — | 43.84 ns | 0 | — | 96 B | 0 |
+| Register | 118.93 μs | 4.41 μs | 19.3 | 304.7 KB | 7.89 KB | 16.1 |
 
-#### 7. FastMediator — 183 of 1600
+#### 7. FastMediator — 177 of 1600
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Send Command | 3.8 μs | 21.54 ns | 7.704 | 8.59 KB | 96 B | 11.7 |
-| Send Query | 3.95 μs | 21.13 ns | 7.484 | 8.57 KB | 96 B | 11.7 |
-| Publish Notification | — | 14.72 ns | 0 | — | 96 B | 0 |
-| Pipeline Behavior | 4.12 μs | 29.09 ns | 8.544 | 8.83 KB | 96 B | 11.5 |
-| Exception Behavior | 5.37 μs | 1.14 μs | 46.2 | 9.12 KB | 392 B | 21.1 |
-| Async Handler | 4.2 μs | 454.2 ns | 32.9 | 9.48 KB | 414 B | 21.2 |
-| Source Generated Dispatch | — | 20.85 ns | 0 | — | 96 B | 0 |
-| Register | 167.58 ms | 2.41 μs | 0.38 | 11.31 MB | 7.89 KB | 2.614 |
+| Send Command | 7.79 μs | 51.07 ns | 8.177 | 8.59 KB | 96 B | 11.7 |
+| Send Query | 7.75 μs | 45.84 ns | 7.774 | 8.57 KB | 96 B | 11.7 |
+| Publish Notification | — | 29.34 ns | 0 | — | 96 B | 0 |
+| Pipeline Behavior | 7.72 μs | 55.19 ns | 8.532 | 8.83 KB | 96 B | 11.5 |
+| Exception Behavior | 10.08 μs | 1.84 μs | 42.7 | 9.12 KB | 392 B | 21.1 |
+| Async Handler | 8.35 μs | 751.78 ns | 30 | 9.48 KB | 415 B | 21.2 |
+| Source Generated Dispatch | — | 43.84 ns | 0 | — | 96 B | 0 |
+| Register | 242.66 ms | 4.41 μs | 0.426 | 12.4 MB | 7.89 KB | 2.496 |
 
 </details>
 

@@ -1,0 +1,1526 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 15 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet restore gen.csproj /p:ArtifactsPath=/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/a /p:MatrixMode=Benchmark /p:BenchmarkDotNetGatherReferences=true --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1
+// command took 2.41 sec and exited with 0
+// start dotnet build gen.csproj -f net11.0 -c Release /p:ArtifactsPath=/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/a /p:MatrixMode=Benchmark /p:BenchmarkDotNetGatherReferences=true --no-restore --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1
+// command took 11.79 sec and exited with 0
+// start dotnet build gen.csproj -f net11.0 -c Release /p:ArtifactsPath=/home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/a /p:MatrixMode=Benchmark --nodeReuse:false /p:UseSharedCompilation=false /p:Deterministic=true /p:Optimize=true in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1
+// command took 5.6 sec and exited with 0
+// ***** Done, took 00:00:19 (19.97 sec)   *****
+// Found 2 benchmarks:
+//   ExtractPageText.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ExtractPageText.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: ExtractPageText.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 34449 --benchmarkName Matrix.PdfProcessing.Benchmarks.ExtractPageText.DocnetCore --job Quick --diagnoserRunMode 3 --benchmarkId 0 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 5879817.00 ns, 5.8798 ms/op
+WorkloadJitting  2: 30 op, 22869640.00 ns, 762.3213 us/op
+WorkloadJitting  3: 30 op, 22171382.00 ns, 739.0461 us/op
+WorkloadJitting  4: 1 op, 1319515.00 ns, 1.3195 ms/op
+
+WorkloadPilot    1: 1 op, 1300659.00 ns, 1.3007 ms/op
+
+WorkloadPilot    1: 16 op, 11454758.00 ns, 715.9224 us/op
+WorkloadPilot    2: 352 op, 256135432.00 ns, 727.6575 us/op
+
+WorkloadWarmup   1: 352 op, 250047949.00 ns, 710.3635 us/op
+WorkloadWarmup   2: 352 op, 247006050.00 ns, 701.7217 us/op
+WorkloadWarmup   3: 352 op, 247596047.00 ns, 703.3979 us/op
+WorkloadWarmup   4: 352 op, 249300618.00 ns, 708.2404 us/op
+WorkloadWarmup   5: 352 op, 250889474.00 ns, 712.7542 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 352 op, 248598532.00 ns, 706.2458 us/op
+WorkloadActual   2: 352 op, 249176427.00 ns, 707.8876 us/op
+WorkloadActual   3: 352 op, 252154752.00 ns, 716.3487 us/op
+WorkloadActual   4: 352 op, 298030167.00 ns, 846.6766 us/op
+WorkloadActual   5: 352 op, 291787254.00 ns, 828.9411 us/op
+WorkloadActual   6: 352 op, 255797428.00 ns, 726.6972 us/op
+WorkloadActual   7: 352 op, 245034057.00 ns, 696.1195 us/op
+WorkloadActual   8: 352 op, 248139423.00 ns, 704.9415 us/op
+WorkloadActual   9: 352 op, 247406109.00 ns, 702.8583 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 352 op, 247212238.00 ns, 702.3075 us/op
+WorkloadResult   1: 352 op, 248598532.00 ns, 706.2458 us/op
+WorkloadResult   2: 352 op, 249176427.00 ns, 707.8876 us/op
+WorkloadResult   3: 352 op, 252154752.00 ns, 716.3487 us/op
+WorkloadResult   4: 352 op, 255797428.00 ns, 726.6972 us/op
+WorkloadResult   5: 352 op, 245034057.00 ns, 696.1195 us/op
+WorkloadResult   6: 352 op, 248139423.00 ns, 704.9415 us/op
+WorkloadResult   7: 352 op, 247406109.00 ns, 702.8583 us/op
+// GC:  0 0 0 1669888 352
+
+// AfterAll
+// Benchmark Process 4859 has exited with code 0.
+
+Mean = 708.728 μs, StdErr = 3.766 μs (0.53%), N = 7, StdDev = 9.963 μs
+Min = 696.119 μs, Q1 = 703.900 μs, Median = 706.246 μs, Q3 = 712.118 μs, Max = 726.697 μs
+IQR = 8.218 μs, LowerFence = 691.573 μs, UpperFence = 724.446 μs
+ConfidenceInterval = [686.289 μs; 731.168 μs] (CI 99.9%), Margin = 22.440 μs (3.17% of Mean)
+Skewness = 0.57, Kurtosis = 1.95, MValue = 2
+
+// ** Remained 14 (93.3 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// **************************
+// Benchmark: ExtractPageText.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 35317 --benchmarkName Matrix.PdfProcessing.Benchmarks.ExtractPageText.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 1 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 302240609.00 ns, 302.2406 ms/op
+WorkloadJitting  2: 1 op, 4836707.00 ns, 4.8367 ms/op
+WorkloadJitting  3: 30 op, 117141919.00 ns, 3.9047 ms/op
+WorkloadJitting  4: 30 op, 45810344.00 ns, 1.5270 ms/op
+WorkloadJitting  5: 1 op, 488960.00 ns, 488.9600 us/op
+
+WorkloadPilot    1: 1 op, 408590.00 ns, 408.5900 us/op
+
+WorkloadPilot    1: 16 op, 6309326.00 ns, 394.3329 us/op
+WorkloadPilot    2: 640 op, 230823162.00 ns, 360.6612 us/op
+WorkloadPilot    3: 704 op, 253943580.00 ns, 360.7153 us/op
+
+WorkloadWarmup   1: 704 op, 251735322.00 ns, 357.5786 us/op
+WorkloadWarmup   2: 704 op, 288932771.00 ns, 410.4159 us/op
+WorkloadWarmup   3: 704 op, 257117394.00 ns, 365.2236 us/op
+WorkloadWarmup   4: 704 op, 252061028.00 ns, 358.0412 us/op
+WorkloadWarmup   5: 704 op, 247597806.00 ns, 351.7014 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 704 op, 247945463.00 ns, 352.1953 us/op
+WorkloadActual   2: 704 op, 254049988.00 ns, 360.8665 us/op
+WorkloadActual   3: 704 op, 251914893.00 ns, 357.8337 us/op
+WorkloadActual   4: 704 op, 251178647.00 ns, 356.7879 us/op
+WorkloadActual   5: 704 op, 258489366.00 ns, 367.1724 us/op
+WorkloadActual   6: 704 op, 255386013.00 ns, 362.7642 us/op
+WorkloadActual   7: 704 op, 257712121.00 ns, 366.0684 us/op
+WorkloadActual   8: 704 op, 257373580.00 ns, 365.5875 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 704 op, 262396785.00 ns, 372.7227 us/op
+WorkloadResult   1: 704 op, 247945463.00 ns, 352.1953 us/op
+WorkloadResult   2: 704 op, 254049988.00 ns, 360.8665 us/op
+WorkloadResult   3: 704 op, 251914893.00 ns, 357.8337 us/op
+WorkloadResult   4: 704 op, 251178647.00 ns, 356.7879 us/op
+WorkloadResult   5: 704 op, 258489366.00 ns, 367.1724 us/op
+WorkloadResult   6: 704 op, 255386013.00 ns, 362.7642 us/op
+WorkloadResult   7: 704 op, 257712121.00 ns, 366.0684 us/op
+WorkloadResult   8: 704 op, 257373580.00 ns, 365.5875 us/op
+// GC:  24 8 0 403560960 704
+
+// AfterAll
+// Benchmark Process 4882 has exited with code 0.
+
+Mean = 361.159 μs, StdErr = 1.857 μs (0.51%), N = 8, StdDev = 5.252 μs
+Min = 352.195 μs, Q1 = 357.572 μs, Median = 361.815 μs, Q3 = 365.708 μs, Max = 367.172 μs
+IQR = 8.135 μs, LowerFence = 345.369 μs, UpperFence = 377.911 μs
+ConfidenceInterval = [351.119 μs; 371.200 μs] (CI 99.9%), Margin = 10.041 μs (2.78% of Mean)
+Skewness = -0.36, Kurtosis = 1.52, MValue = 2
+
+// ** Remained 13 (86.7 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ExtractPageText-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ExtractPageText-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ExtractPageText-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ExtractPageText-report-full.json
+
+// * Detailed results *
+ExtractPageText.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 361.159 μs, StdErr = 1.857 μs (0.51%), N = 8, StdDev = 5.252 μs
+Min = 352.195 μs, Q1 = 357.572 μs, Median = 361.815 μs, Q3 = 365.708 μs, Max = 367.172 μs
+IQR = 8.135 μs, LowerFence = 345.369 μs, UpperFence = 377.911 μs
+ConfidenceInterval = [351.119 μs; 371.200 μs] (CI 99.9%), Margin = 10.041 μs (2.78% of Mean)
+Skewness = -0.36, Kurtosis = 1.52, MValue = 2
+-------------------- Histogram --------------------
+[351.464 μs ; 367.660 μs) | @@@@@@@@
+---------------------------------------------------
+
+ExtractPageText.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 708.728 μs, StdErr = 3.766 μs (0.53%), N = 7, StdDev = 9.963 μs
+Min = 696.119 μs, Q1 = 703.900 μs, Median = 706.246 μs, Q3 = 712.118 μs, Max = 726.697 μs
+IQR = 8.218 μs, LowerFence = 691.573 μs, UpperFence = 724.446 μs
+ConfidenceInterval = [686.289 μs; 731.168 μs] (CI 99.9%), Margin = 22.440 μs (3.17% of Mean)
+Skewness = 0.57, Kurtosis = 1.95, MValue = 2
+-------------------- Histogram --------------------
+[694.983 μs ; 728.738 μs) | @@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method     | Mean     | Error    | StdDev  | Gen0    | Gen1    | Allocated |
+|----------- |---------:|---------:|--------:|--------:|--------:|----------:|
+| PdfPig     | 361.2 μs | 10.04 μs | 5.25 μs | 34.0909 | 11.3636 |  559.8 KB |
+| DocnetCore | 708.7 μs | 22.44 μs | 9.96 μs |       - |       - |   4.63 KB |
+
+// * Hints *
+Outliers
+  ExtractPageText.DocnetCore: Quick -> 2 outliers were removed (828.94 μs, 846.68 μs)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 μs      : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:12 (12.18 sec), executed benchmarks: 2
+
+// Found 3 benchmarks:
+//   ReadMetadata.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ReadMetadata.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ReadMetadata.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: ReadMetadata.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 42473 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadMetadata.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 2 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 233790744.00 ns, 233.7907 ms/op
+WorkloadJitting  2: 1 op, 703708.00 ns, 703.7080 us/op
+WorkloadJitting  3: 30 op, 7468469.00 ns, 248.9490 us/op
+WorkloadJitting  4: 30 op, 9823425.00 ns, 327.4475 us/op
+WorkloadJitting  5: 1 op, 137205.00 ns, 137.2050 us/op
+
+WorkloadPilot    1: 1 op, 100678.00 ns, 100.6780 us/op
+
+WorkloadPilot    1: 16 op, 745485.00 ns, 46.5928 us/op
+WorkloadPilot    2: 5376 op, 217221914.00 ns, 40.4059 us/op
+WorkloadPilot    3: 6192 op, 238689789.00 ns, 38.5481 us/op
+WorkloadPilot    4: 6496 op, 248465165.00 ns, 38.2489 us/op
+WorkloadPilot    5: 6544 op, 253609182.00 ns, 38.7545 us/op
+WorkloadPilot    6: 6464 op, 256124845.00 ns, 39.6233 us/op
+WorkloadPilot    7: 6320 op, 242499121.00 ns, 38.3701 us/op
+WorkloadPilot    8: 6528 op, 250291405.00 ns, 38.3412 us/op
+
+WorkloadWarmup   1: 6528 op, 254094900.00 ns, 38.9239 us/op
+WorkloadWarmup   2: 6528 op, 250877315.00 ns, 38.4310 us/op
+WorkloadWarmup   3: 6528 op, 250992730.00 ns, 38.4486 us/op
+WorkloadWarmup   4: 6528 op, 250700126.00 ns, 38.4038 us/op
+WorkloadWarmup   5: 6528 op, 258992209.00 ns, 39.6741 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 6528 op, 250013889.00 ns, 38.2987 us/op
+WorkloadActual   2: 6528 op, 250972963.00 ns, 38.4456 us/op
+WorkloadActual   3: 6528 op, 250240431.00 ns, 38.3334 us/op
+WorkloadActual   4: 6528 op, 260762242.00 ns, 39.9452 us/op
+WorkloadActual   5: 6528 op, 251867177.00 ns, 38.5826 us/op
+WorkloadActual   6: 6528 op, 251776879.00 ns, 38.5688 us/op
+WorkloadActual   7: 6528 op, 249201398.00 ns, 38.1742 us/op
+WorkloadActual   8: 6528 op, 255956135.00 ns, 39.2090 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 6528 op, 249573318.00 ns, 38.2312 us/op
+WorkloadResult   1: 6528 op, 250013889.00 ns, 38.2987 us/op
+WorkloadResult   2: 6528 op, 250972963.00 ns, 38.4456 us/op
+WorkloadResult   3: 6528 op, 250240431.00 ns, 38.3334 us/op
+WorkloadResult   4: 6528 op, 251867177.00 ns, 38.5826 us/op
+WorkloadResult   5: 6528 op, 251776879.00 ns, 38.5688 us/op
+WorkloadResult   6: 6528 op, 249201398.00 ns, 38.1742 us/op
+WorkloadResult   7: 6528 op, 255956135.00 ns, 39.2090 us/op
+// GC:  24 1 0 414919680 6528
+
+// AfterAll
+// Benchmark Process 4902 has exited with code 0.
+
+Mean = 38.516 μs, StdErr = 0.128 μs (0.33%), N = 7, StdDev = 0.339 μs
+Min = 38.174 μs, Q1 = 38.316 μs, Median = 38.446 μs, Q3 = 38.576 μs, Max = 39.209 μs
+IQR = 0.260 μs, LowerFence = 37.927 μs, UpperFence = 38.965 μs
+ConfidenceInterval = [37.752 μs; 39.280 μs] (CI 99.9%), Margin = 0.764 μs (1.98% of Mean)
+Skewness = 1.01, Kurtosis = 2.68, MValue = 2
+
+// ** Remained 12 (80.0 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// **************************
+// Benchmark: ReadMetadata.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 40545 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadMetadata.PdfSharp --job Quick --diagnoserRunMode 3 --benchmarkId 3 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 35362246.00 ns, 35.3622 ms/op
+WorkloadJitting  2: 30 op, 5035917.00 ns, 167.8639 us/op
+WorkloadJitting  3: 30 op, 5564650.00 ns, 185.4883 us/op
+WorkloadJitting  4: 1 op, 262408.00 ns, 262.4080 us/op
+
+WorkloadPilot    1: 1 op, 99395.00 ns, 99.3950 us/op
+
+WorkloadPilot    1: 16 op, 1165408.00 ns, 72.8380 us/op
+WorkloadPilot    2: 3440 op, 112596324.00 ns, 32.7315 us/op
+WorkloadPilot    3: 7648 op, 232000732.00 ns, 30.3348 us/op
+WorkloadPilot    4: 8256 op, 246480866.00 ns, 29.8548 us/op
+WorkloadPilot    5: 8384 op, 254684164.00 ns, 30.3774 us/op
+WorkloadPilot    6: 8240 op, 247378906.00 ns, 30.0217 us/op
+WorkloadPilot    7: 8336 op, 253204442.00 ns, 30.3748 us/op
+WorkloadPilot    8: 8240 op, 250943045.00 ns, 30.4543 us/op
+
+WorkloadWarmup   1: 8240 op, 248911016.00 ns, 30.2076 us/op
+WorkloadWarmup   2: 8240 op, 250899545.00 ns, 30.4490 us/op
+WorkloadWarmup   3: 8240 op, 256104286.00 ns, 31.0806 us/op
+WorkloadWarmup   4: 8240 op, 250325717.00 ns, 30.3793 us/op
+WorkloadWarmup   5: 8240 op, 250487808.00 ns, 30.3990 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 8240 op, 253427958.00 ns, 30.7558 us/op
+WorkloadActual   2: 8240 op, 259173985.00 ns, 31.4532 us/op
+WorkloadActual   3: 8240 op, 249034035.00 ns, 30.2226 us/op
+WorkloadActual   4: 8240 op, 251930903.00 ns, 30.5741 us/op
+WorkloadActual   5: 8240 op, 253610708.00 ns, 30.7780 us/op
+WorkloadActual   6: 8240 op, 254981678.00 ns, 30.9444 us/op
+WorkloadActual   7: 8240 op, 248505352.00 ns, 30.1584 us/op
+WorkloadActual   8: 8240 op, 247641695.00 ns, 30.0536 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 8240 op, 259977951.00 ns, 31.5507 us/op
+WorkloadResult   1: 8240 op, 253427958.00 ns, 30.7558 us/op
+WorkloadResult   2: 8240 op, 259173985.00 ns, 31.4532 us/op
+WorkloadResult   3: 8240 op, 249034035.00 ns, 30.2226 us/op
+WorkloadResult   4: 8240 op, 251930903.00 ns, 30.5741 us/op
+WorkloadResult   5: 8240 op, 253610708.00 ns, 30.7780 us/op
+WorkloadResult   6: 8240 op, 254981678.00 ns, 30.9444 us/op
+WorkloadResult   7: 8240 op, 248505352.00 ns, 30.1584 us/op
+WorkloadResult   8: 8240 op, 247641695.00 ns, 30.0536 us/op
+// GC:  21 1 0 359269696 8240
+
+// AfterAll
+// Benchmark Process 4918 has exited with code 0.
+
+Mean = 30.618 μs, StdErr = 0.166 μs (0.54%), N = 8, StdDev = 0.469 μs
+Min = 30.054 μs, Q1 = 30.207 μs, Median = 30.665 μs, Q3 = 30.820 μs, Max = 31.453 μs
+IQR = 0.613 μs, LowerFence = 29.287 μs, UpperFence = 31.739 μs
+ConfidenceInterval = [29.722 μs; 31.513 μs] (CI 99.9%), Margin = 0.896 μs (2.93% of Mean)
+Skewness = 0.35, Kurtosis = 1.74, MValue = 2
+
+// ** Remained 11 (73.3 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// **************************
+// Benchmark: ReadMetadata.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 44395 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadMetadata.PdfSharpCore --job Quick --diagnoserRunMode 3 --benchmarkId 4 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 23988821.00 ns, 23.9888 ms/op
+WorkloadJitting  2: 30 op, 5549343.00 ns, 184.9781 us/op
+WorkloadJitting  3: 30 op, 5824905.00 ns, 194.1635 us/op
+WorkloadJitting  4: 1 op, 281875.00 ns, 281.8750 us/op
+
+WorkloadPilot    1: 1 op, 150319.00 ns, 150.3190 us/op
+
+WorkloadPilot    1: 16 op, 2032470.00 ns, 127.0294 us/op
+WorkloadPilot    2: 1968 op, 96661348.00 ns, 49.1165 us/op
+WorkloadPilot    3: 5104 op, 229903360.00 ns, 45.0438 us/op
+WorkloadPilot    4: 5552 op, 253356955.00 ns, 45.6335 us/op
+WorkloadPilot    5: 5488 op, 258437516.00 ns, 47.0914 us/op
+WorkloadPilot    6: 5312 op, 243877051.00 ns, 45.9106 us/op
+WorkloadPilot    7: 5456 op, 257399574.00 ns, 47.1773 us/op
+
+WorkloadWarmup   1: 5456 op, 246238293.00 ns, 45.1317 us/op
+WorkloadWarmup   2: 5456 op, 252427407.00 ns, 46.2660 us/op
+WorkloadWarmup   3: 5456 op, 257144671.00 ns, 47.1306 us/op
+WorkloadWarmup   4: 5456 op, 259102182.00 ns, 47.4894 us/op
+WorkloadWarmup   5: 5456 op, 258808075.00 ns, 47.4355 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 5456 op, 259243815.00 ns, 47.5154 us/op
+WorkloadActual   2: 5456 op, 259086352.00 ns, 47.4865 us/op
+WorkloadActual   3: 5456 op, 257564352.00 ns, 47.2075 us/op
+WorkloadActual   4: 5456 op, 257292195.00 ns, 47.1577 us/op
+WorkloadActual   5: 5456 op, 269845806.00 ns, 49.4585 us/op
+WorkloadActual   6: 5456 op, 258886160.00 ns, 47.4498 us/op
+WorkloadActual   7: 5456 op, 258285192.00 ns, 47.3397 us/op
+WorkloadActual   8: 5456 op, 254467070.00 ns, 46.6399 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 5456 op, 254843160.00 ns, 46.7088 us/op
+WorkloadResult   1: 5456 op, 259243815.00 ns, 47.5154 us/op
+WorkloadResult   2: 5456 op, 259086352.00 ns, 47.4865 us/op
+WorkloadResult   3: 5456 op, 257564352.00 ns, 47.2075 us/op
+WorkloadResult   4: 5456 op, 257292195.00 ns, 47.1577 us/op
+WorkloadResult   5: 5456 op, 258886160.00 ns, 47.4498 us/op
+WorkloadResult   6: 5456 op, 258285192.00 ns, 47.3397 us/op
+WorkloadResult   7: 5456 op, 254467070.00 ns, 46.6399 us/op
+// GC:  40 2 0 671662944 5456
+
+// AfterAll
+// Benchmark Process 4936 has exited with code 0.
+
+Mean = 47.257 μs, StdErr = 0.115 μs (0.24%), N = 7, StdDev = 0.305 μs
+Min = 46.640 μs, Q1 = 47.183 μs, Median = 47.340 μs, Q3 = 47.468 μs, Max = 47.515 μs
+IQR = 0.286 μs, LowerFence = 46.754 μs, UpperFence = 47.896 μs
+ConfidenceInterval = [46.571 μs; 47.943 μs] (CI 99.9%), Margin = 0.686 μs (1.45% of Mean)
+Skewness = -1, Kurtosis = 2.55, MValue = 2
+
+// ** Remained 10 (66.7 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadMetadata-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadMetadata-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadMetadata-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadMetadata-report-full.json
+
+// * Detailed results *
+ReadMetadata.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 30.618 μs, StdErr = 0.166 μs (0.54%), N = 8, StdDev = 0.469 μs
+Min = 30.054 μs, Q1 = 30.207 μs, Median = 30.665 μs, Q3 = 30.820 μs, Max = 31.453 μs
+IQR = 0.613 μs, LowerFence = 29.287 μs, UpperFence = 31.739 μs
+ConfidenceInterval = [29.722 μs; 31.513 μs] (CI 99.9%), Margin = 0.896 μs (2.93% of Mean)
+Skewness = 0.35, Kurtosis = 1.74, MValue = 2
+-------------------- Histogram --------------------
+[29.746 μs ; 30.452 μs) | @@@
+[30.452 μs ; 31.761 μs) | @@@@@
+---------------------------------------------------
+
+ReadMetadata.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 38.516 μs, StdErr = 0.128 μs (0.33%), N = 7, StdDev = 0.339 μs
+Min = 38.174 μs, Q1 = 38.316 μs, Median = 38.446 μs, Q3 = 38.576 μs, Max = 39.209 μs
+IQR = 0.260 μs, LowerFence = 37.927 μs, UpperFence = 38.965 μs
+ConfidenceInterval = [37.752 μs; 39.280 μs] (CI 99.9%), Margin = 0.764 μs (1.98% of Mean)
+Skewness = 1.01, Kurtosis = 2.68, MValue = 2
+-------------------- Histogram --------------------
+[37.995 μs ; 39.442 μs) | @@@@@@@
+---------------------------------------------------
+
+ReadMetadata.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 47.257 μs, StdErr = 0.115 μs (0.24%), N = 7, StdDev = 0.305 μs
+Min = 46.640 μs, Q1 = 47.183 μs, Median = 47.340 μs, Q3 = 47.468 μs, Max = 47.515 μs
+IQR = 0.286 μs, LowerFence = 46.754 μs, UpperFence = 47.896 μs
+ConfidenceInterval = [46.571 μs; 47.943 μs] (CI 99.9%), Margin = 0.686 μs (1.45% of Mean)
+Skewness = -1, Kurtosis = 2.55, MValue = 2
+-------------------- Histogram --------------------
+[46.431 μs ; 47.724 μs) | @@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method       | Mean     | Error    | StdDev   | Gen0   | Gen1   | Allocated |
+|------------- |---------:|---------:|---------:|-------:|-------:|----------:|
+| PdfSharp     | 30.62 μs | 0.896 μs | 0.469 μs | 2.5485 | 0.1214 |  42.58 KB |
+| PdfPig       | 38.52 μs | 0.764 μs | 0.339 μs | 3.6765 | 0.1532 |  62.07 KB |
+| PdfSharpCore | 47.26 μs | 0.686 μs | 0.305 μs | 7.3314 | 0.3666 | 120.22 KB |
+
+// * Hints *
+Outliers
+  ReadMetadata.PdfPig: Quick       -> 1 outlier  was  removed (39.95 μs)
+  ReadMetadata.PdfSharpCore: Quick -> 1 outlier  was  removed, 2 outliers were detected (46.64 μs, 49.46 μs)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 μs      : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:20 (20.88 sec), executed benchmarks: 3
+
+// Found 4 benchmarks:
+//   ReadPageCount.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ReadPageCount.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ReadPageCount.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   ReadPageCount.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: ReadPageCount.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 37735 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadPageCount.DocnetCore --job Quick --diagnoserRunMode 3 --benchmarkId 5 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 417477.00 ns, 417.4770 us/op
+WorkloadJitting  2: 30 op, 1971066.00 ns, 65.7022 us/op
+WorkloadJitting  3: 30 op, 1601759.00 ns, 53.3920 us/op
+WorkloadJitting  4: 1 op, 398511.00 ns, 398.5110 us/op
+
+WorkloadPilot    1: 1 op, 107600.00 ns, 107.6000 us/op
+
+WorkloadPilot    1: 16 op, 1035957.00 ns, 64.7473 us/op
+WorkloadPilot    2: 3872 op, 131849702.00 ns, 34.0521 us/op
+WorkloadPilot    3: 7344 op, 249664807.00 ns, 33.9958 us/op
+WorkloadPilot    4: 7360 op, 254521661.00 ns, 34.5817 us/op
+WorkloadPilot    5: 7232 op, 249247877.00 ns, 34.4646 us/op
+WorkloadPilot    6: 7264 op, 243987682.00 ns, 33.5886 us/op
+WorkloadPilot    7: 7456 op, 249837182.00 ns, 33.5082 us/op
+WorkloadPilot    8: 7472 op, 256098038.00 ns, 34.2744 us/op
+WorkloadPilot    9: 7296 op, 244327353.00 ns, 33.4878 us/op
+WorkloadPilot   10: 7472 op, 254580776.00 ns, 34.0713 us/op
+
+WorkloadWarmup   1: 7472 op, 258766667.00 ns, 34.6315 us/op
+WorkloadWarmup   2: 7472 op, 256746594.00 ns, 34.3612 us/op
+WorkloadWarmup   3: 7472 op, 250771891.00 ns, 33.5615 us/op
+WorkloadWarmup   4: 7472 op, 251140836.00 ns, 33.6109 us/op
+WorkloadWarmup   5: 7472 op, 251886965.00 ns, 33.7108 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 7472 op, 253712150.00 ns, 33.9551 us/op
+WorkloadActual   2: 7472 op, 249917773.00 ns, 33.4472 us/op
+WorkloadActual   3: 7472 op, 258966550.00 ns, 34.6583 us/op
+WorkloadActual   4: 7472 op, 250752555.00 ns, 33.5590 us/op
+WorkloadActual   5: 7472 op, 261622295.00 ns, 35.0137 us/op
+WorkloadActual   6: 7472 op, 252653974.00 ns, 33.8134 us/op
+WorkloadActual   7: 7472 op, 249386234.00 ns, 33.3761 us/op
+WorkloadActual   8: 7472 op, 249887076.00 ns, 33.4431 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 7472 op, 251445282.00 ns, 33.6517 us/op
+WorkloadResult   1: 7472 op, 253712150.00 ns, 33.9551 us/op
+WorkloadResult   2: 7472 op, 249917773.00 ns, 33.4472 us/op
+WorkloadResult   3: 7472 op, 258966550.00 ns, 34.6583 us/op
+WorkloadResult   4: 7472 op, 250752555.00 ns, 33.5590 us/op
+WorkloadResult   5: 7472 op, 261622295.00 ns, 35.0137 us/op
+WorkloadResult   6: 7472 op, 252653974.00 ns, 33.8134 us/op
+WorkloadResult   7: 7472 op, 249386234.00 ns, 33.3761 us/op
+WorkloadResult   8: 7472 op, 249887076.00 ns, 33.4431 us/op
+// GC:  0 0 0 657536 7472
+
+// AfterAll
+// Benchmark Process 4954 has exited with code 0.
+
+Mean = 33.908 μs, StdErr = 0.217 μs (0.64%), N = 8, StdDev = 0.613 μs
+Min = 33.376 μs, Q1 = 33.446 μs, Median = 33.686 μs, Q3 = 34.131 μs, Max = 35.014 μs
+IQR = 0.685 μs, LowerFence = 32.419 μs, UpperFence = 35.158 μs
+ConfidenceInterval = [32.736 μs; 35.080 μs] (CI 99.9%), Margin = 1.172 μs (3.46% of Mean)
+Skewness = 0.75, Kurtosis = 1.77, MValue = 2
+
+// ** Remained 9 (60.0 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 1m from now) **
+// **************************
+// Benchmark: ReadPageCount.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 33217 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadPageCount.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 6 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 231590793.00 ns, 231.5908 ms/op
+WorkloadJitting  2: 1 op, 749474.00 ns, 749.4740 us/op
+WorkloadJitting  3: 30 op, 7268971.00 ns, 242.2990 us/op
+WorkloadJitting  4: 30 op, 9957721.00 ns, 331.9240 us/op
+WorkloadJitting  5: 1 op, 140271.00 ns, 140.2710 us/op
+
+WorkloadPilot    1: 1 op, 77404.00 ns, 77.4040 us/op
+
+WorkloadPilot    1: 16 op, 754493.00 ns, 47.1558 us/op
+WorkloadPilot    2: 5312 op, 214667216.00 ns, 40.4118 us/op
+WorkloadPilot    3: 6192 op, 239884070.00 ns, 38.7410 us/op
+WorkloadPilot    4: 6464 op, 244602165.00 ns, 37.8407 us/op
+WorkloadPilot    5: 6608 op, 271628404.00 ns, 41.1060 us/op
+WorkloadPilot    6: 6096 op, 237735910.00 ns, 38.9987 us/op
+WorkloadPilot    7: 6416 op, 247128879.00 ns, 38.5176 us/op
+WorkloadPilot    8: 6496 op, 248135542.00 ns, 38.1982 us/op
+WorkloadPilot    9: 6560 op, 249076242.00 ns, 37.9689 us/op
+WorkloadPilot   10: 6592 op, 261132066.00 ns, 39.6135 us/op
+WorkloadPilot   11: 6320 op, 241500820.00 ns, 38.2122 us/op
+WorkloadPilot   12: 6544 op, 250281474.00 ns, 38.2459 us/op
+
+WorkloadWarmup   1: 6544 op, 250939868.00 ns, 38.3466 us/op
+WorkloadWarmup   2: 6544 op, 257866923.00 ns, 39.4051 us/op
+WorkloadWarmup   3: 6544 op, 249730128.00 ns, 38.1617 us/op
+WorkloadWarmup   4: 6544 op, 249429017.00 ns, 38.1157 us/op
+WorkloadWarmup   5: 6544 op, 249236049.00 ns, 38.0862 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 6544 op, 261813966.00 ns, 40.0082 us/op
+WorkloadActual   2: 6544 op, 250863185.00 ns, 38.3348 us/op
+WorkloadActual   3: 6544 op, 250782665.00 ns, 38.3225 us/op
+WorkloadActual   4: 6544 op, 251455938.00 ns, 38.4254 us/op
+WorkloadActual   5: 6544 op, 253602081.00 ns, 38.7534 us/op
+WorkloadActual   6: 6544 op, 255041939.00 ns, 38.9734 us/op
+WorkloadActual   7: 6544 op, 251738263.00 ns, 38.4686 us/op
+WorkloadActual   8: 6544 op, 250943916.00 ns, 38.3472 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 6544 op, 254785341.00 ns, 38.9342 us/op
+WorkloadResult   1: 6544 op, 250863185.00 ns, 38.3348 us/op
+WorkloadResult   2: 6544 op, 250782665.00 ns, 38.3225 us/op
+WorkloadResult   3: 6544 op, 251455938.00 ns, 38.4254 us/op
+WorkloadResult   4: 6544 op, 253602081.00 ns, 38.7534 us/op
+WorkloadResult   5: 6544 op, 255041939.00 ns, 38.9734 us/op
+WorkloadResult   6: 6544 op, 251738263.00 ns, 38.4686 us/op
+WorkloadResult   7: 6544 op, 250943916.00 ns, 38.3472 us/op
+// GC:  24 2 0 415360768 6544
+
+// AfterAll
+// Benchmark Process 4974 has exited with code 0.
+
+Mean = 38.518 μs, StdErr = 0.094 μs (0.25%), N = 7, StdDev = 0.250 μs
+Min = 38.323 μs, Q1 = 38.341 μs, Median = 38.425 μs, Q3 = 38.611 μs, Max = 38.973 μs
+IQR = 0.270 μs, LowerFence = 37.936 μs, UpperFence = 39.016 μs
+ConfidenceInterval = [37.955 μs; 39.081 μs] (CI 99.9%), Margin = 0.563 μs (1.46% of Mean)
+Skewness = 0.81, Kurtosis = 1.82, MValue = 2
+
+// ** Remained 8 (53.3 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// **************************
+// Benchmark: ReadPageCount.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 42461 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadPageCount.PdfSharp --job Quick --diagnoserRunMode 3 --benchmarkId 7 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 34947676.00 ns, 34.9477 ms/op
+WorkloadJitting  2: 30 op, 4996875.00 ns, 166.5625 us/op
+WorkloadJitting  3: 30 op, 5468642.00 ns, 182.2881 us/op
+WorkloadJitting  4: 1 op, 272808.00 ns, 272.8080 us/op
+
+WorkloadPilot    1: 1 op, 67816.00 ns, 67.8160 us/op
+
+WorkloadPilot    1: 16 op, 1209990.00 ns, 75.6244 us/op
+WorkloadPilot    2: 3312 op, 109309665.00 ns, 33.0041 us/op
+WorkloadPilot    3: 7584 op, 231118489.00 ns, 30.4745 us/op
+WorkloadPilot    4: 8208 op, 269753586.00 ns, 32.8647 us/op
+WorkloadPilot    5: 7616 op, 231847215.00 ns, 30.4421 us/op
+WorkloadPilot    6: 8224 op, 252433146.00 ns, 30.6947 us/op
+WorkloadPilot    7: 8160 op, 249464879.00 ns, 30.5717 us/op
+WorkloadPilot    8: 8192 op, 257150211.00 ns, 31.3904 us/op
+
+WorkloadWarmup   1: 8192 op, 252928194.00 ns, 30.8750 us/op
+WorkloadWarmup   2: 8192 op, 248518685.00 ns, 30.3368 us/op
+WorkloadWarmup   3: 8192 op, 253895827.00 ns, 30.9931 us/op
+WorkloadWarmup   4: 8192 op, 265649530.00 ns, 32.4279 us/op
+WorkloadWarmup   5: 8192 op, 247798775.00 ns, 30.2489 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 8192 op, 249067355.00 ns, 30.4037 us/op
+WorkloadActual   2: 8192 op, 247754633.00 ns, 30.2435 us/op
+WorkloadActual   3: 8192 op, 253045655.00 ns, 30.8894 us/op
+WorkloadActual   4: 8192 op, 249153015.00 ns, 30.4142 us/op
+WorkloadActual   5: 8192 op, 248148946.00 ns, 30.2916 us/op
+WorkloadActual   6: 8192 op, 248585940.00 ns, 30.3450 us/op
+WorkloadActual   7: 8192 op, 251391258.00 ns, 30.6874 us/op
+WorkloadActual   8: 8192 op, 248844370.00 ns, 30.3765 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 8192 op, 247278246.00 ns, 30.1853 us/op
+WorkloadResult   1: 8192 op, 249067355.00 ns, 30.4037 us/op
+WorkloadResult   2: 8192 op, 247754633.00 ns, 30.2435 us/op
+WorkloadResult   3: 8192 op, 249153015.00 ns, 30.4142 us/op
+WorkloadResult   4: 8192 op, 248148946.00 ns, 30.2916 us/op
+WorkloadResult   5: 8192 op, 248585940.00 ns, 30.3450 us/op
+WorkloadResult   6: 8192 op, 251391258.00 ns, 30.6874 us/op
+WorkloadResult   7: 8192 op, 248844370.00 ns, 30.3765 us/op
+// GC:  21 1 0 356914608 8192
+
+// AfterAll
+// Benchmark Process 4990 has exited with code 0.
+
+Mean = 30.395 μs, StdErr = 0.054 μs (0.18%), N = 7, StdDev = 0.143 μs
+Min = 30.243 μs, Q1 = 30.318 μs, Median = 30.377 μs, Q3 = 30.409 μs, Max = 30.687 μs
+IQR = 0.091 μs, LowerFence = 30.182 μs, UpperFence = 30.545 μs
+ConfidenceInterval = [30.073 μs; 30.716 μs] (CI 99.9%), Margin = 0.322 μs (1.06% of Mean)
+Skewness = 1, Kurtosis = 2.74, MValue = 2
+
+// ** Remained 7 (46.7 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// **************************
+// Benchmark: ReadPageCount.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 39039 --benchmarkName Matrix.PdfProcessing.Benchmarks.ReadPageCount.PdfSharpCore --job Quick --diagnoserRunMode 3 --benchmarkId 8 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 26242707.00 ns, 26.2427 ms/op
+WorkloadJitting  2: 30 op, 5648147.00 ns, 188.2716 us/op
+WorkloadJitting  3: 30 op, 9578017.00 ns, 319.2672 us/op
+WorkloadJitting  4: 1 op, 331988.00 ns, 331.9880 us/op
+
+WorkloadPilot    1: 1 op, 195624.00 ns, 195.6240 us/op
+
+WorkloadPilot    1: 16 op, 2290971.00 ns, 143.1857 us/op
+WorkloadPilot    2: 1760 op, 91557556.00 ns, 52.0213 us/op
+WorkloadPilot    3: 4816 op, 227564305.00 ns, 47.2517 us/op
+WorkloadPilot    4: 5296 op, 248640270.00 ns, 46.9487 us/op
+WorkloadPilot    5: 5328 op, 249371892.00 ns, 46.8040 us/op
+WorkloadPilot    6: 5344 op, 257576974.00 ns, 48.1993 us/op
+WorkloadPilot    7: 5200 op, 244473790.00 ns, 47.0142 us/op
+WorkloadPilot    8: 5328 op, 251608642.00 ns, 47.2238 us/op
+WorkloadPilot    9: 5296 op, 250689342.00 ns, 47.3356 us/op
+
+WorkloadWarmup   1: 5296 op, 250665288.00 ns, 47.3311 us/op
+WorkloadWarmup   2: 5296 op, 250958442.00 ns, 47.3864 us/op
+WorkloadWarmup   3: 5296 op, 250368916.00 ns, 47.2751 us/op
+WorkloadWarmup   4: 5296 op, 250038175.00 ns, 47.2126 us/op
+WorkloadWarmup   5: 5296 op, 263285135.00 ns, 49.7140 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 5296 op, 255674454.00 ns, 48.2769 us/op
+WorkloadActual   2: 5296 op, 254699579.00 ns, 48.0928 us/op
+WorkloadActual   3: 5296 op, 255721431.00 ns, 48.2858 us/op
+WorkloadActual   4: 5296 op, 268994700.00 ns, 50.7921 us/op
+WorkloadActual   5: 5296 op, 265270710.00 ns, 50.0889 us/op
+WorkloadActual   6: 5296 op, 263431608.00 ns, 49.7416 us/op
+WorkloadActual   7: 5296 op, 285505986.00 ns, 53.9097 us/op
+WorkloadActual   8: 5296 op, 273786025.00 ns, 51.6968 us/op
+WorkloadActual   9: 5296 op, 269148035.00 ns, 50.8210 us/op
+WorkloadActual  10: 5296 op, 268686436.00 ns, 50.7338 us/op
+WorkloadActual  11: 5296 op, 267673451.00 ns, 50.5426 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 5296 op, 264181103.00 ns, 49.8831 us/op
+WorkloadResult   1: 5296 op, 255674454.00 ns, 48.2769 us/op
+WorkloadResult   2: 5296 op, 254699579.00 ns, 48.0928 us/op
+WorkloadResult   3: 5296 op, 255721431.00 ns, 48.2858 us/op
+WorkloadResult   4: 5296 op, 268994700.00 ns, 50.7921 us/op
+WorkloadResult   5: 5296 op, 265270710.00 ns, 50.0889 us/op
+WorkloadResult   6: 5296 op, 263431608.00 ns, 49.7416 us/op
+WorkloadResult   7: 5296 op, 273786025.00 ns, 51.6968 us/op
+WorkloadResult   8: 5296 op, 269148035.00 ns, 50.8210 us/op
+WorkloadResult   9: 5296 op, 268686436.00 ns, 50.7338 us/op
+WorkloadResult  10: 5296 op, 267673451.00 ns, 50.5426 us/op
+// GC:  39 2 0 655279832 5296
+
+// AfterAll
+// Benchmark Process 5009 has exited with code 0.
+
+Mean = 49.907 μs, StdErr = 0.402 μs (0.81%), N = 10, StdDev = 1.271 μs
+Min = 48.093 μs, Q1 = 48.650 μs, Median = 50.316 μs, Q3 = 50.777 μs, Max = 51.697 μs
+IQR = 2.128 μs, LowerFence = 45.458 μs, UpperFence = 53.969 μs
+ConfidenceInterval = [47.985 μs; 51.829 μs] (CI 99.9%), Margin = 1.922 μs (3.85% of Mean)
+Skewness = -0.32, Kurtosis = 1.42, MValue = 2
+
+// ** Remained 6 (40.0 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadPageCount-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadPageCount-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadPageCount-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.ReadPageCount-report-full.json
+
+// * Detailed results *
+ReadPageCount.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 30.395 μs, StdErr = 0.054 μs (0.18%), N = 7, StdDev = 0.143 μs
+Min = 30.243 μs, Q1 = 30.318 μs, Median = 30.377 μs, Q3 = 30.409 μs, Max = 30.687 μs
+IQR = 0.091 μs, LowerFence = 30.182 μs, UpperFence = 30.545 μs
+ConfidenceInterval = [30.073 μs; 30.716 μs] (CI 99.9%), Margin = 0.322 μs (1.06% of Mean)
+Skewness = 1, Kurtosis = 2.74, MValue = 2
+-------------------- Histogram --------------------
+[30.145 μs ; 30.785 μs) | @@@@@@@
+---------------------------------------------------
+
+ReadPageCount.DocnetCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 33.908 μs, StdErr = 0.217 μs (0.64%), N = 8, StdDev = 0.613 μs
+Min = 33.376 μs, Q1 = 33.446 μs, Median = 33.686 μs, Q3 = 34.131 μs, Max = 35.014 μs
+IQR = 0.685 μs, LowerFence = 32.419 μs, UpperFence = 35.158 μs
+ConfidenceInterval = [32.736 μs; 35.080 μs] (CI 99.9%), Margin = 1.172 μs (3.46% of Mean)
+Skewness = 0.75, Kurtosis = 1.77, MValue = 2
+-------------------- Histogram --------------------
+[33.263 μs ; 34.068 μs) | @@@@@@
+[34.068 μs ; 35.238 μs) | @@
+---------------------------------------------------
+
+ReadPageCount.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 38.518 μs, StdErr = 0.094 μs (0.25%), N = 7, StdDev = 0.250 μs
+Min = 38.323 μs, Q1 = 38.341 μs, Median = 38.425 μs, Q3 = 38.611 μs, Max = 38.973 μs
+IQR = 0.270 μs, LowerFence = 37.936 μs, UpperFence = 39.016 μs
+ConfidenceInterval = [37.955 μs; 39.081 μs] (CI 99.9%), Margin = 0.563 μs (1.46% of Mean)
+Skewness = 0.81, Kurtosis = 1.82, MValue = 2
+-------------------- Histogram --------------------
+[38.151 μs ; 39.145 μs) | @@@@@@@
+---------------------------------------------------
+
+ReadPageCount.PdfSharpCore: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 49.907 μs, StdErr = 0.402 μs (0.81%), N = 10, StdDev = 1.271 μs
+Min = 48.093 μs, Q1 = 48.650 μs, Median = 50.316 μs, Q3 = 50.777 μs, Max = 51.697 μs
+IQR = 2.128 μs, LowerFence = 45.458 μs, UpperFence = 53.969 μs
+ConfidenceInterval = [47.985 μs; 51.829 μs] (CI 99.9%), Margin = 1.922 μs (3.85% of Mean)
+Skewness = -0.32, Kurtosis = 1.42, MValue = 2
+-------------------- Histogram --------------------
+[47.318 μs ; 48.964 μs) | @@@
+[48.964 μs ; 51.056 μs) | @@@@@@
+[51.056 μs ; 52.471 μs) | @
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method       | Mean     | Error    | StdDev   | Gen0   | Gen1   | Allocated |
+|------------- |---------:|---------:|---------:|-------:|-------:|----------:|
+| PdfSharp     | 30.39 μs | 0.322 μs | 0.143 μs | 2.5635 | 0.1221 |   43569 B |
+| DocnetCore   | 33.91 μs | 1.172 μs | 0.613 μs |      - |      - |      88 B |
+| PdfPig       | 38.52 μs | 0.563 μs | 0.250 μs | 3.6675 | 0.3056 |   63472 B |
+| PdfSharpCore | 49.91 μs | 1.922 μs | 1.271 μs | 7.3640 | 0.3776 |  123731 B |
+
+// * Hints *
+Outliers
+  ReadPageCount.PdfSharp: Quick     -> 1 outlier  was  removed (30.89 μs)
+  ReadPageCount.PdfPig: Quick       -> 1 outlier  was  removed (40.01 μs)
+  ReadPageCount.PdfSharpCore: Quick -> 1 outlier  was  removed (53.91 μs)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 μs      : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:30 (30.24 sec), executed benchmarks: 4
+
+// Found 2 benchmarks:
+//   WriteMultiPageDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   WriteMultiPageDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: WriteMultiPageDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 37563 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 9 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 232925221.00 ns, 232.9252 ms/op
+WorkloadJitting  2: 1 op, 39132679.00 ns, 39.1327 ms/op
+WorkloadJitting  3: 30 op, 538719844.00 ns, 17.9573 ms/op
+WorkloadJitting  4: 30 op, 106066644.00 ns, 3.5356 ms/op
+WorkloadJitting  5: 1 op, 3388333.00 ns, 3.3883 ms/op
+
+WorkloadPilot    1: 1 op, 3425542.00 ns, 3.4255 ms/op
+
+WorkloadPilot    1: 16 op, 56406822.00 ns, 3.5254 ms/op
+WorkloadPilot    2: 80 op, 266818687.00 ns, 3.3352 ms/op
+
+WorkloadWarmup   1: 80 op, 265405279.00 ns, 3.3176 ms/op
+WorkloadWarmup   2: 80 op, 269617784.00 ns, 3.3702 ms/op
+WorkloadWarmup   3: 80 op, 265292399.00 ns, 3.3162 ms/op
+WorkloadWarmup   4: 80 op, 264153731.00 ns, 3.3019 ms/op
+WorkloadWarmup   5: 80 op, 266945454.00 ns, 3.3368 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 80 op, 265221007.00 ns, 3.3153 ms/op
+WorkloadActual   2: 80 op, 265694890.00 ns, 3.3212 ms/op
+WorkloadActual   3: 80 op, 268401965.00 ns, 3.3550 ms/op
+WorkloadActual   4: 80 op, 268898699.00 ns, 3.3612 ms/op
+WorkloadActual   5: 80 op, 270824621.00 ns, 3.3853 ms/op
+WorkloadActual   6: 80 op, 277453349.00 ns, 3.4682 ms/op
+WorkloadActual   7: 80 op, 267187046.00 ns, 3.3398 ms/op
+WorkloadActual   8: 80 op, 267781894.00 ns, 3.3473 ms/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 80 op, 267879904.00 ns, 3.3485 ms/op
+WorkloadResult   1: 80 op, 265221007.00 ns, 3.3153 ms/op
+WorkloadResult   2: 80 op, 265694890.00 ns, 3.3212 ms/op
+WorkloadResult   3: 80 op, 268401965.00 ns, 3.3550 ms/op
+WorkloadResult   4: 80 op, 268898699.00 ns, 3.3612 ms/op
+WorkloadResult   5: 80 op, 270824621.00 ns, 3.3853 ms/op
+WorkloadResult   6: 80 op, 267187046.00 ns, 3.3398 ms/op
+WorkloadResult   7: 80 op, 267781894.00 ns, 3.3473 ms/op
+// GC:  17 3 0 300385920 80
+
+// AfterAll
+// Benchmark Process 5030 has exited with code 0.
+
+Mean = 3.346 ms, StdErr = 0.009 ms (0.27%), N = 7, StdDev = 0.024 ms
+Min = 3.315 ms, Q1 = 3.331 ms, Median = 3.347 ms, Q3 = 3.358 ms, Max = 3.385 ms
+IQR = 0.028 ms, LowerFence = 3.289 ms, UpperFence = 3.400 ms
+ConfidenceInterval = [3.292 ms; 3.401 ms] (CI 99.9%), Margin = 0.054 ms (1.62% of Mean)
+Skewness = 0.16, Kurtosis = 1.59, MValue = 2
+
+// ** Remained 5 (33.3 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// **************************
+// Benchmark: WriteMultiPageDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 44341 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument.PdfSharp --job Quick --diagnoserRunMode 3 --benchmarkId 10 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 110039154.00 ns, 110.0392 ms/op
+WorkloadJitting  2: 30 op, 70224835.00 ns, 2.3408 ms/op
+WorkloadJitting  3: 30 op, 83555262.00 ns, 2.7852 ms/op
+WorkloadJitting  4: 1 op, 2763761.00 ns, 2.7638 ms/op
+
+WorkloadPilot    1: 1 op, 2156000.00 ns, 2.1560 ms/op
+
+WorkloadPilot    1: 16 op, 19840846.00 ns, 1.2401 ms/op
+WorkloadPilot    2: 208 op, 257167969.00 ns, 1.2364 ms/op
+
+WorkloadWarmup   1: 208 op, 247261482.00 ns, 1.1888 ms/op
+WorkloadWarmup   2: 208 op, 244931337.00 ns, 1.1776 ms/op
+WorkloadWarmup   3: 208 op, 246388590.00 ns, 1.1846 ms/op
+WorkloadWarmup   4: 208 op, 248410248.00 ns, 1.1943 ms/op
+WorkloadWarmup   5: 208 op, 243382657.00 ns, 1.1701 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 208 op, 240429593.00 ns, 1.1559 ms/op
+WorkloadActual   2: 208 op, 236383347.00 ns, 1.1365 ms/op
+WorkloadActual   3: 208 op, 241065967.00 ns, 1.1590 ms/op
+WorkloadActual   4: 208 op, 243113657.00 ns, 1.1688 ms/op
+WorkloadActual   5: 208 op, 242790074.00 ns, 1.1673 ms/op
+WorkloadActual   6: 208 op, 245485949.00 ns, 1.1802 ms/op
+WorkloadActual   7: 208 op, 241975684.00 ns, 1.1633 ms/op
+WorkloadActual   8: 208 op, 245847985.00 ns, 1.1820 ms/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 208 op, 245058537.00 ns, 1.1782 ms/op
+WorkloadResult   1: 208 op, 240429593.00 ns, 1.1559 ms/op
+WorkloadResult   2: 208 op, 236383347.00 ns, 1.1365 ms/op
+WorkloadResult   3: 208 op, 241065967.00 ns, 1.1590 ms/op
+WorkloadResult   4: 208 op, 243113657.00 ns, 1.1688 ms/op
+WorkloadResult   5: 208 op, 242790074.00 ns, 1.1673 ms/op
+WorkloadResult   6: 208 op, 245485949.00 ns, 1.1802 ms/op
+WorkloadResult   7: 208 op, 241975684.00 ns, 1.1633 ms/op
+WorkloadResult   8: 208 op, 245847985.00 ns, 1.1820 ms/op
+// GC:  15 8 6 189134824 208
+
+// AfterAll
+// Benchmark Process 5048 has exited with code 0.
+
+Mean = 1.164 ms, StdErr = 0.005 ms (0.44%), N = 8, StdDev = 0.014 ms
+Min = 1.136 ms, Q1 = 1.158 ms, Median = 1.165 ms, Q3 = 1.172 ms, Max = 1.182 ms
+IQR = 0.013 ms, LowerFence = 1.138 ms, UpperFence = 1.192 ms
+ConfidenceInterval = [1.136 ms; 1.192 ms] (CI 99.9%), Margin = 0.028 ms (2.38% of Mean)
+Skewness = -0.49, Kurtosis = 2.16, MValue = 2
+
+// ** Remained 4 (26.7 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteMultiPageDocument-report-full.json
+
+// * Detailed results *
+WriteMultiPageDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.164 ms, StdErr = 0.005 ms (0.44%), N = 8, StdDev = 0.014 ms
+Min = 1.136 ms, Q1 = 1.158 ms, Median = 1.165 ms, Q3 = 1.172 ms, Max = 1.182 ms
+IQR = 0.013 ms, LowerFence = 1.138 ms, UpperFence = 1.192 ms
+ConfidenceInterval = [1.136 ms; 1.192 ms] (CI 99.9%), Margin = 0.028 ms (2.38% of Mean)
+Skewness = -0.49, Kurtosis = 2.16, MValue = 2
+-------------------- Histogram --------------------
+[1.127 ms ; 1.151 ms) | @
+[1.151 ms ; 1.191 ms) | @@@@@@@
+---------------------------------------------------
+
+WriteMultiPageDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 3.346 ms, StdErr = 0.009 ms (0.27%), N = 7, StdDev = 0.024 ms
+Min = 3.315 ms, Q1 = 3.331 ms, Median = 3.347 ms, Q3 = 3.358 ms, Max = 3.385 ms
+IQR = 0.028 ms, LowerFence = 3.289 ms, UpperFence = 3.400 ms
+ConfidenceInterval = [3.292 ms; 3.401 ms] (CI 99.9%), Margin = 0.054 ms (1.62% of Mean)
+Skewness = 0.16, Kurtosis = 1.59, MValue = 2
+-------------------- Histogram --------------------
+[3.299 ms ; 3.402 ms) | @@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method   | Mean     | Error     | StdDev    | Gen0     | Gen1    | Gen2    | Allocated  |
+|--------- |---------:|----------:|----------:|---------:|--------:|--------:|-----------:|
+| PdfSharp | 1.164 ms | 0.0277 ms | 0.0145 ms |  72.1154 | 38.4615 | 28.8462 |  887.99 KB |
+| PdfPig   | 3.346 ms | 0.0541 ms | 0.0240 ms | 212.5000 | 37.5000 |       - | 3666.82 KB |
+
+// * Hints *
+Outliers
+  WriteMultiPageDocument.PdfSharp: Quick -> 1 outlier  was  detected (1.14 ms)
+  WriteMultiPageDocument.PdfPig: Quick   -> 1 outlier  was  removed (3.47 ms)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Gen2      : GC Generation 2 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 ms      : 1 Millisecond (0.001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:12 (12.63 sec), executed benchmarks: 2
+
+// Found 2 benchmarks:
+//   WriteTableDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   WriteTableDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: WriteTableDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 40597 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteTableDocument.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 11 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 206178007.00 ns, 206.1780 ms/op
+WorkloadJitting  2: 1 op, 6238063.00 ns, 6.2381 ms/op
+WorkloadJitting  3: 30 op, 180675743.00 ns, 6.0225 ms/op
+WorkloadJitting  4: 30 op, 44366633.00 ns, 1.4789 ms/op
+WorkloadJitting  5: 1 op, 817220.00 ns, 817.2200 us/op
+
+WorkloadPilot    1: 1 op, 514036.00 ns, 514.0360 us/op
+
+WorkloadPilot    1: 16 op, 9076112.00 ns, 567.2570 us/op
+WorkloadPilot    2: 448 op, 197263948.00 ns, 440.3213 us/op
+WorkloadPilot    3: 576 op, 253979490.00 ns, 440.9366 us/op
+
+WorkloadWarmup   1: 576 op, 257567113.00 ns, 447.1651 us/op
+WorkloadWarmup   2: 576 op, 254092290.00 ns, 441.1324 us/op
+WorkloadWarmup   3: 576 op, 252078344.00 ns, 437.6360 us/op
+WorkloadWarmup   4: 576 op, 251278016.00 ns, 436.2466 us/op
+WorkloadWarmup   5: 576 op, 259035856.00 ns, 449.7150 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 576 op, 257478238.00 ns, 447.0108 us/op
+WorkloadActual   2: 576 op, 254483919.00 ns, 441.8124 us/op
+WorkloadActual   3: 576 op, 256499858.00 ns, 445.3123 us/op
+WorkloadActual   4: 576 op, 255748931.00 ns, 444.0086 us/op
+WorkloadActual   5: 576 op, 253041375.00 ns, 439.3079 us/op
+WorkloadActual   6: 576 op, 254443053.00 ns, 441.7414 us/op
+WorkloadActual   7: 576 op, 253264199.00 ns, 439.6948 us/op
+WorkloadActual   8: 576 op, 256845481.00 ns, 445.9123 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 576 op, 257944736.00 ns, 447.8207 us/op
+WorkloadResult   1: 576 op, 257478238.00 ns, 447.0108 us/op
+WorkloadResult   2: 576 op, 254483919.00 ns, 441.8124 us/op
+WorkloadResult   3: 576 op, 256499858.00 ns, 445.3123 us/op
+WorkloadResult   4: 576 op, 255748931.00 ns, 444.0086 us/op
+WorkloadResult   5: 576 op, 253041375.00 ns, 439.3079 us/op
+WorkloadResult   6: 576 op, 254443053.00 ns, 441.7414 us/op
+WorkloadResult   7: 576 op, 253264199.00 ns, 439.6948 us/op
+WorkloadResult   8: 576 op, 256845481.00 ns, 445.9123 us/op
+// GC:  25 2 0 419567616 576
+
+// AfterAll
+// Benchmark Process 5065 has exited with code 0.
+
+Mean = 443.100 μs, StdErr = 1.021 μs (0.23%), N = 8, StdDev = 2.888 μs
+Min = 439.308 μs, Q1 = 441.230 μs, Median = 442.910 μs, Q3 = 445.462 μs, Max = 447.011 μs
+IQR = 4.233 μs, LowerFence = 434.881 μs, UpperFence = 451.811 μs
+ConfidenceInterval = [437.577 μs; 448.623 μs] (CI 99.9%), Margin = 5.523 μs (1.25% of Mean)
+Skewness = -0.03, Kurtosis = 1.2, MValue = 2
+
+// ** Remained 3 (20.0 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// **************************
+// Benchmark: WriteTableDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 45985 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteTableDocument.PdfSharp --job Quick --diagnoserRunMode 3 --benchmarkId 12 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 107517596.00 ns, 107.5176 ms/op
+WorkloadJitting  2: 30 op, 51527283.00 ns, 1.7176 ms/op
+WorkloadJitting  3: 30 op, 53832568.00 ns, 1.7944 ms/op
+WorkloadJitting  4: 1 op, 2326698.00 ns, 2.3267 ms/op
+
+WorkloadPilot    1: 1 op, 1774360.00 ns, 1.7744 ms/op
+
+WorkloadPilot    1: 16 op, 17610806.00 ns, 1.1007 ms/op
+WorkloadPilot    2: 240 op, 205716906.00 ns, 857.1538 us/op
+WorkloadPilot    3: 304 op, 264015950.00 ns, 868.4735 us/op
+WorkloadPilot    4: 288 op, 240332930.00 ns, 834.4893 us/op
+WorkloadPilot    5: 304 op, 256497305.00 ns, 843.7411 us/op
+
+WorkloadWarmup   1: 304 op, 250444437.00 ns, 823.8304 us/op
+WorkloadWarmup   2: 304 op, 255587693.00 ns, 840.7490 us/op
+WorkloadWarmup   3: 304 op, 253959036.00 ns, 835.3916 us/op
+WorkloadWarmup   4: 304 op, 252835003.00 ns, 831.6941 us/op
+WorkloadWarmup   5: 304 op, 251836066.00 ns, 828.4081 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 304 op, 255669676.00 ns, 841.0187 us/op
+WorkloadActual   2: 304 op, 253378955.00 ns, 833.4834 us/op
+WorkloadActual   3: 304 op, 253675748.00 ns, 834.4597 us/op
+WorkloadActual   4: 304 op, 254162954.00 ns, 836.0623 us/op
+WorkloadActual   5: 304 op, 257545215.00 ns, 847.1882 us/op
+WorkloadActual   6: 304 op, 252187619.00 ns, 829.5645 us/op
+WorkloadActual   7: 304 op, 250632557.00 ns, 824.4492 us/op
+WorkloadActual   8: 304 op, 250925032.00 ns, 825.4113 us/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 304 op, 253578680.00 ns, 834.1404 us/op
+WorkloadResult   1: 304 op, 255669676.00 ns, 841.0187 us/op
+WorkloadResult   2: 304 op, 253378955.00 ns, 833.4834 us/op
+WorkloadResult   3: 304 op, 253675748.00 ns, 834.4597 us/op
+WorkloadResult   4: 304 op, 254162954.00 ns, 836.0623 us/op
+WorkloadResult   5: 304 op, 257545215.00 ns, 847.1882 us/op
+WorkloadResult   6: 304 op, 252187619.00 ns, 829.5645 us/op
+WorkloadResult   7: 304 op, 250632557.00 ns, 824.4492 us/op
+WorkloadResult   8: 304 op, 250925032.00 ns, 825.4113 us/op
+// GC:  11 3 0 185122320 304
+
+// AfterAll
+// Benchmark Process 5081 has exited with code 0.
+
+Mean = 833.955 μs, StdErr = 2.714 μs (0.33%), N = 8, StdDev = 7.677 μs
+Min = 824.449 μs, Q1 = 828.526 μs, Median = 833.972 μs, Q3 = 837.301 μs, Max = 847.188 μs
+IQR = 8.775 μs, LowerFence = 815.363 μs, UpperFence = 850.464 μs
+ConfidenceInterval = [819.276 μs; 848.633 μs] (CI 99.9%), Margin = 14.678 μs (1.76% of Mean)
+Skewness = 0.31, Kurtosis = 1.69, MValue = 2
+
+// ** Remained 2 (13.3 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTableDocument-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTableDocument-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTableDocument-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTableDocument-report-full.json
+
+// * Detailed results *
+WriteTableDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 443.100 μs, StdErr = 1.021 μs (0.23%), N = 8, StdDev = 2.888 μs
+Min = 439.308 μs, Q1 = 441.230 μs, Median = 442.910 μs, Q3 = 445.462 μs, Max = 447.011 μs
+IQR = 4.233 μs, LowerFence = 434.881 μs, UpperFence = 451.811 μs
+ConfidenceInterval = [437.577 μs; 448.623 μs] (CI 99.9%), Margin = 5.523 μs (1.25% of Mean)
+Skewness = -0.03, Kurtosis = 1.2, MValue = 2
+-------------------- Histogram --------------------
+[437.412 μs ; 448.906 μs) | @@@@@@@@
+---------------------------------------------------
+
+WriteTableDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 833.955 μs, StdErr = 2.714 μs (0.33%), N = 8, StdDev = 7.677 μs
+Min = 824.449 μs, Q1 = 828.526 μs, Median = 833.972 μs, Q3 = 837.301 μs, Max = 847.188 μs
+IQR = 8.775 μs, LowerFence = 815.363 μs, UpperFence = 850.464 μs
+ConfidenceInterval = [819.276 μs; 848.633 μs] (CI 99.9%), Margin = 14.678 μs (1.76% of Mean)
+Skewness = 0.31, Kurtosis = 1.69, MValue = 2
+-------------------- Histogram --------------------
+[821.160 μs ; 852.226 μs) | @@@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method   | Mean     | Error    | StdDev  | Gen0    | Gen1   | Allocated |
+|--------- |---------:|---------:|--------:|--------:|-------:|----------:|
+| PdfPig   | 443.1 μs |  5.52 μs | 2.89 μs | 43.4028 | 3.4722 | 711.34 KB |
+| PdfSharp | 834.0 μs | 14.68 μs | 7.68 μs | 36.1842 | 9.8684 | 594.68 KB |
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 μs      : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:13 (13.24 sec), executed benchmarks: 2
+
+// Found 2 benchmarks:
+//   WriteTextDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+//   WriteTextDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+// **************************
+// Benchmark: WriteTextDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 42059 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteTextDocument.PdfPig --job Quick --diagnoserRunMode 3 --benchmarkId 13 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 211780864.00 ns, 211.7809 ms/op
+WorkloadJitting  2: 1 op, 14991443.00 ns, 14.9914 ms/op
+WorkloadJitting  3: 30 op, 332317800.00 ns, 11.0773 ms/op
+WorkloadJitting  4: 30 op, 41242429.00 ns, 1.3747 ms/op
+WorkloadJitting  5: 1 op, 1280491.00 ns, 1.2805 ms/op
+
+WorkloadPilot    1: 1 op, 1262528.00 ns, 1.2625 ms/op
+
+WorkloadPilot    1: 16 op, 19739014.00 ns, 1.2337 ms/op
+WorkloadPilot    2: 208 op, 250475053.00 ns, 1.2042 ms/op
+
+WorkloadWarmup   1: 208 op, 248641305.00 ns, 1.1954 ms/op
+WorkloadWarmup   2: 208 op, 249029416.00 ns, 1.1973 ms/op
+WorkloadWarmup   3: 208 op, 253421066.00 ns, 1.2184 ms/op
+WorkloadWarmup   4: 208 op, 253359050.00 ns, 1.2181 ms/op
+WorkloadWarmup   5: 208 op, 251814157.00 ns, 1.2106 ms/op
+
+// BeforeActualRun
+WorkloadActual   1: 208 op, 252396190.00 ns, 1.2134 ms/op
+WorkloadActual   2: 208 op, 258152418.00 ns, 1.2411 ms/op
+WorkloadActual   3: 208 op, 252804399.00 ns, 1.2154 ms/op
+WorkloadActual   4: 208 op, 252084318.00 ns, 1.2119 ms/op
+WorkloadActual   5: 208 op, 249976880.00 ns, 1.2018 ms/op
+WorkloadActual   6: 208 op, 261785856.00 ns, 1.2586 ms/op
+WorkloadActual   7: 208 op, 249779833.00 ns, 1.2009 ms/op
+WorkloadActual   8: 208 op, 251095801.00 ns, 1.2072 ms/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 208 op, 256231444.00 ns, 1.2319 ms/op
+WorkloadResult   1: 208 op, 252396190.00 ns, 1.2134 ms/op
+WorkloadResult   2: 208 op, 258152418.00 ns, 1.2411 ms/op
+WorkloadResult   3: 208 op, 252804399.00 ns, 1.2154 ms/op
+WorkloadResult   4: 208 op, 252084318.00 ns, 1.2119 ms/op
+WorkloadResult   5: 208 op, 249976880.00 ns, 1.2018 ms/op
+WorkloadResult   6: 208 op, 249779833.00 ns, 1.2009 ms/op
+WorkloadResult   7: 208 op, 251095801.00 ns, 1.2072 ms/op
+// GC:  16 2 0 282820096 208
+
+// AfterAll
+// Benchmark Process 5099 has exited with code 0.
+
+Mean = 1.213 ms, StdErr = 0.005 ms (0.42%), N = 7, StdDev = 0.014 ms
+Min = 1.201 ms, Q1 = 1.205 ms, Median = 1.212 ms, Q3 = 1.214 ms, Max = 1.241 ms
+IQR = 0.010 ms, LowerFence = 1.190 ms, UpperFence = 1.229 ms
+ConfidenceInterval = [1.183 ms; 1.244 ms] (CI 99.9%), Margin = 0.031 ms (2.52% of Mean)
+Skewness = 1.06, Kurtosis = 2.77, MValue = 2
+
+// ** Remained 1 (6.7 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// **************************
+// Benchmark: WriteTextDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet Matrix.PdfProcessing-gen.dll --ipcPort 37973 --benchmarkName Matrix.PdfProcessing.Benchmarks.WriteTextDocument.PdfSharp --job Quick --diagnoserRunMode 3 --benchmarkId 14 in /home/runner/work/dotnet-matrix/dotnet-matrix/src/Matrix.PdfProcessing/.bdn/1/b
+// Failed to set up high priority (Permission denied). In order to run benchmarks with high priority, make sure you have the right permissions.
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// BenchmarkDotNet v0.16.0-preview.2
+// Runtime=.NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+// GC=Concurrent Workstation
+// HardwareIntrinsics=AVX2+BMI1+BMI2+F16C+FMA+LZCNT+MOVBE,AVX,SSE3+SSSE3+SSE4.1+SSE4.2+POPCNT,X86Base+SSE+SSE2,AES+PCLMUL VectorSize=256
+// Job: Quick(MaxRelativeError=0.05, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+
+WorkloadJitting  1: 1 op, 109203256.00 ns, 109.2033 ms/op
+WorkloadJitting  2: 30 op, 55363075.00 ns, 1.8454 ms/op
+WorkloadJitting  3: 30 op, 59668743.00 ns, 1.9890 ms/op
+WorkloadJitting  4: 1 op, 2371612.00 ns, 2.3716 ms/op
+
+WorkloadPilot    1: 1 op, 1842718.00 ns, 1.8427 ms/op
+
+WorkloadPilot    1: 16 op, 17535499.00 ns, 1.0960 ms/op
+WorkloadPilot    2: 240 op, 247332250.00 ns, 1.0306 ms/op
+WorkloadPilot    3: 256 op, 254378948.00 ns, 993.6678 us/op
+
+WorkloadWarmup   1: 256 op, 261286838.00 ns, 1.0207 ms/op
+WorkloadWarmup   2: 256 op, 251984694.00 ns, 984.3152 us/op
+WorkloadWarmup   3: 256 op, 260903677.00 ns, 1.0192 ms/op
+WorkloadWarmup   4: 256 op, 250907277.00 ns, 980.1066 us/op
+WorkloadWarmup   5: 256 op, 253070073.00 ns, 988.5550 us/op
+
+// BeforeActualRun
+WorkloadActual   1: 256 op, 252710804.00 ns, 987.1516 us/op
+WorkloadActual   2: 256 op, 250738285.00 ns, 979.4464 us/op
+WorkloadActual   3: 256 op, 253474395.00 ns, 990.1344 us/op
+WorkloadActual   4: 256 op, 259378870.00 ns, 1.0132 ms/op
+WorkloadActual   5: 256 op, 255456011.00 ns, 997.8750 us/op
+WorkloadActual   6: 256 op, 253419492.00 ns, 989.9199 us/op
+WorkloadActual   7: 256 op, 252585932.00 ns, 986.6638 us/op
+WorkloadActual   8: 256 op, 260066938.00 ns, 1.0159 ms/op
+
+// AfterActualRun
+// BeforeExtraIteration
+// AfterExtraIteration
+WorkloadExtra    1: 256 op, 255224812.00 ns, 996.9719 us/op
+WorkloadResult   1: 256 op, 252710804.00 ns, 987.1516 us/op
+WorkloadResult   2: 256 op, 250738285.00 ns, 979.4464 us/op
+WorkloadResult   3: 256 op, 253474395.00 ns, 990.1344 us/op
+WorkloadResult   4: 256 op, 259378870.00 ns, 1.0132 ms/op
+WorkloadResult   5: 256 op, 255456011.00 ns, 997.8750 us/op
+WorkloadResult   6: 256 op, 253419492.00 ns, 989.9199 us/op
+WorkloadResult   7: 256 op, 252585932.00 ns, 986.6638 us/op
+WorkloadResult   8: 256 op, 260066938.00 ns, 1.0159 ms/op
+// GC:  17 10 8 190410720 256
+
+// AfterAll
+// Benchmark Process 5113 has exited with code 0.
+
+Mean = 995.035 μs, StdErr = 4.626 μs (0.46%), N = 8, StdDev = 13.083 μs
+Min = 979.446 μs, Q1 = 987.030 μs, Median = 990.027 μs, Q3 = 1,001.706 μs, Max = 1,015.886 μs
+IQR = 14.676 μs, LowerFence = 965.015 μs, UpperFence = 1,023.720 μs
+ConfidenceInterval = [970.020 μs; 1,020.049 μs] (CI 99.9%), Margin = 25.015 μs (2.51% of Mean)
+Skewness = 0.56, Kurtosis = 1.57, MValue = 2
+
+// ** Remained 0 (0.0 %) benchmark(s) to run. Estimated finish 2026-11-28 7:21 (0h 0m from now) **
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTextDocument-report.csv
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTextDocument-report-github.md
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTextDocument-report.html
+  tmp/dotnet-matrix/PdfProcessing/ea971fa8581f4e97b4d956754af669c4/results/Matrix.PdfProcessing.Benchmarks.WriteTextDocument-report-full.json
+
+// * Detailed results *
+WriteTextDocument.PdfSharp: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 995.035 μs, StdErr = 4.626 μs (0.46%), N = 8, StdDev = 13.083 μs
+Min = 979.446 μs, Q1 = 987.030 μs, Median = 990.027 μs, Q3 = 1,001.706 μs, Max = 1,015.886 μs
+IQR = 14.676 μs, LowerFence = 965.015 μs, UpperFence = 1,023.720 μs
+ConfidenceInterval = [970.020 μs; 1,020.049 μs] (CI 99.9%), Margin = 25.015 μs (2.51% of Mean)
+Skewness = 0.56, Kurtosis = 1.57, MValue = 2
+-------------------- Histogram --------------------
+[974.942 μs ; 1,024.472 μs) | @@@@@@@@
+---------------------------------------------------
+
+WriteTextDocument.PdfPig: Quick(MaxRelativeError=0.05, Arguments=/p:MatrixMode=Benchmark, IterationTime=250ms, MaxIterationCount=12, MaxWarmupIterationCount=5, MinIterationCount=8, MinWarmupIterationCount=3)
+Runtime = .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3; GC = Concurrent Workstation
+Mean = 1.213 ms, StdErr = 0.005 ms (0.42%), N = 7, StdDev = 0.014 ms
+Min = 1.201 ms, Q1 = 1.205 ms, Median = 1.212 ms, Q3 = 1.214 ms, Max = 1.241 ms
+IQR = 0.010 ms, LowerFence = 1.190 ms, UpperFence = 1.229 ms
+ConfidenceInterval = [1.183 ms; 1.244 ms] (CI 99.9%), Margin = 0.031 ms (2.52% of Mean)
+Skewness = 1.06, Kurtosis = 2.77, MValue = 2
+-------------------- Histogram --------------------
+[1.196 ms ; 1.250 ms) | @@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet v0.16.0-preview.2, Linux Ubuntu 26.04.1 LTS (Resolute Raccoon)
+AMD EPYC 7763 3.22GHz, 1 CPU, 4 logical and 2 physical cores
+Memory: 15.61 GB Total, 5.05 GB Available
+.NET SDK 11.0.100
+  [Host] : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+  Quick  : .NET 11.0.0 (11.0.0, 11.0.26.53018), X64 RyuJIT x86-64-v3
+
+Job=Quick  MaxRelativeError=0.05  Arguments=/p:MatrixMode=Benchmark  
+IterationTime=250ms  MaxIterationCount=12  MaxWarmupIterationCount=5  
+MinIterationCount=8  MinWarmupIterationCount=3  
+
+| Method   | Mean       | Error    | StdDev   | Gen0    | Gen1    | Gen2    | Allocated  |
+|--------- |-----------:|---------:|---------:|--------:|--------:|--------:|-----------:|
+| PdfSharp |   995.0 μs | 25.01 μs | 13.08 μs | 66.4063 | 39.0625 | 31.2500 |  726.36 KB |
+| PdfPig   | 1,213.1 μs | 30.55 μs | 13.56 μs | 76.9231 |  9.6154 |       - | 1327.84 KB |
+
+// * Hints *
+Outliers
+  WriteTextDocument.PdfPig: Quick -> 1 outlier  was  removed (1.26 ms)
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Gen0      : GC Generation 0 collects per 1000 operations
+  Gen1      : GC Generation 1 collects per 1000 operations
+  Gen2      : GC Generation 2 collects per 1000 operations
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 μs      : 1 Microsecond (0.000001 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+Run time: 00:00:12 (12.53 sec), executed benchmarks: 2
+
+Global total time: 00:02:01 (121.93 sec), executed benchmarks: 15
+// * Artifacts cleanup *
+Artifacts cleanup is finished

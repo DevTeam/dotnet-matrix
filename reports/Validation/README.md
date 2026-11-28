@@ -22,11 +22,11 @@ See [workflows/rating.md](../../workflows/rating.md).
 | # | Library | Scenarios | Time | Memory | Points | Group wins |
 |---:|---|---:|---:|---:|---:|---|
 | 1 | [**ValidationModules**](https://matrix.dev-team.org/?category=validation&library=ValidationModules) | 9/9 | 840 | 871 | 1711 | gold in Basic, gold in Object Graph, gold in Rules |
-| 2 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 9/9 | 317 | 430 | 747 | gold in Prepare, silver in Rules |
-| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 8/9 | 310 | 400 | 710 | gold in Prepare, silver in Basic, silver in Object Graph |
-| 4 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 8/9 | 299 | 397 | 696 | gold in Prepare, bronze in Basic, bronze in Object Graph |
-| 5 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) | 9/9 | 220 | 282 | 503 | bronze in Rules |
-| 6 | [**Validot**](https://matrix.dev-team.org/?category=validation&library=Validot) | 7/9 | 183 | 184 | 367 |  |
+| 2 | [**DataAnnotations**](https://matrix.dev-team.org/?category=validation&library=DataAnnotations) | 9/9 | 324 | 430 | 754 | gold in Prepare, silver in Rules |
+| 3 | [**MiniValidation**](https://matrix.dev-team.org/?category=validation&library=MiniValidation) | 8/9 | 318 | 400 | 718 | gold in Prepare, silver in Basic, silver in Object Graph |
+| 4 | [**Microsoft.Extensions.Validation**](https://matrix.dev-team.org/?category=validation&library=Microsoft.Extensions.Validation) | 8/9 | 304 | 396 | 699 | gold in Prepare, bronze in Basic, bronze in Object Graph |
+| 5 | [**FluentValidation**](https://matrix.dev-team.org/?category=validation&library=FluentValidation) | 9/9 | 224 | 282 | 506 | bronze in Rules |
+| 6 | [**Validot**](https://matrix.dev-team.org/?category=validation&library=Validot) | 7/9 | 185 | 184 | 369 |  |
 
 
 <details>
@@ -44,85 +44,85 @@ rating above. The same breakdown appears as a hint on any points value in the
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 29.73 ns | 29.73 ns | 100 | 56 B | 56 B | 100 |
-| Single Failure | 71.97 ns | 71.97 ns | 100 | 224 B | 224 B | 100 |
-| Multiple Failures | 141.74 ns | 141.74 ns | 100 | 608 B | 608 B | 100 |
-| Nested Object | 94.31 ns | 94.31 ns | 100 | 288 B | 288 B | 100 |
-| Collection | 183.9 ns | 183.9 ns | 100 | 464 B | 464 B | 100 |
-| Conditional Rule | 56.22 ns | 56.22 ns | 100 | 224 B | 224 B | 100 |
-| Custom Rule | 54.17 ns | 54.17 ns | 100 | 224 B | 224 B | 100 |
-| Stop On First Failure | 67.71 ns | 67.71 ns | 100 | 224 B | 224 B | 100 |
-| Prepare Validator | 5.23 ns | 0 ns | 40.1 | 24 B | 0 B | 70.7 |
+| Valid Object | 23.47 ns | 23.47 ns | 100 | 56 B | 56 B | 100 |
+| Single Failure | 49.43 ns | 49.43 ns | 100 | 224 B | 224 B | 100 |
+| Multiple Failures | 101.38 ns | 101.38 ns | 100 | 608 B | 608 B | 100 |
+| Nested Object | 69.89 ns | 69.89 ns | 100 | 288 B | 288 B | 100 |
+| Collection | 123.63 ns | 123.63 ns | 100 | 464 B | 464 B | 100 |
+| Conditional Rule | 41.51 ns | 41.51 ns | 100 | 224 B | 224 B | 100 |
+| Custom Rule | 41.16 ns | 41.16 ns | 100 | 224 B | 224 B | 100 |
+| Stop On First Failure | 44.98 ns | 44.98 ns | 100 | 224 B | 224 B | 100 |
+| Prepare Validator | 5.24 ns | 0 ns | 40 | 24 B | 0 B | 70.7 |
 
-#### 2. DataAnnotations — 747 of 1800
+#### 2. DataAnnotations — 754 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 1.06 μs | 29.73 ns | 17 | 1.78 KB | 56 B | 20.8 |
-| Single Failure | 1.2 μs | 71.97 ns | 24.6 | 1.86 KB | 224 B | 35.9 |
-| Multiple Failures | 1.91 μs | 141.74 ns | 27.3 | 2.39 KB | 608 B | 50.6 |
-| Nested Object | 1.72 μs | 94.31 ns | 23.5 | 2.29 KB | 288 B | 36.3 |
-| Collection | 3.31 μs | 183.9 ns | 23.6 | 5.22 KB | 464 B | 30.2 |
-| Conditional Rule | 497.7 ns | 56.22 ns | 33.9 | 1.18 KB | 224 B | 44.9 |
-| Custom Rule | 729.45 ns | 54.17 ns | 27.5 | 1.07 KB | 224 B | 47.1 |
-| Stop On First Failure | 448.13 ns | 67.71 ns | 39.1 | 576 B | 224 B | 64.3 |
+| Valid Object | 736.45 ns | 23.47 ns | 18.2 | 1.78 KB | 56 B | 20.8 |
+| Single Failure | 880.32 ns | 49.43 ns | 23.9 | 1.86 KB | 224 B | 35.9 |
+| Multiple Failures | 1.26 μs | 101.38 ns | 28.5 | 2.39 KB | 608 B | 50.6 |
+| Nested Object | 1.05 μs | 69.89 ns | 26 | 2.29 KB | 288 B | 36.3 |
+| Collection | 2.24 μs | 123.63 ns | 23.6 | 5.22 KB | 464 B | 30.2 |
+| Conditional Rule | 344.33 ns | 41.51 ns | 35.1 | 1.18 KB | 224 B | 44.9 |
+| Custom Rule | 505.1 ns | 41.16 ns | 28.9 | 1.07 KB | 224 B | 47.1 |
+| Stop On First Failure | 284.66 ns | 44.98 ns | 40.1 | 576 B | 224 B | 64.3 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 3. MiniValidation — 710 of 1800
+#### 3. MiniValidation — 718 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 492.47 ns | 29.73 ns | 25 | 760 B | 56 B | 31.9 |
-| Single Failure | 900.21 ns | 71.97 ns | 28.5 | 1.34 KB | 224 B | 42.2 |
-| Multiple Failures | 1.45 μs | 141.74 ns | 31.3 | 2.16 KB | 608 B | 53.1 |
-| Nested Object | 1.22 μs | 94.31 ns | 28 | 1.86 KB | 288 B | 40.2 |
-| Collection | 2.47 μs | 183.9 ns | 27.4 | 2.77 KB | 464 B | 41.3 |
-| Conditional Rule | 327.43 ns | 56.22 ns | 41.7 | 1008 B | 224 B | 49 |
-| Custom Rule | 713.15 ns | 54.17 ns | 27.8 | 1.31 KB | 224 B | 42.6 |
-| Stop On First Failure | — | 67.71 ns | 0 | — | 224 B | 0 |
+| Valid Object | 345.12 ns | 23.47 ns | 26.6 | 760 B | 56 B | 31.9 |
+| Single Failure | 624.57 ns | 49.43 ns | 28.4 | 1.34 KB | 224 B | 42.2 |
+| Multiple Failures | 1.08 μs | 101.38 ns | 30.8 | 2.16 KB | 608 B | 53.1 |
+| Nested Object | 832.94 ns | 69.89 ns | 29.2 | 1.86 KB | 288 B | 40.2 |
+| Collection | 1.5 μs | 123.63 ns | 28.8 | 2.77 KB | 464 B | 41.3 |
+| Conditional Rule | 216.75 ns | 41.51 ns | 44.2 | 1008 B | 224 B | 49 |
+| Custom Rule | 480.63 ns | 41.16 ns | 29.6 | 1.31 KB | 224 B | 42.6 |
+| Stop On First Failure | — | 44.98 ns | 0 | — | 224 B | 0 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 4. Microsoft.Extensions.Validation — 696 of 1800
+#### 4. Microsoft.Extensions.Validation — 699 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 839.52 ns | 29.73 ns | 19.1 | 1.08 KB | 56 B | 26.6 |
-| Single Failure | 1.07 μs | 71.97 ns | 26.1 | 1.45 KB | 224 B | 40.5 |
-| Multiple Failures | 1.43 μs | 141.74 ns | 31.6 | 1.98 KB | 608 B | 55.4 |
-| Nested Object | 1.15 μs | 94.31 ns | 28.8 | 1.84 KB | 288 B | 40.5 |
-| Collection | 3.38 μs | 183.9 ns | 23.4 | 4.48 KB | 464 B | 32.5 |
-| Conditional Rule | 364.02 ns | 56.22 ns | 39.6 | 904 B | 224 B | 51.7 |
-| Custom Rule | 601.05 ns | 54.17 ns | 30.3 | 976 B | 224 B | 49.8 |
-| Stop On First Failure | — | 67.71 ns | 0 | — | 224 B | 0 |
+| Valid Object | 625.62 ns | 23.47 ns | 19.8 | 1.2 KB | 56 B | 25.3 |
+| Single Failure | 696.13 ns | 49.43 ns | 26.9 | 1.45 KB | 224 B | 40.5 |
+| Multiple Failures | 1.04 μs | 101.38 ns | 31.4 | 2.06 KB | 608 B | 54.4 |
+| Nested Object | 832.55 ns | 69.89 ns | 29.2 | 1.84 KB | 288 B | 40.5 |
+| Collection | 2.25 μs | 123.63 ns | 23.5 | 4.48 KB | 464 B | 32.5 |
+| Conditional Rule | 256.27 ns | 41.51 ns | 40.6 | 904 B | 224 B | 51.7 |
+| Custom Rule | 405.72 ns | 41.16 ns | 32.2 | 936 B | 224 B | 50.8 |
+| Stop On First Failure | — | 44.98 ns | 0 | — | 224 B | 0 |
 | Prepare Validator | 0 ns | 0 ns | 100 | 0 B | 0 B | 100 |
 
-#### 5. FluentValidation — 503 of 1800
+#### 5. FluentValidation — 506 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 259.22 ns | 29.73 ns | 34.4 | 632 B | 56 B | 34.9 |
-| Single Failure | 956.65 ns | 71.97 ns | 27.6 | 1.75 KB | 224 B | 37 |
-| Multiple Failures | 2.87 μs | 141.74 ns | 22.3 | 5.99 KB | 608 B | 32 |
-| Nested Object | 1.19 μs | 94.31 ns | 28.3 | 2.38 KB | 288 B | 35.6 |
-| Collection | 3.54 μs | 183.9 ns | 22.8 | 6.56 KB | 464 B | 26.9 |
-| Conditional Rule | 769.18 ns | 56.22 ns | 27.3 | 1.76 KB | 224 B | 36.9 |
-| Custom Rule | 754 ns | 54.17 ns | 27 | 1.84 KB | 224 B | 36 |
-| Stop On First Failure | 831.99 ns | 67.71 ns | 28.7 | 1.75 KB | 224 B | 37 |
-| Prepare Validator | 2.94 μs | 0 ns | 1.843 | 6.34 KB | 0 B | 6.067 |
+| Valid Object | 172 ns | 23.47 ns | 37.6 | 632 B | 56 B | 34.9 |
+| Single Failure | 644.18 ns | 49.43 ns | 28 | 1.75 KB | 224 B | 37 |
+| Multiple Failures | 2.14 μs | 101.38 ns | 21.8 | 5.99 KB | 608 B | 32 |
+| Nested Object | 862.62 ns | 69.89 ns | 28.7 | 2.38 KB | 288 B | 35.6 |
+| Collection | 2.53 μs | 123.63 ns | 22.2 | 6.56 KB | 464 B | 26.9 |
+| Conditional Rule | 572.84 ns | 41.51 ns | 27.2 | 1.76 KB | 224 B | 36.9 |
+| Custom Rule | 568.59 ns | 41.16 ns | 27.2 | 1.84 KB | 224 B | 36 |
+| Stop On First Failure | 547.5 ns | 44.98 ns | 29 | 1.75 KB | 224 B | 37 |
+| Prepare Validator | 2.14 μs | 0 ns | 2.161 | 6.34 KB | 0 B | 6.067 |
 
-#### 6. Validot — 367 of 1800
+#### 6. Validot — 369 of 1800
 
 | Scenario | Time | Best | Points | Memory | Best | Points |
 |---|---:|---:|---:|---:|---:|---:|
-| Valid Object | 1.55 μs | 29.73 ns | 14.1 | 3.07 KB | 56 B | 15.9 |
-| Single Failure | 1.64 μs | 71.97 ns | 21.1 | 3.41 KB | 224 B | 26.5 |
-| Multiple Failures | 1.49 μs | 141.74 ns | 30.9 | 2.85 KB | 608 B | 46.3 |
-| Nested Object | 589.26 ns | 94.31 ns | 40.2 | 2.67 KB | 288 B | 33.6 |
-| Collection | — | 183.9 ns | 0 | — | 464 B | 0 |
-| Conditional Rule | 378.79 ns | 56.22 ns | 38.8 | 2.67 KB | 224 B | 30 |
-| Custom Rule | 389.83 ns | 54.17 ns | 37.6 | 2.67 KB | 224 B | 30 |
-| Stop On First Failure | — | 67.71 ns | 0 | — | 224 B | 0 |
-| Prepare Validator | 444.02 μs | 0 ns | 0.15 | 63.87 KB | 0 B | 1.915 |
+| Valid Object | 1.17 μs | 23.47 ns | 14.5 | 3.07 KB | 56 B | 15.9 |
+| Single Failure | 1.25 μs | 49.43 ns | 20.1 | 3.41 KB | 224 B | 26.5 |
+| Multiple Failures | 991.15 ns | 101.38 ns | 32.1 | 2.85 KB | 608 B | 46.3 |
+| Nested Object | 479.32 ns | 69.89 ns | 38.4 | 2.67 KB | 288 B | 33.6 |
+| Collection | — | 123.63 ns | 0 | — | 464 B | 0 |
+| Conditional Rule | 266.72 ns | 41.51 ns | 39.8 | 2.67 KB | 224 B | 30 |
+| Custom Rule | 265.88 ns | 41.16 ns | 39.7 | 2.67 KB | 224 B | 30 |
+| Stop On First Failure | — | 44.98 ns | 0 | — | 224 B | 0 |
+| Prepare Validator | 247.48 μs | 0 ns | 0.201 | 63.93 KB | 0 B | 1.914 |
 
 </details>
 

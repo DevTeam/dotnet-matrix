@@ -1,0 +1,247 @@
+{
+  "SchemaVersion": 2,
+  "ModuleId": "pdf-processing",
+  "GeneratedAtUtc": "2026-11-28T07:21:43.4351025+00:00",
+  "Environments": [
+    {
+      "Id": "8ca8c9adbd36",
+      "OperatingSystem": "Ubuntu 26.04.1 LTS",
+      "OsArchitecture": "X64",
+      "ProcessArchitecture": "X64",
+      "Framework": ".NET 11.0.0",
+      "RuntimeVersion": "11.0.0",
+      "RuntimeIdentifier": "linux-x64",
+      "DotNetSdkVersion": "11.0.100",
+      "Processor": "AMD EPYC 7763 64-Core Processor",
+      "LogicalCoreCount": 4,
+      "ServerGarbageCollector": false,
+      "StopwatchFrequency": 1000000000,
+      "BenchmarkTool": "BenchmarkDotNet",
+      "BenchmarkToolVersion": "0.16.0.0",
+      "Job": "Quick"
+    }
+  ],
+  "Libraries": [
+    {
+      "Id": "Docnet.Core",
+      "Name": "Docnet.Core",
+      "Package": "Docnet.Core",
+      "Version": "2.6.0",
+      "Baseline": false
+    },
+    {
+      "Id": "PdfPig",
+      "Name": "PdfPig",
+      "Package": "PdfPig",
+      "Version": "0.1.16",
+      "Baseline": false
+    },
+    {
+      "Id": "PDFsharp",
+      "Name": "PDFsharp",
+      "Package": "PDFsharp",
+      "Version": "6.5.0",
+      "Baseline": false
+    },
+    {
+      "Id": "PdfSharpCore",
+      "Name": "PdfSharpCore",
+      "Package": "PdfSharpCore",
+      "Version": "1.3.67",
+      "Baseline": false
+    }
+  ],
+  "Features": [
+    {
+      "Order": 1,
+      "Id": "ReadPageCount",
+      "Name": "Read Page Count",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Successful": true,
+          "MeanNanoseconds": 33908.23419097965,
+          "StandardErrorNanoseconds": 216.70220068173194,
+          "AllocatedBytesPerOperation": 88,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 38517.90051955991,
+          "StandardErrorNanoseconds": 94.45871781631193,
+          "AllocatedBytesPerOperation": 63472,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Successful": true,
+          "MeanNanoseconds": 30394.55770438058,
+          "StandardErrorNanoseconds": 53.99205776834412,
+          "AllocatedBytesPerOperation": 43569,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Successful": true,
+          "MeanNanoseconds": 49907.22109138973,
+          "StandardErrorNanoseconds": 402.03463654195076,
+          "AllocatedBytesPerOperation": 123731,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 2,
+      "Id": "ReadMetadata",
+      "Name": "Read Metadata",
+      "Results": [
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 38516.037990196084,
+          "StandardErrorNanoseconds": 128.15020690575048,
+          "AllocatedBytesPerOperation": 63560,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Successful": true,
+          "MeanNanoseconds": 30617.510831310683,
+          "StandardErrorNanoseconds": 165.65020620825405,
+          "AllocatedBytesPerOperation": 43601,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PdfSharpCore",
+          "Successful": true,
+          "MeanNanoseconds": 47256.62798491831,
+          "StandardErrorNanoseconds": 115.11968871035633,
+          "AllocatedBytesPerOperation": 123105,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 3,
+      "Id": "ExtractPageText",
+      "Name": "Extract Page Text",
+      "Results": [
+        {
+          "LibraryId": "Docnet.Core",
+          "Successful": true,
+          "MeanNanoseconds": 708728.37987013,
+          "StandardErrorNanoseconds": 3765.767908088479,
+          "AllocatedBytesPerOperation": 4744,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 361159.45862926135,
+          "StandardErrorNanoseconds": 1856.6956646738856,
+          "AllocatedBytesPerOperation": 573240,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 4,
+      "Id": "WriteTextDocument",
+      "Name": "Write Text Document",
+      "Results": [
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 1213111.1531593406,
+          "StandardErrorNanoseconds": 5126.455303991646,
+          "AllocatedBytesPerOperation": 1359712,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Successful": true,
+          "MeanNanoseconds": 995034.5346679688,
+          "StandardErrorNanoseconds": 4625.588768165893,
+          "AllocatedBytesPerOperation": 743792,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 5,
+      "Id": "WriteTableDocument",
+      "Name": "Write Table Document",
+      "Results": [
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 443100.05512152787,
+          "StandardErrorNanoseconds": 1021.2218502294818,
+          "AllocatedBytesPerOperation": 728416,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Successful": true,
+          "MeanNanoseconds": 833954.6694078948,
+          "StandardErrorNanoseconds": 2714.256820716522,
+          "AllocatedBytesPerOperation": 608955,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    },
+    {
+      "Order": 6,
+      "Id": "WriteMultiPageDocument",
+      "Name": "Write Multi Page Document",
+      "Results": [
+        {
+          "LibraryId": "PdfPig",
+          "Successful": true,
+          "MeanNanoseconds": 3346446.646428571,
+          "StandardErrorNanoseconds": 9072.881774944015,
+          "AllocatedBytesPerOperation": 3754824,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        },
+        {
+          "LibraryId": "PDFsharp",
+          "Successful": true,
+          "MeanNanoseconds": 1164117.9423076923,
+          "StandardErrorNanoseconds": 5121.946440659109,
+          "AllocatedBytesPerOperation": 909302,
+          "EnvironmentId": "8ca8c9adbd36",
+          "EvidenceId": "46120187647-1-pdf-processing-measured"
+        }
+      ]
+    }
+  ],
+  "Evidence": [
+    {
+      "Id": "46120187647-1-pdf-processing-measured",
+      "Kind": "measured",
+      "GeneratedAtUtc": "2026-11-28T07:21:43.4271844+00:00",
+      "CommitSha": "5fe1262e08d7c56f25394d1bb8955145f2de2492",
+      "WorkflowRunUrl": "https://github.com/DevTeam/dotnet-matrix/actions/runs/46120187647",
+      "Job": "Quick",
+      "EnvironmentId": "8ca8c9adbd36",
+      "ArchiveName": "matrix-reports",
+      "ManifestPath": "reports/PdfProcessing/evidence/46120187647-1-pdf-processing-measured/manifest.json",
+      "Repository": "DevTeam/dotnet-matrix"
+    }
+  ]
+}
