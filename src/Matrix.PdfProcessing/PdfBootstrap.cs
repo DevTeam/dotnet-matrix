@@ -29,9 +29,6 @@ internal static class PdfBootstrap
         // the category accepts the AGPL for PDFsharp and iText7.
         PdfSharp.PdfSharpLicense.SetAgplLicense();
 
-        // QuestPDF 2026 requires an explicit licence selection before first use.
-        QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
-
         if (FontPath.Value is { } path)
         {
             PdfSharp.Fonts.GlobalFontSettings.FontResolver = new PdfSystemFontResolver(path);

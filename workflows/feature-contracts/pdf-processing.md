@@ -4,10 +4,10 @@
 
 The category compares .NET libraries that read and write PDF documents over the
 same in-memory bytes. PdfPig, PDFsharp and iText7 do both; Docnet.Core and
-PdfSharpCore read only; QuestPDF writes only. The split is the point of the
-category: a PDF library that only reads cannot be compared with one that only
-writes on a single operation, so every scenario names the libraries that can
-express it and the others record an explicit availability declaration.
+PdfSharpCore read only. The split is the point of the category: a PDF library
+that only reads cannot be compared with one that only writes on a single
+operation, so every scenario names the libraries that can express it and the
+others record an explicit availability declaration.
 
 Disk and network I/O, rendering to raster images, digital signatures,
 certificates, form filling, PDF/A conversion, JavaScript actions, and any
@@ -24,7 +24,6 @@ would measure the storage device rather than the library.
 | PDFsharp | reader and writer | `PDFsharp` |
 | PdfSharpCore | reader | `PdfSharpCore` |
 | Docnet.Core | reader | `Docnet.Core` |
-| QuestPDF | writer | `QuestPDF` |
 | iText7 | reader and writer | `itext7` |
 
 ## Shared fixture
@@ -88,8 +87,7 @@ PdfPig, Docnet.Core and iText7 claim all three reading scenarios. PDFsharp and
 PdfSharpCore claim the two document-level ones and cannot claim text extraction:
 neither package exposes any text extraction API (its `XTextFormatter` only lays
 text out when writing), so a wrapper would have to implement extraction itself,
-which would measure the adapter instead of the library. QuestPDF claims none:
-it composes documents and exposes no reader at all. A library is only allowed
+which would measure the adapter instead of the library. A library is only allowed
 to claim a scenario if the validation run proves the observable result, not
 merely that a call returned.
 
@@ -107,7 +105,7 @@ merely that a call returned.
 
 ### Writing scenarios
 
-QuestPDF, PdfPig, iText7 and PDFsharp claim all three writing scenarios. PdfPig
+PdfPig, iText7 and PDFsharp claim all three writing scenarios. PdfPig
 writes with its standard-14 builder, so it needs no font program and is the one
 writer that behaves identically on a machine with no font at all; PDFsharp draws
 table cells itself and therefore pays for its own arithmetic exactly as the
@@ -153,13 +151,6 @@ DejaVu and Liberation fonts at the paths the resolver searches, so the resolver
 is expected to find a font there. This is not asserted as a guarantee: the
 validation run is the authority.
 
-## QuestPDF licence
-
-QuestPDF 2026 requires a licence selection before first use and throws
-otherwise. The category selects `LicenseType.Community` once at bootstrap, which
-is the licence QuestPDF grants to the use this project makes of it. The same
-bootstrap statement records the reason.
-
 ## iText7 and the fixture's font encoding
 
 iText7's text extractor cannot read a font resource that declares
@@ -186,10 +177,10 @@ Chart groups follow the operation, and only complete, comparable sets are rated:
 No group mixes a reading library with a writing one, because a library that has
 no document authoring API would score zero for a reason that says nothing about
 its quality as a reader. The consequence is visible and intended: a reader-only
-library is rated only in **Read**, and appears in **Write** as not ranked, while
-a writer-only library is the reverse. Every scenario is rated within its group,
-including the ones a single library dominates, and `MatrixFeature` is not marked
-`rated: false` anywhere in this category.
+library is rated only in **Read**, and appears in **Write** as not ranked, and a
+writer-only library would be the reverse. Every scenario is rated within its
+group, including the ones a single library dominates, and `MatrixFeature` is not
+marked `rated: false` anywhere in this category.
 
 `Supported` and `Unsupported` remain published per library per scenario exactly
 as in every other category, so what a library cannot do is visible next to what

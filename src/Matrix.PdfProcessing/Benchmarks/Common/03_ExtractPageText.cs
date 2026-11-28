@@ -17,8 +17,4 @@ namespace Matrix.PdfProcessing.Benchmarks;
     LibraryCatalog.PdfSharpCore,
     FeatureStatus.Unsupported,
     "PdfSharpCore has no text extraction API; its XTextFormatter only lays text out when writing, so extraction would be an adapter implementing the parser itself.")]
-[FeatureUnavailable(
-    LibraryCatalog.QuestPdf,
-    FeatureStatus.Unsupported,
-    "QuestPDF is a document generator only: it composes content when producing a document and exposes no reader or text extractor.")]
 public partial class ExtractPageText : PdfBenchmarkBase;
